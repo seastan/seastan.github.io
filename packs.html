@@ -1,7 +1,7 @@
 <div ng-show="tab.isSet(2)">
   <button class="packbutton" style="width:25%;height:25px" ng-click="packs.toggleonecore()" ng-class="{selected: packs.filtersettings.onecore}">
     Limit to 1 Core Set
-  <button class="packbutton" style="width:25%;height:25px" ng-click="packs.toggletwocore()" ng-class="{selected: packs.filtersettings.twocore}">
+  </button><button class="packbutton" style="width:25%;height:25px" ng-click="packs.toggletwocore()" ng-class="{selected: packs.filtersettings.twocore}">
     Limit to 2 Core Sets
   </button><button class="packbutton" style="width:25%;height:25px" ng-click="packs.selectAll()">
     Select All
@@ -49,6 +49,7 @@
         <td><button class="packbutton" ng-class="{selected: packs.filtersettings.pack.indexOf('ttor')>=0}" ng-click="packs.toggle('ttor')">The Treachery of Rhudaur</button></td>
         <td><button class="packbutton" ng-class="{selected: packs.filtersettings.pack.indexOf('tos')>=0}" ng-click="packs.toggle('tos')">The Treason of Saruman</button></td>
       </tr>
+      <tr>
         <td><button class="packbutton" ng-class="{selected: packs.filtersettings.pack.indexOf('tdm')>=0}" ng-click="packs.toggle('tdm')">The Dead Marshes</button></td>
         <td><button class="packbutton" ng-class="{selected: packs.filtersettings.pack.indexOf('fos')>=0}" ng-click="packs.toggle('fos')">Foundations of Stone</button></td>
         <td><button class="packbutton" ng-class="{selected: packs.filtersettings.pack.indexOf('tbog')>=0}" ng-click="packs.toggle('tbog')">The Blood of Gondor</button></td>
@@ -56,6 +57,7 @@
         <td><button class="packbutton" ng-class="{selected: packs.filtersettings.pack.indexOf('tbocd')>=0}" ng-click="packs.toggle('tbocd')">The Battle of Carn Dûm</button></td>
         <td><button class="packbutton" ng-class="{selected: packs.filtersettings.pack.indexOf('tlos')>=0}" ng-click="packs.toggle('tlos')">The Land of Shadow</button></td>
       </tr>
+      <tr>
         <td><button class="packbutton" ng-class="{selected: packs.filtersettings.pack.indexOf('rtm')>=0}" ng-click="packs.toggle('rtm')">Return to Mirkwood</button></td>
         <td><button class="packbutton" ng-class="{selected: packs.filtersettings.pack.indexOf('saf')>=0}" ng-click="packs.toggle('saf')">Shadow and Flame</button></td>
         <td><button class="packbutton" ng-class="{selected: packs.filtersettings.pack.indexOf('tmv')>=0}" ng-click="packs.toggle('tmv')">The Morgul Vale</button></td>
@@ -65,4 +67,6 @@
       </tr>
     </tbody>
   </table>
+
+  <td><button class="packbutton" ng-class="" ng-click="">Build me a deck</button></td>
 </div>
