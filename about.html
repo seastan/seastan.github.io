@@ -1,0 +1,108 @@
+<div ng-show="tab.isSet(5)" class="about"><div class="about-inner">
+  <ul style="list-style-image: url('img/types/5quest.png');">
+
+  <li><h4>About</h4>
+    <p>
+    The Rivendell Councilroom is a deck builder for the Lord of the Rings
+    LCG by Fantasy Flight Games. It was built from scratch using AngularJS.
+    Please refer to the <b><a href="https://github.com/ddddirk/lotrdb">project page</a></b>
+    for more information on the development of the Rivendell Councilroom.
+    </p>
+
+  <li><h4>How to use</h4>
+    <p>
+      The Rivendell Councilroom is designed to be a simple and intuitive, 
+      yet fully featured deck builder. The left portion of the screen
+      shows the cards currently in your deck, the center portion shows a card
+      preview, the right portion shows the cards and some settings.<br/>
+      There is no login and no information is saved on the server. Please make
+      your own backups of decks, as nothing can be recovered in case of
+      loss of information.
+    </p>
+    <li style="list-style-position: inside; list-style-image: url('img/spheres/1leadership.png');">
+    <b>Cards</b>
+    <p>
+      In the Cards tab, you can browse cards to add to your deck.
+      This tab also gives you the ability to search for cards by name (be
+      sure not to use accents, type 'Gloin' to find Glóin, for instance),
+      card trait, card text, card type and card sphere.<br/>
+      You can also sort the cards by name, sphere, cost, willpower, attack,
+      defense or hitpoints, by clicking on the relevant headers.
+    </p>
+    <li style="list-style-position: inside; list-style-image: url('img/spheres/2tactics.png');">
+    <b>Packs</b>
+    <p>
+      In the Packs tab, you can select which packs you own. Only cards from
+      these packs will show up in the Cards tab. The packs you've selected
+      are stored in your browser data and will be remembered for subsequent
+      visits to the deckbuilder.
+    </p>
+    <li style="list-style-position: inside; list-style-image: url('img/spheres/3spirit.png');">
+    <b>Decks</b>
+    <p>
+      In the Decks tab, you can save the deck you've made (or are still working
+      on) and load decks you've made in the past. Beware that clearing, loading
+      or uploading decks will <b>overwrite your current deck without prompt</b>,
+      so save your deck before loading another deck, or it will be lost.<br/>
+      Saved decks can be downloaded, either in a text file that contains markup
+      for both Reddit (MarkDown) and BoardGameGeek (BBCode) or as an OCTGN deck.
+      Both these formats can also be uploaded. Note that uploading <b>Does not
+      automatically save the deck</b>, it only loads it as the current deck.<br/>
+      Decks are saved to and loaded from your local browser storage, so if you
+      open the deck builder on another machine (or another web browser), your
+      decks will not be present. Instead, you can either download the deck on the
+      machine you saved it on and upload it elsewhere, or copy the link that appears
+      in your browser's location bar as you save or load a deck. These links can
+      also be used to share decks.
+    </p>
+    <li style="list-style-position: inside; list-style-image: url('img/spheres/4lore.png');">
+    <b>Stats</b>
+    <p>
+      In the Stats tab, you can inspect the deck you've made. The left portion of the
+      tab shows you sample starting hands, press 'Start' to draw six cards and
+      'Draw' to draw additional cards. This should give you an impression of
+      what a first turn would look like and what kind of opening strategies suit
+      a deck. Be sure to press 'Start' after every change to the deck, as it is
+      not updated automatically.<br/>
+      On the right portion of the tab, several graphics are shown after you
+      press the 'Reset' button. The top graph shows the costs cards in the deck,
+      the middle graph shows the division of spheres in the deck and the bottom
+      graphs shows the division of card types in the deck. Clicking on either a
+      sphere or a card type will update to other two graphs, to reflect only the
+      cards from that particular sphere or type. Again, after any change to the
+      deck, or after loading a new deck, press 'Reset' to update the graphs.
+    </p>
+
+  <li>
+  <h4>Contact</h4>
+  <p style="margin-bottom:0;">
+    Please send suggestions, questions, corrections and fan/hate-mail to <a href="mailto:info@dataflux.nl">
+    info@dataflux.nl</a>.<br/> Or contact me on 
+    <a href="https://github.com/ddddirk">Github</a>,
+    <a href="http://reddit.com/u/PityUpvote">Reddit</a> or 
+    <a href="https://boardgamegeek.com/user/dwjmeijer">BoardGameGeek</a>.<br/>
+    Or buy me a drink: </p>
+    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+    <input type="hidden" name="cmd" value="_s-xclick">
+    <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----MIIHNwYJKoZIhvcNAQcEoIIHKDCCByQCAQExggEwMIIBLAIBADCBlDCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20CAQAwDQYJKoZIhvcNAQEBBQAEgYAKa0pV1jHtQHS6lXWa8NRDqFVpFVwOqfFhI60nXbf6PHxnSPE4JYWlS4ADue2ztncTzfGBC1J5VC0H2l2s+x1hJ/79adZ/FMmK7VycsP4LdDY5J+13SkYdmupyPTFwueEzi6hlkWoUlkP19FOrrbmBTMyB2sddn2ZUuEclA+az8TELMAkGBSsOAwIaBQAwgbQGCSqGSIb3DQEHATAUBggqhkiG9w0DBwQIaQegwdDdLJuAgZC2SfSrqldglqKDCrqezohXps/OCRMPP1iO+rfAV4IGk/EdPtLnM91VvBpWlGBaNTUgyrS0hMhWyZB8EZ3Yvq3kTmt0EAGs9YlyRWuvse1XiAkozo8UOKTeDpJTdTNMH+8CiZJGXfmYvdQxJcMICL7SNfus8gdSAxqERtPusXNX+6MOwm6Ehgovt7MAcksDBY+gggOHMIIDgzCCAuygAwIBAgIBADANBgkqhkiG9w0BAQUFADCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20wHhcNMDQwMjEzMTAxMzE1WhcNMzUwMjEzMTAxMzE1WjCBjjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQwEgYDVQQKEwtQYXlQYWwgSW5jLjETMBEGA1UECxQKbGl2ZV9jZXJ0czERMA8GA1UEAxQIbGl2ZV9hcGkxHDAaBgkqhkiG9w0BCQEWDXJlQHBheXBhbC5jb20wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAMFHTt38RMxLXJyO2SmS+Ndl72T7oKJ4u4uw+6awntALWh03PewmIJuzbALScsTS4sZoS1fKciBGoh11gIfHzylvkdNe/hJl66/RGqrj5rFb08sAABNTzDTiqqNpJeBsYs/c2aiGozptX2RlnBktH+SUNpAajW724Nv2Wvhif6sFAgMBAAGjge4wgeswHQYDVR0OBBYEFJaffLvGbxe9WT9S1wob7BDWZJRrMIG7BgNVHSMEgbMwgbCAFJaffLvGbxe9WT9S1wob7BDWZJRroYGUpIGRMIGOMQswCQYDVQQGEwJVUzELMAkGA1UECBMCQ0ExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxFDASBgNVBAoTC1BheVBhbCBJbmMuMRMwEQYDVQQLFApsaXZlX2NlcnRzMREwDwYDVQQDFAhsaXZlX2FwaTEcMBoGCSqGSIb3DQEJARYNcmVAcGF5cGFsLmNvbYIBADAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBBQUAA4GBAIFfOlaagFrl71+jq6OKidbWFSE+Q4FqROvdgIONth+8kSK//Y/4ihuE4Ymvzn5ceE3S/iBSQQMjyvb+s2TWbQYDwcp129OPIbD9epdr4tJOUNiSojw7BHwYRiPh58S1xGlFgHFXwrEBb3dgNbMUa+u4qectsMAXpVHnD9wIyfmHMYIBmjCCAZYCAQEwgZQwgY4xCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDQTEWMBQGA1UEBxMNTW91bnRhaW4gVmlldzEUMBIGA1UEChMLUGF5UGFsIEluYy4xEzARBgNVBAsUCmxpdmVfY2VydHMxETAPBgNVBAMUCGxpdmVfYXBpMRwwGgYJKoZIhvcNAQkBFg1yZUBwYXlwYWwuY29tAgEAMAkGBSsOAwIaBQCgXTAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0xNTA0MjIxNDEwNDZaMCMGCSqGSIb3DQEJBDEWBBTUtKxtk8t1XDWN3DcqvHbRPMqNzDANBgkqhkiG9w0BAQEFAASBgIyhvZcDhmXadwXDvX59e+CatfoUdwIj/J5Nv3QOSsAY+h58Hnjv2neCOD2payY8TukJIQ+98AabZK+IUWEwVinpWohR1vPh5o8uHXQFZx2b6wTM7MzL5MvOBkBVnEU6OID7Jl0CrRzf1e0SBoivjfkRDqsK9P2PrYjEi3EQjQ3K-----END PKCS7-----">
+    <input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
+    <img alt="" border="0" src="https://www.paypalobjects.com/nl_NL/i/scr/pixel.gif" width="1" height="1">
+    </form>
+ 
+
+  <li>
+  <h4>Legalese</h4>
+  <p>
+    This website is not produced, endorsed, supported, or affiliated with Fantasy
+    Flight Games. The copyrightable portions of The Lord of the Rings: The Card 
+    Game and its expansions are © 2011 - 2015 Fantasy Flight Publishing, Inc. 
+    The Lord of the Rings, and the characters, items, events and places therein 
+    are trademarks or registered trademarks of The Saul Zaentz Company d/b/a 
+    Middle-earth Enterprises and are used, under license, by Fantasy Flight Games. 
+    Living Card Game, LCG, LCG logo and Fantasy Flight Supply are trademarks and/or 
+    registered trademarks of Fantasy Flight Publishing, Inc. All Rights Reserved 
+    to their respective owners.<br/>
+    The Rivendell Councilroom was created by Dirk Meijer and published under the GNU
+    GPL (version 2) in April 2015. The source code is available on the 
+    <b><a href="https://github.com/ddddirk/lotrdb">project page</a></b>.
+</div></div>

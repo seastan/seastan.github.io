@@ -1,0 +1,34 @@
+<div ng-show="tab.isSet(4)">
+  
+  <div class="carddraw">
+    <h3>Sample Hand</h3>
+    <br/>
+    <button ng-click="stats.reshuffle()">Start</button>
+    <button ng-click="stats.draw()">Draw</button>
+    <br/><br/>
+    <ul>
+      <li ng-repeat="card in stats.hand track by $index" ng-mouseover="deckC.changepreview(card)" class="card c{{card.sphere}}">
+        {{card.name}}
+        <span ng-click="stats.playCard($index)">Play Card</span>
+      </li>
+    </ul>
+  </div>
+  
+  <script src="Chart.js"></script>
+  <script>
+    Chart.defaults.global.animation=false;
+  </script>
+  
+  <div class="chartdiv">
+    <button ng-click="stats.refresh()">Refresh Charts</button><br/>
+    <canvas id="cost"></canvas>
+    <br/>Cost<br/><br/>
+    <canvas id="spheres"></canvas>
+    <br/>Spheres<br/><br/>
+    <canvas id="type"></canvas>
+    <br/>Types
+    
+  </div>
+  
+  
+</div>

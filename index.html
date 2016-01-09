@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="deckbuilder">
+  <head>
+    <title>The Rivendell Councilroom</title>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+    <link href="style.css" rel="stylesheet" media="screen" />
+    <script src="jquery.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="angular.min.js"></script>
+    <script src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+    <script src="ngStorage.min.js"></script>
+    <script src="lotrdb.js"></script>
+    <script src="lz-string.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=0.3, maximum-scale=2, user-scalable=yes">
+    <link rel="shortcut icon" href="img/favicon.png"> 
+    <link rel="apple-itouch-icon" href="img/favicon.png"> 
+  </head>
+  <body>
+    <header></header>
+    <div class="body">
+      <deck></deck>
+    
+      <cardpreview></cardpreview>
+      
+        <div ng-controller="tabController as tab" class="rightdiv">
+          <section class="tab">
+            <ul class="nav nav-pills">
+              <li>
+                <a href ng-click="tab.setTab(1)" ng-class="{activetab: tab.isSet(1)}">Cards</a></li>
+              <li>
+                <a href ng-click="tab.setTab(2)" ng-class="{activetab: tab.isSet(2)}">Packs</a></li>
+              <li>
+                <a href ng-click="tab.setTab(3)" ng-class="{activetab: tab.isSet(3)}">Decks</a></li>
+              <li>
+                <a href ng-click="tab.setTab(4)" ng-class="{activetab: tab.isSet(4)}">Stats</a></li>
+              <li>
+                <a href ng-click="tab.setTab(5)" ng-class="{activetab: tab.isSet(5)}">Help</a></li>
+              <li>
+                <a href ng-click="tab.setTab(6)" ng-class="{activetab: tab.isSet(6)}">Updates</a></li>
+            </ul>
+          </section>
+          <packs></packs>
+          <cards></cards>
+          <mydecks></mydecks>
+          <stats></stats>
+          <about></about>
+          <news></news>
+        </div>
+        
+      </div>
+
+  <!--  <myfooter></myfooter> -->
+  </body>
+</html>
