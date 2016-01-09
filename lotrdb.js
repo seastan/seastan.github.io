@@ -58,7 +58,21 @@
       } else {
         this.filtersettings.onecore=true;
       }
+      if(this.filtersettings.twocore){
+        this.filtersettings.twocore=false;
+      }
       $localStorage.onecore = this.filtersettings.onecore;
+    }
+    this.toggletwocore = function(){
+      if(this.filtersettings.twocore){
+        this.filtersettings.twocore=false;
+      } else {
+        this.filtersettings.twocore=true;
+      }
+      if(this.filtersettings.onecore){
+        this.filtersettings.onecore=false;
+      }
+      $localStorage.twocore = this.filtersettings.twocore;
     }
     this.selectNone=function(){
       this.filtersettings.pack=[];
@@ -160,6 +174,7 @@
   app.factory('filtersettings',["$localStorage",function ($localStorage) {
     var filtersettings={};
     filtersettings.onecore = $localStorage.onecore;
+    filtersettings.twocore = $localStorage.twocore;
     filtersettings.pack= $localStorage.pack || ["core"];
     filtersettings.type={'1hero': true, '2ally': false, '3attachment': false, '4event': false, '5quest': false};
     filtersettings.spheres={'1leadership': true, '4lore': true, '3spirit': true, '2tactics': true, '5neutral': true, '6baggins':false, '7fellowship':false};
