@@ -82,6 +82,10 @@
       this.filtersettings.pack=this.full.slice(0); //make a clone
       $localStorage.pack = this.filtersettings.pack;
     };
+    this.autoBuild=function(){
+      this.filtersettings.pack=this.full.slice(0); //make a clone
+      $localStorage.pack = this.filtersettings.pack;
+    };
   }]);
   
   app.directive('about', function() {
@@ -106,9 +110,6 @@
       controllerAs: 'packs'
     };
   });
-  
-  
-  
   
   //Tabs in the right div
   app.controller('tabController',[function(){
@@ -282,9 +283,16 @@
     };
     deck.startingThreat = function(){
       var threat = 0;
+      var mirlonde = 0;
+      var loreheroes = 0;
       for(var h in deck['1hero']){
         threat += deck['1hero'][h].cost;
+	if(deck['1hero'][h].name_norm=="Mirlonde")
+	    mirlonde = 1;
+	if(deck['1hero'][h].sphere=="Lore")
+	    loreheroes++;
       };
+      if(mirlonde) threat-=loreheroes;
       return threat;
     };
     
