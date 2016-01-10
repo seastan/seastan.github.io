@@ -82,10 +82,6 @@
       this.filtersettings.pack=this.full.slice(0); //make a clone
       $localStorage.pack = this.filtersettings.pack;
     };
-    this.autoBuild=function(){
-      this.filtersettings.pack=this.full.slice(0); //make a clone
-      $localStorage.pack = this.filtersettings.pack;
-    };
   }]);
   
   app.directive('about', function() {
@@ -224,6 +220,12 @@
     this.changepreview = function(card){
       this.image.update(card);
     }
+    this.autoBuild = function(){
+	for (var card in this.allcards) {
+	    if (card.name_norm="Glorfindel")
+		deck.change(card,1);
+	}
+    };
   }]);
   
   app.directive('cards', function() {
