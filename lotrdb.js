@@ -121,7 +121,7 @@
   
   app.controller('init',['getData','$location','deck','cardObject','$scope',function(getData,$location,deck,cardObject,$scope){
     
-    getData.async('rank_heroes.json').then(function(data) {
+    getData.async('cards.json').then(function(data) {
 	    for (d in data) {
 		cardObject.push(data[d]);
 	    }
@@ -237,17 +237,11 @@
 	// };
     };
     this.addHero = function(){
-	for(var c in cardRank['1hero']) {
-	    if(filtersettings.pack.indexOf(cardRank['1hero'][c].exp)>=0)) {
-		deck.change(cardRank['1hero'][c],1);
+	for(var c in this.allcards) {
+	    if((this.allcards[c].name_norm=="Glorfindel") && (filtersettings.pack.indexOf(this.allcards[c].exp)>=0)) {
+		deck.change(this.allcards[c],1);
 		return;
-	    };
-
-	// for(var c in this.allcards) {
-	//     if((this.allcards[c].name_norm=="Glorfindel") && (filtersettings.pack.indexOf(this.allcards[c].exp)>=0)) {
-	// 	deck.change(this.allcards[c],1);
-	// 	return;
-	// };
+	};
     }
   }]);
   
