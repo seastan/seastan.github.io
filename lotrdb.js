@@ -221,10 +221,11 @@
       this.image.update(card);
     }
     this.autoBuild = function(){
-	for (var card in this.allcards) {
-	    if (card.name_norm="Glorfindel")
-		deck.change(card,1);
-	}
+	deck["1hero"] = [];
+	// for (var card in this.allcards) {
+	//     if (card.name_norm="Glorfindel")
+	// 	deck.change(card,1);
+	// }
     };
   }]);
   
