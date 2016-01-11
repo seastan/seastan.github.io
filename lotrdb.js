@@ -106,6 +106,15 @@
       controllerAs: 'packs'
     };
   });
+
+  app.directive('auto', function() {
+    return {
+      restrict: 'E',
+      templateUrl: 'auto.html',
+      controller: 'packSelect',
+      controllerAs: 'packs'
+    };
+  });
   
   //Tabs in the right div
   app.controller('tabController',[function(){

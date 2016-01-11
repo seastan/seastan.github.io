@@ -133,8 +133,8 @@ for ally in allies:
 
 allies = sorted(allies, key=itemgetter('cardrank'))
 # #print sorted_cards
-# for ally in allies:
-#     print ally["name_norm"],"\t",ally["cardrank"]
+for ally in allies:
+    print ally["name_norm"],"\t",ally["exp"]
 
 ########################
 ### Rank Attachments ###
