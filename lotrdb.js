@@ -224,7 +224,7 @@
 	//	deck["1hero"] = [];
 	for(var c in this.allcards){
 	    if(this.allcards[c].name_norm=="Glorfindel")
-		deck.change(c,1);
+		deck.change(this.allcards[c],1);
 	};
 
 	// for (var card in this.allcards) {
