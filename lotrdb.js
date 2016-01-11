@@ -222,17 +222,20 @@
     }
     this.autoBuild = function(){
 	//	deck["1hero"] = [];
-	for(var c in this.allcards){
+	while (deck["1hero"].length < 1) {
+	    addHero();
+	}
+	// for(var c in this.allcards) {
+	//     if((this.allcards[c].name_norm=="Glorfindel") && (filtersettings.pack.indexOf(this.allcards[c].exp)>=0))
+	// 	deck.change(this.allcards[c],1);
+	// };
+    };
+    this.addHero = function(){
+	for(var c in this.allcards) {
 	    if((this.allcards[c].name_norm=="Glorfindel") && (filtersettings.pack.indexOf(this.allcards[c].exp)>=0))
 		deck.change(this.allcards[c],1);
-
 	};
-
-	// for (var card in this.allcards) {
-	//     if (card.name_norm="Glorfindel")
-	// 	
-	// }
-    };
+    }
   }]);
   
   app.directive('cards', function() {
