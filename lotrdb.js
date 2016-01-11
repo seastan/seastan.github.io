@@ -191,7 +191,7 @@
   }]);
   
   //Logic for the card selection
-  app.controller('cardControl',["$http","$scope","filtersettings","deck","image","cardObject","cardRank",function($http,$scope,filtersettings,deck,image,cardObject,cardRank){
+  app.controller('cardControl',["$http","$scope","filtersettings","deck","image","cardObject",function($http,$scope,filtersettings,deck,image,cardObject){
     $scope.allcards=[];
     $scope.deck=deck;
     this.image = image;
