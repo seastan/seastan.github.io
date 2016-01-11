@@ -119,13 +119,19 @@
   }]);
   
   
-  app.controller('init',['getData','$location','deck','cardObject','$scope',function(getData,$location,deck,cardObject,$scope){
+  app.controller('init',['getData','$location','deck','cardObject','cardRank','$scope',function(getData,$location,deck,cardObject,cardRank,$scope){
     
     getData.async('cards.json').then(function(data) {
-      for (d in data) {
-        cardObject.push(data[d]);
-      }
-    });
+	    for (d in data) {
+		cardObject.push(data[d]);
+	    }
+	});
+    
+    getData.async('rank_heroes.json').then(function(data) {
+	    for (d in data) {
+		cardRank['1hero'].push(data[d]);
+	    }
+	});
     
     setTimeout( function() {
       var hashIndex = $location.url().indexOf('/#');
@@ -185,7 +191,7 @@
   }]);
   
   //Logic for the card selection
-  app.controller('cardControl',["$http","$scope","filtersettings","deck","image","cardObject",function($http,$scope,filtersettings,deck,image,cardObject){
+  app.controller('cardControl',["$http","$scope","filtersettings","deck","image","cardObject","cardRank",function($http,$scope,filtersettings,deck,image,cardObject,cardRank){
     $scope.allcards=[];
     $scope.deck=deck;
     this.image = image;
@@ -231,10 +237,17 @@
 	// };
     };
     this.addHero = function(){
-	for(var c in this.allcards) {
-	    if((this.allcards[c].name_norm=="Glorfindel") && (filtersettings.pack.indexOf(this.allcards[c].exp)>=0))
-		deck.change(this.allcards[c],1);
-	};
+	for(var c in cardRank['1hero']) {
+	    if(filtersettings.pack.indexOf(cardRank['1hero'][c].exp)>=0)) {
+		deck.change(cardRank['1hero'][c],1);
+		return;
+	    };
+
+	// for(var c in this.allcards) {
+	//     if((this.allcards[c].name_norm=="Glorfindel") && (filtersettings.pack.indexOf(this.allcards[c].exp)>=0)) {
+	// 	deck.change(this.allcards[c],1);
+	// 	return;
+	// };
     }
   }]);
   
