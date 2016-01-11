@@ -127,11 +127,11 @@
       }
     });
 
-    getData.async('rank_heroes.json').then(function(data) {
-      for (d in data) {
-        cardRank['1hero'].push(data[d]);
-      }
-    });
+    // getData.async('rank_heroes.json').then(function(data) {
+    //   for (d in data) {
+    //     cardRank['1hero'].push(data[d]);
+    //   }
+    // });
 
     
     setTimeout( function() {
@@ -236,7 +236,7 @@
       for(var c in this.allcards) {
         if((this.allcards[c].name_norm=="Glorfindel") && (filtersettings.pack.indexOf(this.allcards[c].exp)>=0)) {
           deck.change(this.allcards[c],1);
-          return;
+	  //          return;
         }
       }
     };
