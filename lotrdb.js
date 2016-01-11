@@ -119,19 +119,19 @@
   }]);
   
   
-  app.controller('init',['getData','$location','deck','cardObject','cardRank','$scope',function(getData,$location,deck,cardObject,cardRank,$scope){
+  app.controller('init',['getData','$location','deck','cardObject','$scope',function(getData,$location,deck,cardObject,$scope){
     
-    getData.async('cards.json').then(function(data) {
+    getData.async('rank_heroes.json').then(function(data) {
 	    for (d in data) {
 		cardObject.push(data[d]);
 	    }
 	});
     
-    getData.async('rank_heroes.json').then(function(data) {
-	    for (d in data) {
-		cardRank['1hero'].push(data[d]);
-	    }
-	});
+    // getData.async('rank_heroes.json').then(function(data) {
+    // 	    for (d in data) {
+    // 		cardRank['1hero'].push(data[d]);
+    // 	    }
+    // 	});
     
     setTimeout( function() {
       var hashIndex = $location.url().indexOf('/#');
