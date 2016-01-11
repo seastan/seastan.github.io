@@ -296,7 +296,7 @@
 			 ]      
 
 	for (var h in heroranking) {
-	    if (len(heroes) >= 3) return;
+	    if (deck["1hero"].length >= 3) return;
 	    for (var c in this.allcards) {
 		if ((heroranking[h].name_norm==this.allcards[c].name_norm) && (heroranking[h].exp==this.allcards[c].exp) (filtersettings.pack.indexOf(this.allcards[c].exp)>=0))
 		    deck.change(this.allcards[c],1);
