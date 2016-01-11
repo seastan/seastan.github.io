@@ -223,7 +223,7 @@
     this.autoBuild = function(){
 	//	deck["1hero"] = [];
 	while (deck["1hero"].length < 1) {
-	    addHero();
+	    this.addHero();
 	}
 	// for(var c in this.allcards) {
 	//     if((this.allcards[c].name_norm=="Glorfindel") && (filtersettings.pack.indexOf(this.allcards[c].exp)>=0))
