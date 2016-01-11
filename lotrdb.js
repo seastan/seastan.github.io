@@ -298,7 +298,7 @@
 	//	for (var h in heroranking) {
 	//	if (deck["1hero"].length >= 3) return;
 	for (var c in this.allcards) {
-	    if ((this.allcards[c].name_norm=="Glorfindel") && (this.allcards[c].exp=="core") (filtersettings.pack.indexOf(this.allcards[c].exp)>=0))
+	    if ((this.allcards[c].name_norm=="Glorfindel") && (this.allcards[c].exp=="core") && (filtersettings.pack.indexOf(this.allcards[c].exp)>=0))
 		deck.change(this.allcards[c],1);
 	}
 	    //	}
