@@ -221,10 +221,15 @@
       this.image.update(card);
     }
     this.autoBuild = function(){
-	deck["1hero"] = [];
+	//	deck["1hero"] = [];
+	for(var c in this.allcards){
+	    if(this.allcards[c].name_norm=="Glorfindel")
+		deck["2ally"] = [];
+	};
+	
 	// for (var card in this.allcards) {
 	//     if (card.name_norm="Glorfindel")
-	// 	deck.change(card,1);
+	// 	
 	// }
     };
   }]);
