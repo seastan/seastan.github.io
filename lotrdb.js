@@ -110,7 +110,7 @@
   app.directive('auto', function() {
     return {
       restrict: 'E',
-      templateUrl: 'auto.html',
+      templateUrl: 'packs.html',
       controller: 'packSelect',
       controllerAs: 'packs'
     };
