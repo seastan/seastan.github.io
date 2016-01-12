@@ -192,9 +192,10 @@
   }]);
   
   //Logic for the card selection
-  app.controller('cardControl',["$http","$scope","filtersettings","deck","image","cardObject",function($http,$scope,filtersettings,deck,image,cardObject){
+  app.controller('cardControl',["$http","$scope","filtersettings","deck","suggested","image","cardObject",function($http,$scope,filtersettings,deck,suggested,image,cardObject){
     $scope.allcards=[];
     $scope.deck=deck;
+    $scope.suggested=suggested;
     this.image = image;
     this.filtersettings=filtersettings;
     this.order=['sphere','name_norm'];
@@ -484,7 +485,156 @@
       controllerAs: 'deckC'
     };
   });
+
+  app.factory('suggested', function(filtersettings){
+    var suggested={};
+    suggested.filtersettings = filtersettings;
+    suggested['1hero']=[];
+    suggested['2ally']=[];
+    suggested['3attachment']=[];
+    suggested['4event']=[];
+    suggested['5quest']=[];
+    
+    suggested.change = function(card,quantity){
+      if (quantity>0){
+        if (suggested.quantity(card)==0) {
+          card.quantity=quantity;
+          suggested[card.type].push(card);
+        } else {
+          for (var c in suggested[card.type]){
+            if (suggested[card.type][c].cycle==card.cycle && suggested[card.type][c].no==card.no){
+              suggested[card.type][c].quantity = quantity;
+            }
+          }
+        }
+      } else {
+        for (var c in suggested[card.type]){
+            if (suggested[card.type][c].cycle==card.cycle && suggested[card.type][c].no==card.no){
+              suggested[card.type].splice(c, 1);
+            }
+          }
+      }
+    };
+    suggested.quantity = function(card){
+      for (var c in suggested[card.type]){
+        if (suggested[card.type][c].cycle==card.cycle && suggested[card.type][c].no==card.no){
+          return suggested[card.type][c].quantity;
+        };
+      };
+      return 0;
+    };
+    suggested.startingThreat = function(){
+      var threat = 0;
+      var mirlonde = 0;
+      var loreheroes = 0;
+      for(var h in suggested['1hero']){
+        threat += suggested['1hero'][h].cost;
+	if(suggested['1hero'][h].name_norm=="Mirlonde")
+	    mirlonde = 1;
+	if(suggested['1hero'][h].sphere=="4lore")
+	    loreheroes++;
+      };
+      if(mirlonde) threat-=loreheroes;
+      return threat;
+    };
+    
+    suggested.countAllies = function(){
+      var allies=0;
+      for (var a in suggested['2ally']) {
+        allies += suggested['2ally'][a].quantity;
+      };
+      return allies;
+    };
+    suggested.countAttachments = function(){
+      var attachments=0;
+      for (var a in suggested['3attachment']) {
+        attachments += suggested['3attachment'][a].quantity;
+      };
+      return attachments;
+    };
+    suggested.countEvents = function(){
+      var events=0;
+      for (var e in suggested['4event']) {
+        events += suggested['4event'][e].quantity;
+      };
+      return events;
+    };
+    suggested.countQuests = function(){
+      var quests=0;
+      for (var q in suggested['5quest']) {
+        quests += suggested['5quest'][q].quantity;
+      };
+      return quests;
+    };
+    suggested.countHeroes = function(){
+      var heroes=0;
+      for (var h in suggested['1hero']) {
+        heroes += suggested['1hero'][h].quantity;
+      };
+      return heroes;
+    };
+    
+    suggested.countTotal = function() {
+      return suggested.countAllies()+suggested.countAttachments()+suggested.countEvents()+suggested.countQuests();
+    };
+    
+    suggested.empty = function() {
+      return (suggested.countAllies()+suggested.countAttachments()+suggested.countEvents()+suggested.countQuests()+suggested.countHeroes())==0;
+    };
+    
+    suggested.load = function(suggestedArray,cardObject,suggestedname) {
+      if (Object.prototype.toString.apply(suggestedArray) == "[object Object]") {
+        suggested.suggestedname = suggestedname;
+        suggested.loadLegacy(suggestedArray);
+        return 0;
+        
+      }
+      suggested['1hero']=[];
+      suggested['2ally']=[];
+      suggested['3attachment']=[];
+      suggested['4event']=[];
+      suggested['5quest']=[];
+      suggested.suggestedname = suggestedArray[0];
+      for (var i=1; i<suggestedArray.length; i++) {
+        for (var j in cardObject) {
+          if (suggestedArray[i][0]==cardObject[j].cycle
+          &&  suggestedArray[i][1]==cardObject[j].no) {
+            var card = cardObject.slice(+j,+j+1)[0]; //create a copy of the card, not changing the cardObject
+            card.quantity = suggestedArray[i][2];
+            suggested[card.type].push(card);
+          }
+        }
+      }
+    };
+    
+    suggested.loadLegacy = function(suggestedObject) {
+      suggested['1hero']=suggestedObject['1hero'];
+      suggested['2ally']=suggestedObject['2ally'];
+      suggested['3attachment']=suggestedObject['3attachment'];
+      suggested['4event']=suggestedObject['4event'];
+      suggested['5quest']=suggestedObject['5quest'];
+    };
+    
+    
+    return suggested;
+  });
+
   
+  app.controller('suggestedController',['$scope','suggested','image',function($scope,suggested,image){
+    $scope.suggested=suggested;
+    this.changepreview = function(card){
+      image.update(card);
+    }
+  }]);
+  
+  app.directive('suggested', function() {
+    return {
+      restrict: 'E',
+      templateUrl: 'suggested.html',
+      controller: 'suggestedController',
+      controllerAs: 'suggestedC'
+    };
+  });
   
   
   
