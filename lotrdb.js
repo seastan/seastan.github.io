@@ -500,10 +500,10 @@
     suggested['5quest']=[];
     
     suggested.add = function(card) {
-	if(card.name_norm=="Galadriel") {
+	if(card.name_norm=="Galadriel" && card.exp=="cs") {
 	    for (var c in suggested.allcards) {
 		if(suggested.allcards[c].name_norm=="Nenya") {
-		    suggested[card.type].push(card);
+		    suggested[card.type].push(suggested.allcards[c]);
 		}
 	    }
 	}
