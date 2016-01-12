@@ -502,8 +502,9 @@
     suggested.add = function(card) {
 	if(card.name_norm=="Galadriel" && card.exp=="cs") {
 	    for (var c in suggested.allcards) {
-		if(suggested.allcards[c].name_norm=="Nenya") {
-		    suggested[card.type].push(suggested.allcards[c]);
+		var cardc = suggested.allcards[c]
+		if(cardc.name_norm=="Nenya") {
+		    suggested[cardc.type].push(cardc);
 		}
 	    }
 	}
