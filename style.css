@@ -93,7 +93,7 @@ body {
 }
 
 .leftdiv {
-  width: 25%;
+  width: 20%;
   min-width: 200px;
   float: left;
   height:108%;
@@ -103,7 +103,7 @@ body {
 
 .cardpreviewdiv {
   text-align: center;
-  width:30%;
+  width:20%;
   min-width: 100px;
   float: left;
   height:108%;
@@ -111,7 +111,7 @@ body {
 }
 
 .rightdiv {
-  width: 45%;
+  width: 40%;
   min-width: 300px;
   height: 100%;
   float:left;

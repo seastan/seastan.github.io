@@ -45,5 +45,15 @@
         <button class="cardbutton" ng-class="{selected: deck.quantity(card)==3}" ng-click="deck.change(card,3)" ng-hide="card.restrict || (deck.filtersettings.onecore && card.corequantity < 3 && deck.quantity(card)<3 ) || (deck.filtersettings.twocore && card.corequantity < 2 && deck.quantity(card) < 3)">3</button>
       </td>
       <td class="c{{card.sphere}}">{{card.name}}</td></tr>
+    <tr class="head"><td></td><td>Suggested</td></tr>
+    <tr class="card" ng-repeat="card in suggested | orderBy:['sphere','name_norm']" ng-mouseover="deckC.changepreview(card)">
+      <td style="font-size:0;">
+        <button class="cardbutton" ng-class="{selected: deck.quantity(card)==0}" ng-click="deck.change(card,0)">0</button>
+        <button class="cardbutton" ng-class="{selected: deck.quantity(card)==1}" ng-click="deck.change(card,1)">1</button>
+        <button class="cardbutton" ng-class="{selected: deck.quantity(card)==2}" ng-click="deck.change(card,2)" ng-hide="card.restrict || (deck.filtersettings.onecore && card.corequantity < 2 && deck.quantity(card)<2 )">2</button>
+        <button class="cardbutton" ng-class="{selected: deck.quantity(card)==3}" ng-click="deck.change(card,3)" ng-hide="card.restrict || (deck.filtersettings.onecore && card.corequantity < 3 && deck.quantity(card)<3 ) || (deck.filtersettings.twocore && card.corequantity < 2 && deck.quantity(card) < 3)">3</button>
+      </td>
+      <td class="c{{card.sphere}}">{{card.name}}</td></tr>
+
   </table>
 </div>
