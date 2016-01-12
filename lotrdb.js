@@ -349,11 +349,11 @@
     deck['5quest']=[];
     
     deck.change = function(card,quantity){
-      suggested.change(card,quantity);
       if (quantity>0){
         if (deck.quantity(card)==0) {
           card.quantity=quantity;
           deck[card.type].push(card);
+	  suggested.add(card);
         } else {
           for (var c in deck[card.type]){
             if (deck[card.type][c].cycle==card.cycle && deck[card.type][c].no==card.no){
@@ -489,15 +489,26 @@
     };
   });
 
-  app.factory('suggested', function(filtersettings){
+  app.factory('suggested', ['filtersettings','cardObject',function(filtersettings,cardObject){
     var suggested={};
     suggested.filtersettings = filtersettings;
+    suggested.allcards = cardObject
     suggested['1hero']=[];
     suggested['2ally']=[];
     suggested['3attachment']=[];
     suggested['4event']=[];
     suggested['5quest']=[];
     
+    suggested.add = function(card) {
+	if(card.name_norm=="Galadriel") {
+	    for (var c in suggested.allcards) {
+		if(suggested.allcards[c].name_norm=="Nenya") {
+		    suggested[card.type].push(card);
+		}
+	    }
+	}
+    };
+
     suggested.change = function(card,quantity){
         for (var c in suggested[card.type]){
             if (suggested[card.type][c].cycle==card.cycle && suggested[card.type][c].no==card.no){
