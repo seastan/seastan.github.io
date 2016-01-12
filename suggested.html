@@ -1,6 +1,6 @@
 <div class="suggesteddiv">
   
-  <h4>Suggested</h4>
+  <h4 ng-show="deck.countTotal()">Suggested</h4>
   <table class="suggested">
     <tr class="head" ng-show="suggested.countHeroes()"><td style="width:100px"></td><td>Heroes</td></tr>
     <tr class="card" ng-repeat="card in suggested['1hero'] | orderBy:['sphere','name_norm']" ng-mouseover="suggestedC.changepreview(card)">

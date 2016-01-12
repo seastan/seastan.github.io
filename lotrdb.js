@@ -337,9 +337,11 @@
   
   
   
-  app.factory('deck', function(filtersettings){
+  app.factory('deck', ['filtersettings','suggested','cardObject', function(filtersettings,suggested,cardObject){
     var deck={};
     deck.filtersettings = filtersettings;
+    deck.suggested = suggested;
+    deck.allcards = cardObject;
     deck['1hero']=[];
     deck['2ally']=[];
     deck['3attachment']=[];
@@ -347,6 +349,7 @@
     deck['5quest']=[];
     
     deck.change = function(card,quantity){
+      suggested.change(card,quantity);
       if (quantity>0){
         if (deck.quantity(card)==0) {
           card.quantity=quantity;
@@ -468,7 +471,7 @@
     
     
     return deck;
-  });
+  }]);
   
   app.controller('deckController',['$scope','deck','image',function($scope,deck,image){
     $scope.deck=deck;
