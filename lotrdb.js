@@ -499,24 +499,11 @@
     suggested['5quest']=[];
     
     suggested.change = function(card,quantity){
-      if (quantity>0){
-        if (suggested.quantity(card)==0) {
-          card.quantity=quantity;
-          suggested[card.type].push(card);
-        } else {
-          for (var c in suggested[card.type]){
-            if (suggested[card.type][c].cycle==card.cycle && suggested[card.type][c].no==card.no){
-              suggested[card.type][c].quantity = quantity;
-            }
-          }
-        }
-      } else {
         for (var c in suggested[card.type]){
             if (suggested[card.type][c].cycle==card.cycle && suggested[card.type][c].no==card.no){
-              suggested[card.type].splice(c, 1);
+		suggested[card.type].splice(c, 1);
             }
-          }
-      }
+	}
     };
     suggested.quantity = function(card){
       for (var c in suggested[card.type]){
