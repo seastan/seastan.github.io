@@ -350,7 +350,7 @@
     
     deck.change = function(card,quantity){
       if (quantity>0){
-	  suggested.clear(card);
+        suggested.clear(card);
         if (deck.quantity(card)==0) {
           card.quantity=quantity;
           deck[card.type].push(card);
@@ -493,7 +493,7 @@
   app.factory('suggested', ['filtersettings','deck','cardObject',function(filtersettings,deck,cardObject){
     var suggested={};
     suggested.filtersettings = filtersettings;
-    suggested.allcards = cardObject
+    suggested.allcards = cardObject;
     suggested['1hero']=[];
     suggested['2ally']=[];
     suggested['3attachment']=[];
@@ -504,10 +504,9 @@
     suggested.check = function(card) {
 	if(card.name_norm=="Galadriel" && card.exp=="cs") {
 	    for(var c in suggested.allcards) {
-		var cardc = suggested.allcards[c]
+		var cardc = suggested.allcards[c];
 		if(cardc.name_norm=="Nenya") {
-		    suggested.add(cardc)
-
+		    suggested.add(cardc);
 		}
 	    }
 	}
