@@ -200,6 +200,13 @@ table.deck {
   width: 100%
 }
 
+table.suggested {
+  padding:0;
+  margin: 0;
+  width: 100%
+}
+
+
 tr.head {
   font-weight: bold;
 }
