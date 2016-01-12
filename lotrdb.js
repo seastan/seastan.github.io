@@ -552,35 +552,35 @@
     suggested.countAllies = function(){
       var allies=0;
       for (var a in suggested['2ally']) {
-        allies += suggested['2ally'][a].quantity;
+	  allies++;
       };
       return allies;
     };
     suggested.countAttachments = function(){
       var attachments=0;
       for (var a in suggested['3attachment']) {
-        attachments += suggested['3attachment'][a].quantity;
+	  attachments++;
       };
       return attachments;
     };
     suggested.countEvents = function(){
       var events=0;
       for (var e in suggested['4event']) {
-        events += suggested['4event'][e].quantity;
+	  events++;
       };
       return events;
     };
     suggested.countQuests = function(){
       var quests=0;
       for (var q in suggested['5quest']) {
-        quests += suggested['5quest'][q].quantity;
+	  quests++;
       };
       return quests;
     };
     suggested.countHeroes = function(){
       var heroes=0;
       for (var h in suggested['1hero']) {
-        heroes += suggested['1hero'][h].quantity;
+	  heroes++;
       };
       return heroes;
     };
