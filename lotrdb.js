@@ -350,11 +350,11 @@
     
     deck.change = function(card,quantity){
       if (quantity>0){
-	suggested.clear(card);
+	  suggested.clear(card);
         if (deck.quantity(card)==0) {
           card.quantity=quantity;
           deck[card.type].push(card);
-	  suggested.check(card);
+	  suggested.add(card);
         } else {
           for (var c in deck[card.type]){
             if (deck[card.type][c].cycle==card.cycle && deck[card.type][c].no==card.no){
@@ -363,11 +363,11 @@
           }
         }
       } else {
-	for (var c in deck[card.type]){
-          if (deck[card.type][c].cycle==card.cycle && deck[card.type][c].no==card.no){
-            deck[card.type].splice(c, 1);
+        for (var c in deck[card.type]){
+            if (deck[card.type][c].cycle==card.cycle && deck[card.type][c].no==card.no){
+              deck[card.type].splice(c, 1);
+            }
           }
-	}
       }
     };
     deck.quantity = function(card){
@@ -490,35 +490,24 @@
     };
   });
 
-  app.factory('suggested', ['filtersettings','deck','cardObject',function(filtersettings,deck,cardObject){
+  app.factory('suggested', ['filtersettings','cardObject',function(filtersettings,cardObject){
     var suggested={};
     suggested.filtersettings = filtersettings;
-    suggested.allcards = cardObject;
+    suggested.allcards = cardObject
     suggested['1hero']=[];
     suggested['2ally']=[];
     suggested['3attachment']=[];
     suggested['4event']=[];
     suggested['5quest']=[];
     
-    // Gets called when a new card is added to the deck
-    suggested.check = function(card) {
+    suggested.add = function(card) {
 	if(card.name_norm=="Galadriel" && card.exp=="cs") {
 	    for(var c in suggested.allcards) {
-		var cardc = suggested.allcards[c];
+		var cardc = suggested.allcards[c]
 		if(cardc.name_norm=="Nenya") {
-		    suggested.add(cardc);
+		    suggested[cardc.type].push(cardc);
 		}
 	    }
-	}
-    };
-    // Add card to list of suggestions
-    suggested.add = function(card) {
-	// Check if card is already in the deck 
-	if(deck.quantity(card)>0) return;
-	// Check if card is in an available pack
-	for(var p in filtersettings.pack) {
-	    if(filtersettings.pack[p]==card.exp)
-		suggested[cardc.type].push(cardc);
 	}
     };
 
