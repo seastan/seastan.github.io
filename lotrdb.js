@@ -350,6 +350,7 @@
     
     deck.change = function(card,quantity){
       if (quantity>0){
+	  suggested.clear(card);
         if (deck.quantity(card)==0) {
           card.quantity=quantity;
           deck[card.type].push(card);
@@ -501,11 +502,19 @@
     
     suggested.add = function(card) {
 	if(card.name_norm=="Galadriel" && card.exp=="cs") {
-	    for (var c in suggested.allcards) {
+	    for(var c in suggested.allcards) {
 		var cardc = suggested.allcards[c]
 		if(cardc.name_norm=="Nenya") {
 		    suggested[cardc.type].push(cardc);
 		}
+	    }
+	}
+    };
+
+    suggested.clear = function(card) {
+	for(var c in suggested[card.type]) {
+	    if(suggested[card.type][c].cycle==card.cycle && suggested[card.type][c].no==card.no){
+		suggested[card.type].splice(c, 1);
 	    }
 	}
     };
@@ -518,8 +527,8 @@
 	}
     };
     suggested.quantity = function(card){
-      for (var c in suggested[card.type]){
-        if (suggested[card.type][c].cycle==card.cycle && suggested[card.type][c].no==card.no){
+      for(var c in suggested[card.type]){
+        if(suggested[card.type][c].cycle==card.cycle && suggested[card.type][c].no==card.no){
           return suggested[card.type][c].quantity;
         };
       };
