@@ -350,7 +350,7 @@
     
     deck.change = function(card,quantity){
       if (quantity>0){
-        suggested.clear(card);
+	suggested.clear(card);
         if (deck.quantity(card)==0) {
           card.quantity=quantity;
           deck[card.type].push(card);
@@ -363,11 +363,11 @@
           }
         }
       } else {
-        for (var c in deck[card.type]){
-            if (deck[card.type][c].cycle==card.cycle && deck[card.type][c].no==card.no){
-              deck[card.type].splice(c, 1);
-            }
+	for (var c in deck[card.type]){
+          if (deck[card.type][c].cycle==card.cycle && deck[card.type][c].no==card.no){
+            deck[card.type].splice(c, 1);
           }
+	}
       }
     };
     deck.quantity = function(card){
