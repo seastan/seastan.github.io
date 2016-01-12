@@ -618,7 +618,7 @@
     
     
     return suggested;
-  });
+  }]);
 
   
   app.controller('suggestedController',['$scope','suggested','image',function($scope,suggested,image){
