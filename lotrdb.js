@@ -510,7 +510,7 @@
     {name_norm: "Daeron's Runes", exp: "fos"},
     {name_norm: "Deep Knowledge", exp: "voi"},
     {name_norm: "Feint", exp: "core"},
-    {name_norm: "Quick Strike", exp: "core"}
+    {name_norm: "Quick Strike", exp: "core"},
     {name_norm: "Foe-hammer", exp: "thohauh"}
 	     ];
 
