@@ -556,18 +556,7 @@
 	    }
 	}
 	
-	// for(var c in suggested.allcards) {
-	//     var cardc = suggested.allcards[c];
-	//     if (cardc.name_norm=="Rivendell Bow")
-	// 	suggestions.push(cardc);
-	// }
-	// for(var c in suggested.allcards) {
-	//     var cardc = suggested.allcards[c];
-	//     if (cardc.name_norm=="Rivendell Bow")
-	// 	suggestions.push(cardc);
-	// }
-
-	// Try to suggest all the staples
+	// Suggest all the staples
 	for(var s in staples) {
 	    for(var c in suggested.allcards) {
 		var cardc = suggested.allcards[c];
@@ -614,7 +603,7 @@
 	    if(filtersettings.pack[k]==card.exp) properexp=1;
 	//	if (card.name_norm=="Rivendell Bow") suggested[card.type].push(card);
 	if (samename) return;
-	if (!propersphere) return;
+	//	if (!propersphere) return;
 	if (!properexp) return;
 	suggested[card.type].push(card);
     };
