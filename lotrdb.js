@@ -356,11 +356,12 @@
           deck[card.type].push(card);
 	  // Get list of suggestions for newly added card
 	  var suggestions = suggested.get(card);
-	  for(var c in suggestions) {
-	      // If suggested card is not already in the deck, add the card to suggested
-	      if(deck.quantity(suggestions[c])==0)
-		  suggested.add(suggestions[c]);
-	  }
+	  suggested.add(suggestions);
+	  // for(var c in suggestions) {
+	  //     // If suggested card is not already in the deck, add the card to suggested
+	  //     if(deck.quantity(suggestions[c])==0)
+	  // 	  suggested.add(suggestions[c]);
+	  // }
         } else {
           for (var c in deck[card.type]){
             if (deck[card.type][c].cycle==card.cycle && deck[card.type][c].no==card.no){
@@ -512,16 +513,16 @@
 	    for(var c in suggested.allcards) {
 		var cardc = suggested.allcards[c]
 		if(cardc.name_norm=="Nenya" && cardc.exp=="cs") {
-		    suggestions.push(cardc);
+		    return cardc;//suggestions.push(cardc);
 		}
 	    }
 	}
-	return suggestions;
+	return {};//suggestions;
     };
     suggested.add = function(card) {
 	// Check if card is in an available pack
-	for(var p in filtersettings.pack) {
-	    if(filtersettings.pack[p]==card.exp)
+	for(var k in filtersettings.pack) {
+	    if(filtersettings.pack[k]==card.exp)
 		suggested[cardc.type].push(cardc);
 	}
     };
