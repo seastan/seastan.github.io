@@ -568,7 +568,7 @@
 	for(var c in deck['1hero']) {
 	    suggested['sphere'].push(deck['1hero'][c].sphere);
 	}
-	if(deck['1hero'].length>0) suggested['sphere'].push('neutral');
+	if(deck['1hero'].length>0) suggested['sphere'].push('5neutral');
     }
     // Returns true if deck has access to given sphere
     suggested.sphereaccess = function(sphere,deck) {
