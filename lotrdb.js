@@ -513,8 +513,8 @@
 	    for(var c in suggested.allcards) {
 		var cardc = suggested.allcards[c]
 		    if(cardc.name_norm=="Nenya"/* && cardc.exp=="cs"*/) {
-			return cardc;//suggestions.push(cardc);
-		}
+			return cardc;//suggested.add(cardc);//suggestions.push(cardc);
+		    }
 	    }
 	}
 	return {};//suggestions;
@@ -523,7 +523,7 @@
 	// Check if card is in an available pack
 	//	for(var k in filtersettings.pack) {
 	//	    if(filtersettings.pack[k]==card.exp)
-		suggested[cardc.type].push(cardc);
+		suggested[card.type].push(card);
 		//	}
     };
 
