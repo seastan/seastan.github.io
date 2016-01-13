@@ -490,7 +490,7 @@
     };
   });
 
-  app.factory('suggested', ['filtersettings','deck','cardObject',function(filtersettings,deck,cardObject){
+  app.factory('suggested', ['filtersettings','cardObject',function(filtersettings,cardObject){
     var suggested={};
     suggested.filtersettings = filtersettings;
     suggested.allcards = cardObject
