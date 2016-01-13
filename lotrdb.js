@@ -531,7 +531,7 @@
 	    // we want to add Sword That Was Broken as a suggestion
 	    suggested.herorefresh(card,deck);
 	}
-	suggested.clear(card);
+	//suggested.clear(card);
     };
     // The heroes were changed, so possibly a the spheres changed as well. Now we loop over all
     // the heroes in the deck, adding suggestions for each, but restricted to the sphere
