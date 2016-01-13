@@ -680,7 +680,7 @@
     };
     // Returns 1 if word is in string
     suggested.iswordinstring = function(word,string) {
-	
+	return (string.search(word)>=0);
     };
     // Takes in a name and expansion, and returns 1 if the card is in the deck (or heroes)
     suggested.isindeck = function(name_norm,exp,deck) {
