@@ -350,7 +350,6 @@
     
     deck.change = function(card,quantity){
       if (quantity>0){
-	//suggested.clear(card);
 	if (deck.quantity(card)==0) {
 	  card.quantity=quantity;
           deck[card.type].push(card);
@@ -527,7 +526,6 @@
 	suggested['3attachment']=[];
 	suggested['4event']=[];
 	suggested['5quest']=[];
-	//	suggested.clear(card);
 	// Set the spheres that the deck has access to
 	suggested.setspheres(deck);
 	
@@ -566,7 +564,7 @@
 		suggestions.push(cardc);
 
 	    // Suggest Rohan cards
-	    if (suggested.iswordindeck('Rohan character',deck) && suggested.iswordinstring('Rohan',cardc))
+	    if (suggested.iswordindeck('Rohan character',deck) && suggested.iswordincard('Rohan',cardc))
 		suggestions.push(cardc);
 	    
 	}
@@ -664,16 +662,6 @@
 		if (suggested.iswordincard(word,deck[types[t]][c])) return 1;
 	return 0;	
     };
-
-    
-    suggested.clear = function(card) {
-	for(var c in suggested[card.type]) {
-	    if(suggested[card.type][c].cycle==card.cycle && suggested[card.type][c].no==card.no){
-		suggested[card.type].splice(c, 1);
-	    }
-	}
-    };
-
     suggested.change = function(card,quantity){
         for (var c in suggested[card.type]){
             if (suggested[card.type][c].cycle==card.cycle && suggested[card.type][c].no==card.no){
