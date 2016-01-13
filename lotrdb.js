@@ -565,7 +565,7 @@
 	for(var s in suggested.staples) {
 	    for(var c in suggested.allcards) {
 		var cardc = suggested.allcards[c];
-		if (cardc.name_norm==staples[s].name_norm && cardc.exp==suggested.staples[s].exp) 
+		if (cardc.name_norm==suggested.staples[s].name_norm && cardc.exp==suggested.staples[s].exp) 
 		    suggestions.push(cardc);
 	    }
 	}
@@ -607,7 +607,6 @@
 	var properexp=0;
 	for(var k in filtersettings.pack)
 	    if(filtersettings.pack[k]==card.exp) properexp=1;
-	//	if (card.name_norm=="Rivendell Bow") suggested[card.type].push(card);
 	if (samename) return;
 	if (!propersphere) return;
 	if (!properexp) return;
@@ -641,6 +640,10 @@
 	    }
 	}
 	return 0;
+    };
+    // Returns 1 if word is in string
+    suggested.iswordinstring = function(word,string) {
+	
     };
     // Takes in a name and expansion, and returns 1 if the card is in the deck (or heroes)
     suggested.isindeck = function(name_norm,exp,deck) {
