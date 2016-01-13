@@ -350,9 +350,9 @@
     
     deck.change = function(card,quantity){
       if (quantity>0){
-	  suggested.clear(card);
-        if (deck.quantity(card)==0) {
-          card.quantity=quantity;
+	suggested.clear(card);
+	if (deck.quantity(card)==0) {
+	  card.quantity=quantity;
           deck[card.type].push(card);
 	  // Get list of suggestions for newly added card
 	  suggested.newcard(card,this);
@@ -535,14 +535,14 @@
 	    suggested.add(suggestions[c],deck);
 	}
     };
-    suggested.setspheres(deck) {
+    suggested.setspheres = function(deck) {
 	suggested['sphere']=[];
 	for(var c in deck['1hero']) {
 	    suggested['sphere'].push(deck['1hero'][c].sphere);
 	}
     }
     // Returns true if deck has access to given sphere
-    suggested.sphereaccess(sphere,deck) {
+    suggested.sphereaccess = function(sphere,deck) {
 	//	suggested.setspheres(deck); // This currently gets called whenever a card is added to the deck
 	for (var s in suggested['sphere']) {
 	    if(suggested['sphere'][s]==sphere) return 1;
