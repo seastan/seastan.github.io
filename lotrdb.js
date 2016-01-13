@@ -553,12 +553,20 @@
 	    if (suggested.isindeck('Damrod','tlos',deck) && suggested.iswordinstring('Trap',cardc.traits))
 		suggestions.push(cardc);
 
-	    // // Suggest Dwarves for Dain
-	    // if (suggested.isindeck('Dain Ironfoot','rtm',deck) && suggested.iswordinstring('Dwarf characters',cardc.text))
-	    // 	suggestions.push(cardc);
-	    
+	    // Suggest Trap cards for Damrod
+	    if (suggested.isindeck('Damrod','tlos',deck) && suggested.iswordinstring('Trap',cardc.traits))
+		suggestions.push(cardc);
+
+	    // Suggest Trap cards for Damrod
+	    if (suggested.isindeck('Damrod','tlos',deck) && suggested.iswordinstring('Trap',cardc.traits))
+		suggestions.push(cardc);
+
 	    // Suggest Dwarves for other Dwarf-swarm characters
 	    if (suggested.iswordindeck('Dwarf character',deck) && suggested.iswordinstring('Dwarf character',cardc.text))
+		suggestions.push(cardc);
+
+	    // Suggest Rohan cards
+	    if (suggested.iswordindeck('Rohan character',deck) && suggested.iswordinstring('Rohan',cardc))
 		suggestions.push(cardc);
 	    
 	}
@@ -642,12 +650,18 @@
 		if (deck[types[t]][c].name_norm==name_norm && deck[types[t]][c].exp==exp) return 1;
 	return 0;	
     };
-    // Takes in a word and returns 1 if the word is found in the text of a card in the deck
+    // Takes in a word and returns 1 if the word is found in the text/traits of the card
+    suggested.iswordincard = function(word,card) {
+	if (suggested.iswordinstring(word,card.text)) return 1;
+	if (suggested.iswordinstring(word,card.traits)) return 1;
+	return 0;	
+    };
+    // Takes in a word and returns 1 if the word is found in the text/traits of a card in the deck
     suggested.iswordindeck = function(word,deck) {
 	var types = ['1hero','2ally','3attachment','4event','5quest'];
 	for(var t in types)
 	    for (var c in deck[types[t]])
-		if (suggested.iswordinstring(word,deck[types[t]][c].text)) return 1;
+		if (suggested.iswordincard(word,deck[types[t]][c])) return 1;
 	return 0;	
     };
 
