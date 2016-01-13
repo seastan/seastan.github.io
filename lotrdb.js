@@ -639,7 +639,7 @@
     };
     // Takes in a name and expansion, and returns 1 if the card is in the deck (or heroes)
     suggested.isindeck = function(name_norm,exp,deck) {
-	var types = {'1hero','2ally','3attachment','4event','5quest'};
+	var types = ['1hero','2ally','3attachment','4event','5quest'];
 	for(var t in types)
 	    for (var c in deck[types[t]])
 		if (deck[types[t]][c].name_norm==name_norm && deck[types[t]][c].exp==exp) return 1;
