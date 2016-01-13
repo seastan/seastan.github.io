@@ -510,10 +510,10 @@
     };
   });
 
-  app.factory('suggested', ['filtersettings','cardObject',function(filtersettings,cardObject){
+  app.factory('suggested', ['filtersettings','cardObject','$scope',function(filtersettings,cardObject,$scope){
     var suggested={};
     suggested.filtersettings = filtersettings;
-    suggested.allcards = cardObject
+    suggested.allcards = cardObject;
     suggested['1hero']=[];
     suggested['2ally']=[];
     suggested['3attachment']=[];
