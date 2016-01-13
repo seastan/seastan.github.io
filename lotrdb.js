@@ -604,7 +604,7 @@
 	    if(filtersettings.pack[k]==card.exp) properexp=1;
 	//	if (card.name_norm=="Rivendell Bow") suggested[card.type].push(card);
 	if (samename) return;
-	//	if (!propersphere) return;
+	if (!propersphere) return;
 	if (!properexp) return;
 	suggested[card.type].push(card);
     };
