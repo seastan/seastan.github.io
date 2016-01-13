@@ -546,7 +546,7 @@
     suggested.add = function(card,deck) {
 	var propersphere=0;
 	for(var c in deck['1hero'])
-	    if(deck['1hero'].sphere==card.shpere) propersphere=1;
+	    if(deck['1hero'].sphere==card.sphere) propersphere=1;
 	// Check if card is in an available pack
 	var properexp=0;
 	for(var k in filtersettings.pack)
