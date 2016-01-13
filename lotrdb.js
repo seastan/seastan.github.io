@@ -557,6 +557,9 @@
 	    if (suggested.isindeck('Dain Ironfoot','rtm',deck) && suggested.iswordinstring('Dwarf characters',cardc.text))
 		suggestions.push(cardc);
 	    
+	    // Suggest Dwarves for other Dwarf-swarm characters
+	    if (suggested.isindeck('Dain Ironfoot','rtm',deck) && suggested.iswordinstring('Dwarf characters',cardc.text))
+		suggestions.push(cardc);
 	    
 	}
 	// Loop over list of suggested cards
@@ -636,18 +639,24 @@
     };
     // Takes in a name and expansion, and returns 1 if the card is in the deck (or heroes)
     suggested.isindeck = function(name_norm,exp,deck) {
-	for (var c in deck['1hero'])
-	    if (deck['1hero'][c].name_norm==name_norm && deck['1hero'][c].exp==exp) return 1;
-	for (var c in deck['2ally'])
-	    if (deck['2ally'][c].name_norm==name_norm && deck['2ally'][c].exp==exp) return 1;
-	for (var c in deck['3attachment'])
-	    if (deck['3attachment'][c].name_norm==name_norm && deck['3attachment'][c].exp==exp)	return 1;
-	for (var c in deck['4event'])
-	    if (deck['4event'][c].name_norm==name_norm && deck['4event'][c].exp==exp) return 1;
-	for (var c in deck['5quest'])
-	    if (deck['5quest'][c].name_norm==name_norm && deck['5quest'][c].exp==exp) return 1;
+	var types = {'1hero','2ally','3attachment','4event','5quest'};
+	for(var t in types)
+	    for (var c in deck[types[t]])
+		if (deck[types[t]][c].name_norm==name_norm && deck[types[t]][c].exp==exp) return 1;
+
+	// for (var c in deck['1hero'])
+	//     if (deck['1hero'][c].name_norm==name_norm && deck['1hero'][c].exp==exp) return 1;
+	// for (var c in deck['2ally'])
+	//     if (deck['2ally'][c].name_norm==name_norm && deck['2ally'][c].exp==exp) return 1;
+	// for (var c in deck['3attachment'])
+	//     if (deck['3attachment'][c].name_norm==name_norm && deck['3attachment'][c].exp==exp)	return 1;
+	// for (var c in deck['4event'])
+	//     if (deck['4event'][c].name_norm==name_norm && deck['4event'][c].exp==exp) return 1;
+	// for (var c in deck['5quest'])
+	//     if (deck['5quest'][c].name_norm==name_norm && deck['5quest'][c].exp==exp) return 1;
 	return 0;	
     };
+    
     suggested.clear = function(card) {
 	for(var c in suggested[card.type]) {
 	    if(suggested[card.type][c].cycle==card.cycle && suggested[card.type][c].no==card.no){
