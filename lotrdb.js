@@ -559,8 +559,12 @@
 	}
 
 	// Try to suggest all the staples
-	for(var c in staples) {
-	    suggested.add(staples[c],deck);
+	for(var s in staples) {
+	    for(var c in suggested.allcards) {
+		var cardc = suggested.allcards[c];
+		if (cardc.name_norm==staples[s].name_norm && cardc.exp==staples[s].exp) 
+		    suggested.add(cardc,deck);
+	    }
 	}
     };
     suggested.setspheres = function(deck) {
