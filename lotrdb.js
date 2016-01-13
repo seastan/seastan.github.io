@@ -551,7 +551,7 @@
 		var cardtext = cardc.text;
 		// If the card contains the name of the hero in its text, add it
 		if(cardtext.search(heroname)>=0) {
-		    if(!suggested.iscardinlist(cardc,suggested[cardc.type])) suggestions.push(cardc);
+		    suggestions.push(cardc);
 		}
 	    }
 	}
@@ -567,8 +567,8 @@
 
 	// Loop over list of suggested cards
 	for(var c in suggestions) {
-	    // Only suggest cards of the same sphere to the newly added hero's sphere
-	    //	    if(suggestions[c].sphere!=newsphere) continue;
+	    // Only suggest cards that are not already in suggested
+	    if(suggested.iscardinlist(cardc,suggested[cardc.type])) continue;
 	    suggested.add(suggestions[c],deck);
 	}
 
