@@ -102,10 +102,13 @@ body {
 }
 
 .suggesteddiv {
+  width: 20%;
   min-width: 200px;
+  float: left;
   height:108%;
   overflow-y: auto;
   padding-left: 5px;
+  clear: both;
 }
 
 
