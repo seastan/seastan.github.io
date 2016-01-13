@@ -561,6 +561,12 @@
 	    if (cardc.name_norm=="Rivendell Bow")
 		suggestions.push(cardc);
 	}
+	for(var c in suggested.allcards) {
+	    var cardc = suggested.allcards[c];
+	    if (cardc.name_norm=="Rivendell Bow")
+		suggestions.push(cardc);
+	}
+
 	// Try to suggest all the staples
 	for(var s in staples) {
 	    for(var c in suggested.allcards) {
