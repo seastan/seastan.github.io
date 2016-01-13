@@ -592,15 +592,12 @@
 	var samename=suggested.samename(card,deck);
 	// Check if there is a hero with access to the shpere of the card
 	var propersphere=suggested.sphereaccess(card.sphere,deck);
-	
-	// for(var c in deck['1hero'])
-	//     if(deck['1hero'][c].sphere==card.sphere) suggested[card.type].push(card);//  propersphere=1;
 	// Check if card is in an available pack
 	var properexp=0;
 	for(var k in filtersettings.pack)
 	    if(filtersettings.pack[k]==card.exp) properexp=1;
 	if (samename) return;
-	if (!propersphere) return;
+	if (!propersphere || card.type=='1hero') return;
 	if (!properexp) return;
 	suggested[card.type].push(card);
     };
