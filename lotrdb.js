@@ -516,6 +516,7 @@
     
     suggested.deckchange = function(card,deck) {
 	suggested.setspheres(deck);
+	suggested.clear(card);
 	if(card.type=="1hero") {
 	    // The heroes changed, so we reset suggestions
 	    suggested['1hero']=[];
