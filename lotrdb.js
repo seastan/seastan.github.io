@@ -355,7 +355,7 @@
 	  card.quantity=quantity;
           deck[card.type].push(card);
 	  // Get list of suggestions for newly added card
-	  suggested.newcard(card,this);
+	  suggested.deckchange(card,this);
         } else {
           for (var c in deck[card.type]){
             if (deck[card.type][c].cycle==card.cycle && deck[card.type][c].no==card.no){
@@ -502,9 +502,16 @@
     suggested['4event']=[];
     suggested['5quest']=[];
     
-    suggested.newcard = function(card,deck) {
+    suggested.deckchange = function(card,deck) {
 	suggested.setspheres(deck);
 	if(card.type=="1hero") {
+	    // The heroes changed, so we reset suggestions
+	    suggested['sphere']=[];
+	    suggested['1hero']=[];
+	    suggested['2ally']=[];
+	    suggested['3attachment']=[];
+	    suggested['4event']=[];
+	    suggested['5quest']=[];
 	    // If a hero is added, we want to go back and check for suggestions
 	    // for all the other heroes as well, in case the new hero has opened
 	    // up access to a sphere that helps out another hero. For example
@@ -513,9 +520,9 @@
 	    suggested.herorefresh(card,deck);
 	}
     };
-    // A new hero was added, so possibly a new sphere as well. Now we loop over all
+    // The heroes were changed, so possibly a the spheres changed as well. Now we loop over all
     // the heroes in the deck, adding suggestions for each, but restricted to the sphere
-    // of the newly added hero.
+    // of the current heroes.
     suggested.herorefresh = function(hero,deck) {
 	var suggestions=[]; // List of cards to suggest
 	var newsphere = hero.sphere; // Sphere of newly added hero
@@ -536,7 +543,7 @@
 	// Loop over list of suggested cards
 	for(var c in suggestions) {
 	    // Only suggest cards of the same sphere to the newly added hero's sphere
-	    if(suggestions[c].sphere!=newsphere) continue;
+	    //	    if(suggestions[c].sphere!=newsphere) continue;
 	    suggested.add(suggestions[c],deck);
 	}
     };
