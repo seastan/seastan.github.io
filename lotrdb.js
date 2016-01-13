@@ -557,6 +557,11 @@
 	    //	    if(suggestions[c].sphere!=newsphere) continue;
 	    suggested.add(suggestions[c],deck);
 	}
+
+	// Try to suggest all the staples
+	for(var c in staples) {
+	    suggested.add(staples[c],deck);
+	}
     };
     suggested.setspheres = function(deck) {
 	suggested['sphere']=[];
