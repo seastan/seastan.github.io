@@ -518,7 +518,7 @@
 	}
 	return suggestions;
     };
-    suggested.add(card) {
+    suggested.add = function(card) {
 	// Check if card is in an available pack
 	for(var p in filtersettings.pack) {
 	    if(filtersettings.pack[p]==card.exp)
