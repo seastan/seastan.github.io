@@ -551,21 +551,32 @@
 	    if (suggested.isindeck('Damrod','tlos',deck) && suggested.iswordinstring('Trap',cardc.traits))
 		suggestions.push(cardc);
 
-	    // Suggest Trap cards for Damrod
-	    if (suggested.isindeck('Damrod','tlos',deck) && suggested.iswordinstring('Trap',cardc.traits))
+	    // Suggest heal cards for Gloin
+	    if (suggested.isindeck('Gloin','core',deck) && suggested.iswordinstring('heal',cardc.text))
 		suggestions.push(cardc);
 
-	    // Suggest Trap cards for Damrod
-	    if (suggested.isindeck('Damrod','tlos',deck) && suggested.iswordinstring('Trap',cardc.traits))
+	    // Suggest heal cards for Treebeard
+	    if (suggested.isindeck('Treebeard','tos',deck) && suggested.iswordinstring('heal',cardc.text))
 		suggestions.push(cardc);
 
-	    // Suggest Dwarves for other Dwarf-swarm characters
-	    if (suggested.iswordindeck('Dwarf character',deck) && suggested.iswordinstring('Dwarf character',cardc.text))
-		suggestions.push(cardc);
+	    // Suggest cards with similar traits
+	    var traits=['Dwarf','Rohan','Silvan','Noldor','Gondor','Ent','Eagle','Dunedain','Hobbit','Istari','Outlands','Ranger'];
+	    for(var t in traits)
+		if(suggested.iswordindecktext(traits[t],deck) && suggested.iswordincard(traits[t],cardc))
+		    suggestions.push(cardc);
 
-	    // Suggest Rohan cards
-	    if (suggested.iswordindeck('Rohan character',deck) && suggested.iswordincard('Rohan',cardc))
-		suggestions.push(cardc);
+	    // // Suggest Dwarves for other Dwarf-swarm characters
+	    // if (suggested.iswordindeck('Dwarf character',deck) && suggested.iswordinstring('Dwarf',cardc.text))
+	    // 	suggestions.push(cardc);
+
+	    // // Suggest Rohan cards
+	    // if (suggested.iswordindeck('Rohan character',deck) && suggested.iswordincard('Rohan',cardc))
+	    // 	suggestions.push(cardc);
+	    // if (suggested.iswordindeck('Rohan ally',deck) && suggested.iswordincard('Rohan',cardc))
+	    // 	suggestions.push(cardc);
+	    
+	    // // Suggest 
+
 	    
 	}
 	// Loop over list of suggested cards
@@ -662,6 +673,15 @@
 		if (suggested.iswordincard(word,deck[types[t]][c])) return 1;
 	return 0;	
     };
+    // Takes in a word and returns 1 if the word is found in the text of a card in the deck
+    suggested.iswordindecktext = function(word,deck) {
+	var types = ['1hero','2ally','3attachment','4event','5quest'];
+	for(var t in types)
+	    for (var c in deck[types[t]])
+		if (suggested.iswordinstring(word,deck[types[t]][c].text)) return 1;
+	return 0;	
+    };
+
     suggested.change = function(card,quantity){
         for (var c in suggested[card.type]){
             if (suggested[card.type][c].cycle==card.cycle && suggested[card.type][c].no==card.no){
