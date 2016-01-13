@@ -567,9 +567,10 @@
 
 	// Loop over list of suggested cards
 	for(var c in suggestions) {
+	    var cardc = suggestions.allcards[c];
 	    // Only suggest cards that are not already in suggested
 	    if(suggested.iscardinlist(cardc,suggested[cardc.type])) continue;
-	    suggested.add(suggestions[c],deck);
+	    suggested.add(cardc,deck);
 	}
 
 
