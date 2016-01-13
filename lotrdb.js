@@ -514,9 +514,9 @@
     {name_norm: "Foe-hammer", exp: "thohauh"}
 	     ];
 
-    // Case-by-case match. Returns 1 if the card should be suggested, base on what is in deck
+    // Case-by-case match. Returns 1 if the card should be suggested, based on what is in deck
     suggested.match = function(card,deck) {
-	if (suggested.isindeck('Damrod','tlos',deck) &&
+	if (suggested.isindeck('Damrod','tlos',deck)) return;
 
     }
     
