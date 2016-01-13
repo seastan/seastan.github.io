@@ -527,7 +527,7 @@
 	    for(var c in suggested.allcards) {
 		var cardc = suggested.allcards[c];
 		var cardtext = cardc.text;
-		if(cardtext.search(heroname)) {
+		if(cardtext.search(heroname)>=0) {
 		    suggestions.push(cardc);
 		}
 	    }	    
