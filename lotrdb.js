@@ -355,7 +355,7 @@
           card.quantity=quantity;
           deck[card.type].push(card);
 	  // Get list of suggestions for newly added card
-	  var suggestions = suggested.get(card);
+	  var suggestions = suggested.get(card,this);
 	  for(var c in suggestions) {
 	      // If suggested card is not already in the deck, add the card to suggested
 	      if(!deck.samename(suggestions[c]))
@@ -510,7 +510,7 @@
     };
   });
 
-  app.factory('suggested', ['filtersettings','cardObject','$scope',function(filtersettings,cardObject,$scope){
+  app.factory('suggested', ['filtersettings','cardObject',function(filtersettings,cardObject){
     var suggested={};
     suggested.filtersettings = filtersettings;
     suggested.allcards = cardObject;
@@ -520,7 +520,7 @@
     suggested['4event']=[];
     suggested['5quest']=[];
     
-    suggested.get = function(card) {
+    suggested.get = function(card,deck) {
 	var suggestions=[];
 	if(card.type=="1hero") {
 	    var heroname = card.name;
