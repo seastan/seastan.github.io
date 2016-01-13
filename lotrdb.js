@@ -551,7 +551,7 @@
 		var cardtext = cardc.text;
 		// If the card contains the name of the hero in its text, add it
 		if(cardtext.search(heroname)>=0) {
-		    suggestions.push(cardc);
+		    if(!suggested.iscardinlist(cardc,suggested[cardc.type)) suggestions.push(cardc);
 		}
 	    }
 	}
@@ -638,7 +638,14 @@
 	};
 	return 0;
     };
-
+    suggested.iscardinlist(card,list) {
+	for (var c in list) {
+	    if(list[c].cycle==card.cycle && list[c].no==card.no) {
+		return 1;
+	    }
+	}
+	return 0;
+    }
     suggested.clear = function(card) {
 	for(var c in suggested[card.type]) {
 	    if(suggested[card.type][c].cycle==card.cycle && suggested[card.type][c].no==card.no){
