@@ -506,7 +506,6 @@
 	suggested.setspheres(deck);
 	if(card.type=="1hero") {
 	    // The heroes changed, so we reset suggestions
-	    suggested['sphere']=[];
 	    suggested['1hero']=[];
 	    suggested['2ally']=[];
 	    suggested['3attachment']=[];
