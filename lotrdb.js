@@ -349,13 +349,13 @@
     deck['5quest']=[];
     
     deck.change = function(card,quantity){
+      // Get list of suggestions for newly added card
+      suggested.deckchange(card,this);
       if (quantity>0){
-	suggested.clear(card);
+	//suggested.clear(card);
 	if (deck.quantity(card)==0) {
 	  card.quantity=quantity;
           deck[card.type].push(card);
-	  // Get list of suggestions for newly added card
-	  suggested.deckchange(card,this);
         } else {
           for (var c in deck[card.type]){
             if (deck[card.type][c].cycle==card.cycle && deck[card.type][c].no==card.no){
