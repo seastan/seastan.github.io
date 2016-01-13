@@ -358,7 +358,7 @@
 	  var suggestions = suggested.get(card);
 	  for(var c in suggestions) {
 	      // If suggested card is not already in the deck, add the card to suggested
-	      if(deck.quantity(suggestions[c])==0)
+	      if(!deck.samename(suggestions[c]))
 	  	  suggested.add(suggestions[c]);
 	  }
         } else {
@@ -383,6 +383,20 @@
         };
       };
       return 0;
+    };
+    // Returns true if there is a card/hero in the deck by the same name as the given card
+    deck.samename = function(card){
+	for (var c in deck['1hero']){
+	    if (deck['1hero'][c].name_norm==card.name_norm){
+		return 1;
+	    };
+	};
+	for (var c in deck['2ally']){
+	    if (deck['2ally'][c].name_norm==card.name_norm){
+		return 1;
+	    };
+	};
+	return 0;
     };
     deck.startingThreat = function(){
       var threat = 0;
@@ -508,9 +522,20 @@
     
     suggested.get = function(card) {
 	var suggestions=[];
+	if(card.type=="1hero") {
+	    var heroname = card.name;
+	    for(var c in suggested.allcards) {
+		var cardc = suggested.allcards[c];
+		var cardtext = cardc.text;
+		if(cardtext.search(heroname)) {
+		    suggestions.push(cardc);
+		}
+	    }	    
+	}
+	
 	if(card.name_norm=="Galadriel" && card.exp=="cs") {
 	    for(var c in suggested.allcards) {
-		var cardc = suggested.allcards[c]
+		var cardc = suggested.allcards[c];
 		    if(cardc.name_norm=="Nenya"/* && cardc.exp=="cs"*/) {
 			suggestions.push(cardc);
 		    }
