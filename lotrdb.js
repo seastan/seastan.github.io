@@ -511,6 +511,7 @@
     {name_norm: "Deep Knowledge", exp: "voi"},
     {name_norm: "Feint", exp: "core"},
     {name_norm: "Quick Strike", exp: "core"}
+    {name_norm: "Foe-hammer", exp: "thohauh"}
 	     ];
 
     
@@ -549,8 +550,8 @@
 		if(cardtext.search(heroname)>=0) {
 		    suggestions.push(cardc);
 		}
-	    }	 
-	}   
+	    }
+	}
 	
 	// Loop over list of suggested cards
 	for(var c in suggestions) {
@@ -585,7 +586,7 @@
     }
     suggested.add = function(card,deck) {
 	// Check if there is an ally or hero with the same name already in the deck
-	var samename=suggested.samename(card,deck);
+	//	var samename=suggested.samename(card,deck);
 	// Check if there is a hero with access to the shpere of the card
 	var propersphere=suggested.sphereaccess(card.sphere,deck);
 	
