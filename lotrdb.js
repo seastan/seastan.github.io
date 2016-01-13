@@ -607,8 +607,14 @@
 	if (!properexp) return;
 	suggested[card.type].push(card);
     };
-    // Returns true if there is a card/hero in the deck by the same name as the given card
+    // Returns true if there is a in the deck by the same name as the given card
     suggested.samename = function(card,deck){
+	for (var c in deck[card.type]){
+	    if (deck[card.type][c].name_norm==card.name_norm){
+		return 1;
+	    };
+	};	
+	// We also do not want to suggest, for example, Galadriel ally if Galadriel Hero was added to the deck
 	for (var c in deck['1hero']){
 	    if (deck['1hero'][c].name_norm==card.name_norm){
 		return 1;
