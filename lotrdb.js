@@ -510,7 +510,8 @@
     {name_norm: "Daeron's Runes", exp: "fos"},
     {name_norm: "Deep Knowledge", exp: "voi"},
     {name_norm: "Feint", exp: "core"},
-    {name_norm: "Quick Strike", exp: "core"}
+    {name_norm: "Quick Strike", exp: "core"},
+    {name_norm: "Foe-hammer", exp: "thohauh"}
 	     ];
 
     
@@ -549,8 +550,8 @@
 		if(cardtext.search(heroname)>=0) {
 		    suggestions.push(cardc);
 		}
-	    }	 
-	}   
+	    }
+	}
 	
 	// Loop over list of suggested cards
 	for(var c in suggestions) {
@@ -596,8 +597,10 @@
 	for(var k in filtersettings.pack)
 	    if(filtersettings.pack[k]==card.exp) properexp=1;
 
-	if (!samename && propersphere && properexp)
-	    suggested[card.type].push(card);
+	if (samename) return;
+	if (!propersphere) return;
+	if (!properexp) return;
+	suggested[card.type].push(card);
     };
     // Returns true if there is a card/hero in the deck by the same name as the given card
     suggested.samename = function(card,deck){
