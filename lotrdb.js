@@ -502,7 +502,7 @@
     suggested['4event']=[];
     suggested['5quest']=[];
 
-    staples=[
+    suggested.staples=[
     {name_norm: "A Test of Will", exp: "core"},
     {name_norm: "Hasty Stroke", exp: "core"},
     {name_norm: "Steward of Gondor", exp: "core"},
@@ -514,7 +514,13 @@
     {name_norm: "Foe-hammer", exp: "thohauh"}
 	     ];
 
+    // Case-by-case match. Returns 1 if the card should be suggested, base on what is in deck
+    suggested.match = function(card,deck) {
+	
+
+    }
     
+    // This is the main function, it gets called whenever the cards in the deck change and updates the suggestions
     suggested.deckchange = function(card,deck) {
 	// Clear the card that was just changed from the suggested list
 	suggested.clear(card);
@@ -534,7 +540,6 @@
 	    // we want to add Sword That Was Broken as a suggestion
 	    suggested.herorefresh(card,deck);
 	}
-	//suggested.clear(card);
     };
     // The heroes were changed, so possibly a the spheres changed as well. Now we loop over all
     // the heroes in the deck, adding suggestions for each, but restricted to the sphere
@@ -557,10 +562,10 @@
 	}
 	
 	// Suggest all the staples
-	for(var s in staples) {
+	for(var s in suggested.staples) {
 	    for(var c in suggested.allcards) {
 		var cardc = suggested.allcards[c];
-		if (cardc.name_norm==staples[s].name_norm && cardc.exp==staples[s].exp) 
+		if (cardc.name_norm==staples[s].name_norm && cardc.exp==suggested.staples[s].exp) 
 		    suggestions.push(cardc);
 	    }
 	}
@@ -628,6 +633,7 @@
 	};
 	return 0;
     };
+    // Returns 1 if card is in list
     suggested.iscardinlist = function(card,list) {
 	for (var c in list) {
 	    if(list[c].cycle==card.cycle && list[c].no==card.no) {
@@ -636,6 +642,21 @@
 	}
 	return 0;
     }
+    // Takes in a name and expansion, and returns 1 if the card is in the deck (or heroes)
+    suggested.isindeck = function(name_norm,exp,deck) {
+	for (var c in deck['1hero'])
+	    if (deck['1hero'][c].name_norm==name_norm && deck['1hero'][c].exp==exp) return 1;
+	for (var c in deck['2ally'])
+	    if (deck['2ally'][c].name_norm==name_norm && deck['2ally'][c].exp==exp) return 1;
+	for (var c in deck['3attachment'])
+	    if (deck['3attachment'][c].name_norm==name_norm && deck['3attachment'][c].exp==exp)	return 1;
+	for (var c in deck['4event'])
+	    if (deck['4event'][c].name_norm==name_norm && deck['4event'][c].exp==exp) return 1;
+	for (var c in deck['5quest'])
+	    if (deck['5quest'][c].name_norm==name_norm && deck['5quest'][c].exp==exp) return 1;
+	return 0;
+	
+    } 
     suggested.clear = function(card) {
 	for(var c in suggested[card.type]) {
 	    if(suggested[card.type][c].cycle==card.cycle && suggested[card.type][c].no==card.no){
