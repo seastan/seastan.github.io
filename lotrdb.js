@@ -562,22 +562,8 @@
 	    // Suggest cards with similar traits
 	    var traits=['Dwarf','Rohan','Silvan','Noldor','Gondor','Ent','Eagle','Dunedain','Hobbit','Istari','Outlands','Ranger'];
 	    for(var t in traits)
-		if(suggested.istraitindecktext(traits[t],deck) &&
-		   !suggested.iswordindecktext(traits[t],deck) &&
-		   suggested.iswordincard(traits[t],cardc))
+		if(suggested.istraitindecktext(traits[t],deck) && suggested.iswordincard(traits[t],cardc))
 		    suggestions.push(cardc);
-
-	    // // Suggest Dwarves for other Dwarf-swarm characters
-	    // if (suggested.iswordindeck('Dwarf character',deck) && suggested.iswordinstring('Dwarf',cardc.text))
-	    // 	suggestions.push(cardc);
-
-	    // // Suggest Rohan cards
-	    // if (suggested.iswordindeck('Rohan character',deck) && suggested.iswordincard('Rohan',cardc))
-	    // 	suggestions.push(cardc);
-	    // if (suggested.iswordindeck('Rohan ally',deck) && suggested.iswordincard('Rohan',cardc))
-	    // 	suggestions.push(cardc);
-	    
-	    // // Suggest 
 
 	    
 	}
