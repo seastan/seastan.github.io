@@ -496,6 +496,11 @@
     suggested.filtersettings = filtersettings;
     suggested.allcards = cardObject;
     suggested['sphere']=[];
+    deck['1hero']=[];
+    deck['2ally']=[];
+    deck['3attachment']=[];
+    deck['4event']=[];
+    deck['5quest']=[];
     
     suggested.newcard = function(card,deck) {
 	suggested.setspheres(deck);
