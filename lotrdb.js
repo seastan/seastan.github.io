@@ -349,8 +349,6 @@
     deck['5quest']=[];
     
     deck.change = function(card,quantity){
-      // Get list of suggestions for newly added card
-      suggested.deckchange(card,this);
       if (quantity>0){
 	//suggested.clear(card);
 	if (deck.quantity(card)==0) {
@@ -370,6 +368,8 @@
             }
           }
       }
+      // Get list of suggestions for newly added card
+      suggested.deckchange(card,this);
     };
     deck.quantity = function(card){
       for (var c in deck[card.type]){
@@ -501,6 +501,18 @@
     suggested['3attachment']=[];
     suggested['4event']=[];
     suggested['5quest']=[];
+
+    staples=[
+    {name_norm: "A Test of Will", exp: "core"},
+    {name_norm: "Hasty Stroke", exp: "core"},
+    {name_norm: "Steward of Gondor", exp: "core"},
+    {name_norm: "Unexpected Courage", exp: "core"},
+    {name_norm: "Daeron's Runes", exp: "fos"},
+    {name_norm: "Deep Knowledge", exp: "voi"},
+    {name_norm: "Feint", exp: "core"},
+    {name_norm: "Quick Strike", exp: "core"}
+	     ];
+
     
     suggested.deckchange = function(card,deck) {
 	suggested.setspheres(deck);
