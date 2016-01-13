@@ -586,7 +586,7 @@
     }
     suggested.add = function(card,deck) {
 	// Check if there is an ally or hero with the same name already in the deck
-	//	var samename=suggested.samename(card,deck);
+	var samename=suggested.samename(card,deck);
 	// Check if there is a hero with access to the shpere of the card
 	var propersphere=suggested.sphereaccess(card.sphere,deck);
 	
@@ -597,8 +597,10 @@
 	for(var k in filtersettings.pack)
 	    if(filtersettings.pack[k]==card.exp) properexp=1;
 
-	if (!samename && propersphere && properexp)
-	    suggested[card.type].push(card);
+	if (samename) return;
+	if (!propersphere) return;
+	if (!properexp) return;
+	suggested[card.type].push(card);
     };
     // Returns true if there is a card/hero in the deck by the same name as the given card
     suggested.samename = function(card,deck){
