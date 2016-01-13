@@ -538,8 +538,8 @@
     // of the current heroes.
     suggested.herorefresh = function(hero,deck) {
 	var suggestions=[]; // List of cards to suggest
-	var newsphere = hero.sphere; // Sphere of newly added hero
 	// Sphere of new hero
+	//	var newsphere = hero.sphere; // Sphere of newly added hero
 	for(var h in deck['1hero']) {
 	    var heroname = deck['1hero'][h].name;
 	    // Loop over all cards
@@ -553,6 +553,15 @@
 	    }
 	}
 	
+	// Try to suggest all the staples
+	for(var s in staples) {
+	    for(var c in suggested.allcards) {
+		var cardc = suggested.allcards[c];
+		if (cardc.name_norm==staples[s].name_norm && cardc.exp==staples[s].exp) 
+		    suggestions.push(cardc);
+	    }
+	}
+
 	// Loop over list of suggested cards
 	for(var c in suggestions) {
 	    // Only suggest cards of the same sphere to the newly added hero's sphere
@@ -560,14 +569,7 @@
 	    suggested.add(suggestions[c],deck);
 	}
 
-	// Try to suggest all the staples
-	for(var s in staples) {
-	    for(var c in suggested.allcards) {
-		var cardc = suggested.allcards[c];
-		if (cardc.name_norm==staples[s].name_norm && cardc.exp==staples[s].exp) 
-		    suggested.add(cardc,deck);
-	    }
-	}
+
     };
     suggested.setspheres = function(deck) {
 	suggested['sphere']=[];
