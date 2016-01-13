@@ -562,7 +562,9 @@
 	    // Suggest cards with similar traits
 	    var traits=['Dwarf','Rohan','Silvan','Noldor','Gondor','Ent','Eagle','Dunedain','Hobbit','Istari','Outlands','Ranger'];
 	    for(var t in traits)
-		if(suggested.iswordindecktext(traits[t],deck) && suggested.iswordincard(traits[t],cardc))
+		if(suggested.istraitindecktext(traits[t],deck) &&
+		   !suggested.iswordindecktext(traits[t],deck) &&
+		   suggested.iswordincard(traits[t],cardc))
 		    suggestions.push(cardc);
 
 	    // // Suggest Dwarves for other Dwarf-swarm characters
@@ -681,6 +683,18 @@
 		if (suggested.iswordinstring(word,deck[types[t]][c].text)) return 1;
 	return 0;	
     };
+    // Takes in a trait and returns 1 if the trait is found in the text of a card in the deck
+    suggested.istraitindecktext = function(trait,deck) {
+	var types = ['1hero','2ally','3attachment','4event','5quest'];
+	for(var t in types)
+	    for (var c in deck[types[t]]) {
+		// We do not want to include all Gondor cards just because Steward grants the 'Gondor trait' 
+		if (suggested.iswordinstring(trait+' trait',deck[types[t]][c].text)) continue;
+		if (suggested.iswordinstring(trait,deck[types[t]][c].text)) return 1;
+	    }
+	return 0;	
+    };
+
 
     suggested.change = function(card,quantity){
         for (var c in suggested[card.type]){
