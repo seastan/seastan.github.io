@@ -516,60 +516,44 @@
 
     // Case-by-case match. Returns 1 if the card should be suggested, based on what is in deck
     suggested.match = function(card,deck) {
-	if (suggested.isindeck('Damrod','tlos',deck)) return;
-
+	
     }
     
     // This is the main function, it gets called whenever the cards in the deck change and updates the suggestions
     suggested.deckchange = function(card,deck) {
-	// Clear the card that was just changed from the suggested list
-	suggested.clear(card);
+	// Clear the suggestions
+	suggested['1hero']=[];
+	suggested['2ally']=[];
+	suggested['3attachment']=[];
+	suggested['4event']=[];
+	suggested['5quest']=[];
+	//	suggested.clear(card);
 	// Set the spheres that the deck has access to
 	suggested.setspheres(deck);
-	if(card.type=="1hero") {
-	    // The heroes changed, so we reset suggestions
-	    suggested['1hero']=[];
-	    suggested['2ally']=[];
-	    suggested['3attachment']=[];
-	    suggested['4event']=[];
-	    suggested['5quest']=[];
-	    // If a hero is added, we want to go back and check for suggestions
-	    // for all the other heroes as well, in case the new hero has opened
-	    // up access to a sphere that helps out another hero. For example
-	    // If Aragorn(Lore) is in the deck and we add Theodred(Leadership),
-	    // we want to add Sword That Was Broken as a suggestion
-	    suggested.herorefresh(card,deck);
-	}
-    };
-    // The heroes were changed, so possibly a the spheres changed as well. Now we loop over all
-    // the heroes in the deck, adding suggestions for each, but restricted to the sphere
-    // of the current heroes.
-    suggested.herorefresh = function(hero,deck) {
-	var suggestions=[]; // List of cards to suggest
-	// Sphere of new hero
-	//	var newsphere = hero.sphere; // Sphere of newly added hero
-	for(var h in deck['1hero']) {
-	    var heroname = deck['1hero'][h].name;
-	    // Loop over all cards
-	    for(var c in suggested.allcards) {
-		var cardc = suggested.allcards[c];
-		var cardtext = cardc.text;
-		// If the card contains the name of the hero in its text, add it
-		if(cardtext.search(heroname)>=0) {
-		    suggestions.push(cardc);
-		}
-	    }
-	}
 	
-	// Suggest all the staples
-	for(var s in suggested.staples) {
-	    for(var c in suggested.allcards) {
-		var cardc = suggested.allcards[c];
+	// Loop over all the cards and see if they should be suggested
+	var suggestions=[]; // List of cards to suggest
+	for(var c in suggested.allcards) {
+	    var cardc = suggested.allcards[c];
+
+	    // Suggest card if it's a staple
+	    for(var s in suggested.staples) {
 		if (cardc.name_norm==suggested.staples[s].name_norm && cardc.exp==suggested.staples[s].exp) 
 		    suggestions.push(cardc);
 	    }
+	    
+	    // Suggest cards that have a hero's name in the text
+	    for(var h in deck['1hero']) {
+		var heroname = deck['1hero'][h].name;
+		if(suggested.iswordinstring(heroname,cardc.text))
+		    suggestions.push(cardc);
+	    }
+	    
+	    // Suggest Trap cards for Damrod
+	    if (suggested.isindeck('Damrod','tlos',deck) && suggested.iswordinstring('Trap',cardc.traits))
+		suggestions.push(cardc);
+	    
 	}
-
 	// Loop over list of suggested cards
 	for(var c in suggestions) {
 	    var cardc = suggestions[c];
@@ -578,8 +562,61 @@
 	    suggested.add(cardc,deck);
 	}
 
+    }
+    // 	if(card.type=="1hero") {
+    // 	    // The heroes changed, so we reset suggestions
+    // 	    suggested['1hero']=[];
+    // 	    suggested['2ally']=[];
+    // 	    suggested['3attachment']=[];
+    // 	    suggested['4event']=[];
+    // 	    suggested['5quest']=[];
+    // 	    // If a hero is added, we want to go back and check for suggestions
+    // 	    // for all the other heroes as well, in case the new hero has opened
+    // 	    // up access to a sphere that helps out another hero. For example
+    // 	    // If Aragorn(Lore) is in the deck and we add Theodred(Leadership),
+    // 	    // we want to add Sword That Was Broken as a suggestion
+    // 	    suggested.herorefresh(card,deck);
+    // 	}
+    // };
+    // // The heroes were changed, so possibly a the spheres changed as well. Now we loop over all
+    // // the heroes in the deck, adding suggestions for each, but restricted to the sphere
+    // // of the current heroes.
+    // suggested.herorefresh = function(hero,deck) {
+    // 	var suggestions=[]; // List of cards to suggest
+    // 	// Sphere of new hero
+    // 	//	var newsphere = hero.sphere; // Sphere of newly added hero
+    // 	for(var h in deck['1hero']) {
+    // 	    var heroname = deck['1hero'][h].name;
+    // 	    // Loop over all cards
+    // 	    for(var c in suggested.allcards) {
+    // 		var cardc = suggested.allcards[c];
+    // 		var cardtext = cardc.text;
+    // 		// If the card contains the name of the hero in its text, add it
+    // 		if(cardtext.search(heroname)>=0) {
+    // 		    suggestions.push(cardc);
+    // 		}
+    // 	    }
+    // 	}
+	
+    // 	// Suggest all the staples
+    // 	for(var s in suggested.staples) {
+    // 	    for(var c in suggested.allcards) {
+    // 		var cardc = suggested.allcards[c];
+    // 		if (cardc.name_norm==suggested.staples[s].name_norm && cardc.exp==suggested.staples[s].exp) 
+    // 		    suggestions.push(cardc);
+    // 	    }
+    // 	}
 
-    };
+    // 	// Loop over list of suggested cards
+    // 	for(var c in suggestions) {
+    // 	    var cardc = suggestions[c];
+    // 	    // Only suggest cards that are not already in suggested
+    // 	    if(suggested.iscardinlist(cardc,suggested[cardc.type])) continue;
+    // 	    suggested.add(cardc,deck);
+    // 	}
+
+
+    // };
     suggested.setspheres = function(deck) {
 	suggested['sphere']=[];
 	for(var c in deck['1hero']) {
