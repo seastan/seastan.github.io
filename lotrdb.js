@@ -517,7 +517,6 @@
     
     suggested.deckchange = function(card,deck) {
 	suggested.setspheres(deck);
-	suggested.clear(card);
 	if(card.type=="1hero") {
 	    // The heroes changed, so we reset suggestions
 	    suggested['1hero']=[];
@@ -532,6 +531,7 @@
 	    // we want to add Sword That Was Broken as a suggestion
 	    suggested.herorefresh(card,deck);
 	}
+	suggested.clear(card);
     };
     // The heroes were changed, so possibly a the spheres changed as well. Now we loop over all
     // the heroes in the deck, adding suggestions for each, but restricted to the sphere
@@ -600,7 +600,7 @@
 	var properexp=0;
 	for(var k in filtersettings.pack)
 	    if(filtersettings.pack[k]==card.exp) properexp=1;
-
+	if (card.name_norm=="Rivendell Bow") suggested[card.type].push(card);
 	if (samename) return;
 	if (!propersphere) return;
 	if (!properexp) return;
