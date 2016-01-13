@@ -355,12 +355,7 @@
           card.quantity=quantity;
           deck[card.type].push(card);
 	  // Get list of suggestions for newly added card
-	  var suggestions = suggested.get(card,this);
-	  for(var c in suggestions) {
-	      // If suggested card is not already in the deck, add the card to suggested
-	      if(!deck.samename(suggestions[c]))
-	  	  suggested.add(suggestions[c],this);
-	  }
+	  suggested.newcard(card,this);
         } else {
           for (var c in deck[card.type]){
             if (deck[card.type][c].cycle==card.cycle && deck[card.type][c].no==card.no){
@@ -383,20 +378,6 @@
         };
       };
       return 0;
-    };
-    // Returns true if there is a card/hero in the deck by the same name as the given card
-    deck.samename = function(card){
-	for (var c in deck['1hero']){
-	    if (deck['1hero'][c].name_norm==card.name_norm){
-		return 1;
-	    };
-	};
-	for (var c in deck['2ally']){
-	    if (deck['2ally'][c].name_norm==card.name_norm){
-		return 1;
-	    };
-	};
-	return 0;
     };
     deck.startingThreat = function(){
       var threat = 0;
@@ -514,46 +495,89 @@
     var suggested={};
     suggested.filtersettings = filtersettings;
     suggested.allcards = cardObject;
-    suggested['1hero']=[];
-    suggested['2ally']=[];
-    suggested['3attachment']=[];
-    suggested['4event']=[];
-    suggested['5quest']=[];
+    suggested['sphere']=[];
     
-    suggested.get = function(card,deck) {
-	var suggestions=[];
+    suggested.newcard = function(card,deck) {
+	suggested.setspheres(deck);
 	if(card.type=="1hero") {
-	    var heroname = card.name;
+	    // If a hero is added, we want to go back and check for suggestions
+	    // for all the other heroes as well, in case the new hero has opened
+	    // up access to a sphere that helps out another hero. For example
+	    // If Aragorn(Lore) is in the deck and we add Theodred(Leadership),
+	    // we want to add Sword That Was Broken as a suggestion
+	    suggested.herorefresh(card,deck);
+	}
+    };
+    // A new hero was added, so possibly a new sphere as well. Now we loop over all
+    // the heroes in the deck, adding suggestions for each, but restricted to the sphere
+    // of the newly added hero.
+    suggested.herorefresh = function(hero,deck) {
+	var suggestions=[]; // List of cards to suggest
+	var newsphere = hero.sphere; // Sphere of newly added hero
+	// Sphere of new hero
+	for(var h in deck['1hero']) {
+	    var heroname = deck['1hero'][h].name;
+	    // Loop over all cards
 	    for(var c in suggested.allcards) {
 		var cardc = suggested.allcards[c];
 		var cardtext = cardc.text;
+		// If the card contains the name of the hero in its text, add it
 		if(cardtext.search(heroname)>=0) {
 		    suggestions.push(cardc);
 		}
-	    }	    
-	}
+	    }	 
+	}   
 	
-	if(card.name_norm=="Galadriel" && card.exp=="cs") {
-	    for(var c in suggested.allcards) {
-		var cardc = suggested.allcards[c];
-		    if(cardc.name_norm=="Nenya"/* && cardc.exp=="cs"*/) {
-			suggestions.push(cardc);
-		    }
-	    }
+	// Loop over list of suggested cards
+	for(var c in suggestions) {
+	    // Only suggest cards of the same sphere to the newly added hero's sphere
+	    if(suggestions[c].sphere!=newsphere) continue;
+	    suggested.add(suggestions[c],deck);
 	}
-	return suggestions;
     };
+    suggested.setspheres(deck) {
+	suggested['sphere']=[];
+	for(var c in deck['1hero']) {
+	    suggested['sphere'].push(deck['1hero'][c].sphere);
+	}
+    }
+    // Returns true if deck has access to given sphere
+    suggested.sphereaccess(sphere,deck) {
+	//	suggested.setspheres(deck); // This currently gets called whenever a card is added to the deck
+	for (var s in suggested['sphere']) {
+	    if(suggested['sphere'][s]==sphere) return 1;
+	}
+	return 0;
+    }
     suggested.add = function(card,deck) {
-	var propersphere=0;
-	for(var c in deck['1hero'])
-	    if(deck['1hero'][c].sphere==card.sphere) suggested[card.type].push(card);//  propersphere=1;
+	// Check if there is an ally or hero with the same name already in the deck
+	var samename=suggested.samename(card,deck);
+	// Check if there is a hero with access to the shpere of the card
+	var propersphere=suggested.sphereaccess(card.sphere,deck);
+	
+	// for(var c in deck['1hero'])
+	//     if(deck['1hero'][c].sphere==card.sphere) suggested[card.type].push(card);//  propersphere=1;
 	// Check if card is in an available pack
 	var properexp=0;
 	for(var k in filtersettings.pack)
 	    if(filtersettings.pack[k]==card.exp) properexp=1;
 
-	if (propersphere && properexp)
+	if (!samename && propersphere && properexp)
 	    suggested[card.type].push(card);
+    };
+    // Returns true if there is a card/hero in the deck by the same name as the given card
+    suggested.samename = function(card,deck){
+	for (var c in deck['1hero']){
+	    if (deck['1hero'][c].name_norm==card.name_norm){
+		return 1;
+	    };
+	};
+	for (var c in deck['2ally']){
+	    if (deck['2ally'][c].name_norm==card.name_norm){
+		return 1;
+	    };
+	};
+	return 0;
     };
 
     suggested.clear = function(card) {
