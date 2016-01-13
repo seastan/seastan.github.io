@@ -551,7 +551,7 @@
 		var cardtext = cardc.text;
 		// If the card contains the name of the hero in its text, add it
 		if(cardtext.search(heroname)>=0) {
-		    if(!suggested.iscardinlist(cardc,suggested[cardc.type)) suggestions.push(cardc);
+		    if(!suggested.iscardinlist(cardc,suggested[cardc.type])) suggestions.push(cardc);
 		}
 	    }
 	}
