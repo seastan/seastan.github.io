@@ -689,7 +689,7 @@
 	for(var t in types)
 	    for (var c in deck[types[t]]) {
 		// We do not want to include all Gondor cards just because Steward grants the 'Gondor trait' 
-		if (suggested.iswordinstring(trait+' trait',deck[types[t]][c].text)) continue;
+		if (suggested.iswordinstring('trait',deck[types[t]][c].text)) continue;
 		if (suggested.iswordinstring(trait,deck[types[t]][c].text)) return 1;
 	    }
 	return 0;	
