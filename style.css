@@ -102,7 +102,7 @@ body {
 }
 
 .suggesteddiv {
-  width: 15%;
+  width: 20%;
   min-width: 200px;
   float: left;
   height:108%;
@@ -121,7 +121,7 @@ body {
 }
 
 .rightdiv {
-  width: 40%;
+  width: 35%;
   min-width: 300px;
   height: 100%;
   float:left;
