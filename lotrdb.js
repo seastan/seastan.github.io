@@ -559,6 +559,8 @@
 		var cardc = suggested.allcards[c];
 		if (cardc.name_norm==staples[s].name_norm && cardc.exp==staples[s].exp) 
 		    suggestions.push(cardc);
+		if (cardc.name_norm=="Rivendell Bow")
+		    suggestions.push(cardc);
 	    }
 	}
 
