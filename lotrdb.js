@@ -359,7 +359,7 @@
 	  for(var c in suggestions) {
 	      // If suggested card is not already in the deck, add the card to suggested
 	      if(!deck.samename(suggestions[c]))
-	  	  suggested.add(suggestions[c]);
+	  	  suggested.add(suggestions[c],this);
 	  }
         } else {
           for (var c in deck[card.type]){
@@ -543,12 +543,17 @@
 	}
 	return suggestions;
     };
-    suggested.add = function(card) {
+    suggested.add = function(card,deck) {
+	var propersphere=0;
+	for(var c in deck['1hero'])
+	    if(deck['1hero'].sphere==card.shpere) propersphere=1;
 	// Check if card is in an available pack
-	for(var k in filtersettings.pack) {
-	    if(filtersettings.pack[k]==card.exp)
-		suggested[card.type].push(card);
-	}
+	var properexp=0;
+	for(var k in filtersettings.pack)
+	    if(filtersettings.pack[k]==card.exp) properexp=1;
+
+	if (propersphere && properexp)
+	    suggested[card.type].push(card);
     };
 
     suggested.clear = function(card) {
