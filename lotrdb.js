@@ -558,7 +558,7 @@
 	    // 	suggestions.push(cardc);
 	    
 	    // Suggest Dwarves for other Dwarf-swarm characters
-	    if (suggested.iswordindeck('Dwarf characters',deck) && suggested.iswordinstring('Dwarf characters',cardc.text))
+	    if (suggested.iswordindeck('Dwarf character',deck) && suggested.iswordinstring('Dwarf character',cardc.text))
 		suggestions.push(cardc);
 	    
 	}
