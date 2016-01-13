@@ -601,7 +601,7 @@
 	var properexp=0;
 	for(var k in filtersettings.pack)
 	    if(filtersettings.pack[k]==card.exp) properexp=1;
-	if (card.name_norm=="Rivendell Bow") suggested[card.type].push(card);
+	//	if (card.name_norm=="Rivendell Bow") suggested[card.type].push(card);
 	if (samename) return;
 	if (!propersphere) return;
 	if (!properexp) return;
