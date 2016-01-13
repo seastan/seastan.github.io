@@ -638,7 +638,7 @@
 	};
 	return 0;
     };
-    suggested.iscardinlist(card,list) {
+    suggested.iscardinlist = function(card,list) {
 	for (var c in list) {
 	    if(list[c].cycle==card.cycle && list[c].no==card.no) {
 		return 1;
