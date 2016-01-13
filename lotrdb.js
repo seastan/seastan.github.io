@@ -354,7 +354,13 @@
         if (deck.quantity(card)==0) {
           card.quantity=quantity;
           deck[card.type].push(card);
-	  suggested.add(card);
+	  // Get list of suggestions for newly added card
+	  var suggestions = suggested.get(card);
+	  for(var c in suggestions) {
+	      // If suggested card is not already in the deck, add the card to suggested
+	      if(deck.quantity(suggestions[c])==0)
+		  suggested.add(suggestions[c]);
+	  }
         } else {
           for (var c in deck[card.type]){
             if (deck[card.type][c].cycle==card.cycle && deck[card.type][c].no==card.no){
@@ -500,17 +506,25 @@
     suggested['4event']=[];
     suggested['5quest']=[];
     
-    suggested.add = function(card) {
+    suggested.get = function(card) {
+	var suggestions=[];
 	if(card.name_norm=="Galadriel" && card.exp=="cs") {
 	    for(var c in suggested.allcards) {
 		var cardc = suggested.allcards[c]
-		if(cardc.name_norm=="Nenya") {
-		    suggested[cardc.type].push(cardc);
+		if(cardc.name_norm=="Nenya" && cardc.exp=="cs") {
+		    suggestions.push(cardc);
 		}
 	    }
 	}
+	return suggestions;
     };
-
+    suggested.add(card) {
+	// Check if card is in an available pack
+	for(var p in filtersettings.pack) {
+	    if(filtersettings.pack[p]==card.exp)
+		suggested[cardc.type].push(cardc);
+	}
+    };
 
     suggested.clear = function(card) {
 	for(var c in suggested[card.type]) {
