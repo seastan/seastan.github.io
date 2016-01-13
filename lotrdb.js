@@ -516,8 +516,10 @@
 
     
     suggested.deckchange = function(card,deck) {
-	suggested.setspheres(deck);
+	// Clear the card that was just changed from the suggested list
 	suggested.clear(card);
+	// Set the spheres that the deck has access to
+	suggested.setspheres(deck);
 	if(card.type=="1hero") {
 	    // The heroes changed, so we reset suggestions
 	    suggested['1hero']=[];
@@ -550,6 +552,8 @@
 		// If the card contains the name of the hero in its text, add it
 		if(cardtext.search(heroname)>=0) {
 		    suggestions.push(cardc);
+		if (cardc.name_norm=="Rivendell Bow")
+		    suggestions.push(cardc);
 		}
 	    }
 	}
@@ -559,8 +563,6 @@
 	    for(var c in suggested.allcards) {
 		var cardc = suggested.allcards[c];
 		if (cardc.name_norm==staples[s].name_norm && cardc.exp==staples[s].exp) 
-		    suggestions.push(cardc);
-		if (cardc.name_norm=="Rivendell Bow")
 		    suggestions.push(cardc);
 	    }
 	}
