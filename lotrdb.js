@@ -451,7 +451,7 @@
 	    // Suggest cards that have a hero's name in the text
 	    for(var h in deck['1hero']) {
 		var heroname = deck['1hero'][h].name;
-		if(suggested.iswordinstring(heroname,cardc.text))
+		if(suggested.iswordinstring(heroname+'.',cardc.text) || suggested.iswordinstring(heroname+' ',cardc.text) )
 		    suggestions.push(cardc);
 	    }
 	    
