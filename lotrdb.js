@@ -459,8 +459,8 @@
 	    if (suggested.isindeck('Damrod','tlos',deck) && suggested.iswordinstring('Trap',cardc.traits))
 		suggestions.push(cardc);
 
-	    // Suggest heal cards for Gloin
-	    if (suggested.isindeck('Gloin','core',deck) && suggested.iswordinstring('heal',cardc.text))
+	    // Suggest heal/hit point cards for Gloin, Treebeard, Gimil
+	    if ( (suggested.isindeck('Gloin','core',deck) || suggested.isindeck('Gimli','core',deck) || suggested.isindeck('Treebeard','tos',deck)) && (suggested.iswordinstring('heal',cardc.text) || suggested.iswordinstring('hit point',cardc.text)) )
 		suggestions.push(cardc);
 
 	    // Suggest heal cards for Treebeard
@@ -522,6 +522,7 @@
 	var regexp = /(?:(?:a|an|1) )([A-Z][a-z]+) (?:or )?([A-Z][a-z]+)? ?(?:character|hero)/g;
 	var cardtext = card.text;
 	var match = regexp.exec(cardtext);
+	if (card.name_norm=="Nori" && card.exp=='thohauh') return []; // Special exception for Nori, whose text should really be targeting allies, not characters
 	if (!match) return []; // Card has no trait targets
 	if (match[2])
 	    var traitsincardtext = [match[1],match[2]];
