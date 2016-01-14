@@ -527,7 +527,7 @@
 	else 
 	    var traitsincardtext = [match[1]];
 
-	for (var m in traitsincardtext)
+	for (var m in traitsincardtext) {
 	    var trait = traitsincardtext[m];
 	    for (var h in deck['1hero']) {
 		var hero = deck['1hero'][h];
