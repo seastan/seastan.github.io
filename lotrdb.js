@@ -522,6 +522,7 @@
 	var cardtext = card.text;
 	var match = regexp.exec(cardtext);
 	if (!match) return 1; // Card has no trait requirements
+	if (match) return 0;
 	if (match[2])
 	    var traitsincardtext = [match[1],match[2]];
 	else 
