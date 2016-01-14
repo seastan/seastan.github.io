@@ -522,6 +522,7 @@
   
     // Returns true if deck has hero with the proper trait to use the card
     suggested.traitaccess = function(card,deck) {
+	return 1;
 	var cardtext = card.text;
 	var regexp = /([A-Z][a-z]+) (?:or )?([A-Z][a-z]+)? ?(?:character|hero)/g;
 	var match = regexp.exec(cardtext);
@@ -544,14 +545,14 @@
 	// Check if card is in an available pack
 	var properexp=0;
 	// Check if there is a proper trait character in the deck to use the card
-	//	var propertrait=suggested.traitaccess(card,deck);
+	var propertrait=suggested.traitaccess(card,deck);
 
 	for(var k in filtersettings.pack)
 	    if(filtersettings.pack[k]==card.exp) properexp=1;
 	if (samename) return;
 	if (!propersphere && card.type!='1hero') return; // Hero suggestions are exempt from requiring a sphere match
 	if (!properexp) return;
-	//	if (!propertrait) return;
+	if (!propertrait) return;
 	if (card.sphere=='6baggins'||card.sphere=='7fellowship') return; // Never suggest cards of these spheres
 	suggested[card.type].push(card);
     };
