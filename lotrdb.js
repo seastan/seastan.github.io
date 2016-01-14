@@ -489,7 +489,7 @@
 		if(suggested.istraitindecktext(suggested.traits[t],deck) && suggested.iswordincard(suggested.traits[t],cardc))
 		    suggestions.push(cardc);
 	    for(var t in suggested['traits'])
-		if(suggested.istraitinherotraits(suggested.traits[t],deck) && suggested.iswordincard(suggested.traits[t]+' hero',cardc))
+		if(suggested.istraitinherotraits(suggested.traits[t],deck) && suggested.iswordinstring(suggested.traits[t],cardc.text))
 		    suggestions.push(cardc);
 
 	    
@@ -519,6 +519,23 @@
 	}
 	return 0;
     }
+  
+    // Returns true if deck has hero with the proper trait to use the card
+    suggested.traitaccess = function(card,deck) {
+	var cardtext = card.text;
+	var regexp = /([A-Z][a-z]+) (?:or )?([A-Z][a-z]+)? ?(?:character|hero)/g;
+	var match = regexp.exec(cardtext);
+	if (match.length==0) return 1; // Card has no trait requirements
+	for (var m in match) {
+	    var trait = match[m];
+	    for (var h in deck['1hero']) {
+		var hero = deck['1hero'][h];
+		if (suggested.isnameinstring(trait,hero.traits)) return 1;
+	    }
+	}
+	return 0;
+    }
+
     suggested.add = function(card,deck) {
 	// Check if there is an ally or hero with the same name already in the deck
 	var samename=suggested.samename(card,deck);
