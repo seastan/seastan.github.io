@@ -464,11 +464,17 @@
 		suggestions.push(cardc);
 
 	    // Suggest spirit heroes for Caldara
-	    if (suggested.isindeck('Caldara','tbog',deck) && cardc.sphere=='3spirit' && cardc.tpye=='1hero')
+	    if (suggested.isindeck('Caldara','tbog',deck) && cardc.sphere=='3spirit' && cardc.type=='1hero')
+		suggestions.push(cardc);
+
+	    // Suggest doomed for Grima
+	    if (suggested.isindeck('Grima','voi',deck) || suggested.isindeck('Grima hero','voi',deck) && suggested.iswordinstring('oomed',cardc.text))
 		suggestions.push(cardc);
 
 	    // Suggest location cards for Idraen
 	    if (suggested.isindeck('Idraen','ttt',deck) && suggested.iswordinstring('explored',cardc.text))
+		suggestions.push(cardc);
+	    if (suggested.isindeck('Idraen','ttt',deck) && suggested.iswordinstring('progress',cardc.text) && suggested.iswordinstring('location',cardc.text))
 		suggestions.push(cardc);
 
 
