@@ -463,9 +463,14 @@
 	    if ( (suggested.isindeck('Gloin','core',deck) || suggested.isindeck('Gimli','core',deck) || suggested.isindeck('Treebeard','tos',deck)) && (suggested.iswordinstring('heal',cardc.text) || suggested.iswordinstring('hit point',cardc.text)) )
 		suggestions.push(cardc);
 
-	    // Suggest heal cards for Treebeard
-	    if (suggested.isindeck('Treebeard','tos',deck) && suggested.iswordinstring('heal',cardc.text))
+	    // Suggest spirit heroes for Caldara
+	    if (suggested.isindeck('Caldara','tbog',deck) && cardc.sphere=='3spirit' && cardc.tpye=='1hero')
 		suggestions.push(cardc);
+
+	    // Suggest location cards for Idraen
+	    if (suggested.isindeck('Idraen','ttt',deck) && suggested.iswordinstring('explored',cardc.text))
+		suggestions.push(cardc);
+
 
 	    // Suggest weapon/armour for Beregond
 	    if (suggested.isindeck('Beregond','hon',deck) && suggested.iswordinstring('Weapon',cardc.traits))
