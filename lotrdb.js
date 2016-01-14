@@ -470,6 +470,14 @@
 	    if (suggested.isindeck('Treebeard','tos',deck) && suggested.iswordinstring('heal',cardc.text))
 		suggestions.push(cardc);
 
+	    // Suggest engage cards
+	    if (suggested.iswordindeck('engage ',deck) && suggested.iswordincard('engage ',cardc))
+		suggestions.push(cardc);
+	    // Suggest engagement cost cards
+	    if (suggested.iswordindeck('engagement cost',deck) && suggested.iswordincard('engagement cost ',cardc))
+		suggestions.push(cardc);
+
+
 	    // Suggest cards with similar traits
 	    var traits=['Dwarf','Rohan','Silvan','Noldor','Gondor','Ent','Eagle','Dunedain','Hobbit','Istari','Outlands','Ranger'];
 	    for(var t in traits)
