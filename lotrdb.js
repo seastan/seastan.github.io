@@ -482,7 +482,7 @@
 
 	    // Suggest cards with similar traits
 	    for(var t in suggested['traits'])
-		if(suggested.istraitindecktext(suggested.traits[t],deck) && suggested.iswordincard(suggested.traits[t],cardc))
+		if(suggested.istraitindecktext(suggested.traits[t],deck) && suggested.iswordincard(suggested.traits[t],cardc)) // Example: If Eomund is in deck, suggest all characters with Rohan trait
 		    suggestions.push(cardc);
 	    for(var t in suggested['traits'])
 		if(suggested.istraitinherotraits(suggested.traits[t],deck) && suggested.iswordinstring(suggested.traits[t],cardc.text))
@@ -515,12 +515,25 @@
 	}
 	return 0;
     }
+
+    // Returns list of traits targetted by the card text
+    suggested.gettargetsincard = function(card) {
+	var regexp = /(?:(?:a|an|1) )([A-Z][a-z]+) (?:or )?([A-Z][a-z]+)? ?(?:character|hero)/g;
+	var cardtext = card.text;
+	var match = regexp.exec(cardtext);
+	if (!match) return []; // Card has no trait targets
+	if (match[2])
+	    var traitsincardtext = [match[1],match[2]];
+	else 
+	    var traitsincardtext = [match[1]];
+	return match;
+    }
   
     // Returns true if deck has hero with the proper trait to use the card
     suggested.traitaccess = function(card,deck) {
 	var regexp = /(?:(?:a|an|1) )([A-Z][a-z]+) (?:or )?([A-Z][a-z]+)? ?(?:character|hero)/g;
 	var cardtext = card.text;
-	var match = regexp.exec(cardtext);
+	var match = suggested.gettargetsincard(card);//regexp.exec(cardtext);
 	if (!match) return 1; // Card has no trait requirements
 	//	if (match) return 0;
 	if (match[2])
