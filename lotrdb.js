@@ -477,6 +477,9 @@
 	    if (suggested.isindeck('Idraen','ttt',deck) && suggested.iswordinstring('progress',cardc.text) && suggested.iswordinstring('location',cardc.text))
 		suggestions.push(cardc);
 
+	    // Sugest discard pile cards for Arwen
+	    if (suggested.isindeck('Arwen Undomiel','tdr',deck) && suggested.iswordinstring('discard pile',cardc.text))
+		suggestions.push(cardc);
 
 	    // Suggest weapon/armour for Beregond
 	    if (suggested.isindeck('Beregond','hon',deck) && suggested.iswordinstring('Weapon',cardc.traits))
