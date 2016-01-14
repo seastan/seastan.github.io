@@ -518,13 +518,17 @@
   
     // Returns true if deck has hero with the proper trait to use the card
     suggested.traitaccess = function(card,deck) {
-	//	return 1;
+	var regexp = /(?:(?:a|an|1) )([A-Z][a-z]+) (?:or )?([A-Z][a-z]+)? ?(?:character|hero)/g;
 	var cardtext = card.text;
-	var regexp = /([A-Z][a-z]+) (?:or )?([A-Z][a-z]+)? ?(?:character|hero)/g;
 	var match = regexp.exec(cardtext);
 	if (!match) return 1; // Card has no trait requirements
-	for (var m in match) {
-	    var trait = match[m];
+	if (match[2])
+	    var traitsincardtext = [match[1],match[2]];
+	else 
+	    var traitsincardtext = [match[1]];
+
+	for (var m in traitsincardtext)
+	    var trait = traitsincardtext[m];
 	    for (var h in deck['1hero']) {
 		var hero = deck['1hero'][h];
 		if (suggested.iswordinstring(trait,hero.traits)) return 1;
