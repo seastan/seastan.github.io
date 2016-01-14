@@ -526,7 +526,7 @@
 	var cardtext = card.text;
 	var regexp = /([A-Z][a-z]+) (?:or )?([A-Z][a-z]+)? ?(?:character|hero)/g;
 	var match = regexp.exec(cardtext);
-	return 1;
+	alert(match);
 	if (match.length==0) return 1; // Card has no trait requirements
 	for (var m in match) {
 	    var trait = match[m];
