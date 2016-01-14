@@ -548,7 +548,7 @@
 	if (samename) return;
 	if (!propersphere && card.type!='1hero') return; // Hero suggestions are exempt from requiring a sphere match
 	if (!properexp) return;
-	if (!propertrait) return;
+	//	if (!propertrait) return;
 	if (card.sphere=='6baggins'||card.sphere=='7fellowship') return; // Never suggest cards of these spheres
 	suggested[card.type].push(card);
     };
