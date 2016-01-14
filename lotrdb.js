@@ -470,6 +470,12 @@
 	    if (suggested.isindeck('Treebeard','tos',deck) && suggested.iswordinstring('heal',cardc.text))
 		suggestions.push(cardc);
 
+	    // Suggest weapon/armour for Beregond
+	    if (suggested.isindeck('Beregond','hon',deck) && suggested.iswordinstring('Weapon',cardc.traits))
+		suggestions.push(cardc);	    
+	    if (suggested.isindeck('Beregond','hon',deck) && suggested.iswordinstring('Armor',cardc.traits))
+		suggestions.push(cardc);	    
+
 	    // Suggest engage cards
 	    if (suggested.iswordindeck('engage ',deck) && suggested.iswordincard('engage ',cardc))
 		suggestions.push(cardc);
@@ -477,11 +483,13 @@
 	    if (suggested.iswordindeck('engagement cost',deck) && suggested.iswordincard('engagement cost ',cardc))
 		suggestions.push(cardc);
 
-
 	    // Suggest cards with similar traits
 	    var traits=['Dwarf','Rohan','Silvan','Noldor','Gondor','Ent','Eagle','Dunedain','Hobbit','Istari','Outlands','Ranger'];
 	    for(var t in traits)
 		if(suggested.istraitindecktext(traits[t],deck) && suggested.iswordincard(traits[t],cardc))
+		    suggestions.push(cardc);
+	    for(var t in traits)
+		if(suggested.istraitinherotraits(traits[t],deck) && suggested.iswordincard(traits[t]+' hero',cardc))
 		    suggestions.push(cardc);
 
 	    
@@ -598,6 +606,12 @@
 		if (suggested.iswordinstring('trait',deck[types[t]][c].text)) continue;
 		if (suggested.iswordinstring(trait,deck[types[t]][c].text)) return 1;
 	    }
+	return 0;	
+    };
+    // Takes in a trait and returns 1 if the trait is found in the traits of a hero in the deck
+    suggested.istraitinherotraits = function(trait,deck) {
+	for(var h in deck['1hero'])
+	    if (suggested.iswordinstring(trait,deck['1hero'][h].traits)) return 1;
 	return 0;	
     };
 
