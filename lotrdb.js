@@ -445,7 +445,7 @@
 	var suggestions=[]; // List of cards to suggest
 	for(var c in suggested.allcards) {
 	    var cardc = suggested.allcards[c];
-
+	    
 	    // Suggest card if it's a staple
 	    for(var s in suggested.staples) {
 		if (cardc.name_norm==suggested.staples[s].name_norm && cardc.exp==suggested.staples[s].exp) 
@@ -483,16 +483,15 @@
 	    // Suggest engagement cost cards
 	    if (suggested.iswordindeck('engagement cost',deck) && suggested.iswordincard('engagement cost ',cardc))
 		suggestions.push(cardc);
-
+	    
 	    // Suggest cards with similar traits
-	    var traits=['Dwarf','Rohan','Silvan','Noldor','Gondor','Ent','Eagle','Dunedain','Hobbit','Istari','Outlands','Ranger'];
 	    for(var t in sugggested['traits'])
 		if(suggested.istraitindecktext(suggested['traits'][t],deck) && suggested.iswordincard(suggested['traits'][t],cardc))
 		    suggestions.push(cardc);
 	    for(var t in suggested['traits'])
 		if(suggested.istraitinherotraits(suggested['traits'][t],deck) && suggested.iswordinstring(suggested['traits'][t],cardc.text))
 		    suggestions.push(cardc);
-
+	    
 	    
 	}
 	// Loop over list of suggested cards
@@ -502,7 +501,7 @@
 	    if(suggested.iscardinlist(cardc,suggested[cardc.type])) continue;
 	    suggested.add(cardc,deck);
 	}
-
+	
     }
     // Sets the list of spheres that the deck has access to
     suggested.setspheres = function(deck) {
@@ -530,7 +529,7 @@
 	    var trait = match[m];
 	    for (var h in deck['1hero']) {
 		var hero = deck['1hero'][h];
-		if suggested.isnameinstring(trait,hero.traits) return 1;
+		if (suggested.isnameinstring(trait,hero.traits)) return 1;
 	    }
 	}
 	return 0;
