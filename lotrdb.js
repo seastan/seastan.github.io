@@ -411,7 +411,7 @@
     suggested['3attachment']=[];
     suggested['4event']=[];
     suggested['5quest']=[];
-    suggested.traits=['Dwarf','Rohan','Silvan','Noldor','Gondor','Ent','Eagle','Dunedain','Hobbit','Istari','Outlands','Ranger'];
+    suggested['traits']=['Dwarf','Rohan','Silvan','Noldor','Gondor','Ent','Eagle','Dunedain','Hobbit','Istari','Outlands','Ranger'];
 
     suggested.staples=[
     {name_norm: "A Test of Will", exp: "core"},
@@ -485,10 +485,10 @@
 		suggestions.push(cardc);
 
 	    // Suggest cards with similar traits
-	    for(var t in suggested.traits)
-		if(suggested.isstraitindecktext(suggested.traits[t],deck) && suggested.iswordincard(suggested.traits[t],cardc))
+	    for(var t in suggested['traits'])
+		if(suggested.istraitindecktext(suggested.traits[t],deck) && suggested.iswordincard(suggested.traits[t],cardc))
 		    suggestions.push(cardc);
-	    for(var t in suggested.traits)
+	    for(var t in suggested['traits'])
 		if(suggested.istraitinherotraits(suggested.traits[t],deck) && suggested.iswordincard(suggested.traits[t]+' hero',cardc))
 		    suggestions.push(cardc);
 
