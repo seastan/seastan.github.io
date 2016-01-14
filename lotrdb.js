@@ -542,7 +542,7 @@
 	// Check if card is in an available pack
 	var properexp=0;
 	// Check if there is a proper trait character in the deck to use the card
-	var propertrait=suggested.traitaccess(card,deck);
+	//var propertrait=suggested.traitaccess(card,deck);
 	for(var k in filtersettings.pack)
 	    if(filtersettings.pack[k]==card.exp) properexp=1;
 	if (samename) return;
