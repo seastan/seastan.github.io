@@ -484,8 +484,9 @@
 	    for(var t in suggested['traits'])
 		if(suggested.istraitindecktext(suggested.traits[t],deck) && suggested.iswordincard(suggested.traits[t],cardc)) // Example: If Eomund is in deck, suggest all characters with Rohan trait
 		    suggestions.push(cardc);
+	    // Ih hero has a trait, suggest cards that target that trait
 	    for(var t in suggested['traits'])
-		if(suggested.istraitinherotraits(suggested.traits[t],deck) && suggested.iswordinstring(suggested.traits[t],cardc.text))
+		if(suggested.istraitinherotraits(suggested.traits[t],deck) && suggested.iswordinlist(suggested.traits[t],suggested.gettargetsincard(cardc))) 
 		    suggestions.push(cardc);
 
 	    
@@ -588,6 +589,13 @@
 		return 1;
 	    };
 	};
+	return 0;
+    };
+    // Returns 1 if word is in list
+    suggested.iswordinlist = function(word,list) {
+	for (var w in list)
+	    if(list[w]==word)
+		return 1;
 	return 0;
     };
     // Returns 1 if card is in list
