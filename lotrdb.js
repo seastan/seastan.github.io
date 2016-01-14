@@ -411,7 +411,6 @@
     suggested['3attachment']=[];
     suggested['4event']=[];
     suggested['5quest']=[];
-    suggested['traits']=['Dwarf','Rohan','Silvan','Noldor','Gondor','Ent','Eagle','Dunedain','Hobbit','Istari','Outlands','Ranger'];
 
     suggested.staples=[
     {name_norm: "A Test of Will", exp: "core"},
@@ -445,7 +444,7 @@
 	var suggestions=[]; // List of cards to suggest
 	for(var c in suggested.allcards) {
 	    var cardc = suggested.allcards[c];
-	    
+
 	    // Suggest card if it's a staple
 	    for(var s in suggested.staples) {
 		if (cardc.name_norm==suggested.staples[s].name_norm && cardc.exp==suggested.staples[s].exp) 
@@ -483,15 +482,16 @@
 	    // Suggest engagement cost cards
 	    if (suggested.iswordindeck('engagement cost',deck) && suggested.iswordincard('engagement cost ',cardc))
 		suggestions.push(cardc);
-	    
+
 	    // Suggest cards with similar traits
-	    for(var t in sugggested['traits'])
-		if(suggested.istraitindecktext(suggested['traits'][t],deck) && suggested.iswordincard(suggested['traits'][t],cardc))
+	    var traits=['Dwarf','Rohan','Silvan','Noldor','Gondor','Ent','Eagle','Dunedain','Hobbit','Istari','Outlands','Ranger'];
+	    for(var t in traits)
+		if(suggested.istraitindecktext(traits[t],deck) && suggested.iswordincard(traits[t],cardc))
 		    suggestions.push(cardc);
-	    for(var t in suggested['traits'])
-		if(suggested.istraitinherotraits(suggested['traits'][t],deck) && suggested.iswordinstring(suggested['traits'][t],cardc.text))
+	    for(var t in traits)
+		if(suggested.istraitinherotraits(traits[t],deck) && suggested.iswordincard(traits[t]+' hero',cardc))
 		    suggestions.push(cardc);
-	    
+
 	    
 	}
 	// Loop over list of suggested cards
@@ -501,7 +501,7 @@
 	    if(suggested.iscardinlist(cardc,suggested[cardc.type])) continue;
 	    suggested.add(cardc,deck);
 	}
-	
+
     }
     // Sets the list of spheres that the deck has access to
     suggested.setspheres = function(deck) {
@@ -519,21 +519,6 @@
 	}
 	return 0;
     }
-    // Returns true if deck has hero with the proper trait to use the card
-    suggested.traitaccess = function(card,deck) {
-	var cardtext = card.text;
-	var regexp = /([A-Z][a-z]+) (?:or )?([A-Z][a-z]+)? ?(?:character|hero)/g;
-	var match = regexp.exec(cardtext);
-	if (match.length==0) return 1; // Card has no trait requirements
-	for (var m in match) {
-	    var trait = match[m];
-	    for (var h in deck['1hero']) {
-		var hero = deck['1hero'][h];
-		if (suggested.isnameinstring(trait,hero.traits)) return 1;
-	    }
-	}
-	return 0;
-    }
     suggested.add = function(card,deck) {
 	// Check if there is an ally or hero with the same name already in the deck
 	var samename=suggested.samename(card,deck);
@@ -541,14 +526,11 @@
 	var propersphere=suggested.sphereaccess(card.sphere,deck);
 	// Check if card is in an available pack
 	var properexp=0;
-	// Check if there is a proper trait character in the deck to use the card
-	//var propertrait=suggested.traitaccess(card,deck);
 	for(var k in filtersettings.pack)
 	    if(filtersettings.pack[k]==card.exp) properexp=1;
 	if (samename) return;
 	if (!propersphere && card.type!='1hero') return; // Hero suggestions are exempt from requiring a sphere match
 	if (!properexp) return;
-	//	if (!propertrait) return;
 	if (card.sphere=='6baggins'||card.sphere=='7fellowship') return; // Never suggest cards of these spheres
 	suggested[card.type].push(card);
     };
