@@ -425,10 +425,6 @@
     {name_norm: "Foe-hammer", exp: "thohauh"}
 	     ];
 
-    // Case-by-case match. Returns 1 if the card should be suggested, based on what is in deck
-    suggested.match = function(card,deck) {
-	
-    }
     
     // This is the main function, it gets called whenever the cards in the deck change and updates the suggestions
     suggested.deckchange = function(card,deck) {
@@ -526,7 +522,6 @@
 	var cardtext = card.text;
 	var regexp = /([A-Z][a-z]+) (?:or )?([A-Z][a-z]+)? ?(?:character|hero)/g;
 	var match = regexp.exec(cardtext);
-	alert(match);
 	if (match.length==0) return 1; // Card has no trait requirements
 	for (var m in match) {
 	    var trait = match[m];
