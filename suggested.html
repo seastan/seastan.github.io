@@ -1,16 +1,21 @@
 <div class="suggesteddiv">
   
   <h4 ng-show="suggested.countTotal()">Suggested</h4>
+  <button class="packbutton" style="width:200px;height:25px" ng-show="suggested.blacklist.length" ng-click="deck.clearsuggestedblacklist()" ng-class="">
+    Clear Blocked Suggestions
+  </button>
   <table class="suggested">
     <tr class="head" ng-show="suggested.countHeroes()"><td style="width:100px"></td><td>Heroes</td></tr>
     <tr class="card" ng-repeat="card in suggested['1hero'] | orderBy:['sphere','name_norm']" ng-mouseover="suggestedC.changepreview(card)">
       <td style="font-size:0;text-align:center;">
+        <button class="cardbutton" ng-class="" ng-click="suggested.remove(card)">X</button>
         <button class="cardbutton" ng-class="{selected: deck.quantity(card)==1}" ng-click="deck.change(card,1)">1</button>
       </td>
       <td class="c{{card.sphere}}">{{card.name}}</td></li>
     <tr class="head" ng-show="suggested.countAllies()"><td></td><td>Allies</td></tr>
     <tr class="card" ng-repeat="card in suggested['2ally'] | orderBy:['sphere','name_norm']" ng-mouseover="suggestedC.changepreview(card)">
       <td style="font-size:0;">
+        <button class="cardbutton" ng-class="" ng-click="suggested.remove(card)">X</button>
         <button class="cardbutton" ng-class="{selected: deck.quantity(card)==1}" ng-click="deck.change(card,1)">1</button>
         <button class="cardbutton" ng-class="{selected: deck.quantity(card)==2}" ng-click="deck.change(card,2)" ng-hide="card.restrict || (suggested.filtersettings.onecore && card.corequantity < 2 && deck.quantity(card)<2 )">2</button>
         <button class="cardbutton" ng-class="{selected: deck.quantity(card)==3}" ng-click="deck.change(card,3)" ng-hide="card.restrict || (suggested.filtersettings.onecore && card.corequantity < 3 && deck.quantity(card)<3 ) || (suggested.filtersettings.twocore && card.corequantity < 2 && deck.quantity(card) < 3)">3</button>
@@ -19,6 +24,7 @@
     <tr class="head" ng-show="suggested.countAttachments()"><td></td><td>Attachments</td></tr>
     <tr class="card" ng-repeat="card in suggested['3attachment'] | orderBy:['sphere','name_norm']" ng-mouseover="suggestedC.changepreview(card)">
       <td style="font-size:0;">
+        <button class="cardbutton" ng-class="" ng-click="suggested.remove(card)">X</button>
         <button class="cardbutton" ng-class="{selected: deck.quantity(card)==1}" ng-click="deck.change(card,1)">1</button>
         <button class="cardbutton" ng-class="{selected: deck.quantity(card)==2}" ng-click="deck.change(card,2)" ng-hide="card.restrict || (suggested.filtersettings.onecore && card.corequantity < 2 && deck.quantity(card)<2 )">2</button>
         <button class="cardbutton" ng-class="{selected: deck.quantity(card)==3}" ng-click="deck.change(card,3)" ng-hide="card.restrict || (suggested.filtersettings.onecore && card.corequantity < 3 && deck.quantity(card)<3 ) || (suggested.filtersettings.twocore && card.corequantity < 2 && deck.quantity(card) < 3)">3</button>
@@ -27,6 +33,7 @@
     <tr class="head" ng-show="suggested.countEvents()"><td></td><td>Events</td></tr>
     <tr class="card" ng-repeat="card in suggested['4event'] | orderBy:['sphere','name_norm']" ng-mouseover="suggestedC.changepreview(card)">
       <td style="font-size:0;">
+        <button class="cardbutton" ng-class="" ng-click="suggested.remove(card)">X</button>
         <button class="cardbutton" ng-class="{selected: deck.quantity(card)==1}" ng-click="deck.change(card,1)">1</button>
         <button class="cardbutton" ng-class="{selected: deck.quantity(card)==2}" ng-click="deck.change(card,2)" ng-hide="card.restrict || (suggested.filtersettings.onecore && card.corequantity < 2 && deck.quantity(card)<2 )">2</button>
         <button class="cardbutton" ng-class="{selected: deck.quantity(card)==3}" ng-click="deck.change(card,3)" ng-hide="card.restrict || (suggested.filtersettings.onecore && card.corequantity < 3 && deck.quantity(card)<3 ) || (suggested.filtersettings.twocore && card.corequantity < 2 && deck.quantity(card) < 3)">3</button>
@@ -35,6 +42,7 @@
     <tr class="head" ng-show="suggested.countQuests()"><td></td><td>Quests</td></tr>
     <tr class="card" ng-repeat="card in suggested['5quest'] | orderBy:['sphere','name_norm']" ng-mouseover="suggestedC.changepreview(card)">
       <td style="font-size:0;">
+        <button class="cardbutton" ng-class="" ng-click="suggested.remove(card)">X</button>
         <button class="cardbutton" ng-class="{selected: deck.quantity(card)==1}" ng-click="deck.change(card,1)">1</button>
         <button class="cardbutton" ng-class="{selected: deck.quantity(card)==2}" ng-click="deck.change(card,2)" ng-hide="card.restrict || (suggested.filtersettings.onecore && card.corequantity < 2 && deck.quantity(card)<2 )">2</button>
         <button class="cardbutton" ng-class="{selected: deck.quantity(card)==3}" ng-click="deck.change(card,3)" ng-hide="card.restrict || (suggested.filtersettings.onecore && card.corequantity < 3 && deck.quantity(card)<3 ) || (suggested.filtersettings.twocore && card.corequantity < 2 && deck.quantity(card) < 3)">3</button>
