@@ -1,10 +1,16 @@
 <div class="suggesteddiv">
   
-  <h4 ng-show="suggested.countTotal()">Suggested</h4>
-  <button class="packbutton" style="width:200px;height:25px" ng-show="suggested.blacklist.length" ng-click="deck.clearsuggestedblacklist()" ng-class="">
+  <h4 ng-show="!suggested.empty()&&!suggested.hidden()">Suggested</h4>
+  <button class="packbutton" style="width:200px;height:25px" ng-show="!suggested.empty()&&!suggested.hidden" ng-click="suggested.hide()" ng-class="">
+    Hide Suggestions
+  </button>
+  <button class="packbutton" style="width:200px;height:25px" ng-show="!suggested.empty()&&suggested.hidden" ng-click="suggested.show()" ng-class="">
+    Show Suggestions
+  </button>
+  <button class="packbutton" style="width:200px;height:25px" ng-show="suggested.blacklist.length" ng-click="suggested.clearBlacklist()" ng-class="">
     Clear Blocked Suggestions
   </button>
-  <table class="suggested">
+  <table class="suggested" ng-show="!suggested.hidden">
     <tr class="head" ng-show="suggested.countHeroes()"><td style="width:100px"></td><td>Heroes</td></tr>
     <tr class="card" ng-repeat="card in suggested['1hero'] | orderBy:['sphere','name_norm']" ng-mouseover="suggestedC.changepreview(card)">
       <td style="font-size:0;text-align:center;">

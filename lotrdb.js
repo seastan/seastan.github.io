@@ -279,12 +279,7 @@
           }
       }
       // Get list of suggestions for deck
-      suggested.deckchange(this);
-    };
-    // This strange way of calling 'suggested' functions was the only way I could figure out how to pass the deck object to those functions. There is almost certainly a better way.
-    deck.clearsuggestedblacklist = function() {
-	suggested.clearblacklist(this);
-	suggested.deckchange(this); // Even though the deck didn't change, we pretend it did so that it repopulates the suggestions.
+      suggested.deckChange(this);
     };
     deck.quantity = function(card){
       for (var c in deck[card.type]){
@@ -376,6 +371,7 @@
           }
         }
       }
+      deck.clearSuggestedBlacklist();
     };
     
     deck.loadLegacy = function(deckObject) {
@@ -408,6 +404,8 @@
 
   app.factory('suggested', ['filtersettings','cardObject',function(filtersettings,cardObject){
       var suggested={};
+      suggested.hidden=0;
+      suggested.deck=[];
       suggested.filtersettings = filtersettings;
       suggested.allcards = cardObject;
       suggested['sphere']=[];
@@ -416,8 +414,11 @@
       suggested['3attachment']=[];
       suggested['4event']=[];
       suggested['5quest']=[];
-      suggested['traits']=['Dwarf','Rohan','Silvan','Noldor','Gondor','Ent','Eagle','Dunedain','Hobbit','Istari','Outlands','Ranger'];
-      suggested.targetsindeck=[];
+      suggested['traits']=['Dwarf','Rohan','Silvan','Noldor','Gondor','Ent','Eagle','Dunedain','Hobbit','Istari','Outlands','Ranger','Scout','Outlands','Ranged','Sentinel','Weapon'];
+      suggested.targetsInDeck=[];
+      suggested.targetOptionsForDeck=[];
+      suggested.traitSpecificTargetsInDeck=[];
+      suggested.traitSpecificTargetOptionsForDeck=[];
       suggested.blacklist=[];
       suggested.staples=[
 	  {name_norm: "A Test of Will", exp: "core"},
@@ -430,23 +431,10 @@
 	  {name_norm: "Quick Strike", exp: "core"},
 	  {name_norm: "Foe-hammer", exp: "thohauh"}
       ];
-      // Remove from suggested
-      suggested.remove = function(card) {	
-          for (var c in suggested[card.type]){
-              if (suggested[card.type][c].cycle==card.cycle && suggested[card.type][c].no==card.no){
-		  suggested[card.type].splice(c, 1);
-              }
-	  }  
-	  suggested.blacklist.push(card);
-      }
-      // Clear the blacklisted cards
-      suggested.clearblacklist = function() {	
-	  suggested.blacklist=[];
-      }
-
 
       // This is the main function, it gets called whenever the cards in the deck change and updates the suggestions
-      suggested.deckchange = function(deck) {
+      suggested.deckChange = function(deck) {
+	  suggested.deck=deck;
 	  // Clear the suggestions
 	  suggested['1hero']=[];
 	  suggested['2ally']=[];
@@ -454,155 +442,231 @@
 	  suggested['4event']=[];
 	  suggested['5quest']=[];
 	  // Set the spheres that the deck has access to
-	  suggested.setspheres(deck);
-	  suggested.targetsindeck = suggested.gettargetsindeck(deck);
+	  suggested.setSpheres();
+	  // Set the list of target options in the deck
+	  suggested.setTargetsInDeck();
+	  suggested.setTraitSpecificTargetsInDeck();
+	  suggested.setTargetOptionsForDeck();
+	  suggested.setTraitSpecificTargetOptionsForDeck();
 	  // Loop over all the cards and see if they should be suggested
 	  var suggestions=[]; // List of cards to suggest
 	  for(var c in suggested.allcards) {
 	      var cardc = suggested.allcards[c];
-	      
+	      var traitSpecificTargetsInCard = suggested.getTraitSpecificTargetsInCard(cardc);
+	      var traitSpecificTargetOptionsForCard = suggested.getTraitSpecificTargetOptionsForCard(cardc);
 	      // Suggest card if it's a staple
 	      for(var s in suggested.staples) {
-		  if (cardc.name_norm==suggested.staples[s].name_norm && cardc.exp==suggested.staples[s].exp) 
+		  if (cardc.name_norm==suggested.staples[s].name_norm && cardc.exp==suggested.staples[s].exp) {
 		      suggestions.push(cardc);
+		  }
 	      }
-	      
 	      // Suggest cards that have a hero's name in the text
 	      for(var h in deck['1hero']) {
-		  var heroname = deck['1hero'][h].name;
-		  if(suggested.iswordinstring(heroname+'.',cardc.text) || suggested.iswordinstring(heroname+' ',cardc.text) )
-		      suggestions.push(cardc);
+	      	  var heroname = deck['1hero'][h].name;
+	      	  if(suggested.isWordInString(heroname+'.',cardc.text) || suggested.isWordInString(heroname+' ',cardc.text) || suggested.isWordInString(heroname+',',cardc.text)) {
+	      	      suggestions.push(cardc);
+	      	  }
+	      }
+	      // Suggest Trap cards for Damrod
+	      if (suggested.isInDeck('Damrod','tlos') && suggested.isWordInString('Trap',cardc.traits)) {
+	      	  suggestions.push(cardc);
 	      }
 	      
-	      // Suggest Trap cards for Damrod
-	      if (suggested.isindeck('Damrod','tlos',deck) && suggested.iswordinstring('Trap',cardc.traits))
-		  suggestions.push(cardc);
-	      
 	      // Suggest heal/hit point cards for Gloin, Treebeard, Gimil
-	      if ( (suggested.isindeck('Gloin','core',deck) || suggested.isindeck('Gimli','core',deck) || suggested.isindeck('Treebeard','tos',deck)) && (suggested.iswordinstring('heal',cardc.text) || suggested.iswordinstring('hit point',cardc.text)) )
-		  suggestions.push(cardc);
-	      
+	      if ( (suggested.isInDeck('Gloin','core') || suggested.isInDeck('Gimli','core') || suggested.isInDeck('Treebeard','tos')) && (suggested.isWordInString('heal',cardc.text) || suggested.isWordInString('hit point',cardc.text)) )
+	      	  suggestions.push(cardc);
+
+	      // Suggest healing cards for Elrond
+	      if (suggested.isInDeck('Elrond','saf') && suggested.isWordInString('heal',cardc.text))
+	      	  suggestions.push(cardc);
+	      // Suggest high cost cards for Vilya
+	      if (suggested.isInDeck('Vilya','saf') && cardc.cost>=4 && cardc.type!='1hero')
+		  suggested.add(cardc); // Bypass basic checks
+
 	      // Suggest spirit heroes for Caldara
-	      if (suggested.isindeck('Caldara','tbog',deck) && cardc.sphere=='3spirit' && cardc.type=='1hero')
-		  suggestions.push(cardc);
-	      
+	      if (suggested.isInDeck('Caldara','tbog') && cardc.sphere=='3spirit' && cardc.type=='1hero')
+	      	  suggestions.push(cardc);
+	      // Suggest tactics heroes for Thoeden
+	      if (suggested.isInDeck('Theoden','tmv') && cardc.sphere=='2tactics' && cardc.type=='1hero')
+	      	  suggestions.push(cardc);
+
+	      // Suggest victory display for Rossiel
+	      if (suggested.isInDeck('Rossiel','efmg') && suggested.isWordInString('victory',cardc.text))
+	      	  suggestions.push(cardc);
+
+
 	      // Suggest doomed for Grima
-	      if (suggested.isindeck('Grima','voi',deck) || suggested.isindeck('Grima hero','voi',deck) && (suggested.iswordinstring('oomed',cardc.text)||suggested.iswordinstring('oomed',cardc.keywords)))
+	      if (suggested.isInDeck('Grima','voi') || suggested.isInDeck('Grima hero','voi') && (suggested.isWordInString('oomed',cardc.text)||suggested.isWordInString('oomed',cardc.keywords)))
+	      	  suggestions.push(cardc);
+	      // Suggest threat reudction for Boromir, Dunhere, or Hobbit Gandalf
+	      if ((suggested.isInDeck('Boromir','tdm') || suggested.isInDeck('Gandalf','thohauh') || suggested.isInDeck('Dunhere','core')) && (/([L|l]ower|[R|r]educe)/.test(cardc.text)) && (/[T|t]hreat/.test(cardc.text)) && !(/[E|e]ncounter/.test(cardc.text)))
 		  suggestions.push(cardc);
 	      
 	      // Suggest location cards for Idraen
-	      if (suggested.isindeck('Idraen','ttt',deck) && suggested.iswordinstring('explored',cardc.text))
-		  suggestions.push(cardc);
-	      if (suggested.isindeck('Idraen','ttt',deck) && suggested.iswordinstring('progress',cardc.text) && suggested.iswordinstring('location',cardc.text))
-		  suggestions.push(cardc);
+	      if (suggested.isInDeck('Idraen','ttt') && suggested.isWordInString('explored',cardc.text))
+	      	  suggestions.push(cardc);
+	      if (suggested.isInDeck('Idraen','ttt') && suggested.isWordInString('progress',cardc.text) && suggested.isWordInString('location',cardc.text))
+	      	  suggestions.push(cardc);
 	      
-	      // Sugest discard pile cards for Arwen
-	      if (suggested.isindeck('Arwen Undomiel','tdr',deck) && suggested.iswordinstring('discard pile',cardc.text))
-		  suggestions.push(cardc);
+	      // Sugest discard pile cards for Arwen or Erestor
+	      if ((suggested.isInDeck('Arwen Undomiel','tdr')||suggested.isInDeck('Erestor','ttor')) && suggested.isWordInString('discard pile',cardc.text) && !suggested.isWordInString('encounter',cardc.text))
+	      	  suggestions.push(cardc);
+
+	      // Sugest encounter cards for Denethor
+	      if (suggested.isInDeck('Denethor','core') && suggested.isWordInString('top',cardc.text) && suggested.isWordInString('encounter deck',cardc.text))
+	      	  suggestions.push(cardc);
+
+	      // Sugest Tactics Events for Hama
+	      if (suggested.isInDeck('Hama','tld') && (cardc.sphere=='2tactics') && (cardc.type=='4event'))
+	      	  suggestions.push(cardc);
 	      
 	      // Suggest weapon/armour for Beregond
-	      if (suggested.isindeck('Beregond','hon',deck) && suggested.iswordinstring('Weapon',cardc.traits))
-		  suggestions.push(cardc);	    
-	      if (suggested.isindeck('Beregond','hon',deck) && suggested.iswordinstring('Armor',cardc.traits))
-		  suggestions.push(cardc);	    
+	      if (suggested.isInDeck('Beregond','hon') && suggested.isWordInString('Weapon',cardc.traits))
+	      	  suggestions.push(cardc);	    
+	      if (suggested.isInDeck('Beregond','hon') && suggested.isWordInString('Armor',cardc.traits))
+	      	  suggestions.push(cardc);	    
 	      
 	      // Suggest engage cards
-	      if (suggested.iswordindeck('engage ',deck) && suggested.iswordincard('engage ',cardc))
-		  suggestions.push(cardc);
+	      if (suggested.isWordInDeck('engage ') && (suggested.isWordInCard('engage ',cardc) || suggested.isWordInCard('into play engaged',cardc)))
+	      	  suggestions.push(cardc);
 	      // Suggest engagement cost cards
-	      if (suggested.iswordindeck('engagement cost',deck) && suggested.iswordincard('engagement cost ',cardc))
-		  suggestions.push(cardc);
-	      
-	      // Suggest Weapons for Warriors
-	       if (suggested.istraitinherotraits('Warrior',deck) && suggested.iswordincard('eapon',cardc) && (cardc.type=='3attachment'||cardc.type=='4event'))
-	       	   suggestions.push(cardc);
-	      
-	      // Suggest cards with similar traits
-	      for(var t in suggested['traits'])
-		  if(suggested.istraitindecktext(suggested.traits[t],deck) && suggested.iswordincard(suggested.traits[t],cardc.traits)) // Example: If Eomund is in deck, suggest all characters with Rohan trait
-		      suggestions.push(cardc);
-	      // If hero has a trait, suggest cards that target that trait
-	       for(var t in suggested['traits'])
-	           if(suggested.istraitinherotraits(suggested.traits[t],deck) && suggested.istraittargettedbycard(suggested.traits[t],cardc))
-	       	       suggestions.push(cardc);
+	      if (suggested.isWordInDeck('engagement cost') && suggested.isWordInCard('engagement cost ',cardc))
+	      	  suggestions.push(cardc);
 
+	      // Suggest Dwarf Swarm cards
+	      if (suggested.isWordInDeck('Dwarf characters') && suggested.isWordInString('Dwarf characters',cardc.text))
+	      	  suggestions.push(cardc);
+
+	      // Suggest mono sphere cards
+	      if (suggested.monoSphere() && (/[E|e]ach hero you control/.test(cardc.text)) && suggested.isWordInString('icon',cardc.text))
+		  suggestions.push(cardc);
+	      if (suggested.monoSphere() && suggested.isWordInString('from 3 different',cardc.text))
+		  suggestions.push(cardc);
+
+	      // Suggest all allies of a trait if all the heroes have that trait
+	      var monoTrait = suggested.monoTrait();
+	      for (var t in monoTrait)
+		  if (suggested.isWordInString(monoTrait[t],cardc.traits))
+		      suggestions.push(cardc);
 	      
-	      
+	      // Suggest secrecy
+	      if (suggested.isSecrecy() && (/[S|s]ecrecy/.test(cardc.textc)))
+		  suggestions.push(cardc);		  
+ 
+	      // Suggest Weapons for Warriors
+	      if (suggested.isTraitInHeroTraits('Warrior') && suggested.isWordInCard('eapon',cardc) && (cardc.type=='3attachment'||cardc.type=='4event'))
+	       	  suggestions.push(cardc);
+
+	      // Troubleshooting
+	      // if (cardc.name_norm=="The Day's Rising"){
+	      // alert(suggested.targetListToString(suggested.targetOptionsForDeck));
+	      // alert(suggested.targetListToString(traitSpecificTargetsInCard));
+	      // }
+
+
+	      // Suggest cards with similar traits. Example: If Eomund is in deck, suggest all characters with Rohan trait
+	      if (suggested.matchInTargetLists(suggested.traitSpecificTargetsInDeck,traitSpecificTargetOptionsForCard))
+	      	  suggestions.push(cardc);
+	      if (suggested.matchInTargetLists(suggested.traitSpecificTargetOptionsForDeck,traitSpecificTargetsInCard))
+	      	  suggestions.push(cardc);
+
 	  }
+
 	  // Loop over list of suggested cards
 	  for(var c in suggestions) {
+	      
 	      var cardc = suggestions[c];
 	      // Only suggest cards that are not already in suggested
-	      if(suggested.iscardinlist(cardc,suggested[cardc.type])) continue;
-	      suggested.add(cardc,deck);
-	  }
-	  
-      }
+	      if(suggested.isCardInList(cardc,suggested[cardc.type])) continue;
+	      suggested.check(cardc);
+	  }	  
+      };
 
-      suggested.add = function(card,deck) {
+      // Check to make sure the card makes sense to suggest
+      suggested.check = function(card) {
+	  // Check if there is a hero with access to the necessary sphere to play the card
+	  var propersphere=suggested.sphereAccess(card);
+	  // Check if there is a proper target in the deck that can use the card
+	  var propertarget=suggested.deckHasTargetOption(card);
+	  // Cards that have been hand-picked to never be suggested
+	  var vetolisted=suggested.isCardInVetoList(card.name_norm,card.exp);
+	  
+	  var debug = '';
+	  if (vetolisted) return;
+	  if (!propersphere && card.type!='1hero') return; // Hero suggestions are exempt from requiring a sphere match
+	  if (card.sphere=='6baggins'||card.sphere=='7fellowship') return; // Never suggest cards of these spheres
+	  if (!propertarget) return;
+	  suggested.add(card);
+      };
+
+      // Final set of check before adding the card. Should not be bypassed.
+      suggested.add = function(card) {
+	  // Check is card is in blacklist
+	  var blacklisted=suggested.isCardInList(card,suggested.blacklist);
 	  // Check if there is an ally or hero with the same name already in the deck
-	  var samename=suggested.samename(card,deck);
-	  // Check if there is a hero with access to the sphere of the card
-	  var propersphere=suggested.sphereaccess(card.sphere,deck);
+	  var sameName=suggested.sameName(card);
 	  // Check if card is in an available pack
 	  var properexp=0;
 	  for(var k in filtersettings.pack)
 	      if(filtersettings.pack[k]==card.exp) properexp=1;
-	  // Check if there is a proper target in the deck that can use the card
-	  var propertarget=suggested.deckhastarget(card,deck);
-	  // Check is card is in blacklist
-	  var blacklisted=suggested.iscardinlist(card,suggested.blacklist);
 
 	  if (blacklisted) return;
-	  if (samename) return;
-	  if (!propersphere && card.type!='1hero') return; // Hero suggestions are exempt from requiring a sphere match
+	  if (sameName) return;
 	  if (!properexp) return;
-	  if (card.sphere=='6baggins'||card.sphere=='7fellowship') return; // Never suggest cards of these spheres
-	  if (!propertarget) return;
-	  suggested[card.type].push(card);
-      };
 
+	  suggested[card.type].push(card);
+	  
+      }
+      // Define the vetolist here
+      suggested.isCardInVetoList = function(name,exp) {
+	  if (name=='Pippin' && exp=='eaad') return 1;
+	  else if (name=='The End Comes' && exp=='rtr') return 1;
+	  return 0;
+      }
 
       // Sets the list of spheres that the deck has access to
-      suggested.setspheres = function(deck) {
+      suggested.setSpheres = function() {
+	  var deck = suggested.deck;
 	  suggested['sphere']=[];
 	  for(var c in deck['1hero']) {
 	      suggested['sphere'].push(deck['1hero'][c].sphere);
 	  }
 	  if(deck['1hero'].length>0) suggested['sphere'].push('5neutral');
-	  if(suggested.isindeck('Oin','thotd',deck))
+	  if(suggested.isInDeck('Oin','thotd'))
 	      suggested['sphere'].push('2tactics');
-	  if(suggested.isindeck('Amarthiul','tbocd',deck))
+	  if(suggested.isInDeck('Amarthiul','tbocd'))
 	      suggested['sphere'].push('2tactics');
 	  
-      }
+      };
 
       // Returns true if deck has access to given sphere
-      suggested.sphereaccess = function(sphere,deck) {
-	  //	suggested.setspheres(deck); // This currently gets called whenever a card is added to the deck
-	  for (var s in suggested['sphere']) {
-	      if(suggested['sphere'][s]==sphere) return 1;
-	  }
+      suggested.sphereAccess = function(card) {
+	  var sphere = card.sphere;
+	  for (var s in suggested['sphere'])
+	      if(suggested['sphere'][s]==sphere)
+		  return 1;
+	  // Special cases
+	  if (suggested.isInDeck('Elrond','saf') && card.type=='2ally')
+	      return 1;
+	  if (suggested.isInDeck('Hirluin the Fair','tsf') && card.type=='2ally' && suggested.isWordInString('Outlands',card.traits))
+	      return 1;
 	  return 0;
-      }
+      };
+      
+      
       
       // Returns 1 if the deck has an eligible target for the card
-      suggested.deckhastarget = function(card,deck) {
-	  var cardtargets = suggested.gettargetsincard(card);
-	  for (var t in cardtargets) {
-	      var target = cardtargets[t];
-	      var targetfound = 0;
-//	      alert(card.name_norm+' '+target.trait+' '+target.type);
-	      if (suggested.istargetinlist(target,suggested.targetsindeck))
-		  targetfound=1;
-//	      alert(targetfound);
-	      if (targetfound==0) return 0;
-	  }
-	  return 1; // Found all targets
-      }
+      suggested.deckHasTargetOption = function(card) {
+	  var targetsincard = suggested.getTargetsInCard(card);
+	  // Just have to macth one of the targets in the card with a targetoption for the deck
+	  if (targetsincard.length==0) return 1;
+	  for (var t in targetsincard)
+	      if (suggested.isTargetInList(targetsincard[t],suggested.targetOptionsForDeck))
+	   	  return 1;
+	  return 0;
+      };
       
-      
-      // Returns list of targets in the deck. If only Core Gloin was in the deck the returned targets would look like:
+      // Returns list of target options for the card. If Core Gloin was the card, the returned list would look like:
       // [{trait:'None',type:'hero'},
       //  {trait:'None',type:'character'},
       //  {trait:'Leadership',type:'hero'},
@@ -611,46 +675,119 @@
       //  {trait:'Dwarf',type:'character'},
       //  {trait:'Noble',type:'hero'},
       //  {trait:'Noble',type:'character'}]
-      suggested.gettargetsindeck = function(deck) {
-	  var targets =[];
+      suggested.getTargetOptionsForCard = function(card) {
+	  // Special case
+	  if (card.name_norm=='Beorn' && card.exp=='thohauh') return []; // Beorn cannot be a target option for any player card
+	  // 
+	  var targets = [];
 	  var regextrait = /([A-Z][\u00BF-\u1FFF\u2C00-\uD7FF\w]+)/g;
-	  // Loop over heroes
-	  for (var h in deck['1hero']) {
-	      var hero = deck['1hero'][h];
-	      targets.push({trait:'None',type:'hero'});
-	      targets.push({trait:'None',type:'character'});
-	      targets.push({trait:suggested.normalize(hero.sphere),type:'hero'});
-	      targets.push({trait:suggested.normalize(hero.sphere),type:'character'});
-	      var match = regextrait.exec(hero.traits);
-	      while (match != null) {
-		  targets.push({trait:match[0],type:'hero'});
-		  targets.push({trait:match[0],type:'character'});
-		  match = regextrait.exec(hero.traits);
-	      }
-	  }	  
-	  for (var a in deck['2ally']) {
-	      var ally = deck['2ally'][a];
-	      targets.push({trait:'None',type:'ally'});
-	      targets.push({trait:'None',type:'character'});
-	      targets.push({trait:suggested.normalize(ally.sphere),type:'ally'});
-	      targets.push({trait:suggested.normalize(ally.sphere),type:'character'});
-	      var match = regextrait.exec(ally.traits);
-	      while (match != null) {
-		  targets.push({trait:match[0],type:'ally'});
-		  targets.push({trait:match[0],type:'character'});
-		  match = regextrait.exec(ally.traits);
-	      }
-	  }	  
+	  var typen = suggested.normalize(card.type);
+	  targets.push({trait:'None',type:typen});
+	  targets.push({trait:'None',type:'character'});
+	  targets.push({trait:suggested.normalize(card.sphere),type:typen});
+	  targets.push({trait:suggested.normalize(card.sphere),type:'character'});
+	  var match = regextrait.exec(card.traits);
+	  while (match != null) {
+	      targets.push({trait:match[0],type:typen});
+	      targets.push({trait:match[0],type:'character'});
+	      match = regextrait.exec(card.traits);
+	  }
+	  if (suggested.isWordInString('Ranged',card.keywords)) {
+	      targets.push({trait:'Ranged',type:typen});
+	      targets.push({trait:'Ranged',type:'character'});
+	  }
+	  if (suggested.isWordInString('Sentinel',card.keywords)) {
+	      targets.push({trait:'Sentinel',type:typen});
+	      targets.push({trait:'Sentinel',type:'character'});
+	  }
 	  return targets;
-      }
+      };
+
+      suggested.getTraitSpecificTargetOptionsForCard = function(card) {
+	  return suggested.traitSpecificFilter(suggested.getTargetOptionsForCard(card));
+      };
+      
+      // Returns a list of targets that are in the card and specific to the given trait
+      suggested.getTraitSpecificTargetsInCard = function(card) {
+	  return suggested.traitSpecificFilter(suggested.getTargetsInCard(card));
+      };
+
+      // Filter out all targets that are not one of the globally named traits
+      suggested.traitSpecificFilter = function(list) {
+	  targets = [];
+	  for (var t in list)
+	      if (suggested.isWordInList(list[t].trait,suggested.traits))
+		  targets.push(list[t]);
+	  return targets;
+      };
+
+      // Sets list of targets in the deck
+      suggested.setTargetsInDeck = function() {
+	  var deck = suggested.deck;
+	  var targets = [];
+	  // Loop over cards
+	  var types = ['1hero','2ally','3attachment','4event','5quest'];
+	  for (var t in types)
+	      for (var c in deck[types[t]]) {
+		  var newtargets = suggested.getTargetsInCard(deck[types[t]][c]);
+		  targets=targets.concat(newtargets);
+	      }
+	  suggested.targetsInDeck = targets;
+      };
+
+      // Sets list of targets in the deck that specify one of the globally named traits
+      suggested.setTraitSpecificTargetsInDeck = function() {
+	  var deck = suggested.deck;
+	  suggested.traitSpecificTargetsInDeck = suggested.traitSpecificFilter(suggested.targetsInDeck);
+      };
+            
+      // Sets list of targets options for the deck.
+      suggested.setTargetOptionsForDeck = function() {
+	  var deck = suggested.deck;
+	  var targets = [];
+	  var regextrait = /([A-Z][\u00BF-\u1FFF\u2C00-\uD7FF\w]+)/g;
+	  // Loop over cards
+	  var types = ['1hero','2ally','3attachment'];
+	  for (var t in types)
+	      for (var c in deck[types[t]]) {
+		  var newtargets = suggested.getTargetOptionsForCard(deck[types[t]][c]);
+		  targets=targets.concat(newtargets);
+		  
+	      }
+	  suggested.targetOptionsForDeck = targets;
+      };
+
+      // Sets list of targets options for the deck that have one of the globally named traits
+      suggested.setTraitSpecificTargetOptionsForDeck = function() {
+	  var deck = suggested.deck;
+	  suggested.traitSpecificTargetOptionsForDeck = suggested.traitSpecificFilter(suggested.targetOptionsForDeck);
+      };
+
+      // Convert list of targets to a printable string
+      suggested.targetListToString = function(list) {
+	  var string = '';
+	  for (var t in list) {
+	      var target = list[t];
+	      string=string+target.trait+' '+target.type+' / ';
+	  }
+	  return string;	      
+      };
       
       // Checks if a target is in a list of targets
-      suggested.istargetinlist = function(target,list) {
+      suggested.isTargetInList = function(target,list) {
 	  for (var t in list)
 	      if (target.trait==list[t].trait && target.type==list[t].type)
 		  return 1;
 	  return 0;
-      }
+      };
+      
+      // Returns 1 if there is a target in listA that matches a target in listB
+      suggested.matchInTargetLists = function(listA,listB) {
+	  for (var t in listA)
+	      if (suggested.isTargetInList(listA[t],listB))
+		  return 1;
+	  return 0;
+      };
       
       // Converts '2tactics' to 'Tactics', etc.
       suggested.normalize = function(word) {
@@ -661,83 +798,118 @@
 	  if (word=='5neutral') return 'Neutral';
 	  if (word=='6baggins') return 'Baggins';
 	  if (word=='7fellowship') return 'Fellowship';
+	  if (word=='1hero') return 'hero';
+	  if (word=='2ally') return 'ally';
+	  if (word=='3attachment') return 'attachment';
+	  if (word=='4event') return 'event';
+	  if (word=='5quest') return 'quest';
 	  return '';
-      }
+      };
 
-      // Returns list of traits targetted by the card text
-      suggested.gettargetsincard = function(card) {
-	  var targets = [] // List of targets for the card. 
+      // Returns list of targets targetted by the card text
+      suggested.getTargetsInCard = function(card) {
+	  var targets = [] // List of targets named by the card. 
 	  // A returned list for Quick Ears would look like [{trait:'Dunedain',type:'hero'},{trait:'Ranger',type:'hero'}]
 	  // A returned list for Unexpected Courage would look like [{trait:'None',type:'hero'}]
 	  // A returned list for Spear of the Citadel would look like [{trait:'Tactics',type:'character'}]
 	  // A returned list for Valiant Sacrifice would be [{trait:none,type:'ally'}]
-
-	  // Match targets like 'a hero'
-	  var ahero = /a hero/.exec(card.text);
-	  if (ahero) targets.push({trait:'None',type:'hero'})
-	  var aally = /an ally/.exec(card.text);
-	  if (aally) targets.push({trait:'None',type:'ally'})
-	  var acharacter = /a character/.exec(card.text);
-	  if (acharacter) targets.push({trait:'None',type:'character'})
-	  // Match targets like 'a Ranger hero'
-	  var atraithero = /(?:(?:a|an|1) )([A-Z][\u00BF-\u1FFF\u2C00-\uD7FF\w]+) (?:or )?([A-Z][\u00BF-\u1FFF\u2C00-\uD7FF\w]+)? ?(?:hero)/.exec(card.text);
-	  if (atraithero) {
-	      if (atraithero[1])
-		  targets.push({trait:atraithero[1],type:'hero'})
-	      if (atraithero[2])
-		  targets.push({trait:atraithero[2],type:'hero'})
-	  }
-	  var atraitally = /(?:(?:a|an|1) )([A-Z][\u00BF-\u1FFF\u2C00-\uD7FF\w]+) (?:or )?([A-Z][\u00BF-\u1FFF\u2C00-\uD7FF\w]+)? ?(?:ally|allies)/.exec(card.text);
-	  if (atraitally) {
-	      if (atraitally[1])
-		  targets.push({trait:atraitally[1],type:'ally'})
-	      if (atraitally[2])
-		  targets.push({trait:atraitally[2],type:'ally'})
-	  }
-	  var atraitcharacter = /(?:(?:a|an|1) )([A-Z][\u00BF-\u1FFF\u2C00-\uD7FF\w]+) (?:or )?([A-Z][\u00BF-\u1FFF\u2C00-\uD7FF\w]+)? ?(?:character)/.exec(card.text);
-	  if (atraitcharacter) {
-	      if (atraitcharacter[1])
-		  targets.push({trait:atraitcharacter[1],type:'character'})
-	      if (atraitcharacter[2])
-		  targets.push({trait:atraitcharacter[2],type:'character'})
-	  }
-	  // Match cards like 'with ranged' or 'sentinel character'
-	  var withranged = /with [R|r]anged/.exec(card.text);
-	  if (withranged)
-	      targets.push({trait:'Ranged',type:'character'})
 
 	  // Special cases
 	  if (card.name_norm=='Radagast' && card.exp=='ajtr') {
 	      targets.push({trait:'Creature',type:'hero'})
 	      targets.push({trait:'Creature',type:'ally'})
 	      targets.push({trait:'Creature',type:'character'})
+	      return targets;
 	  }
 	  if (card.name_norm=='Nori' && card.exp=='thohauh') {
 	      targets.push({trait:'Dwarf',type:'ally'})
+	      return targets;
 	  }
 	  if (card.name_norm=='Boromir' && card.exp=='hon') {
 	      targets.push({trait:'Gondor',type:'ally'})
+	      return targets;
 	  }
-	  return targets;
-      }
-      // Returns 1 if trait is targetted by the card. It will return 1 if trait is Noldor and card is Rivendell Blade
-      suggested.istraittargettedbycard = function(trait,card) {
-	  var targets = suggested.gettargetsincard(card);
-	  for (var t in targets)
-	      if (trait==targets[t].trait) return 1;
-	  return 0;
-      }
+	  if (card.name_norm=='Hirluin the Fair' && card.exp=='tsf') {
+	      targets.push({trait:'Outlands',type:'ally'})
+	      return targets;
+	  }
 
-      // Force a card to be suggested, bypassing checks. Done by name/exp.
-      suggested.forceadd = function(name_norm,exp,deck) {
+	  // Match certain attachments
+	  var atraitattachment = /(?:(?:a|an|1) )([A-Z][\u00BF-\u1FFF\u2C00-\uD7FF\w]+) (?:or )?([A-Z][\u00BF-\u1FFF\u2C00-\uD7FF\w]+)? ?(?:attachment|card attached)/.exec(card.text);
+	  if (atraitattachment) {
+	      if (atraitattachment[1])
+		  targets.push({trait:atraitattachment[1],type:'attachment'})
+	      if (atraitattachment[2])
+		  targets.push({trait:atraitattachment[2],type:'attachment'})
+	      return targets;
+	  }
+
+	  // Match targets like 'a hero'
+	  var acharacter = /(?: (?:a|an|1)) (hero|character|ally)(?! (?:you control )?with)/.exec(card.text);
+	  if (acharacter) targets.push({trait:'None',type:acharacter[1]});
+	  
+	  // Match targets like 'a Ranger hero'
+	  var atraithero = /(?:(?:a|an|1|Each|each) )([A-Z][\u00BF-\u1FFF\u2C00-\uD7FF\w]+) (?:or )?([A-Z][\u00BF-\u1FFF\u2C00-\uD7FF\w]+)? ?(?:hero)/.exec(card.text);
+	  if (atraithero) {
+	      if (atraithero[1])
+		  targets.push({trait:atraithero[1],type:'hero'})
+	      if (atraithero[2])
+		  targets.push({trait:atraithero[2],type:'hero'})
+	  }
+	  var atraitally = /(?:(?:a|an|1|first) )([A-Z][\u00BF-\u1FFF\u2C00-\uD7FF\w]+) (?:or )?([A-Z][\u00BF-\u1FFF\u2C00-\uD7FF\w]+)? ?(?:ally)/.exec(card.text);
+	  if (atraitally) {
+	      if (atraitally[1])
+		  targets.push({trait:atraitally[1],type:'ally'})
+	      if (atraitally[2])
+		  targets.push({trait:atraitally[2],type:'ally'})
+	  }
+	  var atraitcharacter = /(?:(?:a|an|1|defending|of|unique) )([A-Z][\u00BF-\u1FFF\u2C00-\uD7FF\w]+) (?:or )?([A-Z][\u00BF-\u1FFF\u2C00-\uD7FF\w]+)? ?(?:character|deals|cards|you control)/.exec(card.text);
+	  if (atraitcharacter) {
+	      if (atraitcharacter[1]) {
+		  targets.push({trait:atraitcharacter[1],type:'character'})
+	      }
+	      if (atraitcharacter[2]) {
+		  targets.push({trait:atraitcharacter[2],type:'character'})
+	      }
+	  }
+	  // Match cards like 'with ranged' or 'sentinel character'
+	  var withranged = /(hero|character).+with (the |printed )?([R|r]anged)/.exec(card.text);
+	  if (withranged) {
+	      targets.push({trait:'Ranged',type:withranged[1]})	      
+	  }
+	  var withsentinel = /(hero|character).+with (the |printed )?([S|s]entinel)/.exec(card.text);
+	  if (withsentinel) {
+	      targets.push({trait:'Sentinel',type:withsentinel[1]})	      
+	  }
+	  var rangedcharacter = /[R|r]ranged character/.exec(card.text);
+	  if (rangedcharacter) {
+	      targets.push({trait:'Ranged',type:'character'})	      
+	  }
+	  var sentinelcharacter = /[S|s]entinel character/.exec(card.text);
+	  if (sentinelcharacter) {
+	      targets.push({trait:'Sentinel',type:'character'})	      
+	  }
+
+	  return targets;
+      };
+
+      // Force a card to be suggested, bypassing most checks. Done by name/exp.
+      suggested.forceAdd = function(name_norm,exp) {
 	  for(var c in suggested.allcards) {
 	      var cardc = suggested.allcards[c];
-	      if (cardc.name_norm==name_norm && cardc.exp==exp)
-		  suggested[card.type].push(card);
+	      if (cardc.name_norm==name_norm && cardc.exp==exp && !suggested.sameName(cardc))
+		  suggested.add(card);
 	  }
-      }
+      };
+
+      // Force a card to be suggested, bypassing most checks. Done by card.
+      suggested.forceAddCard = function(card) {
+	  suggested.add(card);
+      };
+
       // Returns true if there is a in the deck by the same name as the given card
-      suggested.samename = function(card,deck){
+      suggested.sameName = function(card){
+	  var deck = suggested.deck;
 	  for (var c in deck[card.type]){
 	      if (deck[card.type][c].name_norm==card.name_norm){
 		  return 1;
@@ -757,14 +929,14 @@
 	  return 0;
       };
       // Returns 1 if word is in list
-      suggested.iswordinlist = function(word,list) {
+      suggested.isWordInList = function(word,list) {
 	  for (var w in list)
 	      if(list[w]==word)
 		  return 1;
 	  return 0;
       };
       // Returns 1 if card is in list
-      suggested.iscardinlist = function(card,list) {
+      suggested.isCardInList = function(card,list) {
 	  for (var c in list) {
 	      if(list[c].cycle==card.cycle && list[c].no==card.no) {
 		  return 1;
@@ -773,65 +945,117 @@
 	  return 0;
       };
       // Returns 1 if word is in string
-      suggested.iswordinstring = function(word,string) {
-	  return (string.search(word)>=0);
+      suggested.isWordInString = function(word,string) {
+	  //	  return (string.search(word)>=0);
+	  return (string.indexOf(word)>-1);
+	  // var hits = string.match(word);
+	  // if (hits) return 1;
+	  // else return 0;
+      };
+      // Returns 1 if regexp is in string
+      suggested.isRegExpInString = function(regexp,string) {
+	  //	  return (string.search(word)>=0);
+	  return regexp.exec(string);
+	  // var hits = string.match(word);
+	  // if (hits) return 1;
+	  // else return 0;
       };
       // Takes in a name and expansion, and returns 1 if the card is in the deck (or heroes)
-      suggested.isindeck = function(name_norm,exp,deck) {
+      suggested.isInDeck = function(name_norm,exp) {
+	  var deck = suggested.deck;
 	  var types = ['1hero','2ally','3attachment','4event','5quest'];
 	  for(var t in types)
-	      for (var c in deck[types[t]])
+	      for (var c in deck[types[t]]) {
 		  if (deck[types[t]][c].name_norm==name_norm && deck[types[t]][c].exp==exp) return 1;
+	      }
 	  return 0;	
       };
       // Takes in a word and returns 1 if the word is found in the text/traits of the card
-      suggested.iswordincard = function(word,card) {
-	  if (suggested.iswordinstring(word,card.text)) return 1;
-	  if (suggested.iswordinstring(word,card.traits)) return 1;
+      suggested.isWordInCard = function(word,card) {
+	  if (suggested.isWordInString(word,card.text)) return 1;
+	  if (suggested.isWordInString(word,card.traits)) return 1;
 	  return 0;	
       };
       // Takes in a word and returns 1 if the word is found in the text/traits of a card in the deck
-      suggested.iswordindeck = function(word,deck) {
+      suggested.isWordInDeck = function(word) {
+	  var deck = suggested.deck;
 	  var types = ['1hero','2ally','3attachment','4event','5quest'];
 	  for(var t in types)
 	      for (var c in deck[types[t]])
-		  if (suggested.iswordincard(word,deck[types[t]][c])) return 1;
+		  if (suggested.isWordInCard(word,deck[types[t]][c])) return 1;
 	  return 0;	
       };
       // Takes in a word and returns 1 if the word is found in the text of a card in the deck
-      suggested.iswordindecktext = function(word,deck) {
+      suggested.isWordInDeckText = function(word) {
+	  var deck = suggested.deck;
 	  var types = ['1hero','2ally','3attachment','4event','5quest'];
 	  for(var t in types)
 	      for (var c in deck[types[t]])
-		  if (suggested.iswordinstring(word,deck[types[t]][c].text)) return 1;
+		  if (suggested.isWordInString(word,deck[types[t]][c].text)) return 1;
 	  return 0;	
       };
       // Takes in a trait and returns 1 if the trait is found in the text of a card in the deck
-      suggested.istraitindecktext = function(trait,deck) {
+      suggested.isTraitInDeckText = function(trait) {
+	  var deck = suggested.deck;
 	  var types = ['1hero','2ally','3attachment','4event','5quest'];
 	  for(var t in types)
 	      for (var c in deck[types[t]]) {
 		  // We do not want to include all Gondor cards just because Steward grants the 'Gondor trait' 
-		  if (suggested.iswordinstring('trait',deck[types[t]][c].text)) continue;
-		  if (suggested.iswordinstring(trait,deck[types[t]][c].text)) return 1;
+		  if (suggested.isWordInString('trait',deck[types[t]][c].text)) continue;
+		  if (suggested.isWordInString(trait,deck[types[t]][c].text)) return 1;
 	      }
 	  return 0;	
       };
-      // Takes in a trait and returns 1 if the trait is found in the traits of a hero in the deck
-      suggested.istraitinherotraits = function(trait,deck) {
+      // Takes in a trait and returns 1 if the trait is found in the traits of a hero in the deck. We also consider keywords like Ranged to be traits.
+      suggested.isTraitInHeroTraits = function(trait) {
+	  var deck = suggested.deck;
 	  for(var h in deck['1hero'])
-	      if (suggested.iswordinstring(trait,deck['1hero'][h].traits)) return 1;
+	      if (suggested.isWordInString(trait,deck['1hero'][h].traits) || suggested.isWordInString(trait,deck['1hero'][h].keywords)) return 1;
 	  return 0;	
       };
-      // Takes in a trait and returns 1 if the trait is found in the traits of an ally in the deck
-      suggested.istraitinallytraits = function(trait,deck) {
+      // Takes in a trait and returns 1 if the trait is found in the traits of an ally in the deck. We also consider keywords like Ranged to be traits.
+      suggested.isTraitInAllyTraits = function(trait) {
+	  var deck = suggested.deck;
 	  for(var h in deck['2ally'])
-	      if (suggested.iswordinstring(trait,deck['2ally'][h].traits)) return 1;
+	      if (suggested.isWordInString(trait,deck['2ally'][h].traits) || suggested.isWordInString(trait,deck['2ally'][h].keywords)) return 1;
 	  return 0;	
       };
       // Takes in a trait and returns 1 if the trait is found in the traits of a character in the deck
-      suggested.istraitindecktraits = function(trait,deck) {
-	  return (suggested.istraitinherotraits(trait,deck)|suggested.istraitinallytraits(trait,deck));
+      suggested.isTraitInDeckTraits = function(trait) {
+	  var deck = suggested.deck;
+	  return (suggested.isTraitInHeroTraits(trait)||suggested.isTraitInAllyTraits(trait));
+      };
+
+      // Detect monosphere
+      suggested.monoSphere = function() {
+	  var deck = suggested.deck;
+	  if (deck['1hero'].length<3) return '';
+	  var sphere = deck['1hero'][0].sphere;
+	  for (var h in deck['1hero'])
+	      if (deck['1hero'][h].sphere!=sphere) return '';
+	  return sphere;
+      };
+
+      // Detect monotrait
+      suggested.monoTrait = function() {
+	  var deck = suggested.deck;
+	  if (deck['1hero'].length<3) return '';
+	  var traitlist = [];
+	  for (var t in suggested['traits']) {
+	      var isTraitInAllHeroes = 1;
+	      for (var h in deck['1hero'])
+		  if (!suggested.isWordInString(suggested['traits'][t],deck['1hero'][h].traits))
+		      isTraitInAllHeroes = 0;
+	      if (isTraitInAllHeroes) traitlist.push(suggested['traits'][t]);
+	  }
+	  return traitlist;
+      };
+
+      // Detect secrecy
+      suggested.isSecrecy = function() {
+	  var deck = suggested.deck;
+	  if (deck['1hero'].length<3) return 0;
+	  return (suggested.startingThreat()<=20);
       };
 
 
@@ -851,6 +1075,7 @@
 	  return 0;
       };
       suggested.startingThreat = function(){
+	  var deck = suggested.deck;
 	  var threat = 0;
 	  var mirlonde = 0;
 	  var loreheroes = 0;
@@ -865,35 +1090,40 @@
 	  return threat;
       };
       // Count cards in Deck
-      suggested.countDeckAllies = function(deck){
+      suggested.countDeckAllies = function(){
+	  var deck = suggested.deck;
 	  var allies=0;
 	  for (var a in deck['2ally']) {
               allies += deck['2ally'][a].quantity;
 	  };
 	  return allies;
       };
-      suggested.countDeckAttachments = function(deck){
+      suggested.countDeckAttachments = function(){
+	  var deck = suggested.deck;
 	  var attachments=0;
 	  for (var a in deck['3attachment']) {
               attachments += deck['3attachment'][a].quantity;
 	  };
 	  return attachments;
       };
-      suggested.countDeckEvents = function(deck){
+      suggested.countDeckEvents = function(){
+	  var deck = suggested.deck;
 	  var events=0;
 	  for (var e in deck['4event']) {
               events += deck['4event'][e].quantity;
 	  };
 	  return events;
       };
-      suggested.countDeckQuests = function(deck){
+      suggested.countDeckQuests = function(){
+	  var deck = suggested.deck;
 	  var quests=0;
 	  for (var q in deck['5quest']) {
               quests += deck['5quest'][q].quantity;
 	  };
 	  return quests;
       };
-      suggested.countDeckHeroes = function(deck){
+      suggested.countDeckHeroes = function(){
+	  var deck = suggested.deck;
 	  var heroes=0;
 	  for (var h in deck['1hero']) {
               heroes += deck['1hero'][h].quantity;
@@ -944,40 +1174,30 @@
       suggested.empty = function() {
 	  return (suggested.countAllies()+suggested.countAttachments()+suggested.countEvents()+suggested.countQuests()+suggested.countHeroes())==0;
       };
-      
-      suggested.load = function(suggestedArray,cardObject,suggestedname) {
-	  if (Object.prototype.toString.apply(suggestedArray) == "[object Object]") {
-              suggested.suggestedname = suggestedname;
-              suggested.loadLegacy(suggestedArray);
-              return 0;
-              
-	  }
-	  suggested['1hero']=[];
-	  suggested['2ally']=[];
-	  suggested['3attachment']=[];
-	  suggested['4event']=[];
-	  suggested['5quest']=[];
-	  suggested.suggestedname = suggestedArray[0];
-	  for (var i=1; i<suggestedArray.length; i++) {
-              for (var j in cardObject) {
-		  if (suggestedArray[i][0]==cardObject[j].cycle
-		      &&  suggestedArray[i][1]==cardObject[j].no) {
-		      var card = cardObject.slice(+j,+j+1)[0]; //create a copy of the card, not changing the cardObject
-		      card.quantity = suggestedArray[i][2];
-		      suggested[card.type].push(card);
-		  }
+
+      // Remove from suggested
+      suggested.remove = function(card) {	
+          for (var c in suggested[card.type]){
+              if (suggested[card.type][c].cycle==card.cycle && suggested[card.type][c].no==card.no){
+		  suggested[card.type].splice(c, 1);
               }
-	  }
-      };
-      
-      suggested.loadLegacy = function(suggestedObject) {
-	  suggested['1hero']=suggestedObject['1hero'];
-	  suggested['2ally']=suggestedObject['2ally'];
-	  suggested['3attachment']=suggestedObject['3attachment'];
-	  suggested['4event']=suggestedObject['4event'];
-	  suggested['5quest']=suggestedObject['5quest'];
-      };
-      
+	  }  
+	  suggested.blacklist.push(card);
+      }
+      // Clear the blacklisted cards
+      suggested.clearBlacklist = function() {	
+	  suggested.blacklist=[];
+	  suggested.deckChange(suggested.deck);
+      }
+
+      // Show/hide suggested
+      suggested.hide = function() {
+	  suggested.hidden = 1;
+      }
+      suggested.show = function() {
+	  suggested.hidden = 0;
+      }
+
       
       return suggested;
   }]);
@@ -1179,6 +1399,7 @@
         deck["4event"] = [];
         deck["5quest"] = [];
         deck.deckname = "";
+	deck.clearSuggestedBlacklist();
       //};
     };
     
