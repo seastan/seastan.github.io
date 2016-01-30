@@ -1,13 +1,12 @@
 <div class="suggesteddiv">
   
-  <h4 ng-show="!suggested.empty()&&!suggested.hidden()">Suggested</h4>
-  <button class="packbutton" style="width:200px;height:25px" ng-show="!suggested.empty()&&!suggested.hidden" ng-click="suggested.hide()" ng-class="">
+  <button class="packbutton" style="width:200px;height:25px" ng-show="(!suggested.empty()||suggested.blacklist.length)&&!suggested.hidden&&!deck.empty()" ng-click="suggested.hide()" ng-class="">
     Hide Suggestions
   </button>
-  <button class="packbutton" style="width:200px;height:25px" ng-show="!suggested.empty()&&suggested.hidden" ng-click="suggested.show()" ng-class="">
+  <button class="packbutton" style="width:200px;height:25px" ng-show="(!suggested.empty()||suggested.blacklist.length)&&suggested.hidden&&!deck.empty()" ng-click="suggested.show()" ng-class="">
     Show Suggestions
   </button>
-  <button class="packbutton" style="width:200px;height:25px" ng-show="suggested.blacklist.length" ng-click="suggested.clearBlacklist()" ng-class="">
+  <button class="packbutton" style="width:200px;height:25px" ng-show="suggested.blacklist.length&&!suggested.hidden&&!deck.empty()" ng-click="suggested.clearBlacklist()" ng-class="">
     Clear Blocked Suggestions
   </button>
   <table class="suggested" ng-show="!suggested.hidden">
