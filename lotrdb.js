@@ -1,7 +1,9 @@
+
 (function() {
 
+
   
-  var app = angular.module('deckbuilder', ['ngStorage']);
+  var app = angular.module('deckbuilder', ['ngStorage','firebase']);
 
   app.filter('toArray', function () {
     'use strict';
@@ -1337,68 +1339,116 @@
       }
     };
   });
-  
-  
-  app.controller('myDecks',['deck','suggested','$localStorage','translate','$scope','cardObject','$location',function(deck,suggested,$localStorage,translate,$scope,cardObject,$location){
+
+  app.controller("firebaseController", ["$scope", "$firebaseObject", "$firebaseAuth", function($scope, $firebaseObject, $firebaseAuth) {
+    $scope.rootRef = new Firebase("https://glaring-fire-3683.firebaseio.com/");
+//    var obj = $firebaseObject(ref);
+    $scope.message = "Hello";
+    alert($scope.message);
+    // download the data into a local object
+//    $scope.data = obj;
+    // create an instance of the authentication service
+    $scope.authObj = $firebaseAuth($scope.rootRef);
+    
+    // login with Google
+    $scope.login = function(provider) {
+	alert('hello');
+	$scope.authObj.$authWithOAuthPopup(provider).then(function(authData) {
+            alert('1');
+	}, function(error) {
+            $scope.error = error;
+	});
+    };
+
+    // For three-way data bindings, bind it to the scope instead
+    obj.$bindTo($scope, "data");
+}]);
+
+app.controller('myDecks',['deck','suggested','$localStorage','translate','$scope','cardObject','$location',function(deck,suggested,$localStorage,translate,$scope,cardObject,$location){
     if (!$localStorage.decks){
-      $localStorage.decks={};
+	$localStorage.decks={};
     }
+    //    var Firebase = require("firebase");
+
     this.decks = $localStorage.decks;
     this.currentdeck = deck;
     this.deckname="";
 
+
+    this.test = function() {
+	//	alert("authenticating");
+	// ref.authWithOAuthPopup("google", function(error, authData) {
+	//     if (error) {
+	// 	console.log("Login Failed!", error);
+	//     } else {
+	// 	console.log("Authenticated successfully with payload:", authData);
+	//     }
+	// });
+	var ref = new Firebase("https://glaring-fire-3683.firebaseio.com/");
+
+	ref.authWithOAuthRedirect("google", function(error) {
+	    if (error) {
+		console.log("Login Failed!", error);
+	    } else {
+		// We'll never get here, as the page will redirect on success.
+	    }
+	});
+	//	alert("authenticated");
+    }
+
+
     this.numberOfDecks = function() {
-      return Object.keys(this.decks).length;
+	return Object.keys(this.decks).length;
     };
 
     this.saveDeck = function(deckname) {
-      if (deck.empty()) {
-        return alert('Deck is empty!');
-      };
-      if (this.currentdeck.deckname=="") {
-        return alert('Please enter a name!');
-      };
-      if ($localStorage.decks[deckname]!=null){
-        if (confirm('A deck by that name exists, overwrite?')) {
-        } else{
-          return 0;
-        }
-      }
-      var CompressedDeck=[deckname];
-      CompressedDeck.name = deckname;
-      var types = ["1hero","2ally","3attachment","4event","5quest"]
-      for (var t in types){
-        var type = types[t];
-        for (var c in deck[type]){
-          var card = deck[type][c];
-          CompressedDeck.push([card.cycle,card.no,card.quantity]);
-        }
-      }
-      $localStorage.decks[deckname] = {};
-      $localStorage.decks[deckname].deck = CompressedDeck;
-      $localStorage.decks[deckname].deckname = deckname;
-      $localStorage.decks[deckname].dateUTC = new Date().valueOf().toString();
-      
-      var compressed = LZString.compressToEncodedURIComponent(JSON.stringify($localStorage.decks[deckname].deck));
-      $location.url("/#"+compressed);
+	if (deck.empty()) {
+            return alert('Deck is empty!');
+	};
+	if (this.currentdeck.deckname=="") {
+            return alert('Please enter a name!');
+	};
+	if ($localStorage.decks[deckname]!=null){
+            if (confirm('A deck by that name exists, overwrite?')) {
+            } else{
+		return 0;
+            }
+	}
+	var CompressedDeck=[deckname];
+	CompressedDeck.name = deckname;
+	var types = ["1hero","2ally","3attachment","4event","5quest"]
+	for (var t in types){
+            var type = types[t];
+            for (var c in deck[type]){
+		var card = deck[type][c];
+		CompressedDeck.push([card.cycle,card.no,card.quantity]);
+            }
+	}
+	$localStorage.decks[deckname] = {};
+	$localStorage.decks[deckname].deck = CompressedDeck;
+	$localStorage.decks[deckname].deckname = deckname;
+	$localStorage.decks[deckname].dateUTC = new Date().valueOf().toString();
+	
+	var compressed = LZString.compressToEncodedURIComponent(JSON.stringify($localStorage.decks[deckname].deck));
+	$location.url("/#"+compressed);
     };
 
     this.loadDeck = function(deckname) {
-      deck.load($localStorage.decks[deckname].deck,cardObject,deckname);
-      var compressed = LZString.compressToEncodedURIComponent(JSON.stringify($localStorage.decks[deckname].deck));
-      $location.url("/#"+compressed);
+	deck.load($localStorage.decks[deckname].deck,cardObject,deckname);
+	var compressed = LZString.compressToEncodedURIComponent(JSON.stringify($localStorage.decks[deckname].deck));
+	$location.url("/#"+compressed);
     };
 
     $scope.loadDeck = this.loadDeck;
 
     this.deleteDeck = function(deckname) {
-      if (confirm('Are you sure you want to delete this deck?')) {
-        delete $localStorage.decks[deckname];
-      };
+	if (confirm('Are you sure you want to delete this deck?')) {
+            delete $localStorage.decks[deckname];
+	};
     };
 
     this.clearDeck = function() {
-      //if (deck.empty() || confirm('Are you sure you want to clear this deck?')) {
+	//if (deck.empty() || confirm('Are you sure you want to clear this deck?')) {
         deck["1hero"] = [];
         deck["2ally"] = [];
         deck["3attachment"] = [];
@@ -1408,7 +1458,7 @@
 	suggested.clearBlacklist();
 	suggested.deckChange(deck);
 
-      //};
+	//};
     };
     
     this.download = function(filename, text) {

@@ -11,6 +11,10 @@
     <br/>
     Uploaded decks can either be a file that was downloaded here, or an OCTGN file. Be sure to save your decks after uploading!
   </div>
+  <div ng-controller="firebaseController as fire">
+    <button class="savebutton" ng-click="fire.login('google')">{{fire.message}}</button>    
+  </div>
+  
   <table style="width:100%;">
     <tr>
       <td colspan=2>
