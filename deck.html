@@ -8,7 +8,7 @@
       <td style="font-size:0;text-align:center;">
         <button class="cardbutton" ng-class="{selected: deck.quantity(card)==0}" ng-click="deck.change(card,0)">X</button>
       </td>
-      <td class="c{{card.sphere}}">{{card.name}}</td></li>
+      <td class="c{{card.sphere}}">{{card.name}}</td>
     <tr class="head" ng-show="deck.countAllies()"><td></td><td>Allies ({{deck.countAllies()}})</td></tr>
     <tr class="card" ng-repeat="card in deck['2ally'] | orderBy:['sphere','name_norm']" ng-mouseover="deckC.changepreview(card)">
       <td style="font-size:0;">

@@ -259,6 +259,7 @@ tr.head {
   border-color: #eee #555 #555 #eee;
   height: 30px;
   font-weight: normal;
+  font-size: 12px;
   text-align: center;
 }
 .savebutton:hover{

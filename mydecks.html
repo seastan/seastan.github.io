@@ -1,37 +1,88 @@
 <div ng-show="tab.isSet(3)" class="mydecks">
-  <div style="text-align: justify; margin: 0 10px 10px 0;">
+    <div style="text-align: justify; margin: 0 10px 10px 0;">
     <div style="font-weight:600;">
-    The deck storage has gone through a lot of changes recently and is still very much in development,
-     if any of your decks get lost as a result of this, I apologize for the inconvenience.</div>
-    <br/>
-    Decks are saved locally in your browser storage. This means that any decks you create on this machine will only
-    be available on this machine. If you want to access your decks somewhere else, please download and upload them.
-    <br/>
-    You can share your decks by copying the link that appears in the location bar of your when you save or load it.
-    <br/>
-    Uploaded decks can either be a file that was downloaded here, or an OCTGN file. Be sure to save your decks after uploading!
+      Important: The Deck Cloud Storage is beta. Your decks will get deleted without notice. Local storage will probably get erased as well, so be sure to download any decks you make to your computer to preserve them. 
   </div>
-  <div ng-controller="firebaseController as fire">
-    <button class="savebutton" ng-click="fire.login('google')">{{fire.message}}</button>    
-  </div>
-  
   <table style="width:100%;">
-    <tr>
-      <td colspan=2>
-        <input name="deckname" placeholder="Deck name" ng-model="mydecks.currentdeck.deckname" style="width:95%;">
-      </td>
-      <td class="decks">
-        <button class="savebutton"  ng-click="mydecks.saveDeck(mydecks.currentdeck.deckname)">Save</button>
-      </td>
-      <td class="decks">
-        <label class="savebutton"><div class="upload">Upload</div><input name="upload" type="file" style="display:none;" onchange="angular.element(this).scope().mydecks.uploadDeck(event)" accept=".txt,.o8d"></label>
-      </td>
-      <td class="decks">
-        <button class="savebutton"  ng-click="mydecks.clearDeck()" style="min-width:100px;">Clear Deck</button>
-      </td>
-    </tr>
+
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container" style="width:95%; border:15px solid transparent;" >
+      <form id="auth" class="" ng-controller="AuthCtrl">
+        <fieldset ng-hide="authData">
+          <div class="form-group">
+            <input type="email" class="form-control" placeholder="email" ng-model="email" />
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" placeholder="password" ng-model="password" />
+          </div>
+          <button type="submit" class="btn btn-default" ng-click="signIn()">Sign In / Sign Up</button>
+        </fieldset>
+        <span ng-show="authData">
+	  <div>Signed in as {{email}}</div>
+	  <br>
+          <button type="submit" class="btn btn-default" ng-click="signOut()">Sign Out</button>
+        </span>
+	<br>
+	<div class="alert alert-{{alert.class}}" ng-show="alert.message">
+	  {{alert.message}}
+	</div>
+      </form>
+    </div>
+  </nav>
+  
+  <div ng-controller="AuthCtrl">
+    <table style="width:100%;" ng-controller="deckdbCtrl">
+      <tr>
+	<td class="decks">
+          <label class="savebutton" style="width:100%;"><div class="upload">Upload</div><input name="upload" type="file" style="display:none;" onchange="angular.element(this).scope().mydecks.uploadDeck(event)" accept=".txt,.o8d"></label>
+	</td>
+	<td class="decks">
+          <button class="savebutton"  ng-click="mydecks.clearDeck()" style="width:100%;">Clear Current Deck</button>
+	</td>
+      </tr>
+      <tr>
+	<td colspan="2">
+          <input name="deckname" placeholder="Deck name" ng-model="mydecks.currentdeck.deckname" style="width:100%;"></input>
+	</td>
+      </tr>
+      <tr>
+	<td class="decks">
+          <button class="savebutton"  ng-click="mydecks.saveDeck(mydecks.currentdeck.deckname)" style="min-width:100px;">Local Save</button>
+	</td>
+	<td class="decks" ng-show="authData">
+          <button class="savebutton" ng-click="saveDeck(mydecks.currentdeck.deckname)" style="min-width:100px;">Cloud Save</button>
+	</td>
+      </tr>
+    </table>
+    
+    <table style="width:100%;" ng-controller="deckdbCtrl" ng-show="authData">
+      <tr>
+	<td style="font-weight:bold;font-size:16px;">Cloud Decks:</td>
+      </tr>
+      <tr ng-repeat="deck in decklist | orderBy:'-dateUTC'">
+	<td style="padding-left:10px;">
+          <!-- <div style="font-weight:bold;">Deck</div> -->
+          <div style="font-weight:bold;">{{deck.$id}}</div>
+          <div style="font-size:9px;padding-left:10px;">{{deck.dateUTC|date:'medium'}}</div>
+	</td>
+	    <td class="decks">
+              <button class="savebutton"  ng-click="loadDeck(deck)">Load</button>
+	    </td>
+	    <td class="decks">
+              <button class="savebutton"  ng-click="mydecks.downloadDeck(deck.deck)">Export</button>
+	    </td>
+	    <td class="decks">
+              <button class="savebutton"  ng-click="mydecks.octgn(deck.deck)">OCTGN</button>
+	    </td>
+	    <td class="decks">
+              <button class="savebutton"  ng-click="deleteDeck(deck)">Delete</button>
+	    </td>
+      </tr>
+    </table>
+  </div>
+  <table style="width:100%;">
     <tr ng-show="mydecks.numberOfDecks()">
-      <td style="font-weight:bold;font-size:16px;">Saved Decks:</td>
+      <td style="font-weight:bold;font-size:16px;">Local Decks:</td>
     </tr>
     <tr ng-repeat="deck in mydecks.decks | toArray | orderBy:'-dateUTC' track by $index">
       <td style="padding-left:10px;">
@@ -39,17 +90,19 @@
         <div style="font-size:9px;padding-left:10px;">{{deck.dateUTC|date:'medium'}}</div>
       </td>
       <td class="decks">
-        <button class="savebutton"  ng-click="mydecks.loadDeck(deck.deckname)">Load</button>
+        <button class="savebutton"  ng-click="mydecks.loadDeck(deck)">Load</button>
       </td>
       <td class="decks">
-        <button class="savebutton"  ng-click="mydecks.downloadDeck(deck.deckname)">Export</button>
+        <button class="savebutton"  ng-click="mydecks.localDownload(deck)">Export</button>
       </td>
       <td class="decks">
-        <button class="savebutton"  ng-click="mydecks.octgn(deck.deckname)">OCTGN</button>
+        <button class="savebutton"  ng-click="mydecks.localOctgn(deck)">OCTGN</button>
       </td>
       <td class="decks">
-        <button class="savebutton"  ng-click="mydecks.deleteDeck(deck.deckname)">Delete Deck</button>
+        <button class="savebutton"  ng-click="mydecks.deleteDeck(deck)">Delete</button>
       </td>
     </tr>
   </table>
+
+
 </div>

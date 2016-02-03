@@ -408,7 +408,12 @@
   app.factory('suggested', ['filtersettings','cardObject',function(filtersettings,cardObject){
       var suggested={};
       suggested.hidden=0;
-      suggested.deck=[];
+      suggested.deck={};
+      suggested.deck['1hero']=[];
+      suggested.deck['2ally']=[];
+      suggested.deck['3attachment']=[];
+      suggested.deck['4event']=[];
+      suggested.deck['5quest']=[];
       suggested.filtersettings = filtersettings;
       suggested.allcards = cardObject;
       suggested['sphere']=[];
@@ -1340,65 +1345,135 @@
     };
   });
 
-  app.controller("firebaseController", ["$scope", "$firebaseObject", "$firebaseAuth", function($scope, $firebaseObject, $firebaseAuth) {
-    $scope.rootRef = new Firebase("https://glaring-fire-3683.firebaseio.com/");
-//    var obj = $firebaseObject(ref);
-    $scope.message = "Hello";
-    alert($scope.message);
-    // download the data into a local object
-//    $scope.data = obj;
-    // create an instance of the authentication service
-    $scope.authObj = $firebaseAuth($scope.rootRef);
-    
-    // login with Google
-    $scope.login = function(provider) {
-	alert('hello');
-	$scope.authObj.$authWithOAuthPopup(provider).then(function(authData) {
-            alert('1');
-	}, function(error) {
-            $scope.error = error;
+
+    app.controller('AuthCtrl', ['$scope', '$rootScope', '$firebaseAuth', '$firebaseArray', function($scope, $rootScope, $firebaseAuth, $firebaseArray) {
+	var ref = new Firebase('https://seastan-lotrdb.firebaseio.com/');
+	$scope.auth = $firebaseAuth(ref);
+	$scope.alert={};
+	
+	// any time auth status updates, add the user data to scope
+	$scope.auth.$onAuth(function(authData) {
+	    $scope.authData = authData;
+	    if (authData)
+		$scope.decklist = $firebaseArray(ref.child('users').child(authData.uid).child('decks'));
+	    else
+		$scope.decklist = null;
 	});
-    };
+	
+	// Sign in
+	$scope.signIn = function () {
+	    ref.authWithPassword({
+		email    : $scope.email,
+		password : $scope.password
+	    }, function(error, authData) {
+		if (error) {
+		    console.log("Login Failed! Attempting to sign you up.", error);
+		    $scope.signUp();
+		} else {
+		    console.log("Authenticated successfully with payload:", authData);
+	 	    $scope.alert.message = '';
+		}
+		$scope.$digest();
+	    });
+	}
+	// Sign up
+	$scope.signUp = function() {
+	    ref.createUser({
+		email    : $scope.email,
+		password : $scope.password
+	    }, function(error, userData) {
+		if (error) {
+		    console.log("Error creating user:", error);
+		    $scope.alert.class = 'danger';
+		    $scope.alert.message = 'The username and password combination you entered is invalid.';
+		} else {
+		    $scope.alert.class = 'success';
+	 	    $scope.alert.message = 'Account created! Please sign in.';
+		    console.log("Successfully created user account with uid:", userData.uid);
+		}
+		$scope.$digest();
+	    });
+	}
+	// Sign out
+	$scope.signOut = function() {
+	    console.log("Logging out");
+	    $scope.auth.$unauth();
+	}
 
-    // For three-way data bindings, bind it to the scope instead
-    obj.$bindTo($scope, "data");
-}]);
+    }]);
 
+
+    app.controller('deckdbCtrl', ['$scope', '$rootScope', '$firebaseAuth', '$firebaseObject', '$firebaseArray', 'deck', 'cardObject', function($scope, $rootScope, $firebaseAuth, $firebaseObject, $firebaseArray, deck, cardObject) {
+	var ref = new Firebase('https://seastan-lotrdb.firebaseio.com/');
+	//$scope.decklist = $firebaseArray(ref.child('users').child('28640923-65c1-4fc6-ac5a-33c7e477c1d6').child('decks'));
+
+		    // 	    angular.forEach(decks, function(cloudDeck) {
+		    // 	console.log(cloudDeck.$id);
+	// })
+	
+		
+	$scope.saveDeck = function(deckname) {
+	    if (deck.empty()) {
+		return alert('Deck is empty!');
+	    };
+	    if (deckname=="") {
+		return alert('Please enter a name!');
+	    };
+	    var cloudDeck = $firebaseObject(ref.child('users').child($scope.authData.uid).child('decks').child(deckname));
+	    cloudDeck.$loaded
+	    var CompressedDeck=[deckname];
+	    var types = ["1hero","2ally","3attachment","4event","5quest"]
+	    for (var t in types){
+		var type = types[t];
+		for (var c in deck[type]){
+		    var card = deck[type][c];
+		    CompressedDeck.push([card.cycle,card.no,card.quantity]);
+		}
+	    }
+	    cloudDeck.deck = CompressedDeck;
+	    cloudDeck.dateUTC = new Date().valueOf().toString();
+
+	    cloudDeck.$save().then(function(ref) {
+	    }, function(error) {
+		console.log("Error:", error);
+	    });
+
+	    var deckarray = $firebaseArray(ref.child('users').child($scope.authData.uid).child('decks'));
+	    deckarray.$loaded().then(function(){
+		$scope.cloudDecks = deckarray;
+		this.decks = deckarray;
+		angular.forEach(decks, function(deck) {
+	     	    console.log(deck.$id);
+		})
+	    });
+	};
+	
+	$scope.loadDeck = function(cloudDeck) {
+	    deck.load(cloudDeck.deck,cardObject,cloudDeck.$id);
+	};
+
+	$scope.deleteDeck = function(cloudDeck) {
+	    if (confirm('Are you sure you want to delete this deck?')) {
+		$scope.decklist.$remove(cloudDeck);
+	    };
+	};
+	
+    }]);
+
+    
+    
 app.controller('myDecks',['deck','suggested','$localStorage','translate','$scope','cardObject','$location',function(deck,suggested,$localStorage,translate,$scope,cardObject,$location){
     if (!$localStorage.decks){
 	$localStorage.decks={};
     }
-    //    var Firebase = require("firebase");
 
     this.decks = $localStorage.decks;
     this.currentdeck = deck;
     this.deckname="";
 
 
-    this.test = function() {
-	//	alert("authenticating");
-	// ref.authWithOAuthPopup("google", function(error, authData) {
-	//     if (error) {
-	// 	console.log("Login Failed!", error);
-	//     } else {
-	// 	console.log("Authenticated successfully with payload:", authData);
-	//     }
-	// });
-	var ref = new Firebase("https://glaring-fire-3683.firebaseio.com/");
-
-	ref.authWithOAuthRedirect("google", function(error) {
-	    if (error) {
-		console.log("Login Failed!", error);
-	    } else {
-		// We'll never get here, as the page will redirect on success.
-	    }
-	});
-	//	alert("authenticated");
-    }
-
-
     this.numberOfDecks = function() {
-	return Object.keys(this.decks).length;
+ 	return Object.keys(this.decks).length;
     };
 
     this.saveDeck = function(deckname) {
@@ -1433,7 +1508,8 @@ app.controller('myDecks',['deck','suggested','$localStorage','translate','$scope
 	$location.url("/#"+compressed);
     };
 
-    this.loadDeck = function(deckname) {
+    this.loadDeck = function(_deck) {
+	var deckname = _deck.deckname;
 	deck.load($localStorage.decks[deckname].deck,cardObject,deckname);
 	var compressed = LZString.compressToEncodedURIComponent(JSON.stringify($localStorage.decks[deckname].deck));
 	$location.url("/#"+compressed);
@@ -1441,7 +1517,8 @@ app.controller('myDecks',['deck','suggested','$localStorage','translate','$scope
 
     $scope.loadDeck = this.loadDeck;
 
-    this.deleteDeck = function(deckname) {
+    this.deleteDeck = function(deck) {
+	var deckname = deck.deckname;
 	if (confirm('Are you sure you want to delete this deck?')) {
             delete $localStorage.decks[deckname];
 	};
@@ -1779,11 +1856,14 @@ app.controller('myDecks',['deck','suggested','$localStorage','translate','$scope
       return text;
     }
     
-    
+    this.localDownload = function(_deck) {
+	this.downloadDeck($localStorage.decks[_deck.deckname].deck);
+    }
 
     
-    this.downloadDeck = function(deckname){
-      var deck= $localStorage.decks[deckname].deck;
+    this.downloadDeck = function(deck){
+      var deckname = deck.deckname;
+//      var deck= $localStorage.decks[deckname].deck;
       var CompressedDeck=LZString.compressToEncodedURIComponent(JSON.stringify(deck));
       var text="++++++++++++\r\n+For Reddit+\r\n++++++++++++ \r\n\r\n";
       text+=this.markdown(deck,deckname,CompressedDeck);
@@ -1849,12 +1929,18 @@ app.controller('myDecks',['deck','suggested','$localStorage','translate','$scope
       };
     }
     
+    this.localOctgn = function(_deck) {
+	this.octgn($localStorage.decks[_deck.deckname].deck);
+    }
+
     
-    this.octgn = function(deckname) {
-      var deck = {"1hero":[],"2ally":[],"3attachment":[],"4event":[],"5quest":[]};
+    this.octgn = function(deck) {
+      var deckname = deck.deckname;
+      var octgndeck = {"1hero":[],"2ally":[],"3attachment":[],"4event":[],"5quest":[]};
       var warned = false;
-      for (var c = 1; c < $localStorage.decks[deckname].deck.length; c++) {
-        var card = $localStorage.decks[deckname].deck[c];
+      for (var c = 1; c < deck.length; c++) {
+//      for (var c = 1; c < $localStorage.decks[deckname].deck.length; c++) {
+        var card = deck[c];
         for (var j in cardObject) {
           if (card[0]==cardObject[j].cycle
           &&  card[1]==cardObject[j].no) {
@@ -1867,7 +1953,7 @@ app.controller('myDecks',['deck','suggested','$localStorage','translate','$scope
               continue;
             }
             fullcard.quantity = card[2];
-            deck[fullcard.type].push(fullcard);
+            octgndeck[fullcard.type].push(fullcard);
           }
         }
       }
@@ -1876,61 +1962,61 @@ app.controller('myDecks',['deck','suggested','$localStorage','translate','$scope
       text+= '<deck game="a21af4e8-be4b-4cda-a6b6-534f9717391f">\n';
       
       text+= '  <section name="Hero" shared="False">\n';
-      for (var h in deck["1hero"]){
+      for (var h in octgndeck["1hero"]){
         text+='    <card qty="';
-        text+=deck["1hero"][h].quantity;
+        text+=octgndeck["1hero"][h].quantity;
         text+='" id="';
-        text+=deck["1hero"][h].octgn;
+        text+=octgndeck["1hero"][h].octgn;
         text+='">';
-        text+=deck["1hero"][h].name_norm;
+        text+=octgndeck["1hero"][h].name_norm;
         text+='</card>\n';
       }
       text+= '  </section>\n';
       
       text+= '  <section name="Ally" shared="False">\n';
-      for (var h in deck["2ally"]){
+      for (var h in octgndeck["2ally"]){
         text+='    <card qty="';
-        text+=deck["2ally"][h].quantity;
+        text+=octgndeck["2ally"][h].quantity;
         text+='" id="';
-        text+=deck["2ally"][h].octgn;
+        text+=octgndeck["2ally"][h].octgn;
         text+='">';
-        text+=deck["2ally"][h].name_norm;
+        text+=octgndeck["2ally"][h].name_norm;
         text+='</card>\n';
       }
       text+= '  </section>\n';
       
       text+= '  <section name="Event" shared="False">\n';
-      for (var h in deck["4event"]){
+      for (var h in octgndeck["4event"]){
         text+='    <card qty="';
-        text+=deck["4event"][h].quantity;
+        text+=octgndeck["4event"][h].quantity;
         text+='" id="';
-        text+=deck["4event"][h].octgn;
+        text+=octgndeck["4event"][h].octgn;
         text+='">';
-        text+=deck["4event"][h].name_norm;
+        text+=octgndeck["4event"][h].name_norm;
         text+='</card>\n';
       }
       text+= '  </section>\n';
       
       text+= '  <section name="Attachment" shared="False">\n';
-      for (var h in deck["3attachment"]){
+      for (var h in octgndeck["3attachment"]){
         text+='    <card qty="';
-        text+=deck["3attachment"][h].quantity;
+        text+=octgndeck["3attachment"][h].quantity;
         text+='" id="';
-        text+=deck["3attachment"][h].octgn;
+        text+=octgndeck["3attachment"][h].octgn;
         text+='">';
-        text+=deck["3attachment"][h].name_norm;
+        text+=octgndeck["3attachment"][h].name_norm;
         text+='</card>\n';
       }
       text+= '  </section>\n';
       
       text+= '  <section name="Side Quest" shared="False">\n';
-      for (var h in deck["5quest"]){
+      for (var h in octgndeck["5quest"]){
         text+='    <card qty="';
-        text+=deck["5quest"][h].quantity;
+        text+=octgndeck["5quest"][h].quantity;
         text+='" id="';
-        text+=deck["5quest"][h].octgn;
+        text+=octgndeck["5quest"][h].octgn;
         text+='">';
-        text+=deck["5quest"][h].name_norm;
+        text+=octgndeck["5quest"][h].name_norm;
         text+='</card>\n';
       }
       text+= '  </section>\n';
@@ -2274,62 +2360,217 @@ app.controller('myDecks',['deck','suggested','$localStorage','translate','$scope
       return(this.typeChart.update());
     }
     
-  }]);
+  }]);  
   
+    app.factory('cardID',['setID', function(setID) {
+	var cardID = function(card) {
+	    return setID(card.exp)+card.no.toString(16)+card.quantity;
+	}
+	return cardID; 
+    }]);
   
-  
-  
-  
-  
-  
-  
-  
-  app.factory('translate',function(){
-    var translate={};
-    translate[""]="";
-    translate.core="Core Set";
-    translate.kd=unescape("Khazad-D%FBm");
-    translate.hon=unescape("Heirs of N%FAmenor");
-    translate.voi="The Voice of Isengard";
-    translate.tlr="The Lost Realm";
-    translate.thohauh="Over Hill and Under Hill";
-    translate.thfg="The Hunt for Gollum";
-    translate.trg="The Redhorn Gate";
-    translate.tsf="The Steward's Fear";
-    translate.tdt="The Dunland Trap";
-    translate.twoe="The Wastes of Eriador";
-    translate.thotd="On the Doorstep";
-    translate.catc="Conflict at the Carrock";
-    translate.rtr="Road to Rivendell";
-    translate.tdf=unescape("The Dr%FAadan Forest");
-    translate.ttt="The Three Trials";
-    translate.efmg="Escape from Mount Gram";
-    translate.tbr="The Black Riders";
-    translate.ajtr="A Journey to Rhosgobel";
-    translate.twitw="The Watcher in the Water";
-    translate.eaad=unescape("Encounter at Amon D%EEn");
-    translate.tit="Trouble in Tharbad";
-    translate.rd="The Road Darkens";
-    translate.thoem="The Hills of Emyn Muil";
-    translate.tld="The Long Dark";
-    translate.aoo="Assault on Osgiliath";
-    translate.nie="The Nin-in-Eilph";
-    translate.tdm="The Dead Marshes";
-    translate.fos="Foundations of Stone";
-    translate.tbog="The Blood of Gondor";
-    translate.cs="Celebrimbor's Secret";
-    translate.rtm="Return to Mirkwood";
-    translate.saf="Shadow and Flame";
-    translate.tmv="The Morgul Vale";
-    translate.tac="The Antlered Crown";
-    translate.tos="The Treason of Saruman";
-    translate.tlos="The Land of Shadow";
-    translate.ate="Across the Ettenmoors";
-    translate.ttor="The Treachery of Rhudaur";
-    translate.tbocd=unescape("The Battle of Carn D%FBm");
-    translate.tdr="The Dread Realm";
-    return translate;
-  });
-  
+    app.factory('setID',function(){
+	var setID = function(set) { 
+	    switch (set) {
+	    case "core": 
+		return "a";
+		break;
+	    case "thfg":
+		return "b";
+		break;
+	    case "catc": 
+		return "b";
+		break;
+	    case "ajtr":
+		return "b";
+		break;
+	    case "thoem":
+		return "b";
+		break;
+	    case "tdm": 
+		return "b";
+		break;
+	    case "rtm":
+		return "b";
+		break;
 
+	    case "kd": 
+		return "c";
+		break;
+	    case "trg":
+		return "d";
+		break;
+	    case "rtr": 
+		return "d";
+		break;
+	    case "twinw":
+		return "d";
+		break;
+	    case "tld":
+		return "d";
+		break;
+	    case "fos": 
+		return "d";
+		break;
+	    case "saf":
+		return "d";
+		break;
+
+	    case "hon": 
+		return "e";
+		break;
+	    case "tsf":
+		return "f";
+		break;
+	    case "tdf": 
+		return "f";
+		break;
+	    case "eaad":
+		return "f";
+		break;
+	    case "aoo":
+		return "f";
+		break;
+	    case "tbog": 
+		return "f";
+		break;
+	    case "tmv":
+		return "f";
+		break;
+
+	    case "tvoi": 
+		return "g";
+		break;
+	    case "tdt":
+		return "h";
+		break;
+	    case "ttt": 
+		return "h";
+		break;
+	    case "tit":
+		return "h";
+		break;
+	    case "tnie":
+		return "h";
+		break;
+	    case "cs": 
+		return "h";
+		break;
+	    case "tac":
+		return "h";
+		break;
+
+	    case "aa": 
+		return "i";
+		break;
+	    case "twoe":
+		return "j";
+		break;
+	    case "efmg": 
+		return "j";
+		break;
+	    case "ate":
+		return "j";
+		break;
+	    case "ttor":
+		return "j";
+		break;
+	    case "tbocd": 
+		return "j";
+		break;
+	    case "tdr":
+		return "j";
+		break;
+
+	    case "tgh": 
+		return "k";
+		break;
+	    case "fots":
+		return "l";
+		break;
+	    case "ttitd": 
+		return "l";
+		break;
+	    case "totd":
+		return "l";
+		break;
+	    case "tdr":
+		return "l";
+		break;
+
+	    case "thohauh": 
+		return "A";
+		break;
+	    case "thotd":
+		return "B";
+		break;
+	    case "tbr": 
+		return "C";
+		break;
+	    case "trd":
+		return "D";
+		break;
+	    case "ttos":
+		return "E";
+		break;
+	    case "tlos": 
+		return "F";
+		break;
+	    case "tfotw":
+		return "G";
+		break;
+	    }
+	}
+	return setID;
+    });
+    
+
+    app.factory('translate',function(){
+	var translate={};
+	translate[""]="";
+	translate.core="Core Set";
+	translate.kd=unescape("Khazad-D%FBm");
+	translate.hon=unescape("Heirs of N%FAmenor");
+	translate.voi="The Voice of Isengard";
+	translate.tlr="The Lost Realm";
+	translate.thohauh="Over Hill and Under Hill";
+	translate.thfg="The Hunt for Gollum";
+	translate.trg="The Redhorn Gate";
+	translate.tsf="The Steward's Fear";
+	translate.tdt="The Dunland Trap";
+	translate.twoe="The Wastes of Eriador";
+	translate.thotd="On the Doorstep";
+	translate.catc="Conflict at the Carrock";
+	translate.rtr="Road to Rivendell";
+	translate.tdf=unescape("The Dr%FAadan Forest");
+	translate.ttt="The Three Trials";
+	translate.efmg="Escape from Mount Gram";
+	translate.tbr="The Black Riders";
+	translate.ajtr="A Journey to Rhosgobel";
+	translate.twitw="The Watcher in the Water";
+	translate.eaad=unescape("Encounter at Amon D%EEn");
+	translate.tit="Trouble in Tharbad";
+	translate.rd="The Road Darkens";
+	translate.thoem="The Hills of Emyn Muil";
+	translate.tld="The Long Dark";
+	translate.aoo="Assault on Osgiliath";
+	translate.nie="The Nin-in-Eilph";
+	translate.tdm="The Dead Marshes";
+	translate.fos="Foundations of Stone";
+	translate.tbog="The Blood of Gondor";
+	translate.cs="Celebrimbor's Secret";
+	translate.rtm="Return to Mirkwood";
+	translate.saf="Shadow and Flame";
+	translate.tmv="The Morgul Vale";
+	translate.tac="The Antlered Crown";
+	translate.tos="The Treason of Saruman";
+	translate.tlos="The Land of Shadow";
+	translate.ate="Across the Ettenmoors";
+	translate.ttor="The Treachery of Rhudaur";
+	translate.tbocd=unescape("The Battle of Carn D%FBm");
+	translate.tdr="The Dread Realm";
+	return translate;
+    });
+  
+    
 })();
