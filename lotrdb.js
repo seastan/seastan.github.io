@@ -1362,6 +1362,7 @@
 	
 	// Sign in
 	$scope.signIn = function () {
+	    console.log("Attempting to sign in as "+$scope.email);
 	    ref.authWithPassword({
 		email    : $scope.email,
 		password : $scope.password
@@ -1375,6 +1376,7 @@
 		}
 		$scope.$digest();
 	    });
+	    console.log("Completed sign in.");
 	}
 	// Sign up
 	$scope.signUp = function() {
