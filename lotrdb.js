@@ -1859,13 +1859,13 @@ app.controller('myDecks',['deck','suggested','$localStorage','translate','$scope
     }
     
     this.localDownload = function(_deck) {
-	this.downloadDeck($localStorage.decks[_deck.deckname].deck);
+	this.downloadDeck($localStorage.decks[_deck.deckname].deck,_deck.deckname);	
     }
-
     
-    this.downloadDeck = function(deck){
-      var deckname = deck.deckname;
-//      var deck= $localStorage.decks[deckname].deck;
+    
+    this.downloadDeck = function(deck,deckname){
+	//      var deckname = deck.deckname;
+	//      var deck= $localStorage.decks[deckname].deck;
       var CompressedDeck=LZString.compressToEncodedURIComponent(JSON.stringify(deck));
       var text="++++++++++++\r\n+For Reddit+\r\n++++++++++++ \r\n\r\n";
       text+=this.markdown(deck,deckname,CompressedDeck);
@@ -1932,12 +1932,12 @@ app.controller('myDecks',['deck','suggested','$localStorage','translate','$scope
     }
     
     this.localOctgn = function(_deck) {
-	this.octgn($localStorage.decks[_deck.deckname].deck);
+	this.octgn($localStorage.decks[_deck.deckname].deck,_deck.deckname);
     }
 
     
-    this.octgn = function(deck) {
-      var deckname = deck.deckname;
+    this.octgn = function(deck,deckname) {
+//      var deckname = deck.deckname;
       var octgndeck = {"1hero":[],"2ally":[],"3attachment":[],"4event":[],"5quest":[]};
       var warned = false;
       for (var c = 1; c < deck.length; c++) {
