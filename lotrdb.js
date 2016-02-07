@@ -1,9 +1,10 @@
 (function() {
   var app = angular.module('deckbuilder', ['ngStorage','firebase','directive.g+signin']);
 
-	app.controller('ExampleCtrl', function ($scope) {
-        $scope.$on('event:google-plus-signin-success', function (event, authResult) {
-			// User successfully authorized the G+ App!
+	app.controller('authController', function ($scope) {
+        $scope.loggedin=false;
+		$scope.$on('event:google-plus-signin-success', function (event, authResult) {
+			$scope.loggedin=true;
 			console.log('Signed in!');
         });
         $scope.$on('event:google-plus-signin-failure', function (event, authResult) {

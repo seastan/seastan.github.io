@@ -1,16 +1,20 @@
 <div class="headerdiv">
-  <div class="headertitle">LOTRDB</div>
-  <input class="headerinput" id="siemail" placeholder="Email" type="text"></input>
+<div class="headertitle">LOTRDB</div>
+<!--     <input class="headerinput" id="siemail" placeholder="Email" type="text"></input>
   <input class="headerinput" id="sipassword" placeholder="Password" type="password"></input>
   <button class="headerbutton" ng-click="deckSearch.search();">Sign In</button>
   <label class="headertext">OR</label>
   <input class="headerinput" id="suuser" placeholder="Username" type="text"></input>
   <input class="headerinput" id="suemail" placeholder="Email" type="text"></input>
   <input class="headerinput" id="supassword" placeholder="Password" type="password"></input>
-  <button class="headerbutton" ng-click="deckSearch.search();">Sign Up</button>
-<div class="headertext">
-		<div ng-controller="ExampleCtrl">
+  <button class="headerbutton" ng-click="deckSearch.search();">Sign Up</button> -->
+
+<div ng-controller="authController">
+		<div class="headerbutton" ng-hide="loggedin">
 			<google-plus-signin clientid="738698575662-e1umri20a35knnd76lr4eqsto2fok9a3"></google-plus-signin>
 		</div>
+		<div class="headertext" ng-show="loggedin">
+			Welcome!
+		</div>
 </div>
-
+</div>

@@ -151,7 +151,8 @@ h3 {
   margin-top: 0px;
   padding:0;
   height:42px;
-  text-align: left;
+  text-align: top;
+
 }
 .headertitle{
   width: 150px;
@@ -160,6 +161,7 @@ h3 {
   zoom: 1;
   font-size:24px;
   font-weight: bold;
+  float:left;
 }
 
 .headerinput {
@@ -171,14 +173,7 @@ h3 {
   font-size:14px;
 }
 .headerbutton {
-  font-size: 14px;
-  width:   100px;
-  height: 30px;
-  border-radius: 6px;
-  background-color: #EEEEEE;
-  border-width: 1px;
-  border-style: solid;
-  border-color: #eee #555 #555 #eee;
+  float: left;
   display: inline-block;
 }
 .headertext {
@@ -459,71 +454,4 @@ canvas {
   overflow: hidden;
   margin: 0;
   padding: 0;
-}
-
-/* Auth */
-
-
-#connect {
-    text-align: center;
-    padding-top: 15px
-}
-#connect p {
-    color: #AAA;
-    margin-top: 20px
-}
-#res {
-    display: none
-}
-.panel {
-    width: 500px;
-    margin: 10px auto;
-}
-#info, .activity-author-info {
-    position: relative;
-    left: 10px;
-    width: calc(100% - 45px);
-}
-
-#info p, .activity-author-info p {
-    font-size: 0.9em
-}
-
-
-
-.spinner {
-  width: 40px;
-  height: 40px;
-
-  position: relative;
-  margin: 20px auto;
-}
-
-.double-bounce1, .double-bounce2 {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background-color: #333;
-  opacity: 0.6;
-  position: absolute;
-  top: 0;
-  left: 0;
-  
-  -webkit-animation: bounce 2.0s infinite ease-in-out;
-  animation: bounce 2.0s infinite ease-in-out;
-}
-
-.double-bounce2 {
-  -webkit-animation-delay: -1.0s;
-  animation-delay: -1.0s;
-}
-
-@-webkit-keyframes bounce {
-  0%, 100% { -webkit-transform: scale(0.0) }
-  50% { -webkit-transform: scale(1.0) }
-}
-
-@keyframes bounce {
-  0%, 100% { transform: scale(0.0) }
-  50% { transform: scale(1.0) }
 }
