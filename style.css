@@ -115,7 +115,7 @@ body {
   text-align: center;
   width:25%;
   min-width: 100px;
-  float: left;
+  float: right;
   height:108%;
   overflow:hidden;
 }
@@ -124,13 +124,13 @@ body {
   width: 35%;
   min-width: 300px;
   height: 100%;
-  float:left;
+  float:right;
   padding-right: 5px;
 }
 
 h1 {
   width: 100%;
-  text-align: center;
+  text-align: left;
   font-size: 30px;
   font-weight: bold;
   margin: 0;
@@ -147,10 +147,50 @@ h3 {
 }
 
 .headerdiv{
-  margin-top: 10px;
+  width: 100%;
+  margin-top: 0px;
   padding:0;
-  height:6vh;
+  height:42px;
+  text-align: left;
 }
+.headertitle{
+  width: 150px;
+  /*float: left;*/
+  display: inline-block;
+  zoom: 1;
+  font-size:24px;
+  font-weight: bold;
+}
+
+.headerinput {
+  width: 120px;
+  height: 30px;
+  /*float: left;*/
+  display: inline-block;
+  zoom: 1;
+  font-size:14px;
+}
+.headerbutton {
+  font-size: 14px;
+  width:   100px;
+  height: 30px;
+  border-radius: 6px;
+  background-color: #EEEEEE;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #eee #555 #555 #eee;
+  display: inline-block;
+}
+.headertext {
+  width: 50px;
+  /*float: left;*/
+  display: inline-block;
+  zoom: 1;
+  font-size:18px;
+  font-weight: bold;
+  text-align: center;
+}
+
 
 .footer{
   margin: 0;
@@ -200,9 +240,14 @@ table.cardlist {
 }
 
 .filterdiv {
-  font-size:0px;
+  font-size:14px;
 }
 
+.decksearch form  { display: table;      }
+.decksearch p     { display: table-row;  }
+.decksearch label { display: table-cell; }
+.decksearch input { display: table-cell; }
+.decksearch select{ display: table-cell; }
 
 table.deck {
   padding:0;
@@ -290,7 +335,7 @@ td.decks {
 
 
 section.tab{
-margin-bottom:2px;
+margin-bottom:1px;
 
 }
 

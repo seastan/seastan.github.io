@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="deckbuilder">
   <head>
-    <title>The Rivendell Councilroom</title>
+    <title>LOTRDB</title>
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
     <link href="style.css" rel="stylesheet" media="screen" />
-    <script src="jquery.js"></script>
+<!-- <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"> -->
+<!-- <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script> -->
+<!-- <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script> -->
+<script src="jquery.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="angular.min.js"></script>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.min.js"></script> -->
@@ -17,10 +20,13 @@
     <script src="ngStorage.min.js"></script>
     <script src="lotrdb.js"></script>
     <script src="lz-string.min.js"></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.2.33.min.js"></script>
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
     <!-- <script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script> -->
     <!-- <script src="https://cdn.firebase.com/libs/angularfire/1.1.3/angularfire.min.js"></script> -->
     <!-- <script src="https://cdn.firebase.com/v0/firebase-simple-login.js"></script> -->
     <meta name="viewport" content="width=device-width, initial-scale=0.3, maximum-scale=2, user-scalable=yes">
+    <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
     <link rel="shortcut icon" href="img/favicon.png"> 
@@ -30,35 +36,38 @@
     <header></header>
     <div class="body">
       <deck></deck>
-      <suggested></suggested>
-      <cardpreview></cardpreview>
+      <suggested ng-controller="suggestedController as sug"></suggested>
       
-        <div ng-controller="tabController as tab" class="rightdiv">
-          <section class="tab">
-            <ul class="nav nav-pills">
-              <li>
-                <a href ng-click="tab.setTab(1)" ng-class="{activetab: tab.isSet(1)}">Cards</a></li>
-              <li>
-                <a href ng-click="tab.setTab(2)" ng-class="{activetab: tab.isSet(2)}">Packs</a></li>
-              <li>
-                <a href ng-click="tab.setTab(3)" ng-class="{activetab: tab.isSet(3)}">Decks</a></li>
-              <li>
-                <a href ng-click="tab.setTab(4)" ng-class="{activetab: tab.isSet(4)}">Stats</a></li>
-              <li>
-                <a href ng-click="tab.setTab(5)" ng-class="{activetab: tab.isSet(5)}">Help</a></li>
-              <li>
-                <a href ng-click="tab.setTab(6)" ng-class="{activetab: tab.isSet(6)}">Updates</a></li>
-            </ul>
-          </section>
-          <packs></packs>
-          <cards></cards>
-          <mydecks></mydecks>
-          <stats></stats>
-          <about></about>
-          <news></news>
-        </div>
-        
+      <div ng-controller="tabController as tab" class="rightdiv">
+        <section class="tab">
+          <ul class="nav nav-pills">
+            <li>
+              <a href ng-click="tab.setTab(1)" ng-class="{activetab: tab.isSet(1)}">Builder</a></li>
+            <li>
+              <a href ng-click="tab.setTab(2)" ng-class="{activetab: tab.isSet(2)}">Sets</a></li>
+            <li>
+              <a href ng-click="tab.setTab(3)" ng-class="{activetab: tab.isSet(3)}">My Decks</a></li>
+            <li>
+              <a href ng-click="tab.setTab(pub)" ng-class="{activetab: tab.isSet(pub)}">Public</a></li>
+            <li>
+              <a href ng-click="tab.setTab(4)" ng-class="{activetab: tab.isSet(4)}">Stats</a></li>
+            <li>
+              <a href ng-click="tab.setTab(5)" ng-class="{activetab: tab.isSet(5)}">Help</a></li>
+            <li>
+              <a href ng-click="tab.setTab(6)" ng-class="{activetab: tab.isSet(6)}">Updates</a></li>
+          </ul>
+        </section>
+        <packs></packs>
+        <cards></cards>
+        <mydecks></mydecks>
+        <public></public>
+        <stats></stats>
+        <about></about>
+        <news></news>
       </div>
+      <cardpreview></cardpreview>
+        
+    </div>
 
   <!--  <myfooter></myfooter> -->
   </body>

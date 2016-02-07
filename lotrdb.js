@@ -1,4 +1,20 @@
-
+function onSuccess(googleUser) {
+      console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+    }
+    function onFailure(error) {
+      console.log(error);
+    }
+    function renderButton() {
+      gapi.signin2.render('my-signin2', {
+        'scope': 'https://www.googleapis.com/auth/plus.login',
+        'width': 250,
+        'height': 50,
+        'longtitle': true,
+        'theme': 'dark',
+        'onsuccess': onSuccess,
+        'onfailure': onFailure
+      });
+    }
 (function() {
 
 
@@ -19,7 +35,7 @@
     };
       });
   
-  app.factory('getData', function($http) {
+x  app.factory('getData', function($http) {
     var promise;
     var getData = {
       async: function(file) {
@@ -39,9 +55,28 @@
     return getData;
   });
   
-  
-  
-  //Logic for the pack selection
+    app.controller('authController',['$scope',function($scope){
+	$scope.login(function (response) {
+	    if (response.authResponse) { // logged in
+		AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+		    IdentityPoolId: 'us-east-1:4ed8877e-d7c8-4b13-ad91-65f655d45684',
+		    Logins: {
+			'accounts.google.com': response.authResponse.accessToken
+		    }
+		});
+		
+		s3 = new AWS.S3; // we can now create our service object
+		
+		console.log('You are now logged in.');
+	    } else {
+		console.log('There was a problem logging you in.');
+	    }
+	});
+
+
+    }]);
+    
+    //Logic for the pack selection
   app.controller('packSelect',["filtersettings","$localStorage",function(filtersettings,$localStorage){
     this.filtersettings=filtersettings;
     this.full=["core", "kd", "hon", "voi", "tlr", "thohauh", "thfg", "trg", "tsf", "tdt", "twoe", "thotd", "catc", "rtr", "tdf", "ttt", "efmg", "tbr", "ajtr", "twitw", "eaad", "tit", "rd", "thoem", "tld", "aoo", "nie", "tdm", "fos", "tbog", "cs", "rtm", "saf", "tmv", "tac", "tos", "tlos", "ate", "ttor", "tbocd", "tdr"]; //all expansions so far
@@ -108,25 +143,23 @@
       controllerAs: 'packs'
     };
   });
-
-  app.directive('auto', function() {
-    return {
-      restrict: 'E',
-      templateUrl: 'auto.html',
-    };
-  });
   
   //Tabs in the right div
-  app.controller('tabController',[function(){
-    this.tab=1;
+  app.service('tabService',[function(){
+      var tab=1;
+      return tab;
+  }]);
+
+  app.controller('tabController',['tabService',function(tabService){
     this.setTab = function(newValue){
-      this.tab = newValue;
+      tabService.tab = newValue;
     };
     this.isSet = function(tabName){
-      return this.tab === tabName;
+      return tabService.tab === tabName;
     };
+    this.setTab(1);
   }]);
-  
+
   
   app.controller('init',['getData','$location','deck','cardObject','$scope',function(getData,$location,deck,cardObject,$scope){
     
@@ -240,6 +273,16 @@
       controllerAs: 'cards'
     };
   });
+
+  app.directive('public', function() {
+    return {
+      restrict: 'E',
+      templateUrl: 'public.html',
+//      controller: 'publicController',
+//      controllerAs: 'public'
+    };
+  });
+
   
   app.directive('traits', function() {
     return {
@@ -248,6 +291,12 @@
     };
   });
   
+  app.directive('quests', function() {
+    return {
+      restrict: 'E',
+      templateUrl: 'questchoice.html'
+    };
+  });
   
   
   app.factory('deck', ['filtersettings','suggested','cardObject', function(filtersettings,suggested,cardObject){
@@ -262,6 +311,7 @@
     deck['5quest']=[];
     
     deck.change = function(card,quantity){
+
       if (quantity>0){
 	if (deck.quantity(card)==0) {
 	  card.quantity=quantity;
@@ -404,6 +454,7 @@
       controllerAs: 'deckC'
     };
   });
+
 
   app.factory('suggested', ['filtersettings','cardObject',function(filtersettings,cardObject){
       var suggested={};
@@ -1216,20 +1267,32 @@
   }]);
 
     
-    app.controller('suggestedController',['$scope','suggested','image',function($scope,suggested,image){
+    // app.controller('suggestedController',['$scope','suggested','image',function($scope,suggested,image){
+    // 	$scope.suggested=suggested;
+    // }]);
+
+    app.controller('suggestedController',['$scope','suggested','tabService','image',function($scope,suggested,tabService,image){
+	// $scope.show() = function() {
+	// 	  return tabService.tab === 1;
+	// }
 	$scope.suggested=suggested;
-	this.changepreview = function(card){
-	    image.update(card);
-	}
+	this.isSet = function(tabName){
+  	    return tabService.tab === tabName;
+	};
+    	this.changepreview = function(card){
+    	    image.update(card);
+    	}
+	
     }]);
+
     
     app.directive('suggested', function() {
-	return {
-	    restrict: 'E',
-	    templateUrl: 'suggested.html',
-	    controller: 'suggestedController',
-	    controllerAs: 'suggestedC'
-	};
+    	return {
+    	    restrict: 'E',
+    	    templateUrl: 'suggested.html',
+    	    controller: 'suggestedController',
+    	    controllerAs: 'sug'
+    	};
     });
     
     
@@ -1307,9 +1370,12 @@
     return image;
   });
   
+    app.service('previewService',[function(){
+      var tab='img';
+      return tab;
+  }]);
   
-  
-  app.controller('cardPreview',['$scope','$sce','image','translate',function($scope,$sce,image,translate){
+  app.controller('previewController',['$scope','$sce','image','translate','previewService',function($scope,$sce,image,translate,previewService){
     $scope.trust = $sce.trustAsHtml;
     this.image=image;
     this.getImg = function() {
@@ -1321,13 +1387,20 @@
     this.alt = function() {
       return image.text;
     }
+    this.setTab = function(newValue){
+      previewService.tab = newValue;
+    };
+    this.isSet = function(tabName){
+      return previewService.tab === tabName;
+    };
+    this.setTab('img');
   }]);
   
   app.directive('cardpreview', function() {
     return {
       restrict: 'E',
       templateUrl: 'cardpreview.html',
-      controller: 'cardPreview',
+      controller: 'previewController',
       controllerAs: 'preview'
     };
   });
@@ -1464,7 +1537,7 @@
 
     
     
-app.controller('myDecks',['deck','suggested','$localStorage','translate','$scope','cardObject','$location',function(deck,suggested,$localStorage,translate,$scope,cardObject,$location){
+app.controller('myDecks',['deck','suggested','getDeckID','$localStorage','translate','$scope','cardObject','$location',function(deck,suggested,getDeckID,$localStorage,translate,$scope,cardObject,$location){
     if (!$localStorage.decks){
 	$localStorage.decks={};
     }
@@ -1936,13 +2009,14 @@ app.controller('myDecks',['deck','suggested','$localStorage','translate','$scope
     }
 
     
-    this.octgn = function(deck,deckname) {
+    this.octgn = function(_deck,deckname) {
 //      var deckname = deck.deckname;
+	alert(getDeckID(deck));
       var octgndeck = {"1hero":[],"2ally":[],"3attachment":[],"4event":[],"5quest":[]};
       var warned = false;
-      for (var c = 1; c < deck.length; c++) {
+      for (var c = 1; c < _deck.length; c++) {
 //      for (var c = 1; c < $localStorage.decks[deckname].deck.length; c++) {
-        var card = deck[c];
+        var card = _deck[c];
         for (var j in cardObject) {
           if (card[0]==cardObject[j].cycle
           &&  card[1]==cardObject[j].no) {
@@ -2364,164 +2438,54 @@ app.controller('myDecks',['deck','suggested','$localStorage','translate','$scope
     
   }]);  
   
+    app.factory('getDeckID',['deck','cardID', function(deck,cardID) {
+	var decklist = []; // List of cardID+quantity
+	var types = ["1hero","2ally","3attachment","4event","5quest"]
+	var getDeckID = function(deck) {
+	    for (var t in types){
+		var type = types[t];
+		for (var c in deck[type]){
+		    var card = deck[type][c];
+		    decklist.push(cardID(card)+deck.quantity(card));
+		}
+	    }
+	    decklist.sort();
+	    return decklist.join("");
+	}
+	return getDeckID;
+    }]);
+
     app.factory('cardID',['setID', function(setID) {
 	var cardID = function(card) {
-	    return setID(card.exp)+card.no.toString(16)+card.quantity;
+	    return setID(card.exp)+('0'+card.no.toString(16)).substr(-2);
 	}
 	return cardID; 
     }]);
   
     app.factory('setID',function(){
 	var setID = function(set) { 
-	    switch (set) {
-	    case "core": 
-		return "a";
-		break;
-	    case "thfg":
-		return "b";
-		break;
-	    case "catc": 
-		return "b";
-		break;
-	    case "ajtr":
-		return "b";
-		break;
-	    case "thoem":
-		return "b";
-		break;
-	    case "tdm": 
-		return "b";
-		break;
-	    case "rtm":
-		return "b";
-		break;
+	    if (set=='core') return 'A';
+	    else if (set=='thfg'||set=='catc'||set=='ajtr'||set=='thoem'||set=='tdm'||set=='rtm') return 'B';
+	    else if (set=='kd') return 'C';
+	    else if (set=='trg'||set=='rtr'||set=='twitw'||set=='tld'||set=='fos'||set=='saf') return 'D';
+	    else if (set=='hon') return 'E';
+	    else if (set=='tsf'||set=='tdf'||set=='eaad'||set=='aoo'||set=='tbog'||set=='tmv') return 'F';
+	    else if (set=='voi') return 'G';
+	    else if (set=='tdt'||set=='ttt'||set=='tit'||set=='tnie'||set=='cs'||set=='tac') return 'H';
+	    else if (set=='tlr') return 'I';
+	    else if (set=='twoe'||set=='efmg'||set=='ate'||set=='ttot'||set=='tbocd'||set=='tdr') return 'J';
+	    else if (set=='tgh') return 'K';
+	    else if (set=='fots'||set=='ttitd'||set=='totd'||set=='tdr') return 'K';
 
-	    case "kd": 
-		return "c";
-		break;
-	    case "trg":
-		return "d";
-		break;
-	    case "rtr": 
-		return "d";
-		break;
-	    case "twinw":
-		return "d";
-		break;
-	    case "tld":
-		return "d";
-		break;
-	    case "fos": 
-		return "d";
-		break;
-	    case "saf":
-		return "d";
-		break;
-
-	    case "hon": 
-		return "e";
-		break;
-	    case "tsf":
-		return "f";
-		break;
-	    case "tdf": 
-		return "f";
-		break;
-	    case "eaad":
-		return "f";
-		break;
-	    case "aoo":
-		return "f";
-		break;
-	    case "tbog": 
-		return "f";
-		break;
-	    case "tmv":
-		return "f";
-		break;
-
-	    case "tvoi": 
-		return "g";
-		break;
-	    case "tdt":
-		return "h";
-		break;
-	    case "ttt": 
-		return "h";
-		break;
-	    case "tit":
-		return "h";
-		break;
-	    case "tnie":
-		return "h";
-		break;
-	    case "cs": 
-		return "h";
-		break;
-	    case "tac":
-		return "h";
-		break;
-
-	    case "aa": 
-		return "i";
-		break;
-	    case "twoe":
-		return "j";
-		break;
-	    case "efmg": 
-		return "j";
-		break;
-	    case "ate":
-		return "j";
-		break;
-	    case "ttor":
-		return "j";
-		break;
-	    case "tbocd": 
-		return "j";
-		break;
-	    case "tdr":
-		return "j";
-		break;
-
-	    case "tgh": 
-		return "k";
-		break;
-	    case "fots":
-		return "l";
-		break;
-	    case "ttitd": 
-		return "l";
-		break;
-	    case "totd":
-		return "l";
-		break;
-	    case "tdr":
-		return "l";
-		break;
-
-	    case "thohauh": 
-		return "A";
-		break;
-	    case "thotd":
-		return "B";
-		break;
-	    case "tbr": 
-		return "C";
-		break;
-	    case "trd":
-		return "D";
-		break;
-	    case "ttos":
-		return "E";
-		break;
-	    case "tlos": 
-		return "F";
-		break;
-	    case "tfotw":
-		return "G";
-		break;
-	    }
+	    else if (set=='thohauh') return 'a';	    
+	    else if (set=='thotd') return 'b';
+	    else if (set=='tbr') return 'c';
+	    else if (set=='trd') return 'd';    
+	    else if (set=='tos') return 'e';    
+	    else if (set=='tlos') return 'f';    
+	    else if (set=='tfotw') return 'g';
+    
+	    else return '_';
 	}
 	return setID;
     });
