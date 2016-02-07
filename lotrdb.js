@@ -1,27 +1,18 @@
-function onSuccess(googleUser) {
-      console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
-    }
-    function onFailure(error) {
-      console.log(error);
-    }
-    function renderButton() {
-      gapi.signin2.render('my-signin2', {
-        'scope': 'https://www.googleapis.com/auth/plus.login',
-        'width': 250,
-        'height': 50,
-        'longtitle': true,
-        'theme': 'dark',
-        'onsuccess': onSuccess,
-        'onfailure': onFailure
-      });
-    }
 (function() {
+  var app = angular.module('deckbuilder', ['ngStorage','firebase','directive.g+signin']);
 
-
+	app.controller('ExampleCtrl', function ($scope) {
+        $scope.$on('event:google-plus-signin-success', function (event, authResult) {
+			// User successfully authorized the G+ App!
+			console.log('Signed in!');
+        });
+        $scope.$on('event:google-plus-signin-failure', function (event, authResult) {
+			// User has not authorized the G+ App!
+			console.log('Not signed into Google Plus.');
+		});
+	});	
   
-  var app = angular.module('deckbuilder', ['ngStorage','firebase']);
-
-  app.filter('toArray', function () {
+	app.filter('toArray', function () {
     'use strict';
 
     return function (obj) {
@@ -35,7 +26,7 @@ function onSuccess(googleUser) {
     };
       });
   
-x  app.factory('getData', function($http) {
+  app.factory('getData', function($http) {
     var promise;
     var getData = {
       async: function(file) {
@@ -55,26 +46,7 @@ x  app.factory('getData', function($http) {
     return getData;
   });
   
-    app.controller('authController',['$scope',function($scope){
-	$scope.login(function (response) {
-	    if (response.authResponse) { // logged in
-		AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-		    IdentityPoolId: 'us-east-1:4ed8877e-d7c8-4b13-ad91-65f655d45684',
-		    Logins: {
-			'accounts.google.com': response.authResponse.accessToken
-		    }
-		});
-		
-		s3 = new AWS.S3; // we can now create our service object
-		
-		console.log('You are now logged in.');
-	    } else {
-		console.log('There was a problem logging you in.');
-	    }
-	});
 
-
-    }]);
     
     //Logic for the pack selection
   app.controller('packSelect',["filtersettings","$localStorage",function(filtersettings,$localStorage){
