@@ -5,6 +5,7 @@
         $scope.loggedin=false;
 		$scope.$on('event:google-plus-signin-success', function (event, authResult) {
 			$scope.loggedin=true;
+			$scope.$digest();
 			console.log('Signed in!');
         });
         $scope.$on('event:google-plus-signin-failure', function (event, authResult) {
