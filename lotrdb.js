@@ -5,6 +5,7 @@
         $scope.loggedin=false;
 		$scope.$on('event:google-plus-signin-success', function (event, authResult) {
 			$scope.loggedin=true;
+			Sscope.authToken=authResult['access_token'];
 			$scope.$digest();
 			console.log('Signed in!');
         });
