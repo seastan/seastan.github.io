@@ -1,0 +1,92 @@
+<div ng-controller="setsCtrl as sets">
+    <!-- <div class="btn-group btn-group-justified" role="group"> -->
+    <!--   <div class="btn-group" role="group"> -->
+    <!-- 	<button type="button" class="btn btn-primary btn-lg btn-outline" ng-click=""></button> -->
+    <!--   </div> -->
+    <!--   <div class="btn-group" role="group"> -->
+    <!-- 	<button type="button" class="btn btn-primary btn-lg btn-outline" ng-click=""></button> -->
+    <!--   </div> -->
+    <!--   <div class="btn-group" role="group"> -->
+    <!-- 	<button type="button" class="btn btn-primary btn-lg btn-outline" ng-click=""></button> -->
+    <!--   </div> -->
+    <!--   <div class="btn-group" role="group"> -->
+    <!-- 	<button type="button" class="btn btn-primary btn-lg btn-outline" ng-click=""></button> -->
+    <!--   </div> -->
+    <!-- </div> -->
+    <div class="btn-group btn-group-justified" role="group">
+      <div class="btn-group" role="group">
+	<button type="button" class="btn btn-primary btn-lg btn-outline packbutton" ng-click="sets.toggleonecore()" ng-class="{selected: sets.filtersettings.onecore}">Limit to 1 Core Set<i class="fa fa-download"></i></button>
+      </div>
+      <div class="btn-group" role="group">
+	<button type="button" class="btn btn-primary btn-lg btn-outline packbutton" ng-click="sets.toggletwocore()" ng-class="{selected: sets.filtersettings.twocore}">Limit to 2 Core Sets</button>
+      </div>
+      <div class="btn-group" role="group">
+	<button type="button" class="btn btn-primary btn-lg btn-outline packbutton" ng-click="sets.selectAll()">Select All</button>
+      </div>
+      <div class="btn-group" role="group">
+	<button type="button" class="btn btn-primary btn-lg btn-outline packbutton" ng-click="sets.selectNone()">Select None</button>
+      </div>
+    </div>
+
+  <table  style="width:100%;font-size:12px;white-space: normal;border-collapse:collapse;table-layout: fixed;">
+    <tbody>
+      <tr>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('core')>=0}" ng-click="sets.toggle('core')">Core Set</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('kd')>=0}" ng-click="sets.toggle('kd')">Khazad-Dûm</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('hon')>=0}" ng-click="sets.toggle('hon')">Heirs of Númenor</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('voi')>=0}" ng-click="sets.toggle('voi')">The Voice of Isengard</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('tlr')>=0}" ng-click="sets.toggle('tlr')">The Lost Realm</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('thohauh')>=0}" ng-click="sets.toggle('thohauh')">Over Hill and Under Hill</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('tgh')>=0}" ng-click="sets.toggle('tgh')" disabled>The Grey Havens</button></td>
+      </tr>
+      <tr>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('thfg')>=0}" ng-click="sets.toggle('thfg')">The Hunt for Gollum</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('trg')>=0}" ng-click="sets.toggle('trg')">The Redhorn Gate</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('tsf')>=0}" ng-click="sets.toggle('tsf')">The Steward's Fear</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('tdt')>=0}" ng-click="sets.toggle('tdt')">The Dunland Trap</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('twoe')>=0}" ng-click="sets.toggle('twoe')">The Wastes of Eriador</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('thotd')>=0}" ng-click="sets.toggle('thotd')">On the Doorstep</button></td>
+      </tr>
+      <tr>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('catc')>=0}" ng-click="sets.toggle('catc')">Conflict at the Carrock</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('rtr')>=0}" ng-click="sets.toggle('rtr')">Road to Rivendell</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('tdf')>=0}" ng-click="sets.toggle('tdf')">The Drúadan Forest</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('ttt')>=0}" ng-click="sets.toggle('ttt')">The Three Trials</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('efmg')>=0}" ng-click="sets.toggle('efmg')">Escape from Mount Gram</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('tbr')>=0}" ng-click="sets.toggle('tbr')">The Black Riders</button></td>
+      </tr>
+      <tr>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('ajtr')>=0}" ng-click="sets.toggle('ajtr')">A Journey to Rhosgobel</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('twitw')>=0}" ng-click="sets.toggle('twitw')">The Watcher in the Water</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('eaad')>=0}" ng-click="sets.toggle('eaad')">Encounter at Amon Dîn</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('tit')>=0}" ng-click="sets.toggle('tit')">Trouble in Tharbad</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('ate')>=0}" ng-click="sets.toggle('ate')">Across the Ettenmoors</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('rd')>=0}" ng-click="sets.toggle('rd')">The Road Darkens</button></td>
+      </tr>
+      <tr>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('thoem')>=0}" ng-click="sets.toggle('thoem')">The Hills of Emyn Muil</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('tld')>=0}" ng-click="sets.toggle('tld')">The Long Dark</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('aoo')>=0}" ng-click="sets.toggle('aoo')">Assault on Osgiliath</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('nie')>=0}" ng-click="sets.toggle('nie')">The Nin-in-Eilph</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('ttor')>=0}" ng-click="sets.toggle('ttor')">The Treachery of Rhudaur</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('tos')>=0}" ng-click="sets.toggle('tos')">The Treason of Saruman</button></td>
+      </tr>
+      <tr>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('tdm')>=0}" ng-click="sets.toggle('tdm')">The Dead Marshes</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('fos')>=0}" ng-click="sets.toggle('fos')">Foundations of Stone</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('tbog')>=0}" ng-click="sets.toggle('tbog')">The Blood of Gondor</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('cs')>=0}" ng-click="sets.toggle('cs')">Celebrimbor's Secret</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('tbocd')>=0}" ng-click="sets.toggle('tbocd')">The Battle of Carn Dûm</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('tlos')>=0}" ng-click="sets.toggle('tlos')">The Land of Shadow</button></td>
+      </tr>
+      <tr>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('rtm')>=0}" ng-click="sets.toggle('rtm')">Return to Mirkwood</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('saf')>=0}" ng-click="sets.toggle('saf')">Shadow and Flame</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('tmv')>=0}" ng-click="sets.toggle('tmv')">The Morgul Vale</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('tac')>=0}" ng-click="sets.toggle('tac')">The Antlered Crown</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('tdr')>=0}" ng-click="sets.toggle('tdr')">The Dread Realm</button></td>
+        <td><button class="btn btn-primary btn-lg btn-outline packbutton"  style="width:100%;font-size:12px;white-space: normal;" ng-class="{selected: sets.filtersettings.pack.indexOf('tfotw')>=0}" ng-click="sets.toggle('tfotw')" disabled>The Flame of the West</button></td>
+      </tr>
+    </tbody>
+  </table>
+

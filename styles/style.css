@@ -1,0 +1,486 @@
+.packbutton {
+/*   font-size: 10px; */
+/*   width:   100%; */
+   height: 60px;
+/*   border-radius: 6px; */
+/*   background-color: #EEEEEE; */
+/*   border-width: 1px; */
+/*   border-style: solid; */
+/*   border-color: #eee #555 #555 #eee; */
+}
+.packbutton.selected {
+    color: #ffffff;
+    background-color: #3ca2e0;
+  /* border-color: #555 #eee #eee #555; */
+}
+.packbutton.selected:hover {
+    color: #ffffff
+}
+/* .packbutton:active { */
+/*   background-color: #bbb; */
+/*   border-color: #555 #eee #eee #555; */
+/* } */
+/* .packbutton:hover { */
+/*   border-color: black; */
+/* } */
+/* .packbutton:disabled { */
+/*   color: lightgrey; */
+/*   background-color: grey; */
+/*   border-color: grey; */
+/* } */
+
+
+.cardbutton {
+  font-size:9px;
+  width:22px;
+  height:22px;
+  border-radius: 6px;
+  background-color: #EEEEEE;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #eee #555 #555 #eee;
+}
+.cardbutton:hover {
+  border-color: black;
+}
+.cardbutton.selected{
+  background-color: #bbb;
+  border-color: #555 #eee #eee #555;
+}
+.cardbutton:active{
+  background-color: #bbb;
+  border-color: #555 #eee #eee #555;
+}
+
+
+
+.filterbutton {
+  width: 7%;
+  height: 35px;
+  border-radius: 6px;
+  background-color: #EEEEEE;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #eee #555 #555 #eee;
+}
+.filterbutton.selected {
+  background-color: #bbb;
+  border-color: #555 #eee #eee #555;
+}
+.filterbutton:active {
+  background-color: #bbb;
+  border-color: #555 #eee #eee #555;
+}
+.filterbutton:hover{
+  border-color: black;
+}
+
+.cardpreview {
+  width: 100%;
+  height: 100%;
+  border: no;
+}
+
+
+body {
+  width: 100%;
+  height:95vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.body{
+  margin: 0;
+  padding:0;
+  height: 86vh;
+}
+
+.deckdiv {
+  width: 23%;
+  left: 75%;
+  height:97%;
+  top:3%;
+  overflow-y: scroll;
+  padding-left: 0px;
+  position:absolute;
+}
+
+.suggesteddiv {
+  width: 23%;
+  left: 51.5%;
+  top:3%;
+  height:97%;
+  overflow-y: scroll;
+  padding-left: 0px;
+  position:absolute;
+}
+
+.cardsdiv {
+  /* flex:1; */
+  /* overflow-y: scroll; */
+  /* height:auto; */
+    overflow-y: scroll;
+    position:absolute;
+    top:100px;
+    bottom:0;
+    left:1%;
+    width:100%;
+}
+
+
+.cardpreviewdiv {
+  text-align: center;
+  width:100%;
+  /* min-width: 100px; */
+  left:0.5%;
+  height:100%;
+  /* overflow:hidden; */
+}
+
+.rightdiv {
+  width: 35%;
+  min-width: 300px;
+  height: 100%;
+  float:right;
+  padding-right: 5px;
+}
+/*
+h1 {
+  width: 100%;
+  text-align: left;
+  font-size: 30px;
+  font-weight: bold;
+  margin: 0;
+}
+h2 {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+}
+h3 {
+  font-size: 20px;
+  margin: 0;
+}
+*/
+.headerdiv{
+  width: 100%;
+  margin-top: 0px;
+  padding:0;
+  height:42px;
+  text-align: left;
+}
+.headertitle{
+  width: 150px;
+  /*float: left;*/
+  display: inline-block;
+  zoom: 1;
+  font-size:24px;
+  font-weight: bold;
+}
+
+.headerinput {
+  width: 120px;
+  height: 30px;
+  /*float: left;*/
+  display: inline-block;
+  zoom: 1;
+  font-size:14px;
+}
+.headerbutton {
+  font-size: 14px;
+  width:   100px;
+  height: 30px;
+  border-radius: 6px;
+  background-color: #EEEEEE;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #eee #555 #555 #eee;
+  display: inline-block;
+}
+.headertext {
+  width: 50px;
+  /*float: left;*/
+  display: inline-block;
+  zoom: 1;
+  font-size:18px;
+  font-weight: bold;
+  text-align: center;
+}
+
+
+.footer{
+  margin: 0;
+  padding:0;
+  height:6vh;
+  width: 100%;
+  font-size: 9px;
+  text-align: center;
+  background-color: lightgrey;
+  position: absolute;
+  bottom: 0px;
+}
+
+.footerdiv{
+  width: 90%;
+  text-align: justify;
+  margin: 0 auto;
+}
+
+.cards {
+  /* display: flex; */
+  /* flex-direction: column; */
+  /*  height:100%; */
+  width:100%;
+  position:absolute;
+  left:10px;
+}
+
+
+table.cardlist {
+  width:100%;
+}
+
+
+.cardrow:nth-child(even) {
+  background-color: #EEEEEE;
+}
+.cardrow:nth-child(odd) {
+  background-color: #FFFFFF;
+}
+
+.cardrow:hover {
+  background-color: #CCCCFF;
+}
+
+.filterdiv {
+  font-size:14px;
+  left:1%;
+  position:absolute;
+}
+
+.decksearch form  { display: table;      }
+.decksearch p     { display: table-row;  }
+.decksearch label { display: table-cell; }
+.decksearch input { display: table-cell; }
+.decksearch select{ display: table-cell; }
+
+table.deck {
+  padding:0;
+  margin: 0;
+  width: 100%
+}
+
+table.suggested {
+  padding:0;
+  margin: 0;
+  width: 100%
+}
+
+
+tr.head {
+  font-weight: bold;
+}
+
+.c1leadership {
+  color: purple;
+}
+.c2tactics {
+  color: red;
+}
+.c3spirit {
+  color: blue;
+}
+.c4lore {
+  color: green;
+}
+.c5neutral {
+  color: #555;
+}
+.c6baggins {
+  color: yellow;
+  text-shadow: 1px 1px grey;
+}
+.c7fellowship {
+  color: orange;
+}
+
+.card:hover {
+  background-color: lightgrey;
+}
+
+
+
+.savebutton { 
+  width: 100%;
+  border-radius: 6px;
+  background-color: #EEEEEE;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #eee #555 #555 #eee;
+  height: 30px;
+  font-weight: normal;
+  font-size: 12px;
+  text-align: center;
+}
+.savebutton:hover{
+  border-color: black;
+}
+
+.savebutton:active {
+  background-color: #bbb;
+  border-color: #555 #eee #eee #555;
+}
+
+div.upload {
+  margin-top:5px;
+}
+
+
+td.decks {
+  padding: 0px;
+  width: 80px;
+  vertical-align: top;
+}
+
+
+.activetab {
+  color: #fff !important;
+  background-color: #337ab7 !important;
+}
+
+
+section.tab{
+margin-bottom:1px;
+
+}
+
+
+
+.carddraw {
+  width: 40%;
+  height: 86vh;
+  overflow-y: auto;
+  float:left;
+}
+
+.carddraw > ul, 
+.carddraw > li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.carddraw > button,
+.chartdiv > button {
+  width: 40%;  
+  border-radius: 6px;
+  background-color: #EEEEEE;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #eee #555 #555 #eee;
+  height: 30px;
+  font-weight: normal;
+  text-align: center;
+}
+.carddraw > button:hover,
+.chartdiv > button:hover{
+  border-color: black;
+}
+
+.carddraw > button:active,
+.chartdiv > button:active {
+  background-color: #bbb;
+  border-color: #555 #eee #eee #555;
+}
+
+.carddraw li span {
+  color: #337ab7;
+  font-size: 11px;
+  float: right;
+  line-height: 1.8;
+  cursor: pointer;
+  margin-right: 4px;
+  display: none;
+}
+.carddraw li:hover span {
+  display: inline-block;
+}
+
+
+
+.mydecks{
+  height: 86vh;
+  overflow-y:auto;
+}
+
+.unique{
+  height:10px;
+  width:auto;
+  margin-bottom: 2px;
+}
+
+
+.chartdiv {
+  width: 60%;
+  height: 86vh;
+  overflow: hidden;
+  float:left;
+  text-align: center;
+  font-weight:bold;
+  font-size:11px;
+}
+
+canvas {
+  width: 100%;
+  min-height: 120px;
+  height: 23vh;
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+
+
+.packtable {
+  border-spacing:0px;
+  width:100%;
+  border-collapse: separate;
+}
+
+.about {
+  text-align: justify;
+  height: 86vh;
+  overflow-y: scroll;
+}
+
+.about-inner {
+  text-align: justify;
+  margin: 25px;
+}
+
+.about-inner > ul >li > p {
+  font-size: 12px;
+  margin-top: 0;
+}
+
+.about-inner >ul>li>p>a {
+  font-weight: bold;
+}
+
+
+.preload {
+  visibility: hidden;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+tr.selected {
+  color:white;
+  background-color: #3ca2e0;
+}
+/*tr:hover { */
+/*   background-color: #dddddd; */
+/* } */
