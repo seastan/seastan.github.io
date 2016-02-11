@@ -2,7 +2,9 @@
   <div class=container-fluid>
     <div class=row>
       <div class="col-sm-3 col-md-2 sidebar">
-        <div class=text-center>
+        
+
+	<div class=text-center>
           <h2 class=brand><img src=images/tales.png height="52" width="52">     
 	    Love of Tales<br>
 	    <small>
@@ -11,15 +13,31 @@
 	      <a ng-click="logIn()" ng-hide="authData" class="btn btn-white btn-outline btn-rounded btn-sm">Log In</a>
 	    </small>
 	  </h2>
+	</div>
+	<ul class="nav nav-sidebar">
+	  <li ng-class="{active: $state.includes('builder')}">
+	    <a ui-sref=builder>Builder <span class=sr-only>(current)</span></a>
+	  </li>
+	  <li ng-class="{active: $state.includes('sets')}">
+	    <a ui-sref=sets>Sets <span class=sr-only>(current)</span></a>
+	  </li>
+	  <li ng-class="{active: $state.includes('reports')}">
+	    <a ui-sref=mydecks>My Decks <span class=sr-only>(current)</span></a>
+	  </li>
+	  <li ng-class="{active: $state.includes('community')}">
+	    <a ui-sref=community>Community <span class=sr-only>(current)</span></a>
+	  </li>
+	</ul>
+	<div class=text-center>
           <!-- <img src=images/tales.png class=user-avatar><br> -->
           <div class="cardpreviewdiv" ng-controller="previewCtrl as preview">
             <div>
-              <div style="width:100%;" ng-hide="preview.name()==' ()'">{{preview.name()}}<br/>
+              <div style="width:100%;" ng-hide="preview.name()==''">{{preview.name()}}<br/>{{preview.exp()}}<br/>
                 <div style="left:25%;width:100%;">
                   <a class="btn btn-white btn-outline btn-rounded btn-sm" href ng-click="preview.setTab('img')" ng-class="{activetab: preview.isSet('img')}">Image</a>
                   <a class="btn btn-white btn-outline btn-rounded btn-sm" href ng-click="preview.setTab('tex'); preview.image.loaded=false" ng-class="{activetab: preview.isSet('tex')}">Text</a>
 		</div>
-		<div style="border-radius:5px;border:4px solid #ffffff;background:#ffffff;height:47%;">
+		<div style="border-radius:5px;border:4px solid #ffffff;background:#ffffff;height:47%">
 		  <img ng-if="preview.image.url&&preview.isSet('img')" ng-src="{{preview.getImg()}}" class="cardpreview" alt="{{preview.alt()}}" title="{{preview.alt()}}" imageonload  />
 		  
 		  <div ng-hide="preview.image.url&&preview.isSet('img')" style="color:black;">
@@ -61,20 +79,6 @@
 	  
 	</div>
 	
-	<ul class="nav nav-sidebar">
-	  <li ng-class="{active: $state.includes('builder')}">
-	    <a ui-sref=builder>Builder <span class=sr-only>(current)</span></a>
-	  </li>
-	  <li ng-class="{active: $state.includes('sets')}">
-	    <a ui-sref=sets>Sets <span class=sr-only>(current)</span></a>
-	  </li>
-	  <li ng-class="{active: $state.includes('reports')}">
-	    <a ui-sref=mydecks>My Decks <span class=sr-only>(current)</span></a>
-	  </li>
-	  <li ng-class="{active: $state.includes('community')}">
-	    <a ui-sref=community>Community <span class=sr-only>(current)</span></a>
-	  </li>
-	</ul>
       </div>
       <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ui-view>
       </div>

@@ -1606,7 +1606,10 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	return this.image.getUrl();
     };
     this.name = function() {
-	return image.name + " (" + translate[image.exp] +")";
+	return image.name;
+    }
+    this.exp = function() {
+	return " (" + translate[image.exp] +")";
     }
     this.alt = function() {
 	return image.text;
