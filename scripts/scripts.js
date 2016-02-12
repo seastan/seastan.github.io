@@ -5,7 +5,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 
 .config(["$stateProvider", "$urlRouterProvider", function(r, t) {
     t.when("/deck", "/deck/builder"),
-	t.otherwise("/login"),
+	t.otherwise("/deck/builder"),
 	r.state("base", {
         "abstract": !0,
         url: "",
@@ -41,6 +41,11 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
         url: "/community",
         parent: "dashboard",
         templateUrl: "views/dashboard/community.html"
+    }).state("deckview", {
+        url: "/:uniqueID",
+        parent: "dashboard",
+        templateUrl: "views/dashboard/deckview.html",
+		controller: 'deckViewCtrl'
     })
 }])
 .controller("LoginCtrl", ["$scope", "$location",'$rootScope', '$firebaseAuth', '$firebaseArray',  function($scope, $location, $rootScope, $firebaseAuth, $firebaseArray) {
@@ -168,8 +173,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	return $location.path("/login");
     }
     $scope.logIn = function() {
-	console.log("Logging out");
-	$rootScope.auth.$unauth();
+	console.log("Logging in");
 	return $location.path("/login");
     }
 
@@ -1640,7 +1644,12 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     this.setTab('img');
 }])
 
+.controller('deckViewCtrl', function($scope, $stateParams,$location) {
+	
+	console.log($stateParams.param);
+    console.log($location.url());
 
+})
 
 .controller('myDecksCtrl', ['deck', 'getDeckString', '$localStorage', 'translate', '$scope', '$rootScope', 'cardObject', '$location', '$firebaseObject','$firebaseArray','getHeroesFromDeckString','loadDeckIntoBuilder','getCardFromCardID','getCardID',
 function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, cardObject, $location,$firebaseObject,$firebaseArray,getHeroesFromDeckString,loadDeckIntoBuilder,getCardFromCardID,getCardID) {
