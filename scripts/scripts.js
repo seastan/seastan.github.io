@@ -201,6 +201,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	    });
 	}
     	else
+			$rootScope.displayName = 'Guest';
     	    console.log("onAuth Fail");
     });
 }])
@@ -1498,7 +1499,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 		this.filtersettings.spheres[sphere] = false;
             }
 	}
-	this.fitersettings.spheres[s] = !(this.filtersettings.spheres[s]);
+	this.filtersettings.spheres[s] = !(this.filtersettings.spheres[s]);
     };
     this.orderby = function(o){
 	this.order = o;
