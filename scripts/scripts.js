@@ -4,7 +4,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 
 
 .config(["$stateProvider", "$urlRouterProvider", function(r, t) {
-    t.when("/dashboard", "/dashboard/builder"),
+    t.when("/deck", "/deck/builder"),
 	t.otherwise("/login"),
 	r.state("base", {
         "abstract": !0,
@@ -21,7 +21,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
         templateUrl: "views/signup.html",
         controller: "SignupCtrl"
     }).state("dashboard", {
-        url: "/dashboard",
+        url: "/deck",
         parent: "base",
         templateUrl: "views/dashboard.html",
         controller: "DashboardCtrl"
@@ -62,7 +62,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 		console.log("Authenticated successfully with payload:", authData);
 	 	$scope.message = '';
 		$scope.$apply(function() {
-		    $location.path("/dashboard");
+		    $location.path("/deck");
 		});
 	    }
 	    $scope.$digest();
@@ -71,7 +71,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     // Guest
     $scope.logInGuest = function() {
 	console.log('Welcome guest');
-	return $location.path("/dashboard"), !1
+	return $location.path("/deck"), !1
     }
 
 }])
@@ -142,7 +142,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 		console.log("Authenticated successfully with payload:", authData);
 	 	$scope.message = '';
 		$scope.$apply(function() {
-		    $location.path("/dashboard");
+		    $location.path("/deck");
 		});
 	    }
 	    $scope.$digest();
@@ -152,7 +152,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     // Guest
     $scope.logInGuest = function() {
 	console.log('Welcome guest');
-	return $location.path("/dashboard"), !1
+	return $location.path("/deck"), !1
     }
 
 }])
@@ -218,7 +218,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 .directive('header', function() {
     return {
 	restrict: 'E',
-	templateUrl: 'views/dashboard.html',
+	templateUrl: 'views/deck.html',
 	controller: 'init'
     };
 })
@@ -274,15 +274,15 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	return generateDeckID;
 })
 
-.factory('getDeckString',['deck','getCardID', function(deck,getCardID) {
-	var decklist = []; // List of cardID+quantity
-	var types = ["1hero","2ally","3attachment","4event","5quest"]
+.factory('getDeckString',['getCardID','getQuantityOfCardInLocalObject', function(getCardID,getQuantityOfCardInLocalObject) {
 	var getDeckString = function(deck) {
+		var decklist = []; // List of cardID+quantity
+		var types = ["1hero","2ally","3attachment","4event","5quest"]
 	    for (var t in types){
 			var type = types[t];
 			for (var c in deck[type]){
 				var card = deck[type][c];
-				decklist.push(getCardID(card)+deck.quantity(card));
+				decklist.push(getCardID(card)+getQuantityOfCardInLocalObject(card,deck));
 			}
 	    }
 	    decklist.sort();
@@ -322,7 +322,17 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	}
 	return getCardID; 
 }])
-  
+.factory('getQuantityOfCardInLocalObject',function() {
+	var quantity = function(card,localDeck) {
+		for (var c in localDeck[card.type]){
+			if (localDeck[card.type][c].cycle==card.cycle && localDeck[card.type][c].no==card.no){
+				return localDeck[card.type][c].quantity;
+			}
+		}
+	}
+	return quantity;
+})
+
 .factory('getSetID',function(){
 	var getSetID = function(set) { 
 	    if (set=='core') return 'A';
@@ -332,21 +342,24 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	    else if (set=='hon') return 'E';
 	    else if (set=='tsf'||set=='tdf'||set=='eaad'||set=='aoo'||set=='tbog'||set=='tmv') return 'F';
 	    else if (set=='voi') return 'G';
-	    else if (set=='tdt'||set=='ttt'||set=='tit'||set=='tnie'||set=='cs'||set=='tac') return 'H';
+	    else if (set=='tdt'||set=='ttt'||set=='tit'||set=='nie'||set=='cs'||set=='tac') return 'H';
 	    else if (set=='tlr') return 'I';
-	    else if (set=='twoe'||set=='efmg'||set=='ate'||set=='ttot'||set=='tbocd'||set=='tdr') return 'J';
+	    else if (set=='twoe'||set=='efmg'||set=='ate'||set=='ttor'||set=='tbocd'||set=='tdr') return 'J';
 	    else if (set=='tgh') return 'K';
 	    else if (set=='fots'||set=='ttitd'||set=='totd'||set=='tdr') return 'K';
 
 	    else if (set=='thohauh') return 'a';	    
 	    else if (set=='thotd') return 'b';
 	    else if (set=='tbr') return 'c';
-	    else if (set=='trd') return 'd';    
+	    else if (set=='rd') return 'd';    
 	    else if (set=='tos') return 'e';    
 	    else if (set=='tlos') return 'f';    
 	    else if (set=='tfotw') return 'g';
     
-	    else return '_';
+	    else {
+			console.log(set+' notfound.');
+			return '_';
+			}
 	}
 	return getSetID;
 })
@@ -1313,7 +1326,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     return suggested;
 }])
 
-.factory('deck', ['filtersettings','suggested','cardObject', function(filtersettings,suggested,cardObject){
+.factory('deck', ['filtersettings','suggested','cardObject','getDeckString', function(filtersettings,suggested,cardObject,getDeckString){
     var deck={};
     deck.filtersettings = filtersettings;
     deck.suggested = suggested;
@@ -1323,9 +1336,9 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     deck['3attachment']=[];
     deck['4event']=[];
     deck['5quest']=[];
-    
+    console.log('deckload '+getDeckString(this));
     deck.change = function(card,quantity){
-
+	console.log('deckchange '+getDeckString(this));
 	if (quantity>0){
 	    if (deck.quantity(card)==0) {
 		card.quantity=quantity;
@@ -1425,6 +1438,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
         deck.deckname = "";
 		suggested.clearBlacklist();
 		suggested.deckChange(deck);
+		console.log("Deck cleared");
     };
     return deck;
 }])
@@ -1440,7 +1454,9 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 			card.quantity = +deckString.substr(i+3,1);
 			deck[card.type].push(card);
 		}
-		return $location.path("/dashboard/builder")
+
+			return $location.path("/deck/builder");
+
 	}
 	return loadDeckIntoBuilder;
 	
@@ -1579,7 +1595,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
             newDeck.deckstring = getDeckString(deck);
             newDeck.$save().then(function(ref) {
 		console.log("Deck saved.");
-		return $location.path("/dashboard/mydecks");
+		return $location.path("/deck/mydecks");
 	    }, function(error) {
 		console.log("Error saving deck:", error);
             });
@@ -1626,8 +1642,8 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 
 
 
-.controller('myDecksCtrl', ['deck', 'getDeckString', '$localStorage', 'translate', '$scope', '$rootScope', 'cardObject', '$location', '$firebaseObject','$firebaseArray','getHeroesFromDeckString','loadDeckIntoBuilder','getCardFromCardID',
-function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, cardObject, $location,$firebaseObject,$firebaseArray,getHeroesFromDeckString,loadDeckIntoBuilder,getCardFromCardID) {
+.controller('myDecksCtrl', ['deck', 'getDeckString', '$localStorage', 'translate', '$scope', '$rootScope', 'cardObject', '$location', '$firebaseObject','$firebaseArray','getHeroesFromDeckString','loadDeckIntoBuilder','getCardFromCardID','getCardID',
+function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, cardObject, $location,$firebaseObject,$firebaseArray,getHeroesFromDeckString,loadDeckIntoBuilder,getCardFromCardID,getCardID) {
     // $scope.myDecksObject.$loaded.then(function() {
     // $scope.myDecksArray = Object.keys($scope.data)
     // .map(function(key) {
@@ -2031,36 +2047,49 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
     };
 
     this.uploadOctgn = function(file) {
-        var deckname = file.name.replace('.o8d', '');
+
+        var deckName = file.name.replace('.o8d', '');
         if (file) {
-            var r = new FileReader();
+		// deck.clear();
+		// deck.deckname = deckname;
+		var deckString = '';
+		var r = new FileReader();
             r.onload = function(e) {
-                var deckArray = [deckname];
                 var regexp = /<card\s+qty="(\d)"\s+id="([0-9a-f\-]+)">/gi,
                 match;
-		
-		deck.clear();
-		deck.deckname = deckname;
-		
+
                 while (match = regexp.exec(e.target.result)) {
                     for (var i in cardObject) {
                         if (cardObject[i].octgn == match[2]) {
+							var cardID = getCardID(cardObject[i]);
+							
 			    //console.log(cardObject[i].name_norm+' '+cardObject[i].type);
-                            var card = cardObject.slice(i,i+1)[0];
-			    card.quantity = +match[1];
-			    //console.log(card.quantity);
-			    deck[card.type].push(card);
+                            //var card = cardObject.slice(i,i+1)[0];
+							deckString = deckString+cardID+match[1];
+			   // card.quantity = +match[1];
+			    //console.log(card.name_norm);
+			    //octgnDeck[card.type].push(card);
 			    //console.log('decksize '+deck.countTotal());
                         }
                     }
                 }
+				var deckObject = {};
+				deckObject.deckname = deckName;
+				deckObject.deckstring = deckString;
+				console.log(deckString);
+				$scope.$apply(function() {
+					loadDeckIntoBuilder(deckObject);
+				});
+
             };
             r.readAsText(file);
         };
-	//	$location.path("/dashboard/builder")
-	$scope.$apply(function() {
-	    $location.path("/dashboard/builder");
-	});
+
+
+	//	$location.path("/deck/builder")
+	// $scope.$apply(function() {
+	    // $location.path("/deck/builder");
+	// });
 
     }
 
