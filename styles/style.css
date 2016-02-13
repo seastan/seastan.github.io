@@ -2,6 +2,9 @@
 /*   font-size: 10px; */
 /*   width:   100%; */
    height: 60px;
+   width:100%;
+   font-size:12px;
+   white-space: normal;
 /*   border-radius: 6px; */
 /*   background-color: #EEEEEE; */
 /*   border-width: 1px; */
@@ -481,6 +484,11 @@ tr.selected {
   color:white;
   background-color: #3ca2e0;
 }
-/*tr:hover { */
-/*   background-color: #dddddd; */
-/* } */
+.release-table-outter {}
+.release-table{table-layout: fixed; margin:0px auto 0px auto; }
+.release-table, td, th{border-collapse:collapse;}
+
+
+.release-table-outter { overflow-x: scroll; }
+.release-table-outter { min-width: 200px; }
+.release-table-outter td { min-width: 200px; }
