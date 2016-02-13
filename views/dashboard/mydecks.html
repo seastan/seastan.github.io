@@ -16,7 +16,7 @@
 	    </h3>
 	  </div>
 	<div class="panel-body">
-	  <table class="table ">
+	  <table class="table">
 	    <thead>
 	      <tr>
 		<th>Name</th>
@@ -37,7 +37,7 @@
 		  {{mydecks.getHeroes(deck.deckstring)}}
 		</td>
 		<td>
-		  {{deck.$id}}
+		  {{deck.deckid}}
 		</td>
 	      </tr>
 	    </tbody>
@@ -48,6 +48,9 @@
 
 
     <div class="btn-group btn-group-justified" role="group">
+      <div class="btn-group" role="group">
+	<button type="button" class="btn btn-primary" ng-click="mydecks.loadInfoPage(mydecks.getSelected())">Load Info Page</button>
+      </div>
       <div class="btn-group" role="group">
 	<button type="button" class="btn btn-primary" ng-click="mydecks.loadDeck(mydecks.getSelected())">Load into Builder</button>
       </div>

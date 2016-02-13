@@ -67,21 +67,21 @@
 
 <div ng-controller="deckCtrl">
 <div class="deckdiv">
-	<div ng-hide="deck.empty();">
-		<input type="text" name="deckname" placeholder="Deck name" ng-model="deck.deckname" style="width:100%;"></input>
-		<button ng-click="saveDeck();" class="filterbutton" style="font-size:12px;width:49%;height:25px;">Save</button>
-		<button ng-click="deck.clear();" class="filterbutton" style="font-size:12px;width:49%;height:25px;">Clear Deck</button>
-	</div>
+  <div ng-hide="deck.empty();">
+    <input type="text" name="deckname" placeholder="Deck name" ng-model="deck.deckname" style="width:100%;"></input>
+    <button ng-click="saveDeck();" class="filterbutton" style="font-size:12px;width:49%;height:25px;">Save</button>
+    <button ng-click="deck.clear();" class="filterbutton" style="font-size:12px;width:49%;height:25px;">Clear Deck</button>
+  </div>
   <h4 ng-show="deck.countTotal()">Total Cards: {{deck.countTotal()}}</h4>
   <table class="deck">
     <tr class="head" ng-show="deck.countHeroes()"><td style="width:100px"></td><td>Heroes (Starting threat: {{deck.startingThreat()}})</td></tr>
-    <tr class="card" ng-repeat="card in deck['1hero'] | orderBy:['sphere','name_norm']" ng-mouseover="deckC.changepreview(card)">
+    <tr class="card" ng-repeat="card in deck['1hero'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
       <td style="font-size:0;text-align:center;">
         <button class="cardbutton" ng-class="{selected: deck.quantity(card)==0}" ng-click="deck.change(card,0)">X</button>
       </td>
       <td class="c{{card.sphere}}">{{card.name}}</td>
     <tr class="head" ng-show="deck.countAllies()"><td></td><td>Allies ({{deck.countAllies()}})</td></tr>
-    <tr class="card" ng-repeat="card in deck['2ally'] | orderBy:['sphere','name_norm']" ng-mouseover="deckC.changepreview(card)">
+    <tr class="card" ng-repeat="card in deck['2ally'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
       <td style="font-size:0;">
         <button class="cardbutton" ng-class="{selected: deck.quantity(card)==0}" ng-click="deck.change(card,0)">X</button>
         <button class="cardbutton" ng-class="{selected: deck.quantity(card)==1}" ng-click="deck.change(card,1)">1</button>
@@ -90,7 +90,7 @@
       </td>
       <td class="c{{card.sphere}}">{{card.name}}</td></li>
     <tr class="head" ng-show="deck.countAttachments()"><td></td><td>Attachments ({{deck.countAttachments()}})</td></tr>
-    <tr class="card" ng-repeat="card in deck['3attachment'] | orderBy:['sphere','name_norm']" ng-mouseover="deckC.changepreview(card)">
+    <tr class="card" ng-repeat="card in deck['3attachment'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
       <td style="font-size:0;">
         <button class="cardbutton" ng-class="{selected: deck.quantity(card)==0}" ng-click="deck.change(card,0)">X</button>
         <button class="cardbutton" ng-class="{selected: deck.quantity(card)==1}" ng-click="deck.change(card,1)">1</button>
@@ -99,7 +99,7 @@
       </td>
       <td class="c{{card.sphere}}">{{card.name}}</td></li>
     <tr class="head" ng-show="deck.countEvents()"><td></td><td>Events ({{deck.countEvents()}})</td></tr>
-    <tr class="card" ng-repeat="card in deck['4event'] | orderBy:['sphere','name_norm']" ng-mouseover="deckC.changepreview(card)">
+    <tr class="card" ng-repeat="card in deck['4event'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
       <td style="font-size:0;">
         <button class="cardbutton" ng-class="{selected: deck.quantity(card)==0}" ng-click="deck.change(card,0)">X</button>
         <button class="cardbutton" ng-class="{selected: deck.quantity(card)==1}" ng-click="deck.change(card,1)">1</button>
@@ -108,7 +108,7 @@
       </td>
       <td class="c{{card.sphere}}">{{card.name}}</td></tr>
     <tr class="head" ng-show="deck.countQuests()"><td></td><td>Quests ({{deck.countQuests()}})</td></tr>
-    <tr class="card" ng-repeat="card in deck['5quest'] | orderBy:['sphere','name_norm']" ng-mouseover="deckC.changepreview(card)">
+    <tr class="card" ng-repeat="card in deck['5quest'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
       <td style="font-size:0;">
         <button class="cardbutton" ng-class="{selected: deck.quantity(card)==0}" ng-click="deck.change(card,0)">X</button>
         <button class="cardbutton" ng-class="{selected: deck.quantity(card)==1}" ng-click="deck.change(card,1)">1</button>
@@ -120,7 +120,7 @@
 
 
 </div>
-<div class="suggesteddiv" ng-controller="suggestedCtrl as suggested">
+<div class="suggesteddiv" ng-controller="suggestedCtrl">
   <button class="filterbutton" style="width:80%;height:25px" ng-show="(!suggested.empty()||suggested.blacklist.length)&&!suggested.hidden&&!deck.empty()" ng-click="suggested.hide()" ng-class="">
     Hide Suggestions
   </button>
@@ -132,14 +132,14 @@
   </button>
   <table class="suggested" ng-show="!suggested.hidden">
     <tr class="head" ng-show="suggested.countHeroes()"><td style="width:100px"></td><td>Heroes</td></tr>
-    <tr class="card" ng-repeat="card in suggested['1hero'] | orderBy:['sphere','name_norm']" ng-mouseover="sug.changepreview(card)">
+    <tr class="card" ng-repeat="card in suggested['1hero'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
       <td style="font-size:0;text-align:center;">
         <button class="cardbutton" ng-class="" ng-click="suggested.remove(card)">X</button>
         <button class="cardbutton" ng-class="{selected: deck.quantity(card)==1}" ng-click="deck.change(card,1)">1</button>
       </td>
       <td class="c{{card.sphere}}">{{card.name}}</td></li>
     <tr class="head" ng-show="suggested.countAllies()"><td></td><td>Allies</td></tr>
-    <tr class="card" ng-repeat="card in suggested['2ally'] | orderBy:['sphere','name_norm']" ng-mouseover="sug.changepreview(card)">
+    <tr class="card" ng-repeat="card in suggested['2ally'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
       <td style="font-size:0;">
         <button class="cardbutton" ng-class="" ng-click="suggested.remove(card)">X</button>
         <button class="cardbutton" ng-class="{selected: deck.quantity(card)==1}" ng-click="deck.change(card,1)">1</button>
@@ -148,7 +148,7 @@
       </td>
       <td class="c{{card.sphere}}">{{card.name}}</td></li>
     <tr class="head" ng-show="suggested.countAttachments()"><td></td><td>Attachments</td></tr>
-    <tr class="card" ng-repeat="card in suggested['3attachment'] | orderBy:['sphere','name_norm']" ng-mouseover="sug.changepreview(card)">
+    <tr class="card" ng-repeat="card in suggested['3attachment'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
       <td style="font-size:0;">
         <button class="cardbutton" ng-class="" ng-click="suggested.remove(card)">X</button>
         <button class="cardbutton" ng-class="{selected: deck.quantity(card)==1}" ng-click="deck.change(card,1)">1</button>
@@ -157,7 +157,7 @@
       </td>
       <td class="c{{card.sphere}}">{{card.name}}</td></li>
     <tr class="head" ng-show="suggested.countEvents()"><td></td><td>Events</td></tr>
-    <tr class="card" ng-repeat="card in suggested['4event'] | orderBy:['sphere','name_norm']" ng-mouseover="sug.changepreview(card)">
+    <tr class="card" ng-repeat="card in suggested['4event'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
       <td style="font-size:0;">
         <button class="cardbutton" ng-class="" ng-click="suggested.remove(card)">X</button>
         <button class="cardbutton" ng-class="{selected: deck.quantity(card)==1}" ng-click="deck.change(card,1)">1</button>
@@ -166,7 +166,7 @@
       </td>
       <td class="c{{card.sphere}}">{{card.name}}</td></tr>
     <tr class="head" ng-show="suggested.countQuests()"><td></td><td>Quests</td></tr>
-    <tr class="card" ng-repeat="card in suggested['5quest'] | orderBy:['sphere','name_norm']" ng-mouseover="sug.changepreview(card)">
+    <tr class="card" ng-repeat="card in suggested['5quest'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
       <td style="font-size:0;">
         <button class="cardbutton" ng-class="" ng-click="suggested.remove(card)">X</button>
         <button class="cardbutton" ng-class="{selected: deck.quantity(card)==1}" ng-click="deck.change(card,1)">1</button>
