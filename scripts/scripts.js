@@ -2462,8 +2462,9 @@ function($rootScope,$scope,$firebaseObject,generateDeckID,getDeckObjectFromDeckI
 			$scope.validDeckID1 = false;
 			return false;
 		}
-		var setValidity1 = function(isValid)
+		var setValidity1 = function(isValid) {
 			$scope.validDeckID1 = isValid;
+		}
 		$scope.deckObject1 = $firebaseObject($rootScope.ref.child('decks').child($scope.formDataMyLogs.deckid1));
 		$scope.deckObject1.$loaded().then(function(isValid) {
 			if ($scope.deckObject1.deckid) setValidity1(true);
@@ -2476,8 +2477,9 @@ function($rootScope,$scope,$firebaseObject,generateDeckID,getDeckObjectFromDeckI
 			$scope.validDeckID2 = false;
 			return false;
 		}
-		var setValidity2 = function(isValid)
+		var setValidity2 = function(isValid) {
 			$scope.validDeckID2 = isValid;
+		}
 		$scope.deckObject2 = $firebaseObject($rootScope.ref.child('decks').child($scope.formDataMyLogs.deckid2));
 		$scope.deckObject2.$loaded().then(function(isValid) {
 			if ($scope.deckObject2.deckid) setValidity2(true);
@@ -2490,8 +2492,9 @@ function($rootScope,$scope,$firebaseObject,generateDeckID,getDeckObjectFromDeckI
 			$scope.validDeckID3 = false;
 			return false;
 		}
-		var setValidity3 = function(isValid)
+		var setValidity3 = function(isValid) {
 			$scope.validDeckID3 = isValid;
+		}
 		$scope.deckObject3 = $firebaseObject($rootScope.ref.child('decks').child($scope.formDataMyLogs.deckid3));
 		$scope.deckObject3.$loaded().then(function(isValid) {
 			if ($scope.deckObject3.deckid) setValidity3(true);
@@ -2504,8 +2507,9 @@ function($rootScope,$scope,$firebaseObject,generateDeckID,getDeckObjectFromDeckI
 			$scope.validDeckID4 = false;
 			return false;
 		}
-		var setValidity4 = function(isValid)
+		var setValidity4 = function(isValid) {
 			$scope.validDeckID4 = isValid;
+		}
 		$scope.deckObject4 = $firebaseObject($rootScope.ref.child('decks').child($scope.formDataMyLogs.deckid4));
 		$scope.deckObject4.$loaded().then(function(isValid) {
 			if ($scope.deckObject4.deckid) setValidity4(true);
