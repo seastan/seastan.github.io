@@ -1815,8 +1815,8 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
 }])
 
 
-.controller('myDecksCtrl', ['deck', 'getDeckString', '$localStorage', 'translate', '$scope', '$rootScope', 'cardObject', '$location', '$firebaseObject','$firebaseArray','getHeroesFromDeckString','loadDeckIntoBuilder','getCardFromCardID','getCardID','searchDecks',
-function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, cardObject, $location,$firebaseObject,$firebaseArray,getHeroesFromDeckString,loadDeckIntoBuilder,getCardFromCardID,getCardID,searchDecks) {
+.controller('myDecksCtrl', ['deck', 'getDeckString', '$localStorage', 'translate', '$scope', '$rootScope', 'cardObject', '$location', '$firebaseObject','$firebaseArray','getHeroesFromDeckString','loadDeckIntoBuilder','getCardFromCardID','getCardID','searchDecks','image',
+function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, cardObject, $location,$firebaseObject,$firebaseArray,getHeroesFromDeckString,loadDeckIntoBuilder,getCardFromCardID,getCardID,searchDecks,image) {
     // $scope.myDecksObject.$loaded.then(function() {
     // $scope.myDecksArray = Object.keys($scope.data)
     // .map(function(key) {
@@ -1839,15 +1839,19 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
     this.getSelected = function() {
 	return this.selectedDeck;
     }
+    this.changepreview = function(card){
+    	image.update(card);
+    }    
     this.loadInfoPage = function(deckObject) {
 	return $location.path("/deck/id:"+deckObject.deckid);
     };
     this.getHeroes = function(deckString) {
-	var heroNames = '';
+//	var heroNames = '';
 	var heroes = getHeroesFromDeckString(deckString);
-	for (var h in heroes)
-	    heroNames+=heroes[h].name_norm+' ';
-	return heroNames;
+//	for (var h in heroes)
+//	    heroNames+=heroes[h].name_norm+' ';
+//	return heroNames;
+	return heroes;
     }
     this.deleteDeck = function(deckObject) {
 	if (!deckObject) return alert("Please select a deck.");

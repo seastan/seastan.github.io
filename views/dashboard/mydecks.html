@@ -34,7 +34,13 @@
 		  <div style="font-size:9px;padding-left:10px;">{{deck.dateUTC|date:'medium'}}</div>
 		</td>
 		<td>
-		  {{mydecks.getHeroes(deck.deckstring)}}
+		  <table >
+		    <td ng-repeat="card in mydecks.getHeroes(deck.deckstring)" ng-mouseover="mydecks.changepreview(card)" class="c{{card.sphere}}" style="padding-right:10px;">{{card.name}}</td>
+
+		    <!-- <td>{{mydecks.getHeroes(deck.deckstring)[0].name}} </td> -->
+		    <!-- <td>{{mydecks.getHeroes(deck.deckstring)[1].name}} </td> -->
+		    <!-- <td>{{mydecks.getHeroes(deck.deckstring)[2].name}} </td> -->
+		    </table>
 		</td>
 		<td>
 		  {{deck.deckid}}

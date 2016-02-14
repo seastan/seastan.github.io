@@ -313,6 +313,38 @@ tr.head {
   background-color: lightgrey;
 }
 
+tr.head {
+  font-weight: bold;
+}
+
+
+td.c1leadership {
+  color: purple;
+}
+.c2tactics {
+  color: red;
+}
+.c3spirit {
+  color: blue;
+}
+.c4lore {
+  color: green;
+}
+.c5neutral {
+  color: #555;
+}
+.c6baggins {
+  color: yellow;
+  text-shadow: 1px 1px grey;
+}
+.c7fellowship {
+  color: orange;
+}
+
+.card:hover {
+  background-color: lightgrey;
+}
+
 
 
 .savebutton { 
