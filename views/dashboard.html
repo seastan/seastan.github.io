@@ -2,8 +2,6 @@
   <div class=container-fluid>
     <div class=row>
       <div class="col-sm-3 col-md-2 sidebar">
-        
-
 	<div class=text-center>
           <h2 class=brand><img src=images/tales.png height="52" width="52">     
 	    Love of Tales<br>
@@ -21,8 +19,11 @@
 	  <li ng-class="{active: $state.includes('sets')}">
 	    <a ui-sref=sets>Sets <span class=sr-only>(current)</span></a>
 	  </li>
-	  <li ng-class="{active: $state.includes('reports')}">
+	  <li ng-class="{active: $state.includes('mydecks')}">
 	    <a ui-sref=mydecks>My Decks <span class=sr-only>(current)</span></a>
+	  </li>
+	  <li ng-class="{active: $state.includes('mylogs')}">
+	    <a ui-sref=mylogs>My Logs <span class=sr-only>(current)</span></a>
 	  </li>
 	  <li ng-class="{active: $state.includes('community')}">
 	    <a ui-sref=community>Community <span class=sr-only>(current)</span></a>

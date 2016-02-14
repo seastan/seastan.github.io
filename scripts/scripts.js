@@ -33,6 +33,10 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
         url: "/mydecks",
         parent: "dashboard",
         templateUrl: "views/dashboard/mydecks.html"
+    }).state("mylogs", {
+        url: "/mylogs",
+        parent: "dashboard",
+        templateUrl: "views/dashboard/mylogs.html"
     }).state("sets", {
         url: "/sets",
         parent: "dashboard",
@@ -54,7 +58,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     $scope.message='';
 
     // Log in
-    $scope.submit = function() {
+     $scope.submit = function() {
 	console.log("Attempting to sign in as "+$scope.liEmail);
 	$rootScope.ref.authWithPassword({
 	    email    : $scope.liEmail,
@@ -228,6 +232,12 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
       templateUrl: 'views/dashboard/traitchoice.html'
     };
 })
+.directive('questchoice', function() {
+    return {
+      restrict: 'E',
+      templateUrl: 'views/dashboard/questchoice.html'
+    };
+})
 .directive('header', function() {
     return {
 	restrict: 'E',
@@ -391,15 +401,16 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 }])
 .factory('getHeroesFromDeckString',['getCardFromCardID', function(getCardFromCardID) {
 	var heroes = function(deckString) {
-		var herolist = [];
-		for (var i=0; i<=(deckString.length-4); i=i+4) {
-			var cardID = deckString.substr(i,3);
-			var card = getCardFromCardID(cardID);
-			if (card.type == '1hero') herolist.push(card);
-		}
-		return herolist;
+	    var herolist = [];
+	    if (!deckString) return herolist;
+	    for (var i=0; i<=(deckString.length-4); i=i+4) {
+		var cardID = deckString.substr(i,3);
+		var card = getCardFromCardID(cardID);
+		if (card.type == '1hero') herolist.push(card);
+	    }
+	    return herolist;
 	}
-	return heroes;
+    return heroes;
 }])
 .factory('getCardID',['getSetID', function(getSetID) {
 	var getCardID = function(card) {
@@ -2384,4 +2395,83 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
     }
 
 
-}]);
+}])
+
+.factory('getDeckStringFromDeckID',['$rootScope','$firebaseObject',function($rootScope,$firebaseObject) {
+    var deckString = function(deckID) {
+	var deckObject = $firebaseObject($rootScope.ref.child('decks').child(deckID));
+	deckObject.$loaded().then(function() {
+	    return deckObject.deckstring; 
+	});
+    };
+    return deckString;
+}])
+
+.controller('myLogsCtrl', ['$rootScope','$scope','$firebaseObject','generateDeckID','getDeckStringFromDeckID','getHeroesFromDeckString',function($rootScope,$scope,$firebaseObject,generateDeckID,getDeckStringFromDeckID,getHeroesFromDeckString) {
+    if (!$rootScope.authData) {
+        return $location.path("/login");
+    } else {
+	var myLogs = [];
+	var allLogs = $firebaseObject($rootScope.ref.child('logs'));
+	allLogs.$loaded().then(function() {
+	    angular.forEach(allLogs, function(value, key){
+		var logID = key;
+		var logObject = value;
+		if (logObject.userid == $rootScope.authData.uid)
+		    myLogs.push(logObject);
+	    });
+	    $scope.myLogsArray = myLogs; 
+	});
+
+	
+	// load logs
+	//this.myDecksArray = $firebaseArray($rootScope.ref.child('users').child($rootScope.authData.uid).child('decks'));    
+    };
+
+    $scope.selectOutcome = 1;
+    $scope.selectQuest = 'Passage Through Mirkwood';
+    // Submit
+    $scope.submit = function() {
+	console.log("Submitting Log.");
+	var logID = generateDeckID();
+	var newLog = $firebaseObject($rootScope.ref.child('logs').child(logID));
+	newLog.$loaded().then(function() {
+	    newLog.logid = logID;
+	    newLog.userid = $rootScope.authData.uid;
+	    newLog.username = $rootScope.displayName;
+	    newLog.date = $scope.datepicker;
+	    newLog.quest = $scope.selectQuest;
+	    newLog.outcome = $scope.selectOutcome;
+	    newLog.score = $scope.score;
+	    newLog.deckid1 = ($scope.inputID1) ? $scope.inputID1 : ""; 
+	    newLog.deckid2 = ($scope.inputID2) ? $scope.inputID2 : ""; 
+	    newLog.deckid3 = ($scope.inputID3) ? $scope.inputID3 : ""; 
+	    newLog.deckid4 = ($scope.inputID4) ? $scope.inputID4 : ""; 
+	    // if (newLog.deckid1) {
+	    // 	newLog.deckstring1 = getDeckStringFromDeckID(newLog.deckid1);
+	    // 	if (!newLog.deckstring1) return alert('Deck ID 1 not found in database.');		
+	    // }
+	    // if (newLog.deckid2) {
+	    // 	newLog.deckstring2 = getDeckStringFromDeckID(newLog.deckid1);
+	    // 	if (!newLog.deckstring1) return alert('Deck ID 2 not found in database.');		
+	    // }
+	    // if (newLog.deckid3) {
+	    // 	newLog.deckstring3 = getDeckStringFromDeckID(newLog.deckid1);
+	    // 	if (!newLog.deckstring1) return alert('Deck ID 3 not found in database.');		
+	    // }
+	    // if (newLog.deckid4) {
+	    // 	newLog.deckstring4 = getDeckStringFromDeckID(newLog.deckid1);
+	    // 	if (!newLog.deckstring1) return alert('Deck ID 4 not found in database.');		
+	    // }
+	    newLog.notes   = ($scope.inputNotes) ? $scope.inputNotes : ""; 
+	    newLog.$save().then(function() {
+		console.log('Log saved');
+
+	    })
+	});
+    }
+}])
+
+
+;
+
