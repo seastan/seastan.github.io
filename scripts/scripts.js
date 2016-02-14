@@ -1715,7 +1715,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
         if (deck.deckname == "") {
             return alert('Please enter a name!');
         };
-	// Dave deck to database
+	// Save deck to database
 	var deckString = getDeckString(deck);
         var deckid = generateDeckID();
         var newDeck = $firebaseObject($rootScope.ref.child('decks').child(deckid));//('users').child($rootScope.authData.uid).child('decks').child(deckid));
@@ -1817,21 +1817,13 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
 
 .controller('myDecksCtrl', ['deck', 'getDeckString', '$localStorage', 'translate', '$scope', '$rootScope', 'cardObject', '$location', '$firebaseObject','$firebaseArray','getHeroesFromDeckString','loadDeckIntoBuilder','getCardFromCardID','getCardID','searchDecks','image',
 function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, cardObject, $location,$firebaseObject,$firebaseArray,getHeroesFromDeckString,loadDeckIntoBuilder,getCardFromCardID,getCardID,searchDecks,image) {
-    // $scope.myDecksObject.$loaded.then(function() {
-    // $scope.myDecksArray = Object.keys($scope.data)
-    // .map(function(key) {
-    // return $scope.data[key];
-    // });
-    // });
+
     if (!$rootScope.authData) {
         return $location.path("/login");
     } else {
 	this.myDecksArray = $firebaseArray($rootScope.ref.child('users').child($rootScope.authData.uid).child('decks'));    
     };
-    // this.refreshDecks = function() {
-    // 	//	this.myDecksArray = searchDecks({"userid":$rootScope.authData.uid});
-    // 	this.myDecksArray = $firebaseArray($rootScope.ref.child('users').child($rootScope.authData.uid).child('decks'));    
-    // }
+
     this.selectedDeck = null;
     this.setSelected = function(selectedDeck) {
 	this.selectedDeck = selectedDeck;
@@ -2401,33 +2393,36 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
 
 }])
 
-.factory('getDeckStringFromDeckID',['$rootScope','$firebaseObject',function($rootScope,$firebaseObject) {
-    var deckString = function(deckID) {
-	var deckObject = $firebaseObject($rootScope.ref.child('decks').child(deckID));
-	deckObject.$loaded().then(function() {
-	    return deckObject.deckstring; 
-	});
-    };
-    return deckString;
+.factory('getDeckObjectFromDeckID',['$rootScope','$firebaseObject',function($rootScope,$firebaseObject) {
+	var deckObject = function(deckID) {
+		$firebaseObject($rootScope.ref.child('decks').child(deckID));
+	}
+	return deckObject;
 }])
 
-.controller('myLogsCtrl', ['$rootScope','$scope','$firebaseObject','generateDeckID','getDeckStringFromDeckID','getHeroesFromDeckString',function($rootScope,$scope,$firebaseObject,generateDeckID,getDeckStringFromDeckID,getHeroesFromDeckString) {
+.factory('formDataMyLogs', function() {
+	var formDataMyLogs = {};
+	return formDataMyLogs;
+})
+
+.controller('myLogsCtrl', ['$rootScope','$scope','$firebaseObject','generateDeckID','getDeckObjectFromDeckID','getHeroesFromDeckString','$location','formDataMyLogs',
+function($rootScope,$scope,$firebaseObject,generateDeckID,getDeckObjectFromDeckID,getHeroesFromDeckString,$location,formDataMyLogs) {
+	$scope.myLogsArray = [];
+	$scope.formDataMyLogs = formDataMyLogs;
     if (!$rootScope.authData) {
         return $location.path("/login");
     } else {
-	var myLogs = [];
-	var allLogs = $firebaseObject($rootScope.ref.child('logs'));
-	allLogs.$loaded().then(function() {
-	    angular.forEach(allLogs, function(value, key){
-		var logID = key;
-		var logObject = value;
-		if (logObject.userid == $rootScope.authData.uid)
-		    myLogs.push(logObject);
-	    });
-	    $scope.myLogsArray = myLogs; 
-	});
-
-	
+		var myLogs = [];
+		var allLogs = $firebaseObject($rootScope.ref.child('logs'));
+		allLogs.$loaded().then(function () {
+			angular.forEach(allLogs, function(value, key){
+				var logID = key;
+				var logObject = value;
+				if (logObject.userid == $rootScope.authData.uid)
+					myLogs.push(logObject);
+			});
+			$scope.myLogsArray = myLogs;
+		});
 	// load logs
 	//this.myDecksArray = $firebaseArray($rootScope.ref.child('users').child($rootScope.authData.uid).child('decks'));    
     };
@@ -2443,37 +2438,89 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
 	    newLog.logid = logID;
 	    newLog.userid = $rootScope.authData.uid;
 	    newLog.username = $rootScope.displayName;
-	    newLog.date = $scope.datepicker;
-	    newLog.quest = $scope.selectQuest;
-	    newLog.outcome = $scope.selectOutcome;
-	    newLog.score = $scope.score;
-	    newLog.deckid1 = ($scope.inputID1) ? $scope.inputID1 : ""; 
-	    newLog.deckid2 = ($scope.inputID2) ? $scope.inputID2 : ""; 
-	    newLog.deckid3 = ($scope.inputID3) ? $scope.inputID3 : ""; 
-	    newLog.deckid4 = ($scope.inputID4) ? $scope.inputID4 : ""; 
-	    // if (newLog.deckid1) {
-	    // 	newLog.deckstring1 = getDeckStringFromDeckID(newLog.deckid1);
-	    // 	if (!newLog.deckstring1) return alert('Deck ID 1 not found in database.');		
-	    // }
-	    // if (newLog.deckid2) {
-	    // 	newLog.deckstring2 = getDeckStringFromDeckID(newLog.deckid1);
-	    // 	if (!newLog.deckstring1) return alert('Deck ID 2 not found in database.');		
-	    // }
-	    // if (newLog.deckid3) {
-	    // 	newLog.deckstring3 = getDeckStringFromDeckID(newLog.deckid1);
-	    // 	if (!newLog.deckstring1) return alert('Deck ID 3 not found in database.');		
-	    // }
-	    // if (newLog.deckid4) {
-	    // 	newLog.deckstring4 = getDeckStringFromDeckID(newLog.deckid1);
-	    // 	if (!newLog.deckstring1) return alert('Deck ID 4 not found in database.');		
-	    // }
-	    newLog.notes   = ($scope.inputNotes) ? $scope.inputNotes : ""; 
+	    newLog.date = $scope.formDataMyLogs.date;
+	    newLog.quest = $scope.formDataMyLogs.quest;
+	    newLog.outcome = $scope.formDataMyLogs.outcome;
+	    newLog.score = $scope.formDataMyLogs.score;
+		newLog.deckids = [];
+		if ($scope.formDataMyLogs.deckid1) newLog.deckids.push($scope.formDataMyLogs.deckid1);
+		if ($scope.formDataMyLogs.deckid2) newLog.deckids.push($scope.formDataMyLogs.deckid2);
+		if ($scope.formDataMyLogs.deckid3) newLog.deckids.push($scope.formDataMyLogs.deckid3);
+		if ($scope.formDataMyLogs.deckid4) newLog.deckids.push($scope.formDataMyLogs.deckid4);
+
+	    newLog.notes   = ($scope.inputNotes) ? $scope.formDataMyLogs.notes : ""; 
 	    newLog.$save().then(function() {
 		console.log('Log saved');
 
 	    })
 	});
     }
+	// On Deck ID change, validate the deck
+	$scope.validateDeckID1 = function() {
+		console.log('change');
+		if (!$scope.formDataMyLogs.deckid1) {
+			$scope.validDeckID1 = false;
+			return false;
+		}
+		var setValidity1 = function(isValid)
+			$scope.validDeckID1 = isValid;
+		$scope.deckObject1 = $firebaseObject($rootScope.ref.child('decks').child($scope.formDataMyLogs.deckid1));
+		$scope.deckObject1.$loaded().then(function(isValid) {
+			if ($scope.deckObject1.deckid) setValidity1(true);
+			else setValidity1(false);
+		});
+	};
+	$scope.validateDeckID2 = function() {
+		console.log('change');
+		if (!$scope.formDataMyLogs.deckid2) {
+			$scope.validDeckID2 = false;
+			return false;
+		}
+		var setValidity2 = function(isValid)
+			$scope.validDeckID2 = isValid;
+		$scope.deckObject2 = $firebaseObject($rootScope.ref.child('decks').child($scope.formDataMyLogs.deckid2));
+		$scope.deckObject2.$loaded().then(function(isValid) {
+			if ($scope.deckObject2.deckid) setValidity2(true);
+			else setValidity2(false);
+		});
+	};
+	$scope.validateDeckID3 = function() {
+		console.log('change');
+		if (!$scope.formDataMyLogs.deckid3) {
+			$scope.validDeckID3 = false;
+			return false;
+		}
+		var setValidity3 = function(isValid)
+			$scope.validDeckID3 = isValid;
+		$scope.deckObject3 = $firebaseObject($rootScope.ref.child('decks').child($scope.formDataMyLogs.deckid3));
+		$scope.deckObject3.$loaded().then(function(isValid) {
+			if ($scope.deckObject3.deckid) setValidity3(true);
+			else setValidity3(false);
+		});
+	};
+	$scope.validateDeckID4 = function() {
+		console.log('change');
+		if (!$scope.formDataMyLogs.deckid4) {
+			$scope.validDeckID4 = false;
+			return false;
+		}
+		var setValidity4 = function(isValid)
+			$scope.validDeckID4 = isValid;
+		$scope.deckObject4 = $firebaseObject($rootScope.ref.child('decks').child($scope.formDataMyLogs.deckid4));
+		$scope.deckObject4.$loaded().then(function(isValid) {
+			if ($scope.deckObject4.deckid) setValidity4(true);
+			else setValidity4(false);
+		});
+	};
+	// My Logs
+	$scope.getDeckObjects = function(log) {
+		console.log(log.logid);
+		var deckObjectList = [];
+		for (var i in log.deckids) {
+			deckObjectList.push(getDeckObjectFromDeckID(log.deckids[i]));
+		}
+		return deckObjectList;
+	}
 }])
 
 

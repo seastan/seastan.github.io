@@ -15,7 +15,7 @@
           <form class="ng-pristine ng-valid" role=form ng-submit=submit()>
 
             <div class="form-group"><label for="datepicker" class="col-sm-2 control-label">Date</label>
-	      <div class="col-sm-10"><input class="form-control underline" id="datepicker" type="text" ng-model="datepicker" ng-required="true"></div>
+	      <div class="col-sm-10"><input class="form-control underline" id="datepicker" type="text" ng-model="formDataMyLogs.date" ng-required="true"></div>
             </div>
             <div class="form-group"><label for="selectQuest" class="col-sm-2 control-label">Quest</label>
 	      <div class="col-sm-10">
@@ -24,32 +24,32 @@
 	    </div>
             <div class="form-group"> <label for="selectOutcome" class="col-sm-2 control-label">Outcome</label>
 	      <div class="col-sm-10">
-		<select class="form-control" ng-model="selectOutcome" ng-required="true"> 
-		  <option value="1">Success</option> 
-		  <option value="0">Fail</option> 
+		<select class="form-control" ng-model="formDataMyLogs.outcome" ng-required="true"> 
+		  <option value="Success">Success</option> 
+		  <option value="Failure">Failure</option> 
 		</select>
 	      </div>
 	    </div>
             <div class="form-group"> <label for="inputScore" class="col-sm-2 control-label">Score</label>
-              <div class="col-sm-10"> <input class="form-control underline" ng-model="score" placeholder="0" type="number"></div>
+              <div class="col-sm-10"> <input class="form-control underline" ng-model="formDataMyLogs.score" placeholder="0" type="number"></div>
             </div>
-            <div class="form-group"> <label for="inputID1" class="col-sm-2 control-label">Deck ID 1</label>
-              <div class="col-sm-10"> <input class="form-control underline" ng-model="inputID1" placeholder="" ng-required="true" type="text"> </div>
+            <div class="form-group" ng-class="{'has-success': validDeckID1,'has-error': (!validDeckID1&&formDataMyLogs.deckid1) }"> <label for="inputID1" class="col-sm-2 control-label">Deck ID 1</label>
+              <div class="col-sm-10"> <input class="form-control underline" ng-model="formDataMyLogs.deckid1" placeholder="" ng-required="true" type="text" ng-change="validateDeckID1()"> </div>
             </div>
-            <div class="form-group"> <label for="inputID2" class="col-sm-2 control-label">Deck ID 2</label>
-              <div class="col-sm-10"> <input class="form-control underline" ng-model="inputID2" placeholder="" type="text"> </div>
+            <div class="form-group" ng-class="{'has-success': validDeckID2,'has-error': (!validDeckID2&&formDataMyLogs.deckid2)}"> <label for="inputID2" class="col-sm-2 control-label">Deck ID 2</label>
+              <div class="col-sm-10"> <input class="form-control underline" ng-model="formDataMyLogs.deckid2" placeholder="" type="text" ng-change="validateDeckID1()"> </div>
             </div>
-            <div class="form-group"> <label for="inputID3" class="col-sm-2 control-label">Deck ID 3</label>
-              <div class="col-sm-10"> <input class="form-control underline" ng-model="inputID3" placeholder="" type="text"> </div>
+            <div class="form-group" ng-class="{'has-success': validDeckID3,'has-error': (!validDeckID3&&formDataMyLogs.deckid3)}"> <label for="inputID3" class="col-sm-2 control-label">Deck ID 3</label>
+              <div class="col-sm-10"> <input class="form-control underline" ng-model="formDataMyLogs.deckid3" placeholder="" type="text" ng-change="validateDeckID1()"> </div>
             </div>
-            <div class="form-group"> <label for="inputID4" class="col-sm-2 control-label">Deck ID 4</label>
-              <div class="col-sm-10"> <input class="form-control underline" ng-model="inputID4" placeholder="" type="text"> </div>
+            <div class="form-group" ng-class="{'has-success': validDeckID4,'has-error': (!validDeckID4&&formDataMyLogs.deckid4)}"> <label for="inputID4" class="col-sm-2 control-label">Deck ID 4</label>
+              <div class="col-sm-10"> <input class="form-control underline" ng-model="formDataMyLogs.deckid4" placeholder="" type="text" ng-change="validateDeckID1()"> </div>
             </div>
            <div class="form-group"> <label for="inputNotes" class="col-sm-2 control-label">Notes</label>
-              <div class="col-sm-10"> <input class="form-control underline" ng-model="inputNotes" placeholder="" type="text" maxlength="200"> </div>
+              <div class="col-sm-10"> <input class="form-control underline" ng-model="formDataMyLogs.notes" placeholder="" type="text" maxlength="200"> </div>
             </div>
             <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10"> <button type=submit class="btn btn-primary">Log Quest</button> </div>
+              <div class="col-sm-offset-2 col-sm-10"> <button type=submit class="btn btn-primary" ng-disabled="((!validDeckID1&&formDataMyLogs.deckid1)||(!validDeckID2&&formDataMyLogs.deckid2)||(!validDeckID3&&formDataMyLogs.deckid3)||(!validDeckID4&&formDataMyLogs.deckid4))">Log Quest</button> </div>
             </div>
           </form>
         </div>
@@ -60,40 +60,51 @@
       <div class="panel panel-warning" style="width:100%">
 	<div class="panel-heading">
 	  <h3 class="panel-title">My Logs</h3>
-	  </div>
+	</div>
 	<div class="panel-body">
-	  <table class="table">
-	    <thead>
+		<div ng-repeat="log in myLogsArray | orderBy:'-date'">
+		  <h4>{{log.quest}}</h4>
+			<div style="padding-left:10px;">Date: {{log.date}}</div>
+			<div style="padding-left:10px;">Outcome: {{log.outcome}}</div>
+			<div style="padding-left:10px;">Score: {{log.score}}</div>
+			<div style="padding-left:10px;">Decks:</div>
+			<div style="padding-left:30px;" ng-repeat="deckid in log.deckids">{{$index +1}}. <a ng-href="#/deck/id:{{deckid}}">{{deckid}}</a></div>
+			<div style="padding-left:10px;">Notes: {{log.notes}}</div>
+		</div>
+<!-- 	    <thead>
 	      <tr>
 		<th>Quest</th>
 		<th>Score</th>
 		<th>Heroes</th>
 		<th>Deck IDs</th>
 	      </tr>
-	    </thead>
-	    <tbody>
-	      <tr ng-repeat="log in myLogsArray | orderBy:'-date'">
-		<td style="padding-left:10px;">
+	    </thead> -->
+
+<!-- 	      <tr ng-repeat="log in myLogsArray | orderBy:'-date'">
+		<td style="padding-left:10px;"> -->
 		  <!-- <div style="font-weight:bold;">Deck</div> -->
 		  <!-- 					<div style="font-weight:bold;">{{deck}}</div>
 							<div style="font-weight:bold;">{{deck.$id}}</div> -->
-		  <div style="font-weight:bold;">{{log.quest}}</div>
+<!-- 		  <div style="font-weight:bold;">{{log.quest}}</div>
 		  <div style="font-size:9px;padding-left:10px;">{{log.date}}</div>
 		</td>
 		<td>
 		  {{log.score}}
 		</td>
 		<td>
-		  Heroes
+
+			<table>
+				<td>
+					<tr	ng-repeat="deckid in log.deckids">{{deckid}}</tr>
+				</td>
+		    </table> 
 		</td>
-		<td>
-		  {{log.deckid1}}<br>{{log.deckid2}}<br>{{log.deckid3}}<br>{{log.deckid4}}
-		</td>
+
 	      </tr>
-	    </tbody>
+
 	  </table>
 	</div>
-      </div>
+      </div> -->
 
 
 
