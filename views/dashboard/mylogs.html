@@ -1,0 +1,199 @@
+<script>
+  $(function() {
+  $( "#datepicker" ).datepicker({dateFormat: "yy-mm-dd"});
+  });
+</script>
+
+<div class="conter-wrapper ng-scope" ng-animate="'animate'" ng-controller="myLogsCtrl">
+  <div class="row">
+    
+    <div class="col-md-6" style="float:left;width:45%">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Log a Quest<div class="panel-control pull-right"><a class="panelButton"><i class="fa fa-refresh"></i></a> <a class="panelButton"><i class="fa fa-minus"></i></a><a class="panelButton"><i class="fa fa-remove"></i></a></div> </h3> </div>
+        <div class="panel-body">
+          <form class="ng-pristine ng-valid" role=form ng-submit=submit()>
+
+            <div class="form-group"><label for="datepicker" class="col-sm-2 control-label">Date</label>
+	      <div class="col-sm-10"><input class="form-control underline" id="datepicker" type="text" ng-model="datepicker" ng-required="true"></div>
+            </div>
+            <div class="form-group"><label for="selectQuest" class="col-sm-2 control-label">Quest</label>
+	      <div class="col-sm-10">
+		<questchoice></questchoice>
+	      </div>
+	    </div>
+            <div class="form-group"> <label for="selectOutcome" class="col-sm-2 control-label">Outcome</label>
+	      <div class="col-sm-10">
+		<select class="form-control" ng-model="selectOutcome" ng-required="true"> 
+		  <option value="1">Success</option> 
+		  <option value="0">Fail</option> 
+		</select>
+	      </div>
+	    </div>
+            <div class="form-group"> <label for="inputScore" class="col-sm-2 control-label">Score</label>
+              <div class="col-sm-10"> <input class="form-control underline" ng-model="score" placeholder="0" type="number"></div>
+            </div>
+            <div class="form-group"> <label for="inputID1" class="col-sm-2 control-label">Deck ID 1</label>
+              <div class="col-sm-10"> <input class="form-control underline" ng-model="inputID1" placeholder="" ng-required="true" type="text"> </div>
+            </div>
+            <div class="form-group"> <label for="inputID2" class="col-sm-2 control-label">Deck ID 2</label>
+              <div class="col-sm-10"> <input class="form-control underline" ng-model="inputID2" placeholder="" type="text"> </div>
+            </div>
+            <div class="form-group"> <label for="inputID3" class="col-sm-2 control-label">Deck ID 3</label>
+              <div class="col-sm-10"> <input class="form-control underline" ng-model="inputID3" placeholder="" type="text"> </div>
+            </div>
+            <div class="form-group"> <label for="inputID4" class="col-sm-2 control-label">Deck ID 4</label>
+              <div class="col-sm-10"> <input class="form-control underline" ng-model="inputID4" placeholder="" type="text"> </div>
+            </div>
+           <div class="form-group"> <label for="inputNotes" class="col-sm-2 control-label">Notes</label>
+              <div class="col-sm-10"> <input class="form-control underline" ng-model="inputNotes" placeholder="" type="text" maxlength="200"> </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10"> <button type=submit class="btn btn-primary">Log Quest</button> </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      </div>
+
+      <div class="col-md-6" style="float:left;width:55%">
+      <div class="panel panel-warning" style="width:100%">
+	<div class="panel-heading">
+	  <h3 class="panel-title">My Logs</h3>
+	  </div>
+	<div class="panel-body">
+	  <table class="table">
+	    <thead>
+	      <tr>
+		<th>Quest</th>
+		<th>Score</th>
+		<th>Heroes</th>
+		<th>Deck IDs</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	      <tr ng-repeat="log in myLogsArray | orderBy:'-date'">
+		<td style="padding-left:10px;">
+		  <!-- <div style="font-weight:bold;">Deck</div> -->
+		  <!-- 					<div style="font-weight:bold;">{{deck}}</div>
+							<div style="font-weight:bold;">{{deck.$id}}</div> -->
+		  <div style="font-weight:bold;">{{log.quest}}</div>
+		  <div style="font-size:9px;padding-left:10px;">{{log.date}}</div>
+		</td>
+		<td>
+		  {{log.score}}
+		</td>
+		<td>
+		  Heroes
+		</td>
+		<td>
+		  {{log.deckid1}}<br>{{log.deckid2}}<br>{{log.deckid3}}<br>{{log.deckid4}}
+		</td>
+	      </tr>
+	    </tbody>
+	  </table>
+	</div>
+      </div>
+
+
+
+
+
+
+        <!-- <div class="panel panel-danger"> -->
+        <!--   <div class="panel-heading"> -->
+        <!--     <h3 class="panel-title">Inline Underline Form <div class="panel-control pull-right"> <a class="panelButton"><i class="fa fa-refresh"></i></a> <a class="panelButton"><i class="fa fa-minus"></i></a> <a class="panelButton"><i class="fa fa-remove"></i></a> </div> </h3> </div> -->
+        <!--   <div class="panel-body"> -->
+        <!--     <form class="form-inline ng-pristine ng-valid"> -->
+        <!--       <div class="form-group"> <label for="exampleInputName2">Name</label> <input class="form-control underline" id="exampleInputName2" placeholder="Jane Doe" type="text"> </div> -->
+        <!--       <div class="form-group"> <label for="exampleInputEmail2">Email</label> <input class="form-control underline" id="exampleInputEmail2" placeholder="jane.doe@example.com" type="email"> </div> <button type="submit" class="btn btn-default">Send invitation</button> </form> -->
+        <!--   </div> -->
+        <!-- </div> -->
+      </div>
+    </div>
+  
+</div>
+
+
+<!-- <div ng-controller="myLogsCtrl"> -->
+<!-- <section style="" class="ng-scope" id="body-container" ui-view=""> -->
+<!--     <pageheader class="ng-scope" pagename="Form" subtitle="Bootstrap UI Elements"></pageheader> -->
+<!--     <div class="conter-wrapper ng-scope" ng-animate="'animate'"> -->
+<!--         <div class="row"> -->
+<!--             <div class="col-md-6" style="left:10px;"> -->
+<!--                 <div class="panel panel-primary"> -->
+<!--                     <div class="panel-heading"> -->
+<!--                         <h3 class="panel-title">Horizontal Underline Form <div class="panel-control pull-right"> <a class="panelButton"><i class="fa fa-refresh"></i></a> <a class="panelButton"><i class="fa fa-minus"></i></a> <a class="panelButton"><i class="fa fa-remove"></i></a> </div> </h3> </div> -->
+<!--                     <div class="panel-body"> -->
+<!--                         <form class="ng-pristine ng-valid"> -->
+
+<!--                             <div class="form-group"> <label for="inputDate3" class="col-sm-2 control-label">Date</label> -->
+<!-- 			      <div class="col-sm-10"><input class="form-control underline" type="text" id="datepicker"></div> -->
+<!--                             </div> -->
+
+
+<!--                             <div class="form-group"> <label for="inputEmail3" class="col-sm-2 control-label">Email</label> -->
+<!--                                 <div class="col-sm-10"> <input class="form-control underline" id="inputEmail3" placeholder="Email" type="email"> </div> -->
+<!--                             </div> -->
+<!--                             <div class="form-group"> <label for="inputPassword3" class="col-sm-2 control-label">Password</label> -->
+<!--                                 <div class="col-sm-10"> <input class="form-control underline" id="inputPassword3" placeholder="Password" type="password"> </div> -->
+<!--                             </div> -->
+<!--                             <div class="form-group"> -->
+<!--                               <div class="col-sm-offset-2 col-sm-10"> <button type="submit" class="btn btn-default">Sign in</button> </div> -->
+<!--                             </div> -->
+<!--                         </form> -->
+<!--                     </div> -->
+<!--                 </div> -->
+<!--                 <div class="panel panel-info"> -->
+<!--                     <div class="panel-heading"> -->
+<!--                         <h3 class="panel-title">Default Form <div class="panel-control pull-right"> <a class="panelButton"><i class="fa fa-refresh"></i></a> <a class="panelButton"><i class="fa fa-minus"></i></a> <a class="panelButton"><i class="fa fa-remove"></i></a> </div> </h3> </div> -->
+<!--                     <div class="panel-body"> -->
+<!--                         <form class="ng-pristine ng-valid"> -->
+<!--                             <div class="form-group"> <label for="exampleInputEmail1">Email address</label> <input class="form-control" id="exampleInputEmail1" placeholder="Enter email" type="email"> </div> -->
+<!--                             <div class="form-group"> <label for="exampleInputPassword1">Password</label> <input class="form-control" id="exampleInputPassword1" placeholder="Password" type="password"> </div> -->
+<!--                             <div class="checkbox"> <label> <input type="checkbox"> Remember me </label> </div> <button type="submit" class="btn btn-default">Submit</button> </form> -->
+<!--                     </div> -->
+<!--                 </div> -->
+<!--                 <div class="panel panel-primary"> -->
+<!--                     <div class="panel-heading"> -->
+<!--                         <h3 class="panel-title">Inline Form <div class="panel-control pull-right"> <a class="panelButton"><i class="fa fa-refresh"></i></a> <a class="panelButton"><i class="fa fa-minus"></i></a> <a class="panelButton"><i class="fa fa-remove"></i></a> </div> </h3> </div> -->
+<!--                     <div class="panel-body"> -->
+<!--                         <form class="form-inline ng-pristine ng-valid"> -->
+<!--                             <div class="form-group"> <label for="exampleInputName2">Name</label> <input class="form-control" id="exampleInputName2" placeholder="Jane Doe" type="text"> </div> -->
+<!--                             <div class="form-group"> <label for="exampleInputEmail2">Email</label> <input class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com" type="email"> </div> <button type="submit" class="btn btn-default">Send invitation</button> </form> -->
+<!--                     </div> -->
+<!--                 </div> -->
+<!--             </div> -->
+<!--             <div class="col-md-6"> -->
+<!--                 <div class="panel panel-danger"> -->
+<!--                     <div class="panel-heading"> -->
+<!--                         <h3 class="panel-title">Inline Underline Form <div class="panel-control pull-right"> <a class="panelButton"><i class="fa fa-refresh"></i></a> <a class="panelButton"><i class="fa fa-minus"></i></a> <a class="panelButton"><i class="fa fa-remove"></i></a> </div> </h3> </div> -->
+<!--                     <div class="panel-body"> -->
+<!--                         <form class="form-inline ng-pristine ng-valid"> -->
+<!--                             <div class="form-group"> <label for="exampleInputName2">Name</label> <input class="form-control underline" id="exampleInputName2" placeholder="Jane Doe" type="text"> </div> -->
+<!--                             <div class="form-group"> <label for="exampleInputEmail2">Email</label> <input class="form-control underline" id="exampleInputEmail2" placeholder="jane.doe@example.com" type="email"> </div> <button type="submit" class="btn btn-default">Send invitation</button> </form> -->
+<!--                     </div> -->
+<!--                 </div> -->
+<!--             </div> -->
+<!--             <div class="col-md-6"> -->
+<!--                 <div class="panel panel-warning"> -->
+<!--                     <div class="panel-heading"> -->
+<!--                         <h3 class="panel-title">Underline Default Form <div class="panel-control pull-right"> <a class="panelButton"><i class="fa fa-refresh"></i></a> <a class="panelButton"><i class="fa fa-minus"></i></a> <a class="panelButton"><i class="fa fa-remove"></i></a> </div> </h3> </div> -->
+<!--                     <div class="panel-body"> -->
+<!--                         <form class="ng-pristine ng-valid"> -->
+<!--                             <div class="form-group"> <label for="exampleInputEmail1">Email address</label> <input class="form-control underline" id="exampleInputEmail1" placeholder="Enter email" type="email"> </div> -->
+<!--                             <div class="form-group"> <label for="exampleInputPassword1">Password</label> <input class="form-control underline" id="exampleInputPassword1" placeholder="Password" type="password"> </div> -->
+<!--                             <div class="checkbox"> <label> <input type="checkbox"> Remember me </label> </div> <button type="submit" class="btn btn-default">Submit</button> </form> -->
+<!--                     </div> -->
+<!--                 </div> -->
+<!--             </div> -->
+<!--         </div> -->
+<!--     </div> -->
+<!-- </section> -->
+<!-- </div> -->
+
+<!--   <script> -->
+<!--   $(function() { -->
+<!--     $( "#datepicker" ).datepicker(); -->
+<!--   }); -->
+<!--   </script> -->
