@@ -503,6 +503,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     translate.ttor="The Treachery of Rhudaur";
     translate.tbocd=unescape("The Battle of Carn D%FBm");
     translate.tdr="The Dread Realm";
+	translate.tgh="The Grey Havens";
     return translate;
 })
 .factory('filtersettings',["$localStorage",function ($localStorage) {
@@ -1656,7 +1657,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 
 .controller('setsCtrl',["filtersettings","$localStorage",function(filtersettings,$localStorage){
     this.filtersettings=filtersettings;
-    this.full=["core", "kd", "hon", "voi", "tlr", "thohauh", "thfg", "trg", "tsf", "tdt", "twoe", "thotd", "catc", "rtr", "tdf", "ttt", "efmg", "tbr", "ajtr", "twitw", "eaad", "tit", "rd", "thoem", "tld", "aoo", "nie", "tdm", "fos", "tbog", "cs", "rtm", "saf", "tmv", "tac", "tos", "tlos", "ate", "ttor", "tbocd", "tdr"]; //all expansions so far
+    this.full=["core", "kd", "hon", "voi", "tlr", "thohauh", "thfg", "trg", "tsf", "tdt", "twoe", "thotd", "catc", "rtr", "tdf", "ttt", "efmg", "tbr", "ajtr", "twitw", "eaad", "tit", "rd", "thoem", "tld", "aoo", "nie", "tdm", "fos", "tbog", "cs", "rtm", "saf", "tmv", "tac", "tos", "tlos", "ate", "ttor", "tbocd", "tdr","tgh"]; //all expansions so far
     this.toggle=function(exp){
 	var ind = this.filtersettings.pack.indexOf(exp);
 	if (ind<0) { //index will be -1 if not found
