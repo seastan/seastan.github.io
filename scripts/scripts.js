@@ -1848,19 +1848,10 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
     }
     this.deleteDeck = function(deckObject) {
 	if (!deckObject) return alert("Please select a deck.");
+	console.log(deckObject);
 	if (confirm('Are you sure you want to delete: '+deckObject.deckname)) {
-	    var allDecks = $firebaseObject($rootScope.ref.child('decks'));	    
-            allDecks.$loaded().then(function() {
-		allDecks.$remove(deckObject);
-		
-	    });
-	    var userDecks = $firebaseObject($rootScope.ref.child('users').child($rootScope.authData.uid).child('decks'));
-            userDecks.$loaded().then(function() {
-		userDecks.$remove(deckObject);
-	    });	    
-	    
-//	    this.myDecksArray.$remove(deckObject);
-	};
+		this.myDecksArray.$remove(deckObject);
+		};
     }
     this.loadDeck = function(deckObject) {
 	if (!deckObject) return alert("Please select a deck.");
@@ -2410,9 +2401,7 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
 function($rootScope,$scope,$firebaseObject,generateDeckID,getDeckObjectFromDeckID,getHeroesFromDeckString,$location,formDataMyLogs) {
 	$scope.myLogsArray = [];
 	$scope.formDataMyLogs = formDataMyLogs;
-    if (!$rootScope.authData) {
-        return $location.path("/login");
-    } else {
+ 	$scope.loadMyLogs = function() {
 		var myLogs = [];
 		var allLogs = $firebaseObject($rootScope.ref.child('logs'));
 		allLogs.$loaded().then(function () {
@@ -2424,11 +2413,17 @@ function($rootScope,$scope,$firebaseObject,generateDeckID,getDeckObjectFromDeckI
 			});
 			$scope.myLogsArray = myLogs;
 		});
+	}
+	if (!$rootScope.authData) {
+        return $location.path("/login");
+    } else {
+		$scope.loadMyLogs();
+
 	// load logs
 	//this.myDecksArray = $firebaseArray($rootScope.ref.child('users').child($rootScope.authData.uid).child('decks'));    
     };
 
-    $scope.selectOutcome = 1;
+    $scope.selectOutcome = 'Success';
     $scope.selectQuest = 'Passage Through Mirkwood';
     // Submit
     $scope.submit = function() {
