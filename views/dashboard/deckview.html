@@ -2,56 +2,63 @@
   <btn class="pull-right btn btn-primary btn-outline btn-rounded" ng-click="loadDeck()">Copy to Builder</btn>
   <h2>{{dvDeckName}} <small>by </small><small style="font-weight:bold">{{dvUserName}}</small></h2>
   <span class="glyphicon glyphicon-dashboard bg-fade"></span>
-  <div class=jumbotron style="width:35%">
+
+  <div class=jumbotron style="left:1%;width:35%;top:90px;position:absolute">
     <div class=container>
       <!-- <div class="deckdiv" style="width:25%;left:1%;top:15%;height:85%"> -->
       <div>
-      <table class="deck">
-	<tr class="head"><td style="width:20px"></td><td>Heroes (Starting threat: {{deck.startingThreat()}})</td></tr>
-	
-	<tr class="card" ng-repeat="card in deck['1hero'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
-	  <td style="font-size:14;">
-	    1
-	  </td>
-	  <td class="c{{card.sphere}}">{{card.name}}</td>
-	<tr><td bgcolor="transparent" colspan=2>&nbsp;</td></tr>
-	<tr class="head"><td></td><td>Allies ({{deck.countAllies()}})</td></tr>
-	<tr class="card" ng-repeat="card in deck['2ally'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
-	  <td style="font-size:14">
-	    {{card.quantity}}
-	  </td>
-	  <td class="c{{card.sphere}}">{{card.name}}</td>
-	<tr><td bgcolor="transparent" colspan=2>&nbsp;</td></tr>
-	<tr class="head"><td></td><td>Attachments ({{deck.countAttachments()}})</td></tr>
-	<tr class="card" ng-repeat="card in deck['3attachment'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
-	  <td style="font-size:14">
-	    {{card.quantity}}
-	  </td>
-	  <td class="c{{card.sphere}}">{{card.name}}</td>
-	<tr><td bgcolor="transparent" colspan=2>&nbsp;</td></tr>
-	<tr class="head"><td></td><td>Events ({{deck.countEvents()}})</td></tr>
-	<tr class="card" ng-repeat="card in deck['4event'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
-	  <td style="font-size:14">
-	    {{card.quantity}}
-	  </td>
-	  <td class="c{{card.sphere}}">{{card.name}}</td></tr>
-	<tr><td bgcolor="transparent" colspan=2>&nbsp;</td></tr>
-	<tr class="head"><td></td><td>Quests ({{deck.countQuests()}})</td></tr>
-	<tr class="card" ng-repeat="card in deck['5quest'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
-	  <td style="font-size:14">
-	    {{card.quantity}}
-	  </td>
-	  <td class="c{{card.sphere}}">{{card.name}}</td></tr>
-      </table>
+	<table class="deck">
+	  <tr class="head"><td style="width:20px"></td><td>Heroes (Starting threat: {{deck.startingThreat()}})</td></tr>
+	  
+	  <tr class="card" ng-repeat="card in deck['1hero'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
+	    <td style="font-size:14;">
+	      1
+	    </td>
+	    <td class="c{{card.sphere}}">{{card.name}}</td>
+	  <tr><td bgcolor="transparent" colspan=2>&nbsp;</td></tr>
+	  <tr class="head"><td></td><td>Allies ({{deck.countAllies()}})</td></tr>
+	  <tr class="card" ng-repeat="card in deck['2ally'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
+	    <td style="font-size:14">
+	      {{card.quantity}}
+	    </td>
+	    <td class="c{{card.sphere}}">{{card.name}}</td>
+	  <tr><td bgcolor="transparent" colspan=2>&nbsp;</td></tr>
+	  <tr class="head"><td></td><td>Attachments ({{deck.countAttachments()}})</td></tr>
+	  <tr class="card" ng-repeat="card in deck['3attachment'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
+	    <td style="font-size:14">
+	      {{card.quantity}}
+	    </td>
+	    <td class="c{{card.sphere}}">{{card.name}}</td>
+	  <tr><td bgcolor="transparent" colspan=2>&nbsp;</td></tr>
+	  <tr class="head"><td></td><td>Events ({{deck.countEvents()}})</td></tr>
+	  <tr class="card" ng-repeat="card in deck['4event'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
+	    <td style="font-size:14">
+	      {{card.quantity}}
+	    </td>
+	    <td class="c{{card.sphere}}">{{card.name}}</td></tr>
+	  <tr><td bgcolor="transparent" colspan=2>&nbsp;</td></tr>
+	  <tr class="head"><td></td><td>Quests ({{deck.countQuests()}})</td></tr>
+	  <tr class="card" ng-repeat="card in deck['5quest'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
+	    <td style="font-size:14">
+	      {{card.quantity}}
+	    </td>
+	    <td class="c{{card.sphere}}">{{card.name}}</td></tr>
+	</table>
       </div>
-
-
-
-
-
-
-      
-      
     </div>
+  </div>
+
+  <div class=jumbotron style="left:40%;width:35%;top:90px;position:absolute">
+    <div class=container>
+	  <div ng-repeat="log in deckLogsArray | orderBy:'-date'">
+	    <h4>{{log.quest}}</h4>
+	    <div style="padding-left:10px;">Date: {{log.date}}</div>
+	    <div style="padding-left:10px;">Outcome: {{log.outcome}}</div>
+	    <div style="padding-left:10px;">Score: {{log.score}}</div>
+	    <div style="padding-left:10px;">Decks:</div>
+	    <div style="padding-left:30px;" ng-repeat="deckid in log.deckids">{{$index +1}}. <a ng-href="#/deck/id:{{deckid}}">{{deckid}}</a></div>
+	    <div style="padding-left:10px;">Notes: {{log.notes}}</div>
+	  </div>
+	</div>
   </div>
 </div>

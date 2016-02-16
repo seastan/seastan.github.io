@@ -513,8 +513,9 @@ canvas {
   padding: 0;
 }
 tr.selected {
-  color:white;
-  background-color: #3ca2e0;
+  /* color:white; */
+  /* background-color: #3ca2e0; */
+  background-color: #bce8f1;
 }
 .release-table-outter {}
 .release-table{table-layout: fixed; margin:0px auto 0px auto; }

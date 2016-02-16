@@ -1793,11 +1793,11 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
     var url = $location.url();
     var index = url.indexOf('id:');
     if (index>-1) {
-        var deckID = url.substr(index+3);	
+        $scope.deckID = url.substr(index+3);	
     } else {
 	//404
     };
-    var deckObject = $firebaseObject($rootScope.ref.child('decks').child(deckID));
+    var deckObject = $firebaseObject($rootScope.ref.child('decks').child($scope.deckID));
     deckObject.$loaded().then(function() {
 	$scope.deckLoaded = true;
 	$scope.dvDeckName = deckObject.deckname;
@@ -1813,6 +1813,26 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
     $scope.loadDeck = function() {
 	return loadDeckIntoBuilder(deckObject);
     }
+
+    // Load logs
+    $scope.deckLogsArray = [];
+    $scope.loadDeckLogs = function() {
+	var deckLogs = [];
+	var allLogs = $firebaseObject($rootScope.ref.child('logs'));
+	allLogs.$loaded().then(function () {
+	    angular.forEach(allLogs, function(value, key){
+		var logID = key;
+		var logObject = value;
+		for (var d in logObject.deckids) {
+		    if (logObject.deckids[d] == $scope.deckID)
+		    deckLogs.push(logObject);
+		}
+	    });
+	    $scope.deckLogsArray = deckLogs;
+	});
+    }		      
+    $scope.loadDeckLogs();
+
 }])
 
 
@@ -2399,25 +2419,25 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
 
 .controller('myLogsCtrl', ['$rootScope','$scope','$firebaseObject','generateDeckID','getDeckObjectFromDeckID','getHeroesFromDeckString','$location','formDataMyLogs',
 function($rootScope,$scope,$firebaseObject,generateDeckID,getDeckObjectFromDeckID,getHeroesFromDeckString,$location,formDataMyLogs) {
-	$scope.myLogsArray = [];
-	$scope.formDataMyLogs = formDataMyLogs;
- 	$scope.loadMyLogs = function() {
-		var myLogs = [];
-		var allLogs = $firebaseObject($rootScope.ref.child('logs'));
-		allLogs.$loaded().then(function () {
-			angular.forEach(allLogs, function(value, key){
-				var logID = key;
-				var logObject = value;
-				if (logObject.userid == $rootScope.authData.uid)
-					myLogs.push(logObject);
-			});
-			$scope.myLogsArray = myLogs;
-		});
-	}
-	if (!$rootScope.authData) {
+    $scope.myLogsArray = [];
+    $scope.formDataMyLogs = formDataMyLogs;
+    $scope.loadMyLogs = function() {
+	var myLogs = [];
+	var allLogs = $firebaseObject($rootScope.ref.child('logs'));
+	allLogs.$loaded().then(function () {
+	    angular.forEach(allLogs, function(value, key){
+		var logID = key;
+		var logObject = value;
+		if (logObject.userid == $rootScope.authData.uid)
+		    myLogs.push(logObject);
+	    });
+	    $scope.myLogsArray = myLogs;
+	});
+    }
+    if (!$rootScope.authData) {
         return $location.path("/login");
     } else {
-		$scope.loadMyLogs();
+	$scope.loadMyLogs();
 
 	// load logs
 	//this.myDecksArray = $firebaseArray($rootScope.ref.child('users').child($rootScope.authData.uid).child('decks'));    
@@ -2447,7 +2467,7 @@ function($rootScope,$scope,$firebaseObject,generateDeckID,getDeckObjectFromDeckI
 	    newLog.notes   = ($scope.inputNotes) ? $scope.formDataMyLogs.notes : ""; 
 	    newLog.$save().then(function() {
 		console.log('Log saved');
-
+		$scope.loadMyLogs();
 	    })
 	});
     }
