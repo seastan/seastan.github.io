@@ -2464,7 +2464,7 @@ function($rootScope,$scope,$firebaseObject,generateDeckID,getDeckObjectFromDeckI
 		if ($scope.formDataMyLogs.deckid3) newLog.deckids.push($scope.formDataMyLogs.deckid3);
 		if ($scope.formDataMyLogs.deckid4) newLog.deckids.push($scope.formDataMyLogs.deckid4);
 
-	    newLog.notes   = ($scope.inputNotes) ? $scope.formDataMyLogs.notes : ""; 
+	    newLog.notes   = $scope.formDataMyLogs.notes; 
 	    newLog.$save().then(function() {
 		console.log('Log saved');
 		$scope.loadMyLogs();

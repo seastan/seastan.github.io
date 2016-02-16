@@ -52,12 +52,12 @@
     <div class=container>
 	  <div ng-repeat="log in deckLogsArray | orderBy:'-date'">
 	    <h4>{{log.quest}}</h4>
-	    <div style="padding-left:10px;">Date: {{log.date}}</div>
-	    <div style="padding-left:10px;">Outcome: {{log.outcome}}</div>
-	    <div style="padding-left:10px;">Score: {{log.score}}</div>
-	    <div style="padding-left:10px;">Decks:</div>
+	    <div style="padding-left:10px;"><b>Date:</b> {{log.date}}</div>
+	    <div style="padding-left:10px;"><b>Outcome:</b> {{log.outcome}}</div>
+	    <div style="padding-left:10px;"><b>Score:</b> {{log.score}}</div>
+	    <div style="padding-left:10px;"><b>Decks:</b></div>
 	    <div style="padding-left:30px;" ng-repeat="deckid in log.deckids">{{$index +1}}. <a ng-href="#/deck/id:{{deckid}}">{{deckid}}</a></div>
-	    <div style="padding-left:10px;">Notes: {{log.notes}}</div>
+	    <div style="padding-left:10px;"><b>Notes:</b> {{log.notes}}</div>
 	  </div>
 	</div>
   </div>
