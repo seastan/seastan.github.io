@@ -1,5 +1,7 @@
 <div ng-controller="deckViewCtrl as dv" ng-show="deckLoaded">
   <btn class="pull-right btn btn-primary btn-outline btn-rounded" ng-click="loadDeck()">Copy to Builder</btn>
+  <btn class="pull-right btn btn-primary btn-outline btn-rounded" ng-click="exportOctgn()">Export to OCTGN</btn>
+  <btn class="pull-right btn btn-primary btn-outline btn-rounded" ng-click="exportText()">Export to Text</btn>
   <h2>{{dvDeckName}} <small>by </small><small style="font-weight:bold">{{dvUserName}}</small></h2>
   <span class="glyphicon glyphicon-dashboard bg-fade"></span>
 
@@ -52,6 +54,7 @@
     <div class=container>
 	  <div ng-repeat="log in deckLogsArray | orderBy:'-date'">
 	    <h4>{{log.quest}}</h4>
+	    <div style="padding-left:10px;"><b>User:</b> {{log.username}}</div>
 	    <div style="padding-left:10px;"><b>Date:</b> {{log.date}}</div>
 	    <div style="padding-left:10px;"><b>Outcome:</b> {{log.outcome}}</div>
 	    <div style="padding-left:10px;"><b>Score:</b> {{log.score}}</div>

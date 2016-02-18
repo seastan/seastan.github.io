@@ -1806,8 +1806,8 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     return logs;
 }])
 
-.controller('deckViewCtrl', ['$scope','$rootScope','$stateParams','$location','$firebaseObject','getLocalObjectFromString','image','getQuantityOfCardInLocalObject','loadDeckIntoBuilder',
-function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObjectFromString,image,getQuantityOfCardInLocalObject,loadDeckIntoBuilder) {
+.controller('deckViewCtrl', ['$scope','$rootScope','$stateParams','$location','$firebaseObject','getLocalObjectFromString','image','getQuantityOfCardInLocalObject','loadDeckIntoBuilder','exportDeck',
+function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObjectFromString,image,getQuantityOfCardInLocalObject,loadDeckIntoBuilder,exportDeck) {
     $scope.deckLoaded = false;
     $scope.deck={};
     var url = $location.url();
@@ -1833,6 +1833,12 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
     $scope.loadDeck = function() {
 	return loadDeckIntoBuilder(deckObject);
     }
+    $scope.exportOctgn = function() {
+	return exportDeck.exportOctgn(deckObject);
+    }
+    $scope.exportText = function() {
+	return exportDeck.exportText(deckObject);
+    }
 
     // Load logs
     $scope.deckLogsArray = [];
@@ -1855,50 +1861,8 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
 
 }])
 
-
-.controller('myDecksCtrl', ['deck', 'getDeckString', '$localStorage', 'translate', '$scope', '$rootScope', 'cardObject', '$location', '$firebaseObject','$firebaseArray','getHeroesFromDeckString','loadDeckIntoBuilder','getCardFromCardID','getCardID','searchDecks','image',
-function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, cardObject, $location,$firebaseObject,$firebaseArray,getHeroesFromDeckString,loadDeckIntoBuilder,getCardFromCardID,getCardID,searchDecks,image) {
-
-    if (!$rootScope.authData) {
-        return $location.path("/login");
-    } else {
-	this.myDecksArray = $firebaseArray($rootScope.ref.child('users').child($rootScope.authData.uid).child('decks'));    
-    };
-
-    this.selectedDeck = null;
-    this.setSelected = function(selectedDeck) {
-	this.selectedDeck = selectedDeck;
-    }
-    this.getSelected = function() {
-	return this.selectedDeck;
-    }
-    this.changepreview = function(card){
-    	image.update(card);
-    }    
-    this.loadInfoPage = function(deckObject) {
-	return $location.path("/deck/id:"+deckObject.deckid);
-    };
-    this.getHeroes = function(deckString) {
-//	var heroNames = '';
-	var heroes = getHeroesFromDeckString(deckString);
-//	for (var h in heroes)
-//	    heroNames+=heroes[h].name_norm+' ';
-//	return heroNames;
-	return heroes;
-    }
-    this.deleteDeck = function(deckObject) {
-	if (!deckObject) return alert("Please select a deck.");
-	console.log(deckObject);
-	if (confirm('Are you sure you want to delete: '+deckObject.deckname)) {
-		this.myDecksArray.$remove(deckObject);
-		};
-    }
-    this.loadDeck = function(deckObject) {
-	if (!deckObject) return alert("Please select a deck.");
-	loadDeckIntoBuilder(deckObject);
-    }	
+.factory('exportDeck', ['translate','getCardFromCardID',function(translate,getCardFromCardID) {
     
-
     this.download = function(filename,text) {
         var pom = document.createElement('a');
         pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
@@ -1912,13 +1876,113 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
         document.body.removeChild(pom);
     }
 
-    String.prototype.chunk = function(n) {
-        var ret = [];
-        for (var i = 0, len = this.length; i < len; i += n) {
-            ret.push(this.substr(i, n))
+    this.exportOctgn = function(deckObject) {
+	if (!deckObject) return alert("No deck selected.");
+
+        var octgndeck = {
+            "1hero": [],
+            "2ally": [],
+            "3attachment": [],
+            "4event": [],
+            "5quest": []
+        };
+        var warned = false;
+	
+	octgndeck.deckname = deckObject.deckname;
+	var deckString = deckObject.deckstring;
+	for (var i=0; i<=(deckString.length-4); i=i+4) {
+	    var cardID = deckString.substr(i,3);
+	    var card = getCardFromCardID(cardID);
+	    if (card.octgn == "") {
+                if (!warned) {
+                    window.alert("Warning: Omitting cards that are not yet available in OCTGN.");
+                    warned = true;
+                }
+                continue;
+            }
+	    card.quantity = +deckString.substr(i+3,1);
+	    octgndeck[card.type].push(card);
+	}
+	
+
+        var text = "";
+        text += '<?xml version="1.0" encoding="utf-8" standalone="yes"?>\n';
+        text += '<deck game="a21af4e8-be4b-4cda-a6b6-534f9717391f">\n';
+
+        text += '  <section name="Hero" shared="False">\n';
+        for (var h in octgndeck["1hero"]) {
+            text += '    <card qty="';
+            text += octgndeck["1hero"][h].quantity;
+            text += '" id="';
+            text += octgndeck["1hero"][h].octgn;
+            text += '">';
+            text += octgndeck["1hero"][h].name_norm;
+            text += '</card>\n';
         }
-        return ret
-    };
+        text += '  </section>\n';
+
+        text += '  <section name="Ally" shared="False">\n';
+        for (var h in octgndeck["2ally"]) {
+            text += '    <card qty="';
+            text += octgndeck["2ally"][h].quantity;
+            text += '" id="';
+            text += octgndeck["2ally"][h].octgn;
+            text += '">';
+            text += octgndeck["2ally"][h].name_norm;
+            text += '</card>\n';
+        }
+        text += '  </section>\n';
+
+        text += '  <section name="Event" shared="False">\n';
+        for (var h in octgndeck["4event"]) {
+            text += '    <card qty="';
+            text += octgndeck["4event"][h].quantity;
+            text += '" id="';
+            text += octgndeck["4event"][h].octgn;
+            text += '">';
+            text += octgndeck["4event"][h].name_norm;
+            text += '</card>\n';
+        }
+        text += '  </section>\n';
+
+        text += '  <section name="Attachment" shared="False">\n';
+        for (var h in octgndeck["3attachment"]) {
+            text += '    <card qty="';
+            text += octgndeck["3attachment"][h].quantity;
+            text += '" id="';
+            text += octgndeck["3attachment"][h].octgn;
+            text += '">';
+            text += octgndeck["3attachment"][h].name_norm;
+            text += '</card>\n';
+        }
+        text += '  </section>\n';
+
+        text += '  <section name="Side Quest" shared="False">\n';
+        for (var h in octgndeck["5quest"]) {
+            text += '    <card qty="';
+            text += octgndeck["5quest"][h].quantity;
+            text += '" id="';
+            text += octgndeck["5quest"][h].octgn;
+            text += '">';
+            text += octgndeck["5quest"][h].name_norm;
+            text += '</card>\n';
+        }
+        text += '  </section>\n';
+
+
+
+        text += '  <section name="Quest" shared="True" />\n'
+        text += '  <section name="Encounter" shared="True" />\n'
+        text += '  <section name="Special" shared="True" />\n'
+        text += '  <section name="Setup" shared="True" />\n'
+
+
+        text += '  <notes><![CDATA[]]></notes>';
+        text += '</deck>';
+
+        this.download(octgndeck.deckname + ".o8d", text);
+    }
+
 
     this.plaintext = function(deckObject) {
         var deck = {};
@@ -1933,7 +1997,7 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
 	for (var i=0; i<=(deckString.length-4); i=i+4) {
 	    var cardID = deckString.substr(i,3);
 	    var card = getCardFromCardID(cardID);
-	    card.quantity = deckString.substr(i+3,1);
+	    card.quantity = +deckString.substr(i+3,1);
 	    deck[card.type].push(card);
 	}
 
@@ -2025,14 +2089,15 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
 	for (var i=0; i<=(deckString.length-4); i=i+4) {
 	    var cardID = deckString.substr(i,3);
 	    var card = getCardFromCardID(cardID);
-	    card.quantity = deckString.substr(i+3,1);
+	    card.quantity = +deckString.substr(i+3,1);
 	    deck[card.type].push(card);
 	}
 
         var text = "#[";
         text += deck.deckname;
         text += "](http://seastan.github.io/";
-        text += 'tbc';
+        text += '#/deck/id:';
+	text += deckObject.deckid;
         text += ")  \r\nTotal Cards: ";
         var total = 0;
         var types = ["2ally", "3attachment", "4event", "5quest"]
@@ -2128,12 +2193,12 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
 	for (var i=0; i<=(deckString.length-4); i=i+4) {
 	    var cardID = deckString.substr(i,3);
 	    var card = getCardFromCardID(cardID);
-	    card.quantity = deckString.substr(i+3,1);
+	    card.quantity = +deckString.substr(i+3,1);
 	    deck[card.type].push(card);
 	}
 	
-        var text = "[size=18][tbc]";
-        text += '[tbc';
+        var text = "[size=18][url=http://seastan.github.io/#/deck/id:";
+        text += deckObject.deckid;
         text += "]";
         text += deck.deckname;
         text += "[/url]";
@@ -2219,7 +2284,6 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
         text += "\r\n[size=7]Deck built with [url=http://seastan.github.io/]Love of Tales[/url][/size]";
         return text;
     }
-
     this.exportText = function(deckObject) {
 	if (!deckObject) return alert("Please select a deck.");
 
@@ -2241,6 +2305,81 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
 
 
         this.download(deckObject.deckname + ".txt", text);
+    };
+
+
+    return this;
+}])
+
+.controller('myDecksCtrl', ['deck', 'getDeckString', '$localStorage', 'translate', '$scope', '$rootScope', 'cardObject', '$location', '$firebaseObject','$firebaseArray','getHeroesFromDeckString','loadDeckIntoBuilder','getCardFromCardID','getCardID','searchDecks','image','exportDeck',
+function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, cardObject, $location,$firebaseObject,$firebaseArray,getHeroesFromDeckString,loadDeckIntoBuilder,getCardFromCardID,getCardID,searchDecks,image,exportDeck) {
+
+    if (!$rootScope.authData) {
+        return $location.path("/login");
+    } else {
+	this.myDecksArray = $firebaseArray($rootScope.ref.child('users').child($rootScope.authData.uid).child('decks'));    
+    };
+
+    this.selectedDeck = null;
+    this.setSelected = function(selectedDeck) {
+	this.selectedDeck = selectedDeck;
+    }
+    this.getSelected = function() {
+	return this.selectedDeck;
+    }
+    this.changepreview = function(card){
+    	image.update(card);
+    }    
+    this.loadInfoPage = function(deckObject) {
+	return $location.path("/deck/id:"+deckObject.deckid);
+    };
+    this.getHeroes = function(deckString) {
+//	var heroNames = '';
+	var heroes = getHeroesFromDeckString(deckString);
+//	for (var h in heroes)
+//	    heroNames+=heroes[h].name_norm+' ';
+//	return heroNames;
+	return heroes;
+    }
+    this.deleteDeck = function(deckObject) {
+	if (!deckObject) return alert("Please select a deck.");
+	console.log(deckObject);
+	if (confirm('Are you sure you want to delete: '+deckObject.deckname)) {
+		this.myDecksArray.$remove(deckObject);
+		};
+    }
+    this.loadDeck = function(deckObject) {
+	if (!deckObject) return alert("Please select a deck.");
+	loadDeckIntoBuilder(deckObject);
+    }	
+    
+
+    this.download = function(filename,text) {
+        var pom = document.createElement('a');
+        pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        pom.setAttribute('download', filename);
+
+        pom.style.display = 'none';
+        document.body.appendChild(pom);
+
+        pom.click();
+
+        document.body.removeChild(pom);
+    }
+
+    String.prototype.chunk = function(n) {
+        var ret = [];
+        for (var i = 0, len = this.length; i < len; i += n) {
+            ret.push(this.substr(i, n))
+        }
+        return ret
+    };
+
+    this.exportText = function(deckObject) {
+	exportDeck.exportText(deckObject);
+    };
+    this.exportOctgn = function(deckObject) {
+	exportDeck.exportOctgn(deckObject);
     };
 
     this.uploadDeck = function(event) {
@@ -2279,34 +2418,22 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
                 while (match = regexp.exec(e.target.result)) {
                     for (var i in cardObject) {
                         if (cardObject[i].octgn == match[2]) {
-							var cardID = getCardID(cardObject[i]);
-							
-			    //console.log(cardObject[i].name_norm+' '+cardObject[i].type);
-                            //var card = cardObject.slice(i,i+1)[0];
-							deckString = deckString+cardID+match[1];
-			   // card.quantity = +match[1];
-			    //console.log(card.name_norm);
-			    //octgnDeck[card.type].push(card);
-			    //console.log('decksize '+deck.countTotal());
+			    var cardID = getCardID(cardObject[i]);
+			    deckString = deckString+cardID+match[1];
+
                         }
                     }
                 }
-				var deckObject = {};
-				deckObject.deckname = deckName;
-				deckObject.deckstring = deckString;
-				$scope.$apply(function() {
-					loadDeckIntoBuilder(deckObject);
-				});
-
+		var deckObject = {};
+		deckObject.deckname = deckName;
+		deckObject.deckstring = deckString;
+		$scope.$apply(function() {
+		    loadDeckIntoBuilder(deckObject);
+		});
+		
             };
             r.readAsText(file);
         };
-
-
-	//	$location.path("/deck/builder")
-	// $scope.$apply(function() {
-	    // $location.path("/deck/builder");
-	// });
 
     }
 
@@ -2314,113 +2441,6 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
         this.octgn($localStorage.decks[_deck.deckname].deck, _deck.deckname);
     }
 
-
-    this.exportOctgn = function(deckObject) {
-	if (!deckObject) return alert("Please select a deck.");
-
-        var octgndeck = {
-            "1hero": [],
-            "2ally": [],
-            "3attachment": [],
-            "4event": [],
-            "5quest": []
-        };
-        var warned = false;
-	
-	deck.deckname = deckObject.deckname;
-	var deckString = deckObject.deckstring;
-	for (var i=0; i<=(deckString.length-4); i=i+4) {
-	    var cardID = deckString.substr(i,3);
-	    var card = getCardFromCardID(cardID);
-	    if (card.octgn == "") {
-                if (!warned) {
-                    window.alert("Warning: Omitting cards that are not yet available in OCTGN.");
-                    warned = true;
-                }
-                continue;
-            }
-	    card.quantity = deckString.substr(i+3,1);
-	    octgndeck[card.type].push(card);
-	}
-	
-
-        var text = "";
-        text += '<?xml version="1.0" encoding="utf-8" standalone="yes"?>\n';
-        text += '<deck game="a21af4e8-be4b-4cda-a6b6-534f9717391f">\n';
-
-        text += '  <section name="Hero" shared="False">\n';
-        for (var h in octgndeck["1hero"]) {
-            text += '    <card qty="';
-            text += octgndeck["1hero"][h].quantity;
-            text += '" id="';
-            text += octgndeck["1hero"][h].octgn;
-            text += '">';
-            text += octgndeck["1hero"][h].name_norm;
-            text += '</card>\n';
-        }
-        text += '  </section>\n';
-
-        text += '  <section name="Ally" shared="False">\n';
-        for (var h in octgndeck["2ally"]) {
-            text += '    <card qty="';
-            text += octgndeck["2ally"][h].quantity;
-            text += '" id="';
-            text += octgndeck["2ally"][h].octgn;
-            text += '">';
-            text += octgndeck["2ally"][h].name_norm;
-            text += '</card>\n';
-        }
-        text += '  </section>\n';
-
-        text += '  <section name="Event" shared="False">\n';
-        for (var h in octgndeck["4event"]) {
-            text += '    <card qty="';
-            text += octgndeck["4event"][h].quantity;
-            text += '" id="';
-            text += octgndeck["4event"][h].octgn;
-            text += '">';
-            text += octgndeck["4event"][h].name_norm;
-            text += '</card>\n';
-        }
-        text += '  </section>\n';
-
-        text += '  <section name="Attachment" shared="False">\n';
-        for (var h in octgndeck["3attachment"]) {
-            text += '    <card qty="';
-            text += octgndeck["3attachment"][h].quantity;
-            text += '" id="';
-            text += octgndeck["3attachment"][h].octgn;
-            text += '">';
-            text += octgndeck["3attachment"][h].name_norm;
-            text += '</card>\n';
-        }
-        text += '  </section>\n';
-
-        text += '  <section name="Side Quest" shared="False">\n';
-        for (var h in octgndeck["5quest"]) {
-            text += '    <card qty="';
-            text += octgndeck["5quest"][h].quantity;
-            text += '" id="';
-            text += octgndeck["5quest"][h].octgn;
-            text += '">';
-            text += octgndeck["5quest"][h].name_norm;
-            text += '</card>\n';
-        }
-        text += '  </section>\n';
-
-
-
-        text += '  <section name="Quest" shared="True" />\n'
-        text += '  <section name="Encounter" shared="True" />\n'
-        text += '  <section name="Special" shared="True" />\n'
-        text += '  <section name="Setup" shared="True" />\n'
-
-
-        text += '  <notes><![CDATA[]]></notes>';
-        text += '</deck>';
-
-        this.download(deck.deckname + ".o8d", text);
-    }
 
 
 }])
