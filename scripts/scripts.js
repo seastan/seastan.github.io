@@ -49,7 +49,11 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
         url: "/id:deckID",
 	parent: "dashboard",
         templateUrl: "views/dashboard/deckview.html",
-		controller: 'deckViewCtrl'
+	controller: 'deckViewCtrl'
+    }).state("help", {
+        url: "/help",
+	parent: "dashboard",
+        templateUrl: "views/dashboard/help.html",
     })
 }])
 .controller("LoginCtrl", ["$scope", "$location",'$rootScope', '$firebaseAuth', '$firebaseArray',  function($scope, $location, $rootScope, $firebaseAuth, $firebaseArray) {
