@@ -48,7 +48,7 @@
     </div>
   </div>
 
-  <div class=jumbotron style="left:40%;width:35%;top:90px;position:absolute">
+  <div class=jumbotron ng-show="deckLogsArray.length" style="left:40%;width:35%;top:90px;position:absolute">
     <div class=container>
 	  <div ng-repeat="log in deckLogsArray | orderBy:'-date'">
 	    <h4>{{log.quest}}</h4>

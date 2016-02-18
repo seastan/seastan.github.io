@@ -549,6 +549,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 }])
 .factory('image',function(){
     var image={};
+    image.card={};
     image.url="";
     image.name="";
     image.exp="";
@@ -597,6 +598,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     image.update = function(card){
 	if(image.url!=card.img){
             image.loaded = false;
+	    image.card = card;
             image.url = card.img;
             image.name = card.name;
             image.exp = card.exp;
@@ -1786,6 +1788,24 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     this.setTab('img');
 }])
 
+.factory('getLogsByDeckID', ['$firebaseObject', function($firebaseObject) {
+    var logs = function(deckID,scopeLogs) {
+	scopeLogs = [];
+	var allLogs = $firebaseObject($rootScope.ref.child('logs'));
+	allLogs.$loaded().then(function () {
+	    angular.forEach(allLogs, function(value, key){
+		var logID = key;
+		var logObject = value;
+		for (var d in logObject.deckids) {
+		    if (logObject.deckids[d] == $scope.deckID)
+			scopeLogs.push(logObject);
+		}
+	    });
+	});	
+    }
+    return logs;
+}])
+
 .controller('deckViewCtrl', ['$scope','$rootScope','$stateParams','$location','$firebaseObject','getLocalObjectFromString','image','getQuantityOfCardInLocalObject','loadDeckIntoBuilder',
 function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObjectFromString,image,getQuantityOfCardInLocalObject,loadDeckIntoBuilder) {
     $scope.deckLoaded = false;
@@ -2421,6 +2441,7 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
 function($rootScope,$scope,$firebaseObject,generateDeckID,getDeckObjectFromDeckID,getHeroesFromDeckString,$location,formDataMyLogs) {
     $scope.myLogsArray = [];
     $scope.formDataMyLogs = formDataMyLogs;
+    $scope.selectedQuest = $scope.formDataMyLogs.quest;
     $scope.loadMyLogs = function() {
 	var myLogs = [];
 	var allLogs = $firebaseObject($rootScope.ref.child('logs'));
@@ -2433,6 +2454,9 @@ function($rootScope,$scope,$firebaseObject,generateDeckID,getDeckObjectFromDeckI
 	    });
 	    $scope.myLogsArray = myLogs;
 	});
+    }
+    $scope.setSelectedQuest = function() {
+	$scope.formDataMyLogs.quest = $scope.selectedQuest;
     }
     if (!$rootScope.authData) {
         return $location.path("/login");
@@ -2541,6 +2565,123 @@ function($rootScope,$scope,$firebaseObject,generateDeckID,getDeckObjectFromDeckI
 		}
 		return deckObjectList;
 	}
+}])
+
+.factory('formDataDeckSearch', function() {
+	var formDataDeckSearch = {};
+	return formDataDeckSearch;
+})
+
+.factory('isCardInDeckObject',['getCardID', function(getCardID) {
+    var isCardInDeckObject = function(card,deckObject) {
+	var cardID = getCardID(card);
+	var deckString = deckObject.deckstring;
+	for (var i=0; i<=(deckString.length-4); i=i+4) {
+	    if (deckString.substr(i,3)==cardID) {
+		console.log(cardID+" "+deckObject.deckstring);
+		return true;
+	    }
+	}
+	return false;
+    }
+    return isCardInDeckObject;
+}])
+
+
+.factory('getLogsByDeckID', function() {
+    var getLogs = function(allLogs,deckID) {
+	var deckLogs = [];
+	angular.forEach(allLogs, function(value, key){
+	    var log = value;
+	    var deckIDs = log.deckids;
+	    var deckInLog = false;
+	    for (var d in deckIDs)
+		if (deckIDs[d] == deckID)
+		    deckInLog=true;
+	    if (deckInLog) deckLogs.push(log);
+	});
+	return deckLogs;
+    }
+    return getLogs;
+})
+
+.controller('communityCtrl', ['$rootScope','$scope','$firebaseObject','getDeckObjectFromDeckID','formDataDeckSearch','isCardInDeckObject','image','getLogsByDeckID','getHeroesFromDeckString','filtersettings','getLocalObjectFromString',
+function($rootScope,$scope,$firebaseObject,getDeckObjectFromDeckID,formDataDeckSearch,isCardInDeckObject,image,getLogsByDeckID,getHeroesFromDeckString,filtersettings,getLocalObjectFromString) {
+    $scope.formDataDeckSearch = formDataDeckSearch;
+    $scope.selectedQuest = $scope.formDataDeckSearch.quest;
+    $scope.image = image;
+    $scope.isWordInString = function(word,string) {
+        return (string.indexOf(word)>-1);
+    };
+    $scope.setSelectedQuest = function() {
+	console.log($scope.selectedQuest)
+	$scope.formDataDeckSearch.quest = $scope.selectedQuest;
+    }
+    // Submit
+    $scope.submit = function() {
+	console.log("Searching decks.");
+	$scope.formDataDeckSearch.searchResultsArray = [];
+	var allDecks = $firebaseObject($rootScope.ref.child('decks'));
+	var allLogs = $firebaseObject($rootScope.ref.child('logs'));
+
+	var filterDecks = function(_allDecks,_allLogs) {
+	    angular.forEach(_allDecks, function(value, key){
+		var deckID = key;
+		var deckObject = value;
+		var match=true;
+		if ((match==true) && $scope.formDataDeckSearch.deckName) {
+		    match=false;
+	    	    if ($scope.isWordInString(formDataDeckSearch.deckName.toLowerCase(),deckObject.deckname.toLowerCase()))
+			match=true;
+		}
+		if ((match==true) && $scope.formDataDeckSearch.quest) {
+//		    console.log("Checking if contains "+formDataDeckSearch.quest);
+		    match=false;
+//		    console.log(deckObject.deckname);
+		    var deckLogsList = getLogsByDeckID(_allLogs,deckID);
+//		    console.log(deckLogsList);
+		    for (var l in deckLogsList)
+			if (formDataDeckSearch.quest == deckLogsList[l].quest && deckLogsList[l].outcome == 'Success')
+			    match=true;
+		}
+		if ((match==true) && $scope.formDataDeckSearch.cardMatch) {
+		    console.log("Checking if contains "+image.card.name);
+		    match=false;
+		    if (isCardInDeckObject(image.card,deckObject))
+			match=true;
+		}
+		if ((match==true) && $scope.formDataDeckSearch.setMatch) {
+		    var localObject = getLocalObjectFromString(deckObject.deckstring);
+		    var types = ["1hero","2ally","3attachment","4event","5quest"]
+		    for (var t in types){
+			var type = types[t];
+			for (var c in localObject[type]){
+			    var card = localObject[type][c];
+			    if (filtersettings.pack.indexOf(card.exp)<0)
+				match=false;
+			}
+		    }
+		}
+		if (match) $scope.formDataDeckSearch.searchResultsArray.push(deckObject);
+	    })
+	}
+	allDecks.$loaded().then(function() {
+	    allLogs.$loaded().then(function() {
+		filterDecks(allDecks,allLogs);
+		console.log("Decks searched.");
+		
+	    });
+	});
+    }
+    // Search results
+    $scope.getHeroes = function(deckString) {
+	return getHeroesFromDeckString(deckString);
+    }
+    $scope.changepreview = function(card){
+	$scope.image.update(card);
+    };
+
+
 }])
 
 
