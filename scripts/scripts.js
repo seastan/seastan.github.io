@@ -2482,12 +2482,12 @@ function($rootScope,$scope,$firebaseObject,generateDeckID,getDeckObjectFromDeckI
 	    newLog.quest = $scope.formDataMyLogs.quest;
 	    newLog.outcome = $scope.formDataMyLogs.outcome;
 	    newLog.score = $scope.formDataMyLogs.score;
-		newLog.deckids = [];
-		if ($scope.formDataMyLogs.deckid1) newLog.deckids.push($scope.formDataMyLogs.deckid1);
-		if ($scope.formDataMyLogs.deckid2) newLog.deckids.push($scope.formDataMyLogs.deckid2);
-		if ($scope.formDataMyLogs.deckid3) newLog.deckids.push($scope.formDataMyLogs.deckid3);
-		if ($scope.formDataMyLogs.deckid4) newLog.deckids.push($scope.formDataMyLogs.deckid4);
-
+	    newLog.deckids = [];
+	    if ($scope.formDataMyLogs.deckid1) newLog.deckids.push($scope.formDataMyLogs.deckid1);
+	    if ($scope.formDataMyLogs.deckid2) newLog.deckids.push($scope.formDataMyLogs.deckid2);
+	    if ($scope.formDataMyLogs.deckid3) newLog.deckids.push($scope.formDataMyLogs.deckid3);
+	    if ($scope.formDataMyLogs.deckid4) newLog.deckids.push($scope.formDataMyLogs.deckid4);
+	    if (!$scope.formDataMyLogs.notes)  $scope.formDataMyLogs.notes="";
 	    newLog.notes   = $scope.formDataMyLogs.notes; 
 	    newLog.$save().then(function() {
 		console.log('Log saved');
