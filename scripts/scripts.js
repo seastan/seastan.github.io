@@ -2465,6 +2465,8 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
 function($rootScope,$scope,$firebaseObject,generateDeckID,getDeckObjectFromDeckID,getHeroesFromDeckString,$location,formDataMyLogs) {
     $scope.myLogsArray = [];
     $scope.formDataMyLogs = formDataMyLogs;
+    // $scope.selectOutcome = 'Success';
+    // $scope.selectQuest = 'Passage Through Mirkwood';
     $scope.selectedQuest = $scope.formDataMyLogs.quest;
     $scope.loadMyLogs = function() {
 	var myLogs = [];
@@ -2479,6 +2481,18 @@ function($rootScope,$scope,$firebaseObject,generateDeckID,getDeckObjectFromDeckI
 	    $scope.myLogsArray = myLogs;
 	});
     }
+    $scope.deleteLog = function(log) {
+	if (confirm('Are you sure?')) {
+	    $rootScope.ref.child('logs').child(log.logid).remove(function(error){
+		if (error) {
+		    console.log("Error:", error);
+		} else {
+		    console.log("Removed successfully!");
+		    $scope.loadMyLogs();
+		}
+	    })
+	}
+    }
     $scope.setSelectedQuest = function() {
 	$scope.formDataMyLogs.quest = $scope.selectedQuest;
     }
@@ -2491,8 +2505,6 @@ function($rootScope,$scope,$firebaseObject,generateDeckID,getDeckObjectFromDeckI
 	//this.myDecksArray = $firebaseArray($rootScope.ref.child('users').child($rootScope.authData.uid).child('decks'));    
     };
 
-    $scope.selectOutcome = 'Success';
-    $scope.selectQuest = 'Passage Through Mirkwood';
     // Submit
     $scope.submit = function() {
 	console.log("Submitting Log.");
@@ -2641,9 +2653,11 @@ function($rootScope,$scope,$firebaseObject,getDeckObjectFromDeckID,formDataDeckS
 	console.log($scope.selectedQuest)
 	$scope.formDataDeckSearch.quest = $scope.selectedQuest;
     }
+    $scope.searching = false;
     // Submit
     $scope.submit = function() {
 	console.log("Searching decks.");
+	$scope.searching = true;
 	$scope.formDataDeckSearch.searchResultsArray = [];
 	var allDecks = $firebaseObject($rootScope.ref.child('decks'));
 	var allLogs = $firebaseObject($rootScope.ref.child('logs'));
@@ -2658,12 +2672,14 @@ function($rootScope,$scope,$firebaseObject,getDeckObjectFromDeckID,formDataDeckS
 	    	    if ($scope.isWordInString(formDataDeckSearch.deckName.toLowerCase(),deckObject.deckname.toLowerCase()))
 			match=true;
 		}
-		if ((match==true) && $scope.formDataDeckSearch.quest) {
-//		    console.log("Checking if contains "+formDataDeckSearch.quest);
+		if ((match==true) && $scope.formDataDeckSearch.userName) {
 		    match=false;
-//		    console.log(deckObject.deckname);
+	    	    if ($scope.isWordInString(formDataDeckSearch.userName.toLowerCase(),deckObject.username.toLowerCase()))
+			match=true;
+		}
+		if ((match==true) && $scope.formDataDeckSearch.quest) {
+		    match=false;
 		    var deckLogsList = getLogsByDeckID(_allLogs,deckID);
-//		    console.log(deckLogsList);
 		    for (var l in deckLogsList)
 			if (formDataDeckSearch.quest == deckLogsList[l].quest && deckLogsList[l].outcome == 'Success')
 			    match=true;
@@ -2691,9 +2707,10 @@ function($rootScope,$scope,$firebaseObject,getDeckObjectFromDeckID,formDataDeckS
 	}
 	allDecks.$loaded().then(function() {
 	    allLogs.$loaded().then(function() {
+		console.log("Decks loaded.");
 		filterDecks(allDecks,allLogs);
 		console.log("Decks searched.");
-		
+		$scope.searching = false;
 	    });
 	});
     }

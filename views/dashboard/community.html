@@ -3,8 +3,10 @@
     <div class="panel-heading">
       <h3 class="panel-title">Deck Search</h3> </div>
     <div class="panel-body">
-      <div><label for="deckName">Name Contains</label></div>
+      <div><label for="deckName">Deck Name Contains</label></div>
       <div><input class="form-control underline" id="deckName" type="text" ng-model="formDataDeckSearch.deckName"></input></div>
+      <div><label for="userName">User Name Contains</label></div>
+      <div><input class="form-control underline" id="userName" type="text" ng-model="formDataDeckSearch.userName"></input></div>
       <div><label for="selectQuest">Completed Quest</label>
 	<questchoice></questchoice>
       </div>
@@ -13,7 +15,10 @@
       <br>
       <div> <input type="checkbox" id="usesSets" class="col-sm-2 control-label" ng-model="formDataDeckSearch.setMatch">Deck only uses cards from <a ng-href="#/deck/sets">sets</a> I've selected</input></div>
       <br>
-      <div><button ng-click="submit()" class="btn btn-primary">Search Decks</button></div>
+      <div>
+	<button ng-click="submit()" class="btn btn-primary" ng-disabled="searching">Search Decks</button>
+	<label ng-show="searching">Searching decks...</label>
+      </div>
     </div>
   </div>
 

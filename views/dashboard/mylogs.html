@@ -57,6 +57,7 @@
 	</div>
 	<div class="panel-body">
 	  <div ng-repeat="log in myLogsArray | orderBy:'-date'">
+	    <btn class="pull-right btn btn-danger btn-outline btn-rounded" ng-click="deleteLog(log)">Delete</btn>
 	    <h4>{{log.quest}}</h4>
 	    <div style="padding-left:10px;">Date: {{log.date}}</div>
 	    <div style="padding-left:10px;">Outcome: {{log.outcome}}</div>
