@@ -1471,6 +1471,8 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     deck.filtersettings = filtersettings;
     deck.suggested = suggested;
     deck.allcards = cardObject;
+    deck.parentID = "";
+//    deck.editing = false;
     deck['1hero']=[];
     deck['2ally']=[];
     deck['3attachment']=[];
@@ -1574,24 +1576,28 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
         deck["4event"] = [];
         deck["5quest"] = [];
         deck.deckname = "";
-		suggested.clearBlacklist();
-		suggested.deckChange(deck);
-//		console.log("Deck cleared");
+	deck.editing = false;
+	deck.parentID = "";
+	//	deck.version = 1;
+	suggested.clearBlacklist();
+	suggested.deckChange(deck);
+	console.log("Deck cleared");
     };
     return deck;
 }])
 
 .factory('loadDeckIntoBuilder', ['deck','cardObject','$location','getCardFromCardID',function(deck,cardObject,$location,getCardFromCardID){
 	var loadDeckIntoBuilder = function(deckObject) {
-		deck.clear();
-		deck.deckname = deckObject.deckname;
-		var deckString = deckObject.deckstring;
-		for (var i=0; i<=(deckString.length-4); i=i+4) {
-			var cardID = deckString.substr(i,3);
-			var card = getCardFromCardID(cardID);
-			card.quantity = +deckString.substr(i+3,1);
-			deck[card.type].push(card);
-		}
+	    deck.clear();
+	    deck.deckname = deckObject.deckname;
+	    deck.parentID = deckObject.deckid;
+	    var deckString = deckObject.deckstring;
+	    for (var i=0; i<=(deckString.length-4); i=i+4) {
+		var cardID = deckString.substr(i,3);
+		var card = getCardFromCardID(cardID);
+		card.quantity = +deckString.substr(i+3,1);
+		deck[card.type].push(card);
+	    }
 //	    console.log(deck);
 			return $location.path("/deck/builder");
 
@@ -1711,6 +1717,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     $scope.changepreview = function(card) {
         image.update(card);
     };
+
     $scope.saveDeck = function() {
 	console.log("Saving deck");
         if (!$rootScope.authData) {
@@ -1725,37 +1732,55 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	// Save deck to database
 	var deckString = getDeckString(deck);
         var deckid = generateDeckID();
-        var newDeck = $firebaseObject($rootScope.ref.child('decks').child(deckid));//('users').child($rootScope.authData.uid).child('decks').child(deckid));
-        newDeck.$loaded().then(function() {
-	    newDeck.deckid = deckid;
-	    newDeck.username = $rootScope.displayName;
-	    newDeck.userid  = $rootScope.authData.uid;
-	    newDeck.deckname = deck.deckname;
-            newDeck.dateUTC = new Date().valueOf().toString();
-            newDeck.deckstring = deckString;
-            newDeck.$save().then(function(ref) {
-		console.log("Deck saved.");
-		return $location.path("/deck/mydecks");
-	    }, function(error) {
-		console.log("Error saving deck:", error);
-            });
-	});
-	// Add deckid to user decks
-	var newUserDeck = $firebaseObject($rootScope.ref.child('users').child($rootScope.authData.uid).child('decks').child(deckid));
-	newUserDeck.$loaded().then(function() {
-	    newUserDeck.deckid = deckid;
-	    newUserDeck.username = $rootScope.displayName;
-	    newUserDeck.userid  = $rootScope.authData.uid;
-	    newUserDeck.deckname = deck.deckname;
-            newUserDeck.dateUTC = new Date().valueOf().toString();
-            newUserDeck.deckstring = deckString;
-            newUserDeck.$save().then(function(ref) {
-		console.log("Deck saved.");
-		return $location.path("/deck/mydecks");
-	    }, function(error) {
-		console.log("Error saving deck:", error);
-            });
-	});
+	var onComplete = function(message) {
+	    console.log(message);
+	}
+	var newDeck = {
+	    "deckid" : deckid,
+	    "username" : $rootScope.displayName,
+	    "userid" : $rootScope.authData.uid,
+	    "deckname" : deck.deckname,
+	    "dateUTC" : new Date().valueOf().toString(),
+	    "deckstring" : deckString,
+	    "parentid" : deck.parentID ? deck.parentID : ""
+	}
+	$rootScope.ref.child('decks').child(deckid).set(newDeck,onComplete("Written to public."));
+	$rootScope.ref.child('users').child($rootScope.authData.uid).child('decks').child(deckid).set(newDeck,onComplete("Written to private."));
+	return $location.path("/deck/mydecks");
+//         var newDeck = $firebaseObject($rootScope.ref.child('decks').child(deckid));//('users').child($rootScope.authData.uid).child('decks').child(deckid));
+//         newDeck.$loaded().then(function() {
+// 	    newDeck.deckid = deckid;
+// 	    newDeck.username = $rootScope.displayName;
+// 	    newDeck.userid  = $rootScope.authData.uid;
+// 	    newDeck.deckname = deck.deckname;
+//             newDeck.dateUTC = new Date().valueOf().toString();
+//             newDeck.deckstring = deckString;
+//             newDeck.$save().then(function(ref) {
+// 		console.log("Deck saved.");
+// 		return $location.path("/deck/mydecks");
+// 	    }, function(error) {
+// 		console.log("Error saving deck:", error);
+//             });
+// 	});
+
+// 	// Add deckid to user decks
+// 	var newUserDeck = $firebaseObject($rootScope.ref.child('users').child($rootScope.authData.uid).child('decks').child(deckid));
+// 	newUserDeck.$loaded().then(function() {
+// 	    newUserDeck.deckid = deckid;
+// 	    newUserDeck.username = $rootScope.displayName;
+// 	    newUserDeck.userid  = $rootScope.authData.uid;
+// 	    newUserDeck.deckname = deck.deckname;
+//             newUserDeck.dateUTC = new Date().valueOf().toString();
+//             newUserDeck.deckstring = deckString;
+// 	    newUserDeck.parentid = deck.parentID;// ? deck.parentID : deckid;
+// //	    newUserDeck.version = deck.version ? deck.version : 1;
+//             newUserDeck.$save().then(function(ref) {
+// 		console.log("Deck saved.");
+// 		return $location.path("/deck/mydecks");
+// 	    }, function(error) {
+// 		console.log("Error saving deck:", error);
+//             });
+// 	});
     }
 }])
 .controller('suggestedCtrl',['$scope','suggested','image','deck',function($scope,suggested,image,deck){
@@ -1810,10 +1835,13 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     return logs;
 }])
 
-.controller('deckViewCtrl', ['$scope','$rootScope','$stateParams','$location','$firebaseObject','getLocalObjectFromString','image','getQuantityOfCardInLocalObject','loadDeckIntoBuilder','exportDeck',
-function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObjectFromString,image,getQuantityOfCardInLocalObject,loadDeckIntoBuilder,exportDeck) {
+// Controller for the deck info page
+.controller('deckViewCtrl', ['$scope','$rootScope','$stateParams','$location','$firebaseObject','getLocalObjectFromString','image','getQuantityOfCardInLocalObject','loadDeckIntoBuilder','exportDeck','hasAccess',
+function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObjectFromString,image,getQuantityOfCardInLocalObject,loadDeckIntoBuilder,exportDeck,hasAccess) {
     $scope.deckLoaded = false;
     $scope.deck={};
+    $scope.hasAccess = hasAccess;
+
     var url = $location.url();
     var index = url.indexOf('id:');
     if (index>-1) {
@@ -1823,9 +1851,8 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
     };
     var deckObject = $firebaseObject($rootScope.ref.child('decks').child($scope.deckID));
     deckObject.$loaded().then(function() {
+	$scope.deckObject = deckObject;
 	$scope.deckLoaded = true;
-	$scope.dvDeckName = deckObject.deckname;
-	$scope.dvUserName = deckObject.username;
 	$scope.deck = getLocalObjectFromString(deckObject.deckstring);
     });
     $scope.changepreview = function(card){
@@ -1862,6 +1889,22 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
 	});
     }		      
     $scope.loadDeckLogs();
+
+    // Load Mods      
+    $scope.deckModsArray = [];
+    $scope.loadDeckMods = function() {
+        var deckMods = [];
+        var allDecks = $firebaseObject($rootScope.ref.child('decks'));
+        allDecks.$loaded().then(function () {
+            angular.forEach(allDecks, function(value, key){
+                var deckObject = value;
+                if (deckObject.parentid == $scope.deckID)
+                    deckMods.push(deckObject);
+	    });
+            $scope.deckModsArray = deckMods;
+        });
+    }
+    $scope.loadDeckMods();
 
 }])
 
@@ -2179,7 +2222,7 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
             }
         }
 
-        text += "***\r\n^^Deck ^^built ^^with [^^Love ^^of ^^Tales](http://seastan.github.io/)";
+        text += "***\r\nDeck built with [Love of Tales](http://seastan.github.io/)";
         return text;
     }
 
@@ -2315,13 +2358,23 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
     return this;
 }])
 
-.controller('myDecksCtrl', ['deck', 'getDeckString', '$localStorage', 'translate', '$scope', '$rootScope', 'cardObject', '$location', '$firebaseObject','$firebaseArray','getHeroesFromDeckString','loadDeckIntoBuilder','getCardFromCardID','getCardID','searchDecks','image','exportDeck',
-function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, cardObject, $location,$firebaseObject,$firebaseArray,getHeroesFromDeckString,loadDeckIntoBuilder,getCardFromCardID,getCardID,searchDecks,image,exportDeck) {
+.factory('formDataMyDecks',function() {
+    var formDataMyDecks = {};
+    return formDataMyDecks;
+})
+
+.controller('myDecksCtrl', ['deck', 'getDeckString', '$localStorage', 'translate', '$scope', '$rootScope', 'cardObject', '$location', '$firebaseObject','$firebaseArray','getHeroesFromDeckString','loadDeckIntoBuilder','getCardFromCardID','getCardID','searchDecks','image','exportDeck','formDataMyDecks',
+function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, cardObject, $location,$firebaseObject,$firebaseArray,getHeroesFromDeckString,loadDeckIntoBuilder,getCardFromCardID,getCardID,searchDecks,image,exportDeck,formDataMyDecks) {
+    $scope.formDataMyDecks = formDataMyDecks;
+    $scope.loadMyDecks = function() {
+	console.log("Loading decks");
+	$scope.myDecksArray = $firebaseArray($rootScope.ref.child('users').child($rootScope.authData.uid).child('decks'));    
+    }
 
     if (!$rootScope.authData) {
         return $location.path("/login");
     } else {
-	this.myDecksArray = $firebaseArray($rootScope.ref.child('users').child($rootScope.authData.uid).child('decks'));    
+	$scope.loadMyDecks();
     };
 
     this.selectedDeck = null;
@@ -2333,16 +2386,16 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
     }
     this.changepreview = function(card){
     	image.update(card);
-    }    
+    }
     this.loadInfoPage = function(deckObject) {
 	return $location.path("/deck/id:"+deckObject.deckid);
     };
     this.getHeroes = function(deckString) {
-//	var heroNames = '';
+	//	var heroNames = '';
 	var heroes = getHeroesFromDeckString(deckString);
-//	for (var h in heroes)
-//	    heroNames+=heroes[h].name_norm+' ';
-//	return heroNames;
+	//	for (var h in heroes)
+	//	    heroNames+=heroes[h].name_norm+' ';
+	//	return heroNames;
 	return heroes;
     }
     this.deleteDeck = function(deckObject) {
@@ -2350,14 +2403,66 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
 	console.log(deckObject);
 	if (confirm('Are you sure you want to delete: '+deckObject.deckname)) {
 		this.myDecksArray.$remove(deckObject);
-		};
+	};
     }
     this.loadDeck = function(deckObject) {
 	if (!deckObject) return alert("Please select a deck.");
 	loadDeckIntoBuilder(deckObject);
-    }	
+    }
+    this.archiveDeck = function(deckObject) {
+	if (!deckObject) return alert("Please select a deck.");
+	var onComplete = function() {
+	    $scope.loadMyDecks();
+	}
+	$rootScope.ref.child('users').child($rootScope.authData.uid).child('decks').child(deckObject.deckid).child('archived').set(true,onComplete);
+    }
+    this.unArchiveDeck = function(deckObject) {
+	if (!deckObject) return alert("Please select a deck.");
+	var onComplete = function() {
+	    $scope.loadMyDecks();
+	}
+	$rootScope.ref.child('users').child($rootScope.authData.uid).child('decks').child(deckObject.deckid).child('archived').set(false,onComplete);
+    }
+    this.editDeck = function(deckObject) {
+	if (!deckObject) return alert("Please select a deck.");
+	if (deckObject.published) return alert("Cannot edit a published deck!");
+	loadDeckIntoBuilder(deckObject);
+	deck.editing=true;
+    }
+    // this.publish = function(deckObject) {
+    // 	var myDeck = $firebaseObject($rootScope.ref.child('users').child($rootScope.authData.uid).child('decks').child(deckObject.deckid));
+    // 	var onComplete = function() {
+    // 	    console.log("Reloading decks.");
+    // 	    $scope.loadMyDecks();
+    // 	}
+    // 	var copyObject = function(obj) {
+    // 	    var newObj = {};
+    // 	    for (var key in obj) {
+    // 		if (key.indexOf('$') < 0 && obj.hasOwnProperty(key)) {
+    // 		    newObj[key] = obj[key];
+    // 		};
+    // 	    }
+    // 	    return newObj;
+    // 	}
+    // 	myDeck.$loaded().then(function() {
+    // 	    // Update personal deck to public
+    // 	    myDeck.published = true;
+    // 	    myDeck.$save().then(function() {
+    // 		// Make deck public!
+    // 		$rootScope.ref.child('decks').child(deckObject.deckid).set(copyObject(myDeck),onComplete);
+    // 		// newDeck.$loaded().then(function() {
+    // 		//     newDeck = myDeck;
+    // 		//     newDeck.$save().then(function(ref) {
+    // 		// 	console.log("Deck saved.");
+    // 		// 	return $location.path("/deck/mydecks");
+    // 		//     }, function(error) {
+    // 		// 	console.log("Error saving deck:", error);
+    // 		//     });
+    // 		// });
+    // 	    })
+    // 	})
+    // }
     
-
     this.download = function(filename,text) {
         var pom = document.createElement('a');
         pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
@@ -2641,8 +2746,23 @@ function($rootScope,$scope,$firebaseObject,generateDeckID,getDeckObjectFromDeckI
     return getLogs;
 })
 
-.controller('communityCtrl', ['$rootScope','$scope','$firebaseObject','getDeckObjectFromDeckID','formDataDeckSearch','isCardInDeckObject','image','getLogsByDeckID','getHeroesFromDeckString','filtersettings','getLocalObjectFromString',
-function($rootScope,$scope,$firebaseObject,getDeckObjectFromDeckID,formDataDeckSearch,isCardInDeckObject,image,getLogsByDeckID,getHeroesFromDeckString,filtersettings,getLocalObjectFromString) {
+// Determines if the user has access to the card (including quatity in the case of core set cards)
+.factory('hasAccess',['filtersettings',function(filtersettings) {
+    var hasAccess = function(card) {
+	if (filtersettings.pack.indexOf(card.exp)<0)
+	    return false;
+	if (filtersettings.onecore && (card.quantity>card.corequantity))
+	    return false;
+	if (filtersettings.twocore && (card.quantity>2*card.corequantity))
+	    return false;
+	return true;
+    }
+    return hasAccess;
+}])
+
+// Controller for the community tab
+.controller('communityCtrl', ['$rootScope','$scope','$firebaseObject','getDeckObjectFromDeckID','formDataDeckSearch','isCardInDeckObject','image','getLogsByDeckID','getHeroesFromDeckString','filtersettings','getLocalObjectFromString','hasAccess',
+function($rootScope,$scope,$firebaseObject,getDeckObjectFromDeckID,formDataDeckSearch,isCardInDeckObject,image,getLogsByDeckID,getHeroesFromDeckString,filtersettings,getLocalObjectFromString,hasAccess) {
     $scope.formDataDeckSearch = formDataDeckSearch;
     $scope.selectedQuest = $scope.formDataDeckSearch.quest;
     $scope.image = image;
@@ -2666,6 +2786,7 @@ function($rootScope,$scope,$firebaseObject,getDeckObjectFromDeckID,formDataDeckS
 	    angular.forEach(_allDecks, function(value, key){
 		var deckID = key;
 		var deckObject = value;
+		var localObject = getLocalObjectFromString(deckObject.deckstring);
 		var match=true;
 		if ((match==true) && $scope.formDataDeckSearch.deckName) {
 		    match=false;
@@ -2684,6 +2805,9 @@ function($rootScope,$scope,$firebaseObject,getDeckObjectFromDeckID,formDataDeckS
 			if (formDataDeckSearch.quest == deckLogsList[l].quest && deckLogsList[l].outcome == 'Success')
 			    match=true;
 		}
+		if ((match==true) && (localObject.countTotal()<50) && !$scope.formDataDeckSearch.lessThanFifty) {
+		    match=false;
+		}
 		if ((match==true) && $scope.formDataDeckSearch.cardMatch) {
 		    console.log("Checking if contains "+image.card.name);
 		    match=false;
@@ -2691,14 +2815,12 @@ function($rootScope,$scope,$firebaseObject,getDeckObjectFromDeckID,formDataDeckS
 			match=true;
 		}
 		if ((match==true) && $scope.formDataDeckSearch.setMatch) {
-		    var localObject = getLocalObjectFromString(deckObject.deckstring);
 		    var types = ["1hero","2ally","3attachment","4event","5quest"]
 		    for (var t in types){
 			var type = types[t];
 			for (var c in localObject[type]){
 			    var card = localObject[type][c];
-			    if (filtersettings.pack.indexOf(card.exp)<0)
-				match=false;
+			    if (!hasAccess(card)) match=false;
 			}
 		    }
 		}
@@ -2718,7 +2840,7 @@ function($rootScope,$scope,$firebaseObject,getDeckObjectFromDeckID,formDataDeckS
     $scope.getHeroes = function(deckString) {
 	return getHeroesFromDeckString(deckString);
     }
-    $scope.changepreview = function(card){
+    $scope.changepreview = function(card) {
 	$scope.image.update(card);
     };
 

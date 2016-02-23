@@ -11,6 +11,8 @@
 	<questchoice></questchoice>
       </div>
       <br>
+      <div> <input type="checkbox" id="lessThanFifty" class="col-sm-2 control-label" ng-model="formDataDeckSearch.lessThanFifty">Include decks with less than 50 cards</input></div>
+      <br>
       <div> <input type="checkbox" id="includesCard" class="col-sm-2 control-label" ng-model="formDataDeckSearch.cardMatch" ng-disabled="!image.card.no">Deck includes the card currently in the Card Preview</input></div>
       <br>
       <div> <input type="checkbox" id="usesSets" class="col-sm-2 control-label" ng-model="formDataDeckSearch.setMatch">Deck only uses cards from <a ng-href="#/deck/sets">sets</a> I've selected</input></div>

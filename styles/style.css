@@ -1,3 +1,5 @@
+a { cursor: pointer; }
+
 .packbutton {
 /*   font-size: 10px; */
 /*   width:   100%; */
@@ -55,6 +57,10 @@
   border-color: #555 #eee #eee #555;
 }
 
+td.noAccess{
+   color:red;
+   font-weight:bold;
+}
 
 
 .filterbutton {

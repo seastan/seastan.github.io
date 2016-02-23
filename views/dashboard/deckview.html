@@ -1,11 +1,20 @@
 <div ng-controller="deckViewCtrl as dv" ng-show="deckLoaded">
-  <btn class="pull-right btn btn-primary btn-outline btn-rounded" ng-click="loadDeck()">Copy to Builder</btn>
+  <btn class="pull-right btn btn-primary btn-outline btn-rounded" ng-click="loadDeck()">Modify Deck</btn>
   <btn class="pull-right btn btn-primary btn-outline btn-rounded" ng-click="exportOctgn()">Export to OCTGN</btn>
   <btn class="pull-right btn btn-primary btn-outline btn-rounded" ng-click="exportText()">Export to Text</btn>
-  <h2>{{dvDeckName}} <small>by </small><small style="font-weight:bold">{{dvUserName}}</small></h2>
-  <span class="glyphicon glyphicon-dashboard bg-fade"></span>
+  <div>
+    <h2>{{deckObject.deckname}} <small>by </small><small style="font-weight:bold">{{deckObject.username}}</small>
+      <br>
+      <div style="font-size:20px;">
+	<small>Deck ID: {{deckObject.deckid}}</small>
+	<br>
+	<small ng-show="deckObject.parentid" >Modified from: <a ng-href="#/deck/id:{{deckObject.parentid}}">{{deckObject.parentid}}</a></small>
+      </div>
+    </h2>
+  </div>
+  <!-- <span class="glyphicon glyphicon-dashboard bg-fade"></span> -->
 
-  <div class=jumbotron style="left:1%;width:35%;top:90px;position:absolute">
+  <div class=jumbotron style="left:1%;width:30%;top:100px;position:absolute">
     <div class=container>
       <!-- <div class="deckdiv" style="width:25%;left:1%;top:15%;height:85%"> -->
       <div>
@@ -13,35 +22,36 @@
 	  <tr class="head"><td style="width:20px"></td><td>Heroes (Starting threat: {{deck.startingThreat()}})</td></tr>
 	  
 	  <tr class="card" ng-repeat="card in deck['1hero'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
-	    <td style="font-size:14;">
+	    <td style="font-size:14;" ng-class="{noAccess: !hasAccess(card)}">
 	      1
 	    </td>
 	    <td class="c{{card.sphere}}">{{card.name}}</td>
 	  <tr><td bgcolor="transparent" colspan=2>&nbsp;</td></tr>
+	  <tr class="head"><td></td><td>Total ({{deck.countTotal()}})</td></tr>
 	  <tr class="head"><td></td><td>Allies ({{deck.countAllies()}})</td></tr>
 	  <tr class="card" ng-repeat="card in deck['2ally'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
-	    <td style="font-size:14">
+	    <td style="font-size:14" ng-class="{noAccess: !hasAccess(card)}">
 	      {{card.quantity}}
 	    </td>
 	    <td class="c{{card.sphere}}">{{card.name}}</td>
 	  <tr><td bgcolor="transparent" colspan=2>&nbsp;</td></tr>
 	  <tr class="head"><td></td><td>Attachments ({{deck.countAttachments()}})</td></tr>
 	  <tr class="card" ng-repeat="card in deck['3attachment'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
-	    <td style="font-size:14">
+	    <td style="font-size:14" ng-class="{noAccess: !hasAccess(card)}">
 	      {{card.quantity}}
 	    </td>
 	    <td class="c{{card.sphere}}">{{card.name}}</td>
 	  <tr><td bgcolor="transparent" colspan=2>&nbsp;</td></tr>
 	  <tr class="head"><td></td><td>Events ({{deck.countEvents()}})</td></tr>
 	  <tr class="card" ng-repeat="card in deck['4event'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
-	    <td style="font-size:14">
+	    <td style="font-size:14" ng-class="{noAccess: !hasAccess(card)}">
 	      {{card.quantity}}
 	    </td>
 	    <td class="c{{card.sphere}}">{{card.name}}</td></tr>
 	  <tr><td bgcolor="transparent" colspan=2>&nbsp;</td></tr>
 	  <tr class="head"><td></td><td>Quests ({{deck.countQuests()}})</td></tr>
 	  <tr class="card" ng-repeat="card in deck['5quest'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
-	    <td style="font-size:14">
+	    <td style="font-size:14" ng-class="{noAccess: !hasAccess(card)}">
 	      {{card.quantity}}
 	    </td>
 	    <td class="c{{card.sphere}}">{{card.name}}</td></tr>
@@ -50,7 +60,7 @@
     </div>
   </div>
 
-  <div class=jumbotron ng-show="deckLogsArray.length" style="left:40%;width:35%;top:90px;position:absolute">
+  <div class=jumbotron ng-show="deckLogsArray.length" style="left:32%;width:30%;top:100px;position:absolute">
     <div class=container>
 	  <div ng-repeat="log in deckLogsArray | orderBy:'-date'">
 	    <h4>{{log.quest}}</h4>
@@ -64,4 +74,28 @@
 	  </div>
 	</div>
   </div>
+  <div class=jumbotron ng-show="deckModsArray.length" style="left:63%;width:30%;top:100px;position:absolute">
+    <div class=container>
+      <h4>Modifications</h4>
+      <table class="table mydecktable">
+	<thead>
+	  <tr>
+	    <th>Author</th>
+	    <th>Deck ID</th>
+	  </tr>
+	</thead>
+	<tbody>
+	  <tr ng-repeat="deck in deckModsArray | orderBy:'-date'">
+	    <td>
+	      {{deck.username}}
+	    </td>
+	    <td>
+	      <a ng-href="#/deck/id:{{deck.deckid}}">{{deck.deckid}}</a>
+	    </td>
+	  </tr>
+	</tbody>
+      </table>
+    </div>
+  </div>
+  
 </div>
