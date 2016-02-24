@@ -334,6 +334,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	for (var i=0; i<=(deckString.length-4); i=i+4) {
 	    var cardID = deckString.substr(i,3);
 	    var card = getCardFromCardID(cardID);
+	    if (!card) console.log('Error finding card: '+cardID);
 	    card.quantity = +deckString.substr(i+3,1);
 	    localObject[card.type].push(card);
 	}
@@ -1754,8 +1755,8 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	$rootScope.ref.child('decks').child(deckid).set(newDeck,onComplete("Written to public."));
 	$rootScope.ref.child('users').child($rootScope.authData.uid).child('decks').child(deckid).set(newDeck,onComplete("Written to private."));
 	if (deck.parentID) $rootScope.ref.child('decks').child(deck.parentID).child('daughterids').child(deckid).set(deckid);
-	return $location.path("/deck/mydecks");
 	$scope.saving=false;
+	return $location.path("/deck/mydecks");
     }
 }])
 .controller('suggestedCtrl',['$scope','suggested','image','deck',function($scope,suggested,image,deck){
