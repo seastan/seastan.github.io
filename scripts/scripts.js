@@ -1722,9 +1722,10 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     $scope.changepreview = function(card) {
         image.update(card);
     };
-
+    $scope.saving=false;
     $scope.saveDeck = function() {
 	console.log("Saving deck");
+	$scope.saving=true;
         if (!$rootScope.authData) {
             return $location.path("/login");
         }
@@ -1751,8 +1752,9 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	}
 	$rootScope.ref.child('decks').child(deckid).set(newDeck,onComplete("Written to public."));
 	$rootScope.ref.child('users').child($rootScope.authData.uid).child('decks').child(deckid).set(newDeck,onComplete("Written to private."));
-	$rootScope.ref.child('decks').child(deck.parentID).child('daughterids').child(deckid).set(deckid);
+	if (deck.parentID) $rootScope.ref.child('decks').child(deck.parentID).child('daughterids').child(deckid).set(deckid);
 	return $location.path("/deck/mydecks");
+	$scope.saving=false;
 //         var newDeck = $firebaseObject($rootScope.ref.child('decks').child(deckid));//('users').child($rootScope.authData.uid).child('decks').child(deckid));
 //         newDeck.$loaded().then(function() {
 // 	    newDeck.deckid = deckid;

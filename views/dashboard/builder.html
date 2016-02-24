@@ -69,7 +69,7 @@
 <div class="deckdiv">
   <div ng-hide="deck.empty();">
     <input type="text" name="deckname" placeholder="Deck name" ng-model="deck.deckname" ng-disabled="deck.editing" style="width:100%;"></input>
-    <button ng-click="saveDeck();" class="filterbutton" style="font-size:12px;width:49%;height:25px;">Save</button>
+    <button ng-click="saveDeck();" class="filterbutton" style="font-size:12px;width:49%;height:25px;" ng-disabled="saving">Save</button>
     <button ng-click="deck.clear();" class="filterbutton" style="font-size:12px;width:49%;height:25px;">Clear Deck</button>
   </div>
   <h4 ng-show="deck.countTotal()">Total Cards: {{deck.countTotal()}}</h4>
