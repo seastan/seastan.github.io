@@ -1880,18 +1880,16 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
     // Load logs
     $scope.deckLogsArray = [];
     $scope.loadDeckLogs = function() {
-	var deckLogs = [];
-	var allLogs = $firebaseObject($rootScope.ref.child('logs'));
-	allLogs.$loaded().then(function () {
-	    angular.forEach(allLogs, function(value, key){
-		var logID = key;
-		var logObject = value;
-		for (var d in logObject.deckids) {
-		    if (logObject.deckids[d] == $scope.deckID)
-		    deckLogs.push(logObject);
-		}
+	$scope.deckLogsArray = [];
+	var logIDs = $firebaseObject($rootScope.ref.child('decks').child($scope.deckID).child('logids'))
+	logIDs.$loaded().then(function () {
+	    angular.forEach(logIDs, function(value, key){
+		var logID = value;
+		var logObject = $firebaseObject($rootScope.ref.child('logs').child(logID));
+		logObject.$loaded().then(function() {
+		    $scope.deckLogsArray.push(logObject);
+		})
 	    });
-	    $scope.deckLogsArray = deckLogs;
 	});
     }		      
     $scope.loadDeckLogs();
@@ -2661,62 +2659,78 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
 function($rootScope,$scope,$firebaseObject,$firebaseArray,generateDeckID,getDeckObjectFromDeckID,getHeroesFromDeckString,$location,formDataMyLogs) {
     $scope.myLogsArray = [];
     $scope.formDataMyLogs = formDataMyLogs;
-    // $scope.selectOutcome = 'Success';
-    // $scope.selectQuest = 'Passage Through Mirkwood';
     $scope.selectedQuest = $scope.formDataMyLogs.quest;
+    // Load logs
+    $scope.myLogsArray = [];
     $scope.loadMyLogs = function() {
-	var myLogs = [];
-	var allLogs = $firebaseObject($rootScope.ref.child('logs'));
-	allLogs.$loaded().then(function () {
-	    angular.forEach(allLogs, function(value, key){
-		var logID = key;
-		var logObject = value;
-		if (logObject.userid == $rootScope.authData.uid)
-		    myLogs.push(logObject);
+	$scope.myLogsArray = [];
+	var logIDs = $firebaseObject($rootScope.ref.child('users').child($rootScope.authData.uid).child('logids'))
+	logIDs.$loaded().then(function () {
+	    angular.forEach(logIDs, function(value, key){
+		var logID = value;
+		var logObject = $firebaseObject($rootScope.ref.child('logs').child(logID));
+		logObject.$loaded().then(function() {
+		    $scope.myLogsArray.push(logObject);
+		})
 	    });
-	    $scope.myLogsArray = myLogs;
 	});
-	// var myLogIDs = $firebaseObject($rootScope.ref.child('users').child($rootScope.authData.uid).child('logids'));
-	// myLogIDs.$loaded().then(function () {
-	//     angular.forEach(allLogs, function(value, key){
-	// 	var logID = key;
-	// 	var logObject = value;
-	// 	if (logObject.userid == $rootScope.authData.uid)
-	// 	    myLogs.push(logObject);
-	//     });
-	//     $scope.myLogsArray = myLogs;
-	// });
-
-    }
+    }		      
     $scope.deleteLog = function(log) {
 	if (confirm('Are you sure?')) {
-	    $rootScope.ref.child('logs').child(log.logid).remove(function(error){
-		if (error) {
-		    console.log("Error:", error);
-		} else {
-		    console.log("Removed successfully!");
-		    $rootScope.ref.child('users').child($rootScope.authData.uid).child('logids').child(log.logid).remove();
-		    for (var l in log.deckids) $rootScope.ref.child('decks').child(log.deckids[l]).child('logids').child(log.logid).remove();
-		    $scope.loadMyLogs();
-		}
-	    })
-	    
+	    $rootScope.ref.child('users').child($rootScope.authData.uid).child('logids').child(log.logid).remove();
+	    for (var l in log.deckids) $rootScope.ref.child('decks').child(log.deckids[l]).child('logids').child(log.logid).remove();
+	    $rootScope.ref.child('logs').child(log.logid).remove();
+	    $scope.loadMyLogs();
 	}
     }
     $scope.setSelectedQuest = function() {
 	$scope.formDataMyLogs.quest = $scope.selectedQuest;
     }
+    // If authenticated, load logs.
     if (!$rootScope.authData) {
         return $location.path("/login");
     } else {
 	$scope.loadMyLogs();
-
-	// load logs
-	//this.myDecksArray = $firebaseArray($rootScope.ref.child('users').child($rootScope.authData.uid).child('decks'));    
     };
-
     // Submit
     $scope.submit = function() {
+	// Validate
+	var regexDate = /^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]$/;
+	console.log($scope.formDataMyLogs.date);
+	if (!regexDate.test($scope.formDataMyLogs.date))
+	    return alert("Invalid date format");
+	if(!$scope.formDataMyLogs.quest)
+	    return alert("Invalid quest");
+	if(!$scope.formDataMyLogs.outcome)
+	    return alert("Invalid outcome");
+	var regexScore = /^[0-9]+$/
+	if ($scope.formDataMyLogs.score && !regexScore.test($scope.formDataMyLogs.score))
+	    return alert("Invalid score");
+	// Note sanitization
+	var tagBody = '(?:[^"\'>]|"[^"]*"|\'[^\']*\')*';
+	var tagOrComment = new RegExp(
+	    '<(?:'
+	    // Comment body.
+		+ '!--(?:(?:-*[^->])*--+|-?)'
+	    // Special "raw text" elements whose content should be elided.
+		+ '|script\\b' + tagBody + '>[\\s\\S]*?</script\\s*'
+		+ '|style\\b' + tagBody + '>[\\s\\S]*?</style\\s*'
+	    // Regular name
+		+ '|/?[a-z]'
+		+ tagBody
+		+ ')>',
+	    'gi');
+	var removeTags = function(html) {
+	    var oldHtml;
+	    do {
+		oldHtml = html;
+		html = html.replace(tagOrComment, '');
+	    } while (html !== oldHtml);
+	    return html.replace(/</g, '&lt;');
+	}
+	if ($scope.formDataMyLogs.notes) $scope.formDataMyLogs.notes = removeTags($scope.formDataMyLogs.notes);
+	
+	
 	console.log("Submitting Log.");
 	var logID = generateDeckID();
 	var newLog = $firebaseObject($rootScope.ref.child('logs').child(logID));
@@ -2736,12 +2750,12 @@ function($rootScope,$scope,$firebaseObject,$firebaseArray,generateDeckID,getDeck
 	    newLog.notes   = $scope.formDataMyLogs.notes; 
 
 	    var onComplete = function() {
-//		$scope.loadMyLogs();
+		$scope.loadMyLogs();
 	    }
 	    newLog.$save().then(function() {
 		console.log('Log saved');
-		if ($scope.formDataMyLogs.deckid1)
-		$scope.loadMyLogs();
+		// if ($scope.formDataMyLogs.deckid1)
+		//     $scope.loadMyLogs();
 		$rootScope.ref.child('users').child($rootScope.authData.uid).child('logids').child(logID).set(logID,onComplete);
 		for (var d in deckIDs) 
 		    if (deckIDs[d])
