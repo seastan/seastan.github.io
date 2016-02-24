@@ -1907,7 +1907,7 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
                 var modID = value;
 		var modDeck = $firebaseObject($rootScope.ref.child('decks').child(modID));
 		modDeck.$loaded().then(function() {
-		    deckMods.push(modDeck.$value());
+		    deckMods.push(modDeck);
 		})
                 // if (deckObject.parentid == $scope.deckID)
                 //     deckMods.push(deckObject);
@@ -2438,7 +2438,7 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
 	console.log("Loading decks");
 	$scope.myDecksArray = $firebaseArray($rootScope.ref.child('users').child($rootScope.authData.uid).child('decks'));    
     }
-
+    $scope.deleting = false;
     if (!$rootScope.authData) {
         return $location.path("/login");
     } else {
@@ -2462,18 +2462,11 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
 	var heroes = getHeroesFromDeckString(deckString);
 	return heroes;
     }
-    this.deleteDeck = function(deckObject) {
-	if (!deckObject) return alert("Please select a deck.");
-	console.log(deckObject);
-	if (confirm('Are you sure you want to delete: '+deckObject.deckname)) {
-		this.myDecksArray.$remove(deckObject);
-	};
-    }
     this.loadDeck = function(deckObject) {
 	if (!deckObject) return alert("Please select a deck.");
 	loadDeckIntoBuilder(deckObject);
     }
-    this.archiveDeck = function(deckObject) {
+    $scope.archiveDeck = function(deckObject) {
 	if (!deckObject) return alert("Please select a deck.");
 	var onComplete = function() {
 	    $scope.loadMyDecks();
@@ -2501,11 +2494,31 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
 	}
 	$rootScope.ref.child('users').child($rootScope.authData.uid).child('decks').child(deckObject.deckid).child('published').set(false,onComplete);
     }
-    this.editDeck = function(deckObject) {
-	if (!deckObject) return alert("Please select a deck.");
-	if (deckObject.published) return alert("Cannot edit a published deck!");
-	loadDeckIntoBuilder(deckObject);
-	deck.editing=true;
+    this.deleteDeck = function(deckObject) {
+	if (confirm('Are you sure you want to delete: '+deckObject.deckname)) { 
+	    if (!deckObject) return alert("Please select a deck.");
+	    $scope.deleting=true;
+	    var myDeck = $firebaseObject($rootScope.ref.child('decks').child(deckObject.deckid));
+	    myDeck.$loaded().then(function() {
+		console.log(deck);
+		if (myDeck.logids) {
+		    if (confirm("This deck could not be deleted as it is being used in one or more quest logs. Move to archives instead?")) {
+			$scope.archiveDeck(deckObject);
+		    }
+		} else if (myDeck.daughterids) {
+		    if (confirm("This deck could not be deleted as it is being referenced by newer deck modifications. Move to archives instead?")) {
+			$scope.archiveDeck(deckObject);
+		    }
+		} else {
+		    $rootScope.ref.child('users').child($rootScope.authData.uid).child('decks').child(deckObject.deckid).remove();
+		    $rootScope.ref.child('decks').child(deckObject.deckid).remove();
+		    if (deckObject.parentid) $rootScope.ref.child('decks').child(deckObject.parentid).child('daughterids').child(deckObject.deckid).remove();
+		    $scope.loadMyDecks();
+		}
+		$scope.deleting=false;
+	    })
+	    
+	}
     }
     // this.publish = function(deckObject) {
     // 	var myDeck = $firebaseObject($rootScope.ref.child('users').child($rootScope.authData.uid).child('decks').child(deckObject.deckid));

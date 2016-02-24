@@ -18,7 +18,7 @@
 	    <button type="button" class="btn btn-primary btn-outline btn-rounded" ng-click="mydecks.loadDeck(mydecks.getSelected())">Modify Deck</button>
 	  </div>
 	  <div class="btn-group" role="group">
-	    <button type="button" class="btn btn-primary btn-outline btn-rounded" ng-click="mydecks.archiveDeck(mydecks.getSelected())">Send to Archives</button>
+	    <button type="button" class="btn btn-primary btn-outline btn-rounded" ng-click="archiveDeck(mydecks.getSelected())">Send to Archives</button>
 	  </div>
 	  <div class="btn-group" role="group">
 	    <button type="button" class="btn btn-primary btn-outline btn-rounded" ng-click="mydecks.publishDeck(mydecks.getSelected())">Publish</button>
@@ -29,9 +29,9 @@
 	  <div class="btn-group" role="group">
 	    <button type="button" class="btn btn-primary btn-outline btn-rounded" ng-click="mydecks.exportOctgn(mydecks.getSelected())">Export to OCTGN</button>
 	  </div>
-	  <!-- <div class="btn-group" role="group"> -->
-	  <!--   <button type="button" class="btn btn-danger" ng-click="mydecks.deleteDeck(mydecks.getSelected())">Delete Deck</button> -->
-	  <!-- </div> -->
+	  <div class="btn-group" role="group">
+	    <button type="button" class="btn btn-danger btn-rounded" ng-click="mydecks.deleteDeck(mydecks.getSelected())" ng-disabled="deleting">Delete Deck</button>
+	  </div>
 	</div>
 	<br>
 	<div> <input type="checkbox" id="showArchives" class="col-sm-1 control-label" ng-model="formDataMyDecks.showArchives">Show archived decks</input></div>
