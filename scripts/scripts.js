@@ -306,7 +306,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	return generateDeckID;
 })
 
-.factory('getDeckString',['getCardID','getQuantityOfCardInLocalObject', function(getCardID,getQuantityOfCardInLocalObject) {
+.factory('getDeckString',['getCardID', function(getCardID) {
 	var getDeckString = function(deck) {
 		var decklist = []; // List of cardID+quantity
 		var types = ["1hero","2ally","3attachment","4event","5quest"]
@@ -314,7 +314,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 			var type = types[t];
 			for (var c in deck[type]){
 				var card = deck[type][c];
-				decklist.push(getCardID(card)+card.quantity);//getQuantityOfCardInLocalObject(card,deck));
+				decklist.push(getCardID(card)+card.quantity);
 			}
 	    }
 	    decklist.sort();
@@ -1811,8 +1811,8 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 }])
 
 // Controller for the deck info page
-.controller('deckViewCtrl', ['$scope','$rootScope','$stateParams','$location','$firebaseObject','getLocalObjectFromString','image','getQuantityOfCardInLocalObject','loadDeckIntoBuilder','exportDeck','hasAccess',
-function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObjectFromString,image,getQuantityOfCardInLocalObject,loadDeckIntoBuilder,exportDeck,hasAccess) {
+.controller('deckViewCtrl', ['$scope','$rootScope','$stateParams','$location','$firebaseObject','getLocalObjectFromString','image','loadDeckIntoBuilder','exportDeck','hasAccess',
+function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObjectFromString,image,loadDeckIntoBuilder,exportDeck,hasAccess) {
     $scope.deckLoaded = false;
     $scope.viewDeck={};
     $scope.hasAccess = hasAccess;
@@ -1833,9 +1833,6 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
     $scope.changepreview = function(card){
     	image.update(card);
     }    
-    // $scope.cardQuantity = function(card){
-    // 	return getQuantityOfCardInLocalObject(card,$scope.viewDeck);
-    // }
     $scope.loadDeck = function() {
 	return loadDeckIntoBuilder(deckObject);
     }
@@ -2480,7 +2477,7 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
 	    $scope.deleting=true;
 	    var myDeck = $firebaseObject($rootScope.ref.child('decks').child(deckObject.deckid));
 	    myDeck.$loaded().then(function() {
-		console.log(deck);
+//		console.log(deck);
 		if (myDeck.logids) {
 		    if (confirm("This deck could not be deleted as it is being used in one or more quest logs. Move to archives instead?")) {
 			$scope.archiveDeck(deckObject);
@@ -2655,7 +2652,6 @@ function($rootScope,$scope,$firebaseObject,$firebaseArray,generateDeckID,getDeck
     $scope.submit = function() {
 	// Validate
 	var regexDate = /^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]$/;
-	console.log($scope.formDataMyLogs.date);
 	if (!regexDate.test($scope.formDataMyLogs.date))
 	    return alert("Invalid date format");
 	if(!$scope.formDataMyLogs.quest)
@@ -2781,7 +2777,7 @@ function($rootScope,$scope,$firebaseObject,$firebaseArray,generateDeckID,getDeck
     };
     // My Logs
     $scope.getDeckObjects = function(log) {
-	console.log(log.logid);
+//	console.log(log.logid);
 	var deckObjectList = [];
 	for (var i in log.deckids) {
 	    deckObjectList.push(getDeckObjectFromDeckID(log.deckids[i]));
