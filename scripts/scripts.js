@@ -1900,12 +1900,17 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
     $scope.deckModsArray = [];
     $scope.loadDeckMods = function() {
         var deckMods = [];
-        var allDecks = $firebaseObject($rootScope.ref.child('decks'));
-        allDecks.$loaded().then(function () {
-            angular.forEach(allDecks, function(value, key){
-                var deckObject = value;
-                if (deckObject.parentid == $scope.deckID)
-                    deckMods.push(deckObject);
+//        var allDecks = $firebaseObject($rootScope.ref.child('decks'));
+	var deckModIDs = $firebaseObject($rootScope.ref.child('decks').child($scope.deckID).child('daughterids'))
+        deckModIDs.$loaded().then(function () {
+            angular.forEach(deckModIDs, function(value, key){
+                var modID = value;
+		var modDeck = $firebaseObject($rootScope.ref.child('decks').child(modID));
+		modDeck.$loaded().then(function() {
+		    deckMods.push(modDeck.$value());
+		})
+                // if (deckObject.parentid == $scope.deckID)
+                //     deckMods.push(deckObject);
 	    });
             $scope.deckModsArray = deckMods;
         });
@@ -2475,12 +2480,26 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
 	}
 	$rootScope.ref.child('users').child($rootScope.authData.uid).child('decks').child(deckObject.deckid).child('archived').set(true,onComplete);
     }
+    this.publishDeck = function(deckObject) {
+	if (!deckObject) return alert("Please select a deck.");
+	var onComplete = function() {
+	    $scope.loadMyDecks();
+	}
+	$rootScope.ref.child('users').child($rootScope.authData.uid).child('decks').child(deckObject.deckid).child('published').set(true,onComplete);
+    }
     this.unArchiveDeck = function(deckObject) {
 	if (!deckObject) return alert("Please select a deck.");
 	var onComplete = function() {
 	    $scope.loadMyDecks();
 	}
 	$rootScope.ref.child('users').child($rootScope.authData.uid).child('decks').child(deckObject.deckid).child('archived').set(false,onComplete);
+    }
+    this.unPublishDeck = function(deckObject) {
+	if (!deckObject) return alert("Please select a deck.");
+	var onComplete = function() {
+	    $scope.loadMyDecks();
+	}
+	$rootScope.ref.child('users').child($rootScope.authData.uid).child('decks').child(deckObject.deckid).child('published').set(false,onComplete);
     }
     this.editDeck = function(deckObject) {
 	if (!deckObject) return alert("Please select a deck.");

@@ -6,7 +6,7 @@
           <h2 class=brand><img src=images/tales.png height="52" width="52">     
 	    Love of Tales<br>
 	    <small>
-	      Welcome {{displayName}}
+	      Welcome <a ng-href="#/deck/user:{{displayName}}" style="color:white">{{displayName}}</a>
 	      <a ng-click="logOut()" ng-show="authData" class="btn btn-white btn-outline btn-rounded btn-sm">Log Out</a>
 	      <a ng-click="logIn()" ng-hide="authData" class="btn btn-white btn-outline btn-rounded btn-sm">Log In</a>
 	    </small>
