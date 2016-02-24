@@ -1,0 +1,45 @@
+<div ng-controller="userViewCtrl" ng-show="userLoaded">
+  <!-- <btn class="pull-right btn btn-primary btn-outline btn-rounded" ng-click="loadDeck()">Modify Deck</btn> -->
+  <!-- <btn class="pull-right btn btn-primary btn-outline btn-rounded" ng-click="exportOctgn()">Export to OCTGN</btn> -->
+  <!-- <btn class="pull-right btn btn-primary btn-outline btn-rounded" ng-click="exportText()">Export to Text</btn> -->
+  <div>
+    <h2>{{username}}'s decks</h2>
+  </div>
+  <!-- <span class="glyphicon glyphicon-dashboard bg-fade"></span> -->
+
+  <div class="panel panel-primary" style="width:50%">
+    <!-- <div class="panel-heading"> -->
+    <!--   <h3 class="panel-title">My Decks</h3> -->
+    <!-- </div> -->
+    <div class="panel-body">
+      <table class="table mydecktable">
+	<thead>
+	  <tr>
+	    <th>Name</th>
+	    <th>Heroes</th>
+	    <!-- <th>Deck ID</th> -->
+	  </tr>
+	</thead>
+	<tbody>
+	  <tr ng-repeat="deck in userDecksArray | orderBy:'-dateUTC'" ng-show="deck.published" >
+	    <td style="padding-left:10px;">
+	      <!-- <div style="font-weight:bold;">Deck</div> -->
+	      <!-- 					<div style="font-weight:bold;">{{deck}}</div>
+							<div style="font-weight:bold;">{{deck.$id}}</div> -->
+	      <div style="font-weight:bold;"><a ng-href="#/deck/id:{{deck.deckid}}">{{deck.deckname}}</a></div>
+	      <div style="font-size:9px;padding-left:10px;">{{deck.dateUTC|date:'medium'}}</div>
+	    </td>
+	    <td>
+	      <table >
+		<td ng-repeat="card in getHeroes(deck.deckstring)" ng-mouseover="changepreview(card)" class="c{{card.sphere}}" style="padding-right:10px;">{{card.name}}</td>
+	      </table>
+	    </td>
+	    <!-- <td> -->
+	    <!--   <a ng-href="#/deck/id:{{deck.deckid}}">{{deck.deckid}}</a> -->
+	    <!-- </td> -->
+	  </tr>
+	</tbody>
+      </table>
+    </div>
+  </div>
+</div>
