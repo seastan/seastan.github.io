@@ -15,38 +15,41 @@
           <h3 class="panel-title">Log a Quest</h3> 
 	</div>
         <div class="panel-body">
+	  <form>
             <div><label for="datepicker">Date*</label></div>
-	      <div><input id="datepicker" type="text" ng-model="formDataMyLogs.date" ng-required="true"></input></div>
-              <div><label for="selectQuest">Quest*</label></div>
-	      <div>
-		<questchoice id="selectQuest" ng-required="true" ng-model="formDataMyLogs.quest"></questchoice>
-	      </div>
-              <div> <label for="selectOutcome">Outcome*</label></div>
-	      <div>
-		<select ng-model="formDataMyLogs.outcome" ng-required="true"> 
-		  <option value="Success">Success</option> 
-		  <option value="Failure">Failure</option> 
-		</select>
-	      </div>
-
+	    <div><input class="form-control underline" id="datepicker" type="text" ng-model="formDataMyLogs.date" ng-required="true"></input></div>
+            <div><label for="selectQuest">Quest*</label></div>
+	    <div>
+	      <questchoice id="selectQuest" ng-required="true" ng-model="formDataMyLogs.quest"></questchoice>
+	    </div>
+            <div> <label for="selectOutcome">Outcome*</label></div>
+	    <div>
+	      <select class="form-control" ng-model="formDataMyLogs.outcome" ng-required="true"> 
+		<option value="Success">Success</option> 
+		<option value="Failure">Failure</option> 
+	      </select>
+	    </div>
+	    
             <div class="form-group"> <label for="inputScore">Score*</label></div>
             <div> <input class="form-control underline" ng-model="formDataMyLogs.score" placeholder="0" type="number"></div>
             <div ng-class="{'has-success': validDeckID1,'has-error': (!validDeckID1&&formDataMyLogs.deckid1) }"> <label for="inputID1" class="control-label">Deck ID 1*</label>
               <div> <input class="form-control underline" ng-model="formDataMyLogs.deckid1" placeholder="" ng-required="true" type="text" ng-change="validateDeckID1()"> </div>
 	    </div>
             <div ng-class="{'has-success': validDeckID2,'has-error': (!validDeckID2&&formDataMyLogs.deckid2) }"> <label for="inputID2" class="control-label">Deck ID 2</label>
-              <div> <input class="form-control underline" ng-model="formDataMyLogs.deckid2" placeholder="" ng-required="true" type="text" ng-change="validateDeckID2()"> </div>
+              <div> <input class="form-control underline" ng-model="formDataMyLogs.deckid2" placeholder="" type="text" ng-change="validateDeckID2()"> </div>
 	    </div>
             <div ng-class="{'has-success': validDeckID3,'has-error': (!validDeckID3&&formDataMyLogs.deckid3) }"> <label for="inputID3" class="control-label">Deck ID 3</label>
-              <div> <input class="form-control underline" ng-model="formDataMyLogs.deckid3" placeholder="" ng-required="true" type="text" ng-change="validateDeckID3()"> </div>
+              <div> <input class="form-control underline" ng-model="formDataMyLogs.deckid3" placeholder="" type="text" ng-change="validateDeckID3()"> </div>
 	    </div>
             <div ng-class="{'has-success': validDeckID4,'has-error': (!validDeckID4&&formDataMyLogs.deckid4) }"> <label for="inputID4" class="control-label">Deck ID 4</label>
-              <div> <input class="form-control underline" ng-model="formDataMyLogs.deckid4" placeholder="" ng-required="true" type="text" ng-change="validateDeckID4()"> </div>
+              <div> <input class="form-control underline" ng-model="formDataMyLogs.deckid4" placeholder="" type="text" ng-change="validateDeckID4()"> </div>
 	    </div>
             <div> <label for="inputNotes" class="col-sm-2 control-label">Notes</label></div>
             <div> <input class="form-control underline" ng-model="formDataMyLogs.notes" placeholder="" type="text" maxlength="200"></input> </div>
-            <div> <button ng-click="submit()" class="btn btn-primary" ng-disabled="((!validDeckID1&&formDataMyLogs.deckid1)||(!validDeckID2&&formDataMyLogs.deckid2)||(!validDeckID3&&formDataMyLogs.deckid3)||(!validDeckID4&&formDataMyLogs.deckid4)||(!formDataMyLogs.quest))">Log Quest</button> </div>
-            </div>
+            <br>
+	    <div> <button ng-click="submit()" class="btn btn-primary" ng-disabled="((!validDeckID1&&formDataMyLogs.deckid1)||(!validDeckID2&&formDataMyLogs.deckid2)||(!validDeckID3&&formDataMyLogs.deckid3)||(!validDeckID4&&formDataMyLogs.deckid4)||(!formDataMyLogs.quest))">Log Quest</button> </div>
+	    </form>
+        </div>
       </div>
     </div>
 
