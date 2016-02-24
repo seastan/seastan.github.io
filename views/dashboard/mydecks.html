@@ -39,7 +39,7 @@
 	<table class="table mydecktable">
 	  <thead>
 	    <tr>
-	      <th>Name</th>
+	      <th>Name<br> <a ng-click="mydecks.renameDeck(mydecks.getSelected())">(Rename selected deck)</a></th>
 	      <th>Heroes</th>
 	      <th>Deck ID</th>
 	    </tr>
@@ -59,7 +59,7 @@
 	      </td>
 	      <td>
 		<table >
-		  <td ng-repeat="card in mydecks.getHeroes(deck.deckstring)" ng-mouseover="mydecks.changepreview(card)" class="c{{card.sphere}}" style="padding-right:10px;">{{card.name}}</td>
+		  <td ng-repeat="card in deck.heroes" ng-mouseover="mydecks.changepreview(card)" class="c{{card.sphere}}" style="padding-right:10px;">{{card.name}}</td>
 		</table>
 	      </td>
 	      <td>
