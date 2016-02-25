@@ -32,22 +32,22 @@
 	    
             <div class="form-group"> <label for="inputScore">Score*</label></div>
             <div> <input class="form-control underline" ng-model="formDataMyLogs.score" placeholder="0" type="number"></div>
-            <div ng-class="{'has-success': validDeckID1,'has-error': (!validDeckID1&&formDataMyLogs.deckid1) }"> <label for="inputID1" class="control-label">Deck ID 1*</label>
+            <div ng-class="{'has-success': formDataMyLogs.validDeckID1,'has-error': (!formDataMyLogs.validDeckID1&&formDataMyLogs.deckid1) }"> <label for="inputID1" class="control-label">Deck ID 1*</label>
               <div> <input class="form-control underline" ng-model="formDataMyLogs.deckid1" placeholder="" ng-required="true" type="text" ng-change="validateDeckID1()"> </div>
 	    </div>
-            <div ng-class="{'has-success': validDeckID2,'has-error': (!validDeckID2&&formDataMyLogs.deckid2) }"> <label for="inputID2" class="control-label">Deck ID 2</label>
+            <div ng-class="{'has-success': formDataMyLogs.validDeckID2,'has-error': (!formDataMyLogs.validDeckID2&&formDataMyLogs.deckid2) }"> <label for="inputID2" class="control-label">Deck ID 2</label>
               <div> <input class="form-control underline" ng-model="formDataMyLogs.deckid2" placeholder="" type="text" ng-change="validateDeckID2()"> </div>
 	    </div>
-            <div ng-class="{'has-success': validDeckID3,'has-error': (!validDeckID3&&formDataMyLogs.deckid3) }"> <label for="inputID3" class="control-label">Deck ID 3</label>
+            <div ng-class="{'has-success': formDataMyLogs.validDeckID3,'has-error': (!formDataMyLogs.validDeckID3&&formDataMyLogs.deckid3) }"> <label for="inputID3" class="control-label">Deck ID 3</label>
               <div> <input class="form-control underline" ng-model="formDataMyLogs.deckid3" placeholder="" type="text" ng-change="validateDeckID3()"> </div>
 	    </div>
-            <div ng-class="{'has-success': validDeckID4,'has-error': (!validDeckID4&&formDataMyLogs.deckid4) }"> <label for="inputID4" class="control-label">Deck ID 4</label>
+            <div ng-class="{'has-success': formDataMyLogs.validDeckID4,'has-error': (!formDataMyLogs.validDeckID4&&formDataMyLogs.deckid4) }"> <label for="inputID4" class="control-label">Deck ID 4</label>
               <div> <input class="form-control underline" ng-model="formDataMyLogs.deckid4" placeholder="" type="text" ng-change="validateDeckID4()"> </div>
 	    </div>
             <div> <label for="inputNotes" class="col-sm-2 control-label">Notes</label></div>
             <div> <input class="form-control underline" ng-model="formDataMyLogs.notes" placeholder="" type="text" maxlength="200"></input> </div>
             <br>
-	    <div> <button ng-click="submit()" class="btn btn-primary" ng-disabled="((!validDeckID1&&formDataMyLogs.deckid1)||(!validDeckID2&&formDataMyLogs.deckid2)||(!validDeckID3&&formDataMyLogs.deckid3)||(!validDeckID4&&formDataMyLogs.deckid4)||(!formDataMyLogs.quest))">Log Quest</button> </div>
+	    <div> <button ng-click="submit()" class="btn btn-primary" ng-disabled="((!formDataMyLogs.validDeckID1&&formDataMyLogs.deckid1)||(!formDataMyLogs.validDeckID2&&formDataMyLogs.deckid2)||(!formDataMyLogs.validDeckID3&&formDataMyLogs.deckid3)||(!formDataMyLogs.validDeckID4&&formDataMyLogs.deckid4)||(!formDataMyLogs.quest))">Log Quest</button> </div>
 	    </form>
         </div>
       </div>
