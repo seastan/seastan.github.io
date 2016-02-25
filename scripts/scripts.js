@@ -247,13 +247,13 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
       templateUrl: 'views/dashboard/questchoice.html'
     };
 })
-.directive('header', function() {
-    return {
-	restrict: 'E',
-	templateUrl: 'views/deck.html',
-	controller: 'init'
-    };
-})
+// .directive('header', function() {
+//     return {
+// 	restrict: 'E',
+// 	templateUrl: 'views/deck.html',
+// 	controller: 'init'
+//     };
+// })
 .directive('cards', function() {
     return {
 	restrict: 'E',
@@ -1612,16 +1612,25 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	return loadDeckIntoBuilder;
 	
 }])
+
+// A factory to keep track of all variabled being watched.
+.factory('syncStatus',function() {
+    var syncStatus = {};
+    return syncStatus;
+})
+
 //
 // Controllers
 //
 
-.controller('init',['getData','$location','deck','cardObject','$scope',function(getData,$location,deck,cardObject,$scope){
+.controller('init',['getData','$location','deck','cardObject','$scope','syncStatus',function(getData,$location,deck,cardObject,$scope,syncStatus){
+    $scope.syncStatus = syncStatus;
     getData.async('cards.json').then(function(data) {
 	cardObject.length=0;
 	for (var d in data) {
 	    cardObject.push(data[d]);
 	}
+	$scope.syncStatus.cardObjectLoaded = true; // Triggers $watch functions
     });
 
     setTimeout( function() {
@@ -1755,8 +1764,8 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	$rootScope.ref.child('decks').child(deckid).set(newDeck,onComplete("Written to public."));
 	$rootScope.ref.child('users').child($rootScope.authData.uid).child('decks').child(deckid).set(newDeck,onComplete("Written to private."));
 	if (deck.parentID) $rootScope.ref.child('decks').child(deck.parentID).child('daughterids').child(deckid).set(deckid);
+	$location.path("/deck/mydecks");
 	$scope.saving=false;
-	return $location.path("/deck/mydecks");
     }
 }])
 .controller('suggestedCtrl',['$scope','suggested','image','deck',function($scope,suggested,image,deck){
@@ -1812,8 +1821,8 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 }])
 
 // Controller for the deck info page
-.controller('deckViewCtrl', ['$scope','$rootScope','$stateParams','$location','$firebaseObject','getLocalObjectFromString','image','loadDeckIntoBuilder','exportDeck','hasAccess',
-function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObjectFromString,image,loadDeckIntoBuilder,exportDeck,hasAccess) {
+.controller('deckViewCtrl', ['$scope','$rootScope','$stateParams','$location','$firebaseObject','getLocalObjectFromString','image','loadDeckIntoBuilder','exportDeck','hasAccess','syncStatus',
+function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObjectFromString,image,loadDeckIntoBuilder,exportDeck,hasAccess,syncStatus) {
     $scope.deckLoaded = false;
     $scope.viewDeck={};
     $scope.hasAccess = hasAccess;
@@ -1825,12 +1834,18 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
     } else {
 	//404
     };
-    var deckObject = $firebaseObject($rootScope.ref.child('decks').child($scope.deckID));
-    deckObject.$loaded().then(function() {
-	$scope.deckObject = deckObject;
-	$scope.deckLoaded = true;
-	$scope.viewDeck = getLocalObjectFromString(deckObject.deckstring);
+    $scope.syncStatus = syncStatus;
+    $scope.$watch('syncStatus.cardObjectLoaded',function(newValue,oldValue) {
+    	if (newValue==true) {
+	    var deckObject = $firebaseObject($rootScope.ref.child('decks').child($scope.deckID));
+	    deckObject.$loaded().then(function() {
+		$scope.deckObject = deckObject;
+		$scope.viewDeck = getLocalObjectFromString(deckObject.deckstring);
+		$scope.deckLoaded = true;
+	    });
+    	}
     });
+
     $scope.changepreview = function(card){
     	image.update(card);
     }    
@@ -1901,10 +1916,11 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
     return userIDFromUsername;
 }])
 
-.controller('userViewCtrl', ['$scope','$rootScope','$firebaseObject','$firebaseArray','image','getUserIDFromUsername','$location','getHeroesFromDeckString',
-function($scope,$rootScope,$firebaseObject,$firebaseArray,image,getUserIDFromUsername,$location,getHeroesFromDeckString) {
+.controller('userViewCtrl', ['$scope','$rootScope','$firebaseObject','$firebaseArray','image','getUserIDFromUsername','$location','getHeroesFromDeckString','syncStatus',
+function($scope,$rootScope,$firebaseObject,$firebaseArray,image,getUserIDFromUsername,$location,getHeroesFromDeckString,syncStatus) {
     $scope.userLoaded = false;
     $scope.userDecksArray = [];
+
     var url = $location.url();
     var index = url.indexOf('user:');
     if (index>-1) {
@@ -1942,7 +1958,15 @@ function($scope,$rootScope,$firebaseObject,$firebaseArray,image,getUserIDFromUse
 	    }
 	})
     }
-    $scope.loadUserDecks();
+
+
+    $scope.syncStatus = syncStatus;
+    $scope.$watch('syncStatus.cardObjectLoaded',function(newValue,oldValue) {
+	if (newValue==true) {
+	    $scope.loadUserDecks();
+	}
+    });
+
 
 }])
 
@@ -2473,8 +2497,8 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
 	$rootScope.ref.child('users').child($rootScope.authData.uid).child('decks').child(deckObject.deckid).child('published').set(false,onComplete);
     }
     this.deleteDeck = function(deckObject) {
+	if (!deckObject) return alert("Please select a deck.");
 	if (confirm('Are you sure you want to delete: '+deckObject.deckname)) { 
-	    if (!deckObject) return alert("Please select a deck.");
 	    $scope.deleting=true;
 	    var myDeck = $firebaseObject($rootScope.ref.child('decks').child(deckObject.deckid));
 	    myDeck.$loaded().then(function() {
@@ -2495,7 +2519,7 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
 		}
 		$scope.deleting=false;
 	    })
-	    
+	    this.selectedDeck = null;
 	}
     }
     this.renameDeck = function(deckObject) {
