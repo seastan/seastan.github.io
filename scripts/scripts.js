@@ -1839,7 +1839,7 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
     	if (newValue==true) {
 	    var deckObject = $firebaseObject($rootScope.ref.child('decks').child($scope.deckID));
 	    deckObject.$loaded().then(function() {
-		$scope.deckObject = deckObject;
+		$scope.viewDeckObject = deckObject;
 		$scope.viewDeck = getLocalObjectFromString(deckObject.deckstring);
 		$scope.deckLoaded = true;
 	    });
@@ -1850,13 +1850,13 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
     	image.update(card);
     }    
     $scope.loadDeck = function() {
-	return loadDeckIntoBuilder(deckObject);
+	return loadDeckIntoBuilder($scope.viewDeckObject);
     }
     $scope.exportOctgn = function() {
-	return exportDeck.exportOctgn(deckObject);
+	return exportDeck.exportOctgn($scope.viewDeckObject);
     }
     $scope.exportText = function() {
-	return exportDeck.exportText(deckObject);
+	return exportDeck.exportText($scope.viewDeckObject);
     }
 
     // Load logs

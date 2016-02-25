@@ -3,12 +3,12 @@
   <btn class="pull-right btn btn-primary btn-outline btn-rounded" ng-click="exportOctgn()">Export to OCTGN</btn>
   <btn class="pull-right btn btn-primary btn-outline btn-rounded" ng-click="exportText()">Export to Text</btn>
   <div>
-    <h2>{{deckObject.deckname}} <small>by </small><small style="font-weight:bold">{{deckObject.username}}</small>
+    <h2>{{viewDeckObject.deckname}} <small>by </small><small style="font-weight:bold">{{viewDeckObject.username}}</small>
       <br>
       <div style="font-size:20px;">
-	<small>Deck ID: {{deckObject.deckid}}</small>
+	<small>Deck ID: {{viewDeckObject.deckid}}</small>
 	<br>
-	<small ng-show="deckObject.parentid" >Modified from: <a ng-href="#/deck/id:{{deckObject.parentid}}">{{deckObject.parentid}}</a></small>
+	<small ng-show="viewDeckObject.parentid" >Modified from: <a ng-href="#/deck/id:{{viewDeckObject.parentid}}">{{viewDeckObject.parentid}}</a></small>
 	</br>
       </div>
       </br>
