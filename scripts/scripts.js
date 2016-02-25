@@ -2932,7 +2932,12 @@ function($rootScope,$scope,$firebaseObject,getDeckObjectFromDeckID,formDataDeckS
 	allDecks.$loaded().then(function() {
 	    allLogs.$loaded().then(function() {
 		console.log("Decks loaded.");
+		// Filter decks according to search criteria
 		filterDecks(allDecks,allLogs);
+		// Get Heroes
+		for (var d=0; d<$scope.formDataDeckSearch.searchResultsArray.length; d++) {
+                    $scope.formDataDeckSearch.searchResultsArray[d].heroes = getHeroesFromDeckString($scope.formDataDeckSearch.searchResultsArray[d].deckstring);
+                }
 		console.log("Decks searched.");
 		$scope.searching = false;
 	    });
