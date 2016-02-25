@@ -71,7 +71,7 @@
 	    <div style="padding-left:10px;"><b>Outcome:</b> {{log.outcome}}</div>
 	    <div style="padding-left:10px;"><b>Score:</b> {{log.score}}</div>
 	    <div style="padding-left:10px;"><b>Decks:</b></div>
-	    <div style="padding-left:30px;" ng-repeat="deckid in log.deckids">{{$index +1}}. <a ng-href="#/deck/id:{{deckid}}">{{deckid}}</a></div>
+	    <div style="padding-left:30px;" ng-repeat="d in log.decks">{{$index +1}}. <a ng-href="#/deck/id:{{d.deckid}}">{{d.deckname}}</a></div>
 	    <div style="padding-left:10px;"><b>Notes:</b> {{log.notes}}</div>
 	  </div>
 	</div>

@@ -1869,7 +1869,14 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
 		var logID = value;
 		var logObject = $firebaseObject($rootScope.ref.child('logs').child(logID));
 		logObject.$loaded().then(function() {
-		    $scope.deckLogsArray.push(logObject);
+		    logObject.decks = [];
+		    for (var d in logObject.deckids) {
+			var deckObject = $firebaseObject($rootScope.ref.child('decks').child(logObject.deckids[d]));
+			deckObject.$loaded().then(function() {
+			    logObject.decks.push(deckObject);
+			    $scope.deckLogsArray.push(logObject);
+			})
+		    }
 		})
 	    });
 	});
@@ -2641,6 +2648,20 @@ function($rootScope,$scope,$firebaseObject,$firebaseArray,generateDeckID,getDeck
     $scope.myLogsArray = [];
     $scope.formDataMyLogs = formDataMyLogs;
     $scope.selectedQuest = $scope.formDataMyLogs.quest;
+    // Load default date
+    var todaysDate = function() {
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; //January is 0!
+	var yyyy = today.getFullYear();	
+	if(dd<10) dd='0'+dd 
+	if(mm<10) mm='0'+mm 
+	today = yyyy+'-'+mm+'-'+dd;
+	return today;
+    }
+    if (!$scope.formDataMyLogs.date) $scope.formDataMyLogs.date = todaysDate();
+    // Load default outcome
+    if (!$scope.formDataMyLogs.outcome) $scope.formDataMyLogs.outcome = "Success";
     // Load logs
     $scope.myLogsArray = [];
     $scope.loadMyLogs = function() {
@@ -2651,11 +2672,19 @@ function($rootScope,$scope,$firebaseObject,$firebaseArray,generateDeckID,getDeck
 		var logID = value;
 		var logObject = $firebaseObject($rootScope.ref.child('logs').child(logID));
 		logObject.$loaded().then(function() {
-		    $scope.myLogsArray.push(logObject);
+		    logObject.decks = [];
+		    for (var d in logObject.deckids) {
+			var deckObject = $firebaseObject($rootScope.ref.child('decks').child(logObject.deckids[d]));
+			deckObject.$loaded().then(function() {
+			    logObject.decks.push(deckObject);
+			    $scope.myLogsArray.push(logObject);
+			})
+		    }
 		})
 	    });
 	});
-    }		      
+    }	
+    // Delete log
     $scope.deleteLog = function(log) {
 	if (confirm('Are you sure?')) {
 	    $rootScope.ref.child('users').child($rootScope.authData.uid).child('logids').child(log.logid).remove();
@@ -2686,6 +2715,8 @@ function($rootScope,$scope,$firebaseObject,$firebaseArray,generateDeckID,getDeck
 	var regexScore = /^[0-9]+$/
 	if ($scope.formDataMyLogs.score && !regexScore.test($scope.formDataMyLogs.score))
 	    return alert("Invalid score");
+	if (!$scope.formDataMyLogs.score)
+	    $scope.formDataMyLogs.score = null;
 	// Note sanitization
 	var tagBody = '(?:[^"\'>]|"[^"]*"|\'[^\']*\')*';
 	var tagOrComment = new RegExp(
@@ -2746,11 +2777,11 @@ function($rootScope,$scope,$firebaseObject,$firebaseArray,generateDeckID,getDeck
     // On Deck ID change, validate the deck
     $scope.validateDeckID1 = function() {
 	if (!$scope.formDataMyLogs.deckid1) {
-	    $scope.validDeckID1 = false;
+	    $scope.formDataMyLogs.validDeckID1 = false;
 	    return false;
 	}
 	var setValidity1 = function(isValid) {
-	    $scope.validDeckID1 = isValid;
+	    $scope.formDataMyLogs.validDeckID1 = isValid;
 	}
 	$scope.deckObject1 = $firebaseObject($rootScope.ref.child('decks').child($scope.formDataMyLogs.deckid1));
 	$scope.deckObject1.$loaded().then(function(isValid) {
@@ -2760,11 +2791,11 @@ function($rootScope,$scope,$firebaseObject,$firebaseArray,generateDeckID,getDeck
     };
     $scope.validateDeckID2 = function() {
 	if (!$scope.formDataMyLogs.deckid2) {
-	    $scope.validDeckID2 = false;
+	    $scope.formDataMyLogs.validDeckID2 = false;
 	    return false;
 	}
 	var setValidity2 = function(isValid) {
-	    $scope.validDeckID2 = isValid;
+	    $scope.formDataMyLogs.validDeckID2 = isValid;
 	}
 	$scope.deckObject2 = $firebaseObject($rootScope.ref.child('decks').child($scope.formDataMyLogs.deckid2));
 	$scope.deckObject2.$loaded().then(function(isValid) {
@@ -2774,11 +2805,11 @@ function($rootScope,$scope,$firebaseObject,$firebaseArray,generateDeckID,getDeck
     };
     $scope.validateDeckID3 = function() {
 	if (!$scope.formDataMyLogs.deckid3) {
-	    $scope.validDeckID3 = false;
+	    $scope.formDataMyLogs.validDeckID3 = false;
 	    return false;
 	}
 	var setValidity3 = function(isValid) {
-	    $scope.validDeckID3 = isValid;
+	    $scope.formDataMyLogs.validDeckID3 = isValid;
 	}
 	$scope.deckObject3 = $firebaseObject($rootScope.ref.child('decks').child($scope.formDataMyLogs.deckid3));
 	$scope.deckObject3.$loaded().then(function(isValid) {
@@ -2788,11 +2819,11 @@ function($rootScope,$scope,$firebaseObject,$firebaseArray,generateDeckID,getDeck
     };
     $scope.validateDeckID4 = function() {
 	if (!$scope.formDataMyLogs.deckid4) {
-	    $scope.validDeckID4 = false;
+	    $scope.formDataMyLogs.validDeckID4 = false;
 	    return false;
 	}
 	var setValidity4 = function(isValid) {
-	    $scope.validDeckID4 = isValid;
+	    $scope.formDataMyLogs.validDeckID4 = isValid;
 	}
 	$scope.deckObject4 = $firebaseObject($rootScope.ref.child('decks').child($scope.formDataMyLogs.deckid4));
 	$scope.deckObject4.$loaded().then(function(isValid) {
@@ -2802,7 +2833,6 @@ function($rootScope,$scope,$firebaseObject,$firebaseArray,generateDeckID,getDeck
     };
     // My Logs
     $scope.getDeckObjects = function(log) {
-//	console.log(log.logid);
 	var deckObjectList = [];
 	for (var i in log.deckids) {
 	    deckObjectList.push(getDeckObjectFromDeckID(log.deckids[i]));
