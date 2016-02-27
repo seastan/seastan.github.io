@@ -3092,7 +3092,7 @@ function($rootScope,$scope,$firebaseObject,getDeckObjectFromDeckID,formDataDeckS
 	    for (var c in statsCardObject) {
 		var card = statsCardObject[c];
 		var cardID = getCardID(card);
-		card.deckPercentage = (cardPopularity[cardID]) ? (cardPopularity[cardID]/cardPopularity['totalDecks']).toPrecision(3) : 0;
+		card.deckPercentage = (cardPopularity[cardID]) ? parseFloat((cardPopularity[cardID]/cardPopularity['totalDecks']*100).toPrecision(3)) : 0;
 	    }
 	    $scope.databaseStats.statsObject = statsObject;
 	    $scope.databaseStats.statsCardObject = statsCardObject;
