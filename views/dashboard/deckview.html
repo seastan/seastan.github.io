@@ -9,14 +9,12 @@
 	<small>Deck ID: {{viewDeckObject.deckid}}</small>
 	<br>
 	<small ng-show="viewDeckObject.parentid" >Modified from: <a ng-href="#/deck/id:{{viewDeckObject.parentid}}">{{viewDeckObject.parentid}}</a></small>
-	</br>
       </div>
-      </br>
     </h2>
   </div>
   <!-- <span class="glyphicon glyphicon-dashboard bg-fade"></span> -->
 
-  <div class=jumbotron style="left:1%;width:30%;top:100px;position:absolute">
+  <div class=jumbotron style="float:left;width:32%;margin-right:2%">
     <div class=container>
       <!-- <div class="deckdiv" style="width:25%;left:1%;top:15%;height:85%"> -->
       <div>
@@ -62,7 +60,36 @@
     </div>
   </div>
 
-  <div class=jumbotron ng-show="deckLogsArray.length" style="left:32%;width:30%;top:100px;position:absolute">
+
+  <div class=jumbotron style="float:left;width:32%;margin-right:2%" ng-show="(authData.uid==viewDeckObject.userid)||(deckCommentsArray.length)">
+    <div class=container>
+      <h4>Notes</h4>
+      <div ng-show="authData.uid==viewDeckObject.userid">
+	<textarea cols="20" rows="4" style="width:100%" ng-model="commentBoxText" maxlength="350"></textarea>
+	<button type="button" class="btn btn-primary pull-right btn-rounded" ng-click="submitComment()">Submit</button>
+      </div>
+      <div>
+ 	<div ng-repeat="comment in deckCommentsArray | orderBy:'+dateUTC'">
+	  <br>
+	  <div>{{comment.text}}</div>
+	  <br>
+	  <div style="font-size:12px;padding-left:10px;text-align:right">
+	    <div>
+	      <a ng-click="deleteComment(comment)" ng-show="authData.uid==viewDeckObject.userid">(Delete comment)</a>
+	    </div>
+	    <div>
+	      {{comment.dateUTC|date:'medium'}}
+	    </div>
+	    <div>
+	      {{comment.username}}
+	    </div>
+	  </div>
+	</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class=jumbotron ng-show="deckLogsArray.length" style="float:left;width:32%;">
     <div class=container>
 	  <div ng-repeat="log in deckLogsArray | orderBy:'-date'">
 	    <h4>{{log.quest}}</h4>
@@ -76,7 +103,12 @@
 	  </div>
 	</div>
   </div>
-  <div class=jumbotron ng-show="deckModsArray.length" style="left:63%;width:30%;top:100px;position:absolute">
+
+
+
+
+
+  <div class=jumbotron ng-show="deckModsArray.length" style="float:left;width:32%;">
     <div class=container>
       <h4>Modifications</h4>
       <table class="table mydecktable">
@@ -99,5 +131,7 @@
       </table>
     </div>
   </div>
+
+
   
 </div>

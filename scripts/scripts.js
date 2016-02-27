@@ -1619,12 +1619,42 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     return syncStatus;
 })
 
+.factory('sanitizeText',function() {
+    // Note sanitization
+    var tagBody = '(?:[^"\'>]|"[^"]*"|\'[^\']*\')*';
+    var tagOrComment = new RegExp(
+	'<(?:'
+	// Comment body.
+	    + '!--(?:(?:-*[^->])*--+|-?)'
+	// Special "raw text" elements whose content should be elided.
+	    + '|script\\b' + tagBody + '>[\\s\\S]*?</script\\s*'
+	    + '|style\\b' + tagBody + '>[\\s\\S]*?</style\\s*'
+	// Regular name
+	    + '|/?[a-z]'
+	    + tagBody
+	    + ')>',
+	    'gi');
+    
+    var sanitizeText = function(html) {
+	var oldHtml;
+	do {
+	    oldHtml = html;
+	    html = html.replace(tagOrComment, '');
+	} while (html !== oldHtml);
+	return html.replace(/</g, '&lt;');
+    }
+    return sanitizeText;
+})
+
+
 //
 // Controllers
 //
 
-.controller('init',['getData','$location','deck','cardObject','$scope','syncStatus',function(getData,$location,deck,cardObject,$scope,syncStatus){
+.controller('init',['getData','$location','deck','cardObject','$scope','syncStatus','$rootScope','sanitizeText',
+function(getData,$location,deck,cardObject,$scope,syncStatus,$rootScope,sanitizeText){
     $scope.syncStatus = syncStatus;
+    $rootScope.sanitizeText = sanitizeText;
     getData.async('cards.json').then(function(data) {
 	cardObject.length=0;
 	for (var d in data) {
@@ -1736,16 +1766,16 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     $scope.saving=false;
     $scope.saveDeck = function() {
 	console.log("Saving deck");
-	$scope.saving=true;
         if (!$rootScope.authData) {
             return $location.path("/login");
         }
         if (deck.empty()) {
             return alert('Deck is empty!');
         };
-        if (deck.deckname == "") {
-            return alert('Please enter a name!');
-        };
+        if (deck.deckname == "") return alert('Please enter a name!');
+	deck.deckname = $rootScope.sanitizeText(deck.deckname);
+        if (deck.deckname == "") return alert('Please enter a name!');
+	$scope.saving=true;	
 	// Save deck to database
 	var deckString = getDeckString(deck);
         var deckid = generateDeckID();
@@ -1821,8 +1851,8 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 }])
 
 // Controller for the deck info page
-.controller('deckViewCtrl', ['$scope','$rootScope','$stateParams','$location','$firebaseObject','getLocalObjectFromString','image','loadDeckIntoBuilder','exportDeck','hasAccess','syncStatus',
-function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObjectFromString,image,loadDeckIntoBuilder,exportDeck,hasAccess,syncStatus) {
+.controller('deckViewCtrl', ['$scope','$rootScope','$stateParams','$location','$firebaseObject','getLocalObjectFromString','image','loadDeckIntoBuilder','exportDeck','hasAccess','syncStatus','generateDeckID',
+function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObjectFromString,image,loadDeckIntoBuilder,exportDeck,hasAccess,syncStatus,generateDeckID) {
     $scope.deckLoaded = false;
     $scope.viewDeck={};
     $scope.hasAccess = hasAccess;
@@ -1903,6 +1933,49 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
         });
     }
     $scope.loadDeckMods();
+
+    // Load comments
+    $scope.deckCommentsArray = [];
+    $scope.loadDeckComments = function() {
+	var deckComments = [];
+	var deckCommentsObject= $firebaseObject($rootScope.ref.child('decks').child($scope.deckID).child('comments'));
+	deckCommentsObject.$loaded().then(function() {
+            angular.forEach(deckCommentsObject, function(value, key){
+		deckComments.push(value);
+	    })
+	    $scope.deckCommentsArray = deckComments;
+	})
+    }
+    $scope.loadDeckComments();
+    // Submit comment
+    $scope.submitComment = function() {
+	//	console.log("Submitting comment.")
+	if (!$rootScope.authData)
+            return $location.path("/login");
+	if (!$scope.commentBoxText) return alert("Please type a comment.");
+	var commentText = $rootScope.sanitizeText($scope.commentBoxText);
+	if (!$rootScope.displayName) return alert("Not properly logged in.");
+	var commentID = generateDeckID();
+	var comment = {
+	    "commentid" : commentID,
+	    "username" : $rootScope.displayName,
+	    "userid" : $rootScope.authData.uid,
+	    "dateUTC" : new Date().valueOf().toString(),
+	    "text" : commentText,
+	    "deckid" : $scope.deckID
+	}
+	$scope.deckCommentsArray.push(comment);
+	//	console.log($scope.deckCommentsArray);
+	$rootScope.ref.child('decks').child($scope.deckID).child('comments').child(commentID).set(comment);
+	$scope.commentBoxText = "";
+    }
+    // Delete comment
+    $scope.deleteComment = function(comment) {
+	if (confirm("Are you sure?")) {
+	    $rootScope.ref.child('decks').child($scope.deckID).child('comments').child(comment.commentid).remove();
+	    $scope.loadDeckComments();	
+	}
+    }
 
 }])
 
@@ -2643,6 +2716,7 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
     return formDataMyLogs;
 })
 
+
 .controller('myLogsCtrl', ['$rootScope','$scope','$firebaseObject','$firebaseArray','generateDeckID','getDeckObjectFromDeckID','getHeroesFromDeckString','$location','formDataMyLogs',
 function($rootScope,$scope,$firebaseObject,$firebaseArray,generateDeckID,getDeckObjectFromDeckID,getHeroesFromDeckString,$location,formDataMyLogs) {
     $scope.myLogsArray = [];
@@ -2717,29 +2791,7 @@ function($rootScope,$scope,$firebaseObject,$firebaseArray,generateDeckID,getDeck
 	    return alert("Invalid score");
 	if (!$scope.formDataMyLogs.score)
 	    $scope.formDataMyLogs.score = null;
-	// Note sanitization
-	var tagBody = '(?:[^"\'>]|"[^"]*"|\'[^\']*\')*';
-	var tagOrComment = new RegExp(
-	    '<(?:'
-	    // Comment body.
-		+ '!--(?:(?:-*[^->])*--+|-?)'
-	    // Special "raw text" elements whose content should be elided.
-		+ '|script\\b' + tagBody + '>[\\s\\S]*?</script\\s*'
-		+ '|style\\b' + tagBody + '>[\\s\\S]*?</style\\s*'
-	    // Regular name
-		+ '|/?[a-z]'
-		+ tagBody
-		+ ')>',
-	    'gi');
-	var removeTags = function(html) {
-	    var oldHtml;
-	    do {
-		oldHtml = html;
-		html = html.replace(tagOrComment, '');
-	    } while (html !== oldHtml);
-	    return html.replace(/</g, '&lt;');
-	}
-	if ($scope.formDataMyLogs.notes) $scope.formDataMyLogs.notes = removeTags($scope.formDataMyLogs.notes);
+	if ($scope.formDataMyLogs.notes) $scope.formDataMyLogs.notes = $rootScope.sanitizeText($scope.formDataMyLogs.notes);
 	
 	
 	console.log("Submitting Log.");
@@ -2893,12 +2945,18 @@ function($rootScope,$scope,$firebaseObject,$firebaseArray,generateDeckID,getDeck
     return hasAccess;
 }])
 
+.factory('databaseStats',function() {
+    var databaseStats = {};
+    return databaseStats;
+})
+
 // Controller for the community tab
-.controller('communityCtrl', ['$rootScope','$scope','$firebaseObject','getDeckObjectFromDeckID','formDataDeckSearch','isCardInDeckObject','image','getLogsByDeckID','getHeroesFromDeckString','filtersettings','getLocalObjectFromString','hasAccess',
-function($rootScope,$scope,$firebaseObject,getDeckObjectFromDeckID,formDataDeckSearch,isCardInDeckObject,image,getLogsByDeckID,getHeroesFromDeckString,filtersettings,getLocalObjectFromString,hasAccess) {
+.controller('communityCtrl', ['$rootScope','$scope','$firebaseObject','getDeckObjectFromDeckID','formDataDeckSearch','isCardInDeckObject','image','getLogsByDeckID','getHeroesFromDeckString','filtersettings','getLocalObjectFromString','hasAccess','databaseStats','cardObject','getCardID',
+function($rootScope,$scope,$firebaseObject,getDeckObjectFromDeckID,formDataDeckSearch,isCardInDeckObject,image,getLogsByDeckID,getHeroesFromDeckString,filtersettings,getLocalObjectFromString,hasAccess,databaseStats,cardObject,getCardID) {
     $scope.formDataDeckSearch = formDataDeckSearch;
     $scope.selectedQuest = $scope.formDataDeckSearch.quest;
     $scope.image = image;
+    $scope.databaseStats = databaseStats;
     $scope.isWordInString = function(word,string) {
         return (string.indexOf(word)>-1);
     };
@@ -2913,7 +2971,8 @@ function($rootScope,$scope,$firebaseObject,getDeckObjectFromDeckID,formDataDeckS
 	$scope.searching = true;
 	$scope.formDataDeckSearch.searchResultsArray = [];
 	var allDecks = $firebaseObject($rootScope.ref.child('decks'));
-	var allLogs = $firebaseObject($rootScope.ref.child('logs'));
+	var allLogs = {};
+	if ($scope.formDataDeckSearch.quest) allLogs = $firebaseObject($rootScope.ref.child('logs'));
 
 	var filterDecks = function(_allDecks,_allLogs) {
 	    angular.forEach(_allDecks, function(value, key){
@@ -2956,21 +3015,31 @@ function($rootScope,$scope,$firebaseObject,getDeckObjectFromDeckID,formDataDeckS
 			}
 		    }
 		}
-		if (match) $scope.formDataDeckSearch.searchResultsArray.push(deckObject);
+		if (match) {
+		    //		    console.log("Found match.");
+		    $scope.formDataDeckSearch.searchResultsArray.push(deckObject);
+		}
 	    })
 	}
+	var onLoaded = function(allDeck, allLogs) {
+	    console.log("Decks loaded.");
+	    // Filter decks according to search criteria
+	    filterDecks(allDecks,allLogs);
+	    // Get Heroes
+	    for (var d=0; d<$scope.formDataDeckSearch.searchResultsArray.length; d++) {
+                $scope.formDataDeckSearch.searchResultsArray[d].heroes = getHeroesFromDeckString($scope.formDataDeckSearch.searchResultsArray[d].deckstring);
+            }
+	    console.log("Decks searched.");
+	    $scope.searching = false;
+	}
 	allDecks.$loaded().then(function() {
-	    allLogs.$loaded().then(function() {
-		console.log("Decks loaded.");
-		// Filter decks according to search criteria
-		filterDecks(allDecks,allLogs);
-		// Get Heroes
-		for (var d=0; d<$scope.formDataDeckSearch.searchResultsArray.length; d++) {
-                    $scope.formDataDeckSearch.searchResultsArray[d].heroes = getHeroesFromDeckString($scope.formDataDeckSearch.searchResultsArray[d].deckstring);
-                }
-		console.log("Decks searched.");
-		$scope.searching = false;
-	    });
+	    if ($scope.formDataDeckSearch.quest) {
+		allLogs.$loaded().then(function() {
+		    onLoaded(allDecks,allLogs);
+		});
+	    } else {
+		onLoaded(allDecks,allLogs);
+	    }
 	});
     }
     // Search results
@@ -2980,8 +3049,58 @@ function($rootScope,$scope,$firebaseObject,getDeckObjectFromDeckID,formDataDeckS
     $scope.changepreview = function(card) {
 	$scope.image.update(card);
     };
+    // Stats
+    $scope.genStats = function() {
+	// The statsobject is just key-values pairs. The cardID and the number of decks that cardID is found in.
+	var cardPopularity = {};
+	var allDecks = $firebaseObject($rootScope.ref.child('decks'));
+	allDecks.$loaded().then(function() {
+	    console.log("Loaded all decks.");
+	    cardPopularity.totalDecks = 0;
+	    angular.forEach(allDecks, function(value, key){
+		cardPopularity.totalDecks++;
+		var deckID = key;
+		var deckObject = value;
+		var deckString = deckObject.deckstring;
+		for (var i=0; i<=(deckString.length-4); i=i+4) {
+                    var cardID = deckString.substr(i,3);
+		    if (!cardPopularity[cardID]) cardPopularity[cardID] = 1;
+		    else cardPopularity[cardID] = cardPopularity[cardID] + 1;
+		}
+	    });	
+	    console.log("Parsed all decks.");
+	    console.log("Saving stats.");
+	    $rootScope.ref.child('stats').child('cardPopularity').set(cardPopularity);
+	    // allStats.$loaded().then(function() {
+	    // 	allStats = statsObject;
+	    // 	console.log("Saving stats");
+	    // 	allStats.$save();
+	    // })
+	});
+    }
+    $scope.getStats = function() {
+	if ($scope.databaseStats.gotStats) return;
+	$scope.databaseStats.gotStats = true;
+	// Copy the cardObject. The new cardObject will have a additional field
+	// called 'deckPercentage' which is the percentage of decks the card is in. 
+	var statsCardObject = JSON.parse(JSON.stringify(cardObject));
+	// Get the stats object from the database
+	var statsObject = $firebaseObject($rootScope.ref.child('stats'));
+	statsObject.$loaded().then(function() {
+	    var cardPopularity = statsObject['cardPopularity'];
+	    // Loop over the statsCardObject
+	    for (var c in statsCardObject) {
+		var card = statsCardObject[c];
+		var cardID = getCardID(card);
+		card.deckPercentage = (cardPopularity[cardID]) ? (cardPopularity[cardID]/cardPopularity['totalDecks']).toPrecision(3) : 0;
+	    }
+	    $scope.databaseStats.statsObject = statsObject;
+	    $scope.databaseStats.statsCardObject = statsCardObject;
+	    
+	});
+    }
 
-
+	    
 }])
 
 
