@@ -2747,13 +2747,13 @@ function($rootScope,$scope,$firebaseObject,$firebaseArray,generateDeckID,getDeck
 		var logObject = $firebaseObject($rootScope.ref.child('logs').child(logID));
 		logObject.$loaded().then(function() {
 		    logObject.decks = [];
+		    console.log("----");
+		    console.log(logObject.deckids);
 		    for (var d in logObject.deckids) {
-			var deckObject = $firebaseObject($rootScope.ref.child('decks').child(logObject.deckids[d]));
-			deckObject.$loaded().then(function() {
-			    logObject.decks.push(deckObject);
-			    $scope.myLogsArray.push(logObject);
-			})
+			console.log(logObject.deckids[d]);
+			logObject.decks.push($firebaseObject($rootScope.ref.child('decks').child(logObject.deckids[d])));
 		    }
+		    $scope.myLogsArray.push(logObject);
 		})
 	    });
 	});
