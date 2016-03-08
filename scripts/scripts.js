@@ -1889,30 +1889,39 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
 	return exportDeck.exportText($scope.viewDeckObject);
     }
 
+    // Load deck names for the log entries
+    $scope.loadLogDecks = function() {
+	for (var l in $scope.deckLogsArray) {
+	    var deckIDs = $scope.deckLogsArray[l].deckids;
+	    $scope.deckLogsArray[l].decks = [];
+	    angular.forEach(deckIDs, function(value, key) {
+		var deckID = value;
+		$scope.deckLogsArray[l].decks.push($firebaseObject($rootScope.ref.child('decks').child(deckID)));
+	    })
+	}
+    }
     // Load logs
     $scope.deckLogsArray = [];
     $scope.loadDeckLogs = function() {
-	$scope.deckLogsArray = [];
-	var logIDs = $firebaseObject($rootScope.ref.child('decks').child($scope.deckID).child('logids'))
-	logIDs.$loaded().then(function () {
+	var deckLogsArray = [];
+	var deckObject = $firebaseObject($rootScope.ref.child('decks').child($scope.deckID))
+	deckObject.$loaded().then(function () {
+	    var logIDs = deckObject.logids
+	    var nLogIDs = Object.keys(logIDs).length;
 	    angular.forEach(logIDs, function(value, key){
 		var logID = value;
 		var logObject = $firebaseObject($rootScope.ref.child('logs').child(logID));
 		logObject.$loaded().then(function() {
-		    logObject.decks = [];
-		    for (var d in logObject.deckids) {
-			var deckObject = $firebaseObject($rootScope.ref.child('decks').child(logObject.deckids[d]));
-			deckObject.$loaded().then(function() {
-			    logObject.decks.push(deckObject);
-			    $scope.deckLogsArray.push(logObject);
-			})
-		    }
+		    deckLogsArray.push(logObject);
+		    if (deckLogsArray.length == nLogIDs) {
+			$scope.deckLogsArray = deckLogsArray;
+			$scope.loadLogDecks();
+		    }		    
 		})
 	    });
 	});
     }		      
     $scope.loadDeckLogs();
-
     // Load Mods      
     $scope.deckModsArray = [];
     $scope.loadDeckMods = function() {
@@ -2747,10 +2756,7 @@ function($rootScope,$scope,$firebaseObject,$firebaseArray,generateDeckID,getDeck
 		var logObject = $firebaseObject($rootScope.ref.child('logs').child(logID));
 		logObject.$loaded().then(function() {
 		    logObject.decks = [];
-		    console.log("----");
-		    console.log(logObject.deckids);
 		    for (var d in logObject.deckids) {
-			console.log(logObject.deckids[d]);
 			logObject.decks.push($firebaseObject($rootScope.ref.child('decks').child(logObject.deckids[d])));
 		    }
 		    $scope.myLogsArray.push(logObject);
