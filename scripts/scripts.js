@@ -55,6 +55,11 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	parent: "dashboard",
         templateUrl: "views/dashboard/userview.html",
 	controller: 'userViewCtrl'
+    }).state("deckpage", {
+        url: "/page:username",
+	parent: "dashboard",
+        templateUrl: "views/dashboard/deckpage.html",
+	controller: 'deckPageCtrl'
     }).state("help", {
         url: "/help",
 	parent: "dashboard",
@@ -1907,6 +1912,145 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
 	var deckObject = $firebaseObject($rootScope.ref.child('decks').child($scope.deckID))
 	deckObject.$loaded().then(function () {
 	    var logIDs = deckObject.logids
+	    if (!logIDs) return;
+	    var nLogIDs = Object.keys(logIDs).length;
+	    angular.forEach(logIDs, function(value, key){
+		var logID = value;
+		var logObject = $firebaseObject($rootScope.ref.child('logs').child(logID));
+		logObject.$loaded().then(function() {
+		    deckLogsArray.push(logObject);
+		    if (deckLogsArray.length == nLogIDs) {
+			$scope.deckLogsArray = deckLogsArray;
+			$scope.loadLogDecks();
+		    }		    
+		})
+	    });
+	});
+    }		      
+    $scope.loadDeckLogs();
+    // Load Mods      
+    $scope.deckModsArray = [];
+    $scope.loadDeckMods = function() {
+        var deckMods = [];
+//        var allDecks = $firebaseObject($rootScope.ref.child('decks'));
+	var deckModIDs = $firebaseObject($rootScope.ref.child('decks').child($scope.deckID).child('daughterids'))
+        deckModIDs.$loaded().then(function () {
+            angular.forEach(deckModIDs, function(value, key){
+                var modID = value;
+		var modDeck = $firebaseObject($rootScope.ref.child('decks').child(modID));
+		modDeck.$loaded().then(function() {
+		    deckMods.push(modDeck);
+		})
+                // if (deckObject.parentid == $scope.deckID)
+                //     deckMods.push(deckObject);
+	    });
+            $scope.deckModsArray = deckMods;
+        });
+    }
+    $scope.loadDeckMods();
+
+    // Load comments
+    $scope.deckCommentsArray = [];
+    $scope.loadDeckComments = function() {
+	var deckComments = [];
+	var deckCommentsObject= $firebaseObject($rootScope.ref.child('decks').child($scope.deckID).child('comments'));
+	deckCommentsObject.$loaded().then(function() {
+            angular.forEach(deckCommentsObject, function(value, key){
+		deckComments.push(value);
+	    })
+	    $scope.deckCommentsArray = deckComments;
+	})
+    }
+    $scope.loadDeckComments();
+    // Submit comment
+    $scope.submitComment = function() {
+	//	console.log("Submitting comment.")
+	if (!$rootScope.authData)
+            return $location.path("/login");
+	if (!$scope.commentBoxText) return alert("Please type a comment.");
+	var commentText = $rootScope.sanitizeText($scope.commentBoxText);
+	if (!$rootScope.displayName) return alert("Not properly logged in.");
+	var commentID = generateDeckID();
+	var comment = {
+	    "commentid" : commentID,
+	    "username" : $rootScope.displayName,
+	    "userid" : $rootScope.authData.uid,
+	    "dateUTC" : new Date().valueOf().toString(),
+	    "text" : commentText,
+	    "deckid" : $scope.deckID
+	}
+	$scope.deckCommentsArray.push(comment);
+	//	console.log($scope.deckCommentsArray);
+	$rootScope.ref.child('decks').child($scope.deckID).child('comments').child(commentID).set(comment);
+	$scope.commentBoxText = "";
+    }
+    // Delete comment
+    $scope.deleteComment = function(comment) {
+	if (confirm("Are you sure?")) {
+	    $rootScope.ref.child('decks').child($scope.deckID).child('comments').child(comment.commentid).remove();
+	    $scope.loadDeckComments();	
+	}
+    }
+
+}])
+
+.controller('deckPageCtrl', ['$scope','$rootScope','$stateParams','$location','$firebaseObject','getLocalObjectFromString','image','loadDeckIntoBuilder','exportDeck','hasAccess','syncStatus','generateDeckID',
+function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObjectFromString,image,loadDeckIntoBuilder,exportDeck,hasAccess,syncStatus,generateDeckID) {
+    $scope.decksLoaded = false;
+    $scope.deckPageObject={};
+    $scope.hasAccess = hasAccess;
+
+    var url = $location.url();
+    var index = url.indexOf('id:');
+    if (index>-1) {
+        $scope.deckID = url.substr(index+3);	
+    } else {
+	//404
+    };
+    $scope.syncStatus = syncStatus;
+    $scope.$watch('syncStatus.cardObjectLoaded',function(newValue,oldValue) {
+    	if (newValue==true) {
+	    var deckObject = $firebaseObject($rootScope.ref.child('decks').child($scope.deckID));
+	    deckObject.$loaded().then(function() {
+		$scope.viewDeckObject = deckObject;
+		$scope.viewDeck = getLocalObjectFromString(deckObject.deckstring);
+		$scope.deckLoaded = true;
+	    });
+    	}
+    });
+
+    $scope.changepreview = function(card){
+    	image.update(card);
+    }    
+    $scope.loadDeck = function() {
+	return loadDeckIntoBuilder($scope.viewDeckObject);
+    }
+    $scope.exportOctgn = function() {
+	return exportDeck.exportOctgn($scope.viewDeckObject);
+    }
+    $scope.exportText = function() {
+	return exportDeck.exportText($scope.viewDeckObject);
+    }
+
+    // Load deck names for the log entries
+    $scope.loadLogDecks = function() {
+	for (var l in $scope.deckLogsArray) {
+	    var deckIDs = $scope.deckLogsArray[l].deckids;
+	    $scope.deckLogsArray[l].decks = [];
+	    angular.forEach(deckIDs, function(value, key) {
+		var deckID = value;
+		$scope.deckLogsArray[l].decks.push($firebaseObject($rootScope.ref.child('decks').child(deckID)));
+	    })
+	}
+    }
+    // Load logs
+    $scope.deckLogsArray = [];
+    $scope.loadDeckLogs = function() {
+	var deckLogsArray = [];
+	var deckObject = $firebaseObject($rootScope.ref.child('decks').child($scope.deckID))
+	deckObject.$loaded().then(function () {
+	    var logIDs = deckObject.logids
+	    if (!logIDs) return;
 	    var nLogIDs = Object.keys(logIDs).length;
 	    angular.forEach(logIDs, function(value, key){
 		var logID = value;
@@ -1989,6 +2133,7 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
 }])
 
 
+
 .factory('getUserIDFromUsername',[function() {
     var userIDFromUsername = function(username,allUsers) {
         var returnID = null;
@@ -1996,7 +2141,6 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
             var userID = key;
 	    var userObject = value;
 	    if (userObject.username == username) {
-		console.log(key);
 		returnID = key;
 	    }
         });
@@ -2027,7 +2171,6 @@ function($scope,$rootScope,$firebaseObject,$firebaseArray,image,getUserIDFromUse
 
     $scope.loadUserDecks = function() {
 //	var userID = getUserIDFromUsername($scope.username);
-	console.log($scope.username);
 	var allUsers = $firebaseObject($rootScope.ref.child('users'));
 	allUsers.$loaded().then(function() {
 	    var userID = getUserIDFromUsername($scope.username,allUsers);
@@ -3064,14 +3207,16 @@ function($rootScope,$scope,$firebaseObject,getDeckObjectFromDeckID,formDataDeckS
 	    console.log("Loaded all decks.");
 	    cardPopularity.totalDecks = 0;
 	    angular.forEach(allDecks, function(value, key){
-		cardPopularity.totalDecks++;
 		var deckID = key;
 		var deckObject = value;
 		var deckString = deckObject.deckstring;
-		for (var i=0; i<=(deckString.length-4); i=i+4) {
-                    var cardID = deckString.substr(i,3);
-		    if (!cardPopularity[cardID]) cardPopularity[cardID] = 1;
-		    else cardPopularity[cardID] = cardPopularity[cardID] + 1;
+		if (!deckObject.daughterids) { // only count decks with no newer versions
+		    cardPopularity.totalDecks++;
+		    for (var i=0; i<=(deckString.length-4); i=i+4) {
+			var cardID = deckString.substr(i,3);
+			if (!cardPopularity[cardID]) cardPopularity[cardID] = 1;
+			else cardPopularity[cardID] = cardPopularity[cardID] + 1;
+		    }
 		}
 	    });	
 	    console.log("Parsed all decks.");

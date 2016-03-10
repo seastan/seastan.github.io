@@ -80,7 +80,7 @@
 	    </td>
 	    <td>
 	      <table >
-		<td ng-repeat="card in deck.heroes" ng-mouseover="changepreview(card)" class="c{{card.sphere}}" style="padding-right:10px;">{{card.name}}</td>
+		<td ng-repeat="card in deck.heroes | limitTo:4" ng-mouseover="changepreview(card)" class="c{{card.sphere}}" style="padding-right:10px;">{{card.name}}</td>
 	      </table>
 	    </td>
 	    <td>
