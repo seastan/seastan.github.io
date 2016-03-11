@@ -44,40 +44,40 @@
 
 
 
-  <div class="panel panel-primary" style="width:49%;float:left;margin-right:1%">
-    <div class="panel-heading">
-      <h3 class="panel-title">Deck Pages</h3>
-    </div>
-    <div class="panel-body">
-      <table class="table mydecktable">
-	<thead>
-	  <tr>
-	    <th>Name</th>
-	    <th>Heroes</th>
-	    <!-- <th>Deck ID</th> -->
-	  </tr>
-	</thead>
-	<tbody>
-	  <tr ng-repeat="deck in userDecksArray | orderBy:'-dateUTC'" ng-show="deck.published" >
-	    <td style="padding-left:10px;">
-	      <!-- <div style="font-weight:bold;">Deck</div> -->
-	      <!-- 					<div style="font-weight:bold;">{{deck}}</div>
-							<div style="font-weight:bold;">{{deck.$id}}</div> -->
-	      <div style="font-weight:bold;"><a ng-href="#/deck/id:{{deck.deckid}}">{{deck.deckname}}</a></div>
-	    </td>
-	    <td>
-	      <table >
-		<td ng-repeat="card in deck.heroes | orderBy:'sphere'" ng-mouseover="changepreview(card)" class="c{{card.sphere}}" style="padding-right:10px;">{{card.name}}</td>
-	      </table>
-	    </td>
-	    <!-- <td> -->
-	    <!--   <a ng-href="#/deck/id:{{deck.deckid}}">{{deck.deckid}}</a> -->
-	    <!-- </td> -->
-	  </tr>
-	</tbody>
-      </table>
-    </div>
-  </div>
+  <!-- <div class="panel panel-primary" style="width:49%;float:left;margin-right:1%"> -->
+  <!--   <div class="panel-heading"> -->
+  <!--     <h3 class="panel-title">Deck Pages</h3> -->
+  <!--   </div> -->
+  <!--   <div class="panel-body"> -->
+  <!--     <table class="table mydecktable"> -->
+  <!-- 	<thead> -->
+  <!-- 	  <tr> -->
+  <!-- 	    <th>Name</th> -->
+  <!-- 	    <th>Heroes</th> -->
+  <!-- 	    <\!-- <th>Deck ID</th> -\-> -->
+  <!-- 	  </tr> -->
+  <!-- 	</thead> -->
+  <!-- 	<tbody> -->
+  <!-- 	  <tr ng-repeat="deck in userDecksArray | orderBy:'-dateUTC'" ng-show="deck.published" > -->
+  <!-- 	    <td style="padding-left:10px;"> -->
+  <!-- 	      <\!-- <div style="font-weight:bold;">Deck</div> -\-> -->
+  <!-- 	      <\!-- 					<div style="font-weight:bold;">{{deck}}</div> -->
+  <!-- 							<div style="font-weight:bold;">{{deck.$id}}</div> -\-> -->
+  <!-- 	      <div style="font-weight:bold;"><a ng-href="#/deck/id:{{deck.deckid}}">{{deck.deckname}}</a></div> -->
+  <!-- 	    </td> -->
+  <!-- 	    <td> -->
+  <!-- 	      <table > -->
+  <!-- 		<td ng-repeat="card in deck.heroes | orderBy:'sphere'" ng-mouseover="changepreview(card)" class="c{{card.sphere}}" style="padding-right:10px;">{{card.name}}</td> -->
+  <!-- 	      </table> -->
+  <!-- 	    </td> -->
+  <!-- 	    <\!-- <td> -\-> -->
+  <!-- 	    <\!--   <a ng-href="#/deck/id:{{deck.deckid}}">{{deck.deckid}}</a> -\-> -->
+  <!-- 	    <\!-- </td> -\-> -->
+  <!-- 	  </tr> -->
+  <!-- 	</tbody> -->
+  <!--     </table> -->
+  <!--   </div> -->
+  <!-- </div> -->
 
 
 
