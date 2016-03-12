@@ -1,0 +1,133 @@
+<div ng-controller="deckPageCtrl" ng-show="decksLoaded">
+  <btn class="pull-right btn btn-primary btn-outline btn-rounded" ng-click="logQuest()">Log Quest</btn>
+  <btn class="pull-right btn btn-primary btn-outline btn-rounded" ng-click="exportOctgn()">Export to OCTGN</btn>
+  <btn class="pull-right btn btn-primary btn-outline btn-rounded" ng-click="exportText()">Export to Text</btn>
+  <div>
+    <h2>{{deckPageObject.pagetitle}} <small>by </small><small style="font-weight:bold">{{deckPageObject.username}}</small></h2>
+    <div class=jumbotron style="float:top;width:24%;margin-right:1%" ng-show="authData.uid==ownerID">
+      <!--       <div> -->
+      <!-- 	<input class="form-control underline" id="deck" type="text" placeholder="Deck ID" style="width:50%" ng-model="newDeckID"> -->
+      <!-- 	<button ng-click="addDeck()" class="btn btn-primary btn-rounded btn-outline">Add Deck</button> -->
+      <!-- </input> -->
+      <!-- </div> -->
+      
+      <div class="input-group">
+	<input type="text" class="form-control" placeholder="Deck ID" ng-model="newDeckID">
+	<span class="input-group-btn">
+          <button class="btn btn-default" type="button" ng-click="addDeck(newDeckID)">Add Deck</button>
+	</span>
+      </div>
+    </div>
+  </div>
+  
+  <div class=jumbotron style="position:relative;float:left;width:24%;margin-right:1%" ng-repeat="deckObject in deckObjectsArray">
+    <button type="button" class="close" style="position:absolute;top:3px;right:5px;" ng-show="authData.uid==ownerID" ng-click="removeDeck(deckObject)">
+      <span class="glyphicon glyphicon-remove"></span>
+    </button>
+    <div class=container>
+      <!-- <div class="deckdiv" style="width:25%;left:1%;top:15%;height:85%"> -->
+      <div>
+	<h4><a ng-href="#/deck/id:{{deckObject.deckid}}">{{deckObject.deckname}}</a></h4>
+	<table class="deck">
+	  <tr class="head"><td style="width:20px"></td><td>Starting threat: {{deckObject.localObject.startingThreat()}}</td></tr>
+	  
+	  <tr class="card" ng-repeat="card in deckObject.localObject['1hero'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
+	    <td style="font-size:14;" ng-class="{noAccess: !hasAccess(card)}">
+	      1
+	    </td>
+	    <td class="c{{card.sphere}}">{{card.name}}</td>
+	  <tr><td bgcolor="transparent" colspan=2>&nbsp;</td></tr>
+	  <tr class="head"><td></td><td>Total ({{deckObject.localObject.countTotal()}})</td></tr>
+	  <tr class="head"><td></td><td>Allies ({{deckObject.localObject.countAllies()}})</td></tr>
+	  <tr class="card" ng-repeat="card in deckObject.localObject['2ally'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
+	    <td style="font-size:14" ng-class="{noAccess: !hasAccess(card)}">
+	      {{card.quantity}}
+	    </td>
+	    <td class="c{{card.sphere}}">{{card.name}}</td>
+	  <tr><td bgcolor="transparent" colspan=2>&nbsp;</td></tr>
+	  <tr class="head"><td></td><td>Attachments ({{deckObject.localObject.countAttachments()}})</td></tr>
+	  <tr class="card" ng-repeat="card in deckObject.localObject['3attachment'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
+	    <td style="font-size:14" ng-class="{noAccess: !hasAccess(card)}">
+	      {{card.quantity}}
+	    </td>
+	    <td class="c{{card.sphere}}">{{card.name}}</td>
+	  <tr><td bgcolor="transparent" colspan=2>&nbsp;</td></tr>
+	  <tr class="head"><td></td><td>Events ({{deckObject.localObject.countEvents()}})</td></tr>
+	  <tr class="card" ng-repeat="card in deckObject.localObject['4event'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
+	    <td style="font-size:14" ng-class="{noAccess: !hasAccess(card)}">
+	      {{card.quantity}}
+	    </td>
+	    <td class="c{{card.sphere}}">{{card.name}}</td></tr>
+	  <tr><td bgcolor="transparent" colspan=2>&nbsp;</td></tr>
+	  <tr class="head"><td></td><td>Quests ({{deckObject.localObject.countQuests()}})</td></tr>
+	  <tr class="card" ng-repeat="card in deckObject.localObject['5quest'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
+	    <td style="font-size:14" ng-class="{noAccess: !hasAccess(card)}">
+	      {{card.quantity}}
+	    </td>
+	    <td class="c{{card.sphere}}">{{card.name}}</td></tr>
+	</table>
+      </div>
+      <br><br>
+      <div ng-show="deckObject.deckModsArray.length">
+	<h4>Modifications</h4>
+	<table class="table mydecktable">
+	  <thead>
+	    <tr>
+	      <th>Author</th>
+	      <th>Deck ID</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <tr ng-repeat="d in deckObject.deckModsArray | orderBy:'-date'">
+	      <td>
+		{{d.username}}
+	      </td>
+	      <td>
+		<a ng-href="#/deck/id:{{d.deckid}}">{{d.deckname}}</a>
+	      </td>
+	      <td ng-show="authData.uid==ownerID">
+		<a ng-click="updateDeck(deckObject,d)" title="Update deck"><span class="glyphicon glyphicon-circle-arrow-up"></span></a>	     
+	      </td>
+	    </tr>
+	  </tbody>
+	</table>
+      </div>
+      
+    </div>
+  </div>
+
+
+  <div class=jumbotron style="float:left;width:48%;margin-right:2%" ng-show="(authData.uid==ownerID)||(deckCommentsArray.length)">
+    <div class=container>
+      <h4>Notes</h4>
+      <div ng-show="authData.uid==ownerID">
+	<textarea cols="20" rows="4" style="width:100%" ng-model="commentBoxText" maxlength="350"></textarea>
+	<button type="button" class="btn btn-default pull-right" ng-click="submitComment()">Submit</button>
+      </div>
+      <div>
+ 	<div ng-repeat="comment in deckCommentsArray | orderBy:'+dateUTC'">
+	  <br>
+	  <div>{{comment.text}}</div>
+	  <br>
+	  <div style="font-size:12px;padding-left:10px;text-align:right">
+	    <div>
+	      <a ng-click="deleteComment(comment)" ng-show="authData.uid==ownerID">(Delete comment)</a>
+	    </div>
+	    <div>
+	      {{comment.dateUTC|date:'medium'}}
+	    </div>
+	    <div>
+	      {{comment.username}}
+	    </div>
+	  </div>
+	</div>
+      </div>
+    </div>
+  </div>
+  
+
+
+  
+</div>
+
+
