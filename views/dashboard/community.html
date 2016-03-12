@@ -79,7 +79,7 @@
 	      <div style="font-size:9px;padding-left:10px;">{{deck.dateUTC|date:'medium'}}</div>
 	    </td>
 	    <td>
-	      <table >
+	      <table>
 		<td ng-repeat="card in deck.heroes | limitTo:4" ng-mouseover="changepreview(card)" class="c{{card.sphere}}" style="padding-right:10px;">{{card.name}}</td>
 	      </table>
 	    </td>

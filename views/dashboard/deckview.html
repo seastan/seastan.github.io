@@ -66,7 +66,7 @@
       <h4>Notes</h4>
       <div ng-show="authData.uid==viewDeckObject.userid">
 	<textarea cols="20" rows="4" style="width:100%" ng-model="commentBoxText" maxlength="350"></textarea>
-	<button type="button" class="btn btn-primary pull-right btn-rounded" ng-click="submitComment()">Submit</button>
+	<button type="button" class="btn btn-default pull-right" ng-click="submitComment()">Submit</button>
       </div>
       <div>
  	<div ng-repeat="comment in deckCommentsArray | orderBy:'+dateUTC'">
