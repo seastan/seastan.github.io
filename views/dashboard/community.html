@@ -27,7 +27,7 @@
   <div class="panel panel-warning" style="float:right;width:37%">
     <div class="panel-heading">
       <h3 class="panel-title">Deck Stats (updated weekly)</h3>
-      <button ng-click="getStats()" class="btn btn-warning btn-rounded btn-outline" ng-hide="databaseStats.gotStats">Get Stats</button>
+      <button ng-click="getStats()" class="btn btn-warning btn-rounded btn-outline" ng-hide="gotStats">Get Stats</button>
       <button ng-click="genStats()" class="btn btn-warning btn-rounded btn-outline" ng-show="user.admin">Generate Stats</button>
     </div>
     <div class="panel-body" ng-show="databaseStats.statsCardObject">

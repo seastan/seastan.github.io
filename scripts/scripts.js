@@ -637,6 +637,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     }
     return image;
 })
+
 .factory('suggested', ['filtersettings','cardObject',function(filtersettings,cardObject){
     var suggested={};
     suggested.hidden=0;
@@ -654,7 +655,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     suggested['3attachment']=[];
     suggested['4event']=[];
     suggested['5quest']=[];
-    suggested['traits']=['Dwarf','Rohan','Silvan','Noldor','Gondor','Ent','Eagle','Dunedain','Hobbit','Istari','Outlands','Ranger','Scout','Outlands','Ranged','Sentinel','Weapon'];
+    suggested['traits']=['Dwarf','Rohan','Silvan','Noldor','Gondor','Ent','Eagle','Dunedain','Hobbit','Istari','Outlands','Ranger','Scout','Outlands','Ranged','Sentinel','Weapon','Noble','Warrior'];
     suggested.targetsInDeck=[];
     suggested.targetOptionsForDeck=[];
     suggested.traitSpecificTargetsInDeck=[];
@@ -668,7 +669,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	{name_norm: "Daeron's Runes", exp: "fos"},
 	{name_norm: "Deep Knowledge", exp: "voi"},
 	{name_norm: "Feint", exp: "core"},
-	{name_norm: "Foe-hammer", exp: "thohauh"}
+	{name_norm: "Gandalf", exp: "core"}
     ];
 
     // This is the main function, it gets called whenever the cards in the deck change and updates the suggestions
@@ -737,8 +738,8 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	    // Suggest doomed for Grima
 	    if (suggested.isInDeck('Grima','voi') || suggested.isInDeck('Grima hero','voi') && (suggested.isWordInString('oomed',cardc.text)||suggested.isWordInString('oomed',cardc.keywords)))
 	      	suggestions.push(cardc);
-	    // Suggest threat reudction for Boromir, Dunhere, or Hobbit Gandalf
-	    if ((suggested.isInDeck('Boromir','tdm') || suggested.isInDeck('Gandalf','thohauh') || suggested.isInDeck('Dunhere','core')) && (/([L|l]ower|[R|r]educe)/.test(cardc.text)) && (/[T|t]hreat/.test(cardc.text)) && !(/[E|e]ncounter/.test(cardc.text)))
+	    // Suggest threat reduction for Boromir, Dunhere, or Hobbit Gandalf
+	    if ((suggested.isInDeck('Boromir','tdm') || suggested.isInDeck('Gandalf','thohauh') || suggested.isInDeck('Dunhere','core')) && (/([L|l]ower|[R|r]educe)/.test(cardc.text)) && (/[T|t]hreat/.test(cardc.text)))
 		suggestions.push(cardc);
 	    
 	    // Suggest location cards for Idraen
@@ -895,8 +896,6 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	    return 1;
 	return 0;
     };
-    
-    
     
     // Returns 1 if the deck has an eligible target for the card
     suggested.deckHasTargetOption = function(card) {
@@ -1212,6 +1211,16 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 		if (deck[types[t]][c].name_norm==name_norm && deck[types[t]][c].exp==exp) return 1;
 	    }
 	return 0;	
+    };
+    // Takes in a name and expansion, and returns 1 if the card is suggested
+    suggested.isInSuggested = function(card) {
+	console.log(card.name_norm);
+	var types = ['1hero','2ally','3attachment','4event','5quest'];
+	for(var t in types)
+	    for (var c in suggested[types[t]]) {
+		if (suggested[types[t]][c].name_norm==card.name_norm && suggested[types[t]][c].exp==card.exp) return 1;
+	    }
+	return 0;
     };
     // Takes in a word and returns 1 if the word is found in the text/traits of the card
     suggested.isWordInCard = function(word,card) {
@@ -1803,12 +1812,15 @@ function(getData,$location,deck,cardObject,$scope,syncStatus,$rootScope,sanitize
 	$scope.saving=false;
     }
 }])
-.controller('suggestedCtrl',['$scope','suggested','image','deck',function($scope,suggested,image,deck){
+.controller('suggestedCtrl',['$scope','suggested','image','deck','databaseStats',function($scope,suggested,image,deck,databaseStats){
     $scope.suggested=suggested;
-//    deck.refreshSuggested();
+    $scope.suggested.getStats = function() {
+	$scope.suggested.databaseStats = databaseStats;
+    }
+    //    deck.refreshSuggested();
     $scope.changepreview = function(card){
     	image.update(card);
-    }    
+    }
 }])
 
 
@@ -3179,10 +3191,39 @@ function($rootScope,$scope,$firebaseObject,$firebaseArray,generateDeckID,getDeck
     return hasAccess;
 }])
 
-.factory('databaseStats',function() {
+.factory('databaseStats',['$rootScope','$firebaseObject','cardObject','getCardID',function($rootScope,$firebaseObject,cardObject,getCardID) {
     var databaseStats = {};
+    databaseStats.getStats = function() {
+	if (databaseStats.gotStats) return;
+	databaseStats.gotStats = true;
+	// Copy the cardObject. The new cardObject will have a additional field
+	// called 'deckPercentage' which is the percentage of decks the card is in. 
+	var statsCardObject = cardObject;//JSON.parse(JSON.stringify(cardObject));
+	// Get the stats object from the database
+	var statsObject = $firebaseObject($rootScope.ref.child('stats'));
+	var returnObject = function(object) {
+	    return object;
+	}
+	statsObject.$loaded().then(function() {
+	    var cardPopularity = statsObject['cardPopularity'];
+	    // Loop over the statsCardObject
+	    for (var c in statsCardObject) {
+		var card = statsCardObject[c];
+		var cardID = getCardID(card);
+		card.deckPercentage = (cardPopularity[cardID]) ? parseFloat((cardPopularity[cardID]/cardPopularity['totalDecks']*100).toPrecision(3)) : 0;
+	    }
+	    databaseStats.statsCardObject = statsCardObject;
+	    databaseStats.statsObject = statsObject;
+	    returnObject(statsCardObject);
+	});
+    }
+    databaseStats.getStatsCardObject = function() {
+	console.log("Getting stats.");
+	if (databaseStats.statsCardObject) return databaseStats.statsCardObject;
+	else return databaseStats.getStats();
+    }
     return databaseStats;
-})
+}])
 
 // Controller for the community tab
 .controller('communityCtrl', ['$rootScope','$scope','$firebaseObject','getDeckObjectFromDeckID','formDataDeckSearch','isCardInDeckObject','image','getLogsByDeckID','getHeroesFromDeckString','filtersettings','getLocalObjectFromString','hasAccess','databaseStats','cardObject','getCardID',
@@ -3315,25 +3356,8 @@ function($rootScope,$scope,$firebaseObject,getDeckObjectFromDeckID,formDataDeckS
 	});
     }
     $scope.getStats = function() {
-	if ($scope.databaseStats.gotStats) return;
-	$scope.databaseStats.gotStats = true;
-	// Copy the cardObject. The new cardObject will have a additional field
-	// called 'deckPercentage' which is the percentage of decks the card is in. 
-	var statsCardObject = JSON.parse(JSON.stringify(cardObject));
-	// Get the stats object from the database
-	var statsObject = $firebaseObject($rootScope.ref.child('stats'));
-	statsObject.$loaded().then(function() {
-	    var cardPopularity = statsObject['cardPopularity'];
-	    // Loop over the statsCardObject
-	    for (var c in statsCardObject) {
-		var card = statsCardObject[c];
-		var cardID = getCardID(card);
-		card.deckPercentage = (cardPopularity[cardID]) ? parseFloat((cardPopularity[cardID]/cardPopularity['totalDecks']*100).toPrecision(3)) : 0;
-	    }
-	    $scope.databaseStats.statsObject = statsObject;
-	    $scope.databaseStats.statsCardObject = statsCardObject;
-	    
-	});
+	$scope.databaseStats.statsCardObject = databaseStats.getStatsCardObject();
+	$scope.gotStats = true;
     }
 
 	    
