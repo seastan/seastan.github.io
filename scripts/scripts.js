@@ -1815,12 +1815,15 @@ function(getData,$location,deck,cardObject,$scope,syncStatus,$rootScope,sanitize
 .controller('suggestedCtrl',['$scope','suggested','image','deck','databaseStats',function($scope,suggested,image,deck,databaseStats){
     $scope.suggested=suggested;
     $scope.suggested.getStats = function() {
+	databaseStats.getStatsCardObject();
 	$scope.suggested.databaseStats = databaseStats;
     }
-    //    deck.refreshSuggested();
+//    deck.refreshSuggested();
     $scope.changepreview = function(card){
     	image.update(card);
     }
+    // Rank cards  (Omit this for use in Rivendell Councilroom)
+
 }])
 
 
