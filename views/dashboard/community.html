@@ -27,7 +27,7 @@
   <div class="panel panel-warning" style="float:right;width:37%">
     <div class="panel-heading">
       <h3 class="panel-title">Deck Stats (updated weekly)</h3>
-      <button ng-click="getStats()" class="btn btn-warning btn-rounded btn-outline" ng-hide="databaseStats.gotStats">Get Stats</button>
+      <button ng-click="getStats()" class="btn btn-warning btn-rounded btn-outline" ng-hide="gotStats">Get Stats</button>
       <button ng-click="genStats()" class="btn btn-warning btn-rounded btn-outline" ng-show="user.admin">Generate Stats</button>
     </div>
     <div class="panel-body" ng-show="databaseStats.statsCardObject">
@@ -64,7 +64,7 @@
       <h3 class="panel-title">Search Results</h3>
     </div>
     <div class="panel-body">
-      <table class="table mydecktable">
+      <table class="table mydecktable" style="max-width:100%;">
 	<thead>
 	  <tr>
 	    <th>Name</th>
@@ -79,12 +79,12 @@
 	      <div style="font-size:9px;padding-left:10px;">{{deck.dateUTC|date:'medium'}}</div>
 	    </td>
 	    <td>
-	      <table >
-		<td ng-repeat="card in deck.heroes" ng-mouseover="changepreview(card)" class="c{{card.sphere}}" style="padding-right:10px;">{{card.name}}</td>
+	      <table>
+		<td ng-repeat="card in deck.heroes | limitTo:4" ng-mouseover="changepreview(card)" class="c{{card.sphere}}" style="padding-right:10px;">{{card.name}}</td>
 	      </table>
 	    </td>
 	    <td>
-	      <div>{{deck.username}}</div>
+	      <div><a ng-href="#/deck/user:{{deck.username}}" style="font-weight:bold;">{{deck.username}}</a></div>
 	    </td>
 	  </tr>
 	</tbody>

@@ -2,7 +2,7 @@
   <div style="width:100%">
     <!-- <b style="color:red;font-size:20px">Important: The Deck Cloud Storage is in beta. Your decks will get deleted without notice. Be sure to download any decks you make to your computer to preserve them. </b> -->
     <!-- <br><br> -->
-    <label class="btn btn-success" style="width:250px;height:45px"><div class="upload">Upload an OCTGN Deck</div><input name="upload" type="file" style="display:none;" onchange="angular.element(this).scope().mydecks.uploadDeck(event)" accept=".o8d"></input></label>
+    <label class="btn btn-success" style="width:250px;height:45px"><div class="upload"><span class="glyphicon glyphicon-open"></span> Upload an OCTGN Deck</div><input name="upload" type="file" style="display:none;" onchange="angular.element(this).scope().mydecks.uploadDeck(event)" accept=".o8d"></input></label>
     <br><br>
     <div class="panel panel-primary" style="width:100%">
       <div class="panel-heading">
@@ -52,7 +52,7 @@
 	      </td>
 	      <td>
 		<table >
-		  <td ng-repeat="card in deck.heroes | orderBy:'sphere'" ng-mouseover="mydecks.changepreview(card)" class="c{{card.sphere}}" style="padding-right:10px;">{{card.name}}</td>
+		  <td ng-repeat="card in deck.heroes | orderBy:'sphere' | limitTo:4" ng-mouseover="mydecks.changepreview(card)" class="c{{card.sphere}}" style="padding-right:10px;">{{card.name}}</td>
 		</table>
 	      </td>
 	      <td>

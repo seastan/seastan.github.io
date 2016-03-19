@@ -1,18 +1,4 @@
 <div ng-controller="setsCtrl as sets">
-  <!-- <div class="btn-group btn-group-justified" role="group"> -->
-  <!--   <div class="btn-group" role="group"> -->
-  <!-- 	<button type="button" class="btn btn-primary btn-lg btn-outline" ng-click=""></button> -->
-  <!--   </div> -->
-  <!--   <div class="btn-group" role="group"> -->
-  <!-- 	<button type="button" class="btn btn-primary btn-lg btn-outline" ng-click=""></button> -->
-  <!--   </div> -->
-  <!--   <div class="btn-group" role="group"> -->
-  <!-- 	<button type="button" class="btn btn-primary btn-lg btn-outline" ng-click=""></button> -->
-  <!--   </div> -->
-  <!--   <div class="btn-group" role="group"> -->
-  <!-- 	<button type="button" class="btn btn-primary btn-lg btn-outline" ng-click=""></button> -->
-  <!--   </div> -->
-  <!-- </div> -->
   <div class="btn-group btn-group-justified" role="group">
     <div class="btn-group" role="group">
       <button type="button" class="btn btn-primary btn-lg btn-outline packbutton" ng-click="sets.toggleonecore()" ng-class="{selected: sets.filtersettings.onecore}">Limit to 1 Core Set<i class="fa fa-download"></i></button>
@@ -27,76 +13,86 @@
       <button type="button" class="btn btn-primary btn-lg btn-outline packbutton" ng-click="sets.selectNone()">Select None</button>
     </div>
   </div>
+  <h2>Cycles:</h2>
+  <div class="btn-group" style="width:100%">
+    <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('core')>=0}" ng-click="sets.toggle('core')" style="width:14.3%">Core Set</button>
+    <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('thfg')>=0}" ng-click="sets.toggle('thfg')" style="width:14.3%">The Hunt for Gollum</button>
+<button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('catc')>=0}" ng-click="sets.toggle('catc')" style="width:14.3%">Conflict at the Carrock</button>
+<button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('ajtr')>=0}" ng-click="sets.toggle('ajtr')" style="width:14.3%">A Journey to Rhosgobel</button>
+<button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('thoem')>=0}" ng-click="sets.toggle('thoem')" style="width:14.3%">The Hills of Emyn Muil</button>
+<button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tdm')>=0}" ng-click="sets.toggle('tdm')" style="width:14.3%">The Dead Marshes</button>
+<button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('rtm')>=0}" ng-click="sets.toggle('rtm')" style="width:14.3%">Return to Mirkwood</button>
+  </div>
 
-  <table  style="width:100%;font-size:12px;white-space: normal;border-collapse:collapse;table-layout: fixed;">
-    <tbody>
-      <tr>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('core')>=0}" ng-click="sets.toggle('core')">Core Set</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('kd')>=0}" ng-click="sets.toggle('kd')">Khazad-Dûm</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('hon')>=0}" ng-click="sets.toggle('hon')">Heirs of Númenor</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('voi')>=0}" ng-click="sets.toggle('voi')">The Voice of Isengard</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tlr')>=0}" ng-click="sets.toggle('tlr')">The Lost Realm</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('thohauh')>=0}" ng-click="sets.toggle('thohauh')">Over Hill and Under Hill</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tgh')>=0}" ng-click="sets.toggle('tgh')">The Grey Havens</button></td>
-      </tr>
-      <tr>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('thfg')>=0}" ng-click="sets.toggle('thfg')">The Hunt for Gollum</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('trg')>=0}" ng-click="sets.toggle('trg')">The Redhorn Gate</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tsf')>=0}" ng-click="sets.toggle('tsf')">The Steward's Fear</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tdt')>=0}" ng-click="sets.toggle('tdt')">The Dunland Trap</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('twoe')>=0}" ng-click="sets.toggle('twoe')">The Wastes of Eriador</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('thotd')>=0}" ng-click="sets.toggle('thotd')">On the Doorstep</button></td>
-      </tr>
-      <tr>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('catc')>=0}" ng-click="sets.toggle('catc')">Conflict at the Carrock</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('rtr')>=0}" ng-click="sets.toggle('rtr')">Road to Rivendell</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tdf')>=0}" ng-click="sets.toggle('tdf')">The Drúadan Forest</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('ttt')>=0}" ng-click="sets.toggle('ttt')">The Three Trials</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('efmg')>=0}" ng-click="sets.toggle('efmg')">Escape from Mount Gram</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tbr')>=0}" ng-click="sets.toggle('tbr')">The Black Riders</button></td>
-      </tr>
-      <tr>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('ajtr')>=0}" ng-click="sets.toggle('ajtr')">A Journey to Rhosgobel</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('twitw')>=0}" ng-click="sets.toggle('twitw')">The Watcher in the Water</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('eaad')>=0}" ng-click="sets.toggle('eaad')">Encounter at Amon Dîn</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tit')>=0}" ng-click="sets.toggle('tit')">Trouble in Tharbad</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('ate')>=0}" ng-click="sets.toggle('ate')">Across the Ettenmoors</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('rd')>=0}" ng-click="sets.toggle('rd')">The Road Darkens</button></td>
-      </tr>
-      <tr>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('thoem')>=0}" ng-click="sets.toggle('thoem')">The Hills of Emyn Muil</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tld')>=0}" ng-click="sets.toggle('tld')">The Long Dark</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('aoo')>=0}" ng-click="sets.toggle('aoo')">Assault on Osgiliath</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('nie')>=0}" ng-click="sets.toggle('nie')">The Nin-in-Eilph</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('ttor')>=0}" ng-click="sets.toggle('ttor')">The Treachery of Rhudaur</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tos')>=0}" ng-click="sets.toggle('tos')">The Treason of Saruman</button></td>
-      </tr>
-      <tr>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tdm')>=0}" ng-click="sets.toggle('tdm')">The Dead Marshes</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('fos')>=0}" ng-click="sets.toggle('fos')">Foundations of Stone</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tbog')>=0}" ng-click="sets.toggle('tbog')">The Blood of Gondor</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('cs')>=0}" ng-click="sets.toggle('cs')">Celebrimbor's Secret</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tbocd')>=0}" ng-click="sets.toggle('tbocd')">The Battle of Carn Dûm</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tlos')>=0}" ng-click="sets.toggle('tlos')">The Land of Shadow</button></td>
-      </tr>
-      <tr>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('rtm')>=0}" ng-click="sets.toggle('rtm')">Return to Mirkwood</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('saf')>=0}" ng-click="sets.toggle('saf')">Shadow and Flame</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tmv')>=0}" ng-click="sets.toggle('tmv')">The Morgul Vale</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tac')>=0}" ng-click="sets.toggle('tac')">The Antlered Crown</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tdr')>=0}" ng-click="sets.toggle('tdr')">The Dread Realm</button></td>
-        <td><button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tfotw')>=0}" ng-click="sets.toggle('tfotw')" disabled>The Flame of the West</button></td>
-      </tr>
-    </tbody>
-  </table>
-  <br><br><br>
+  <div class="btn-group" style="width:100%">
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('kd')>=0}" ng-click="sets.toggle('kd')" style="width:14.3%">Khazad-Dûm</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('trg')>=0}" ng-click="sets.toggle('trg')" style="width:14.3%">The Redhorn Gate</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('rtr')>=0}" ng-click="sets.toggle('rtr')" style="width:14.3%">Road to Rivendell</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('twitw')>=0}" ng-click="sets.toggle('twitw')" style="width:14.3%">The Watcher in the Water</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tld')>=0}" ng-click="sets.toggle('tld')" style="width:14.3%">The Long Dark</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('fos')>=0}" ng-click="sets.toggle('fos')" style="width:14.3%">Foundations of Stone</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('saf')>=0}" ng-click="sets.toggle('saf')" style="width:14.3%">Shadow and Flame</button>
+  </div>
+
+  <div class="btn-group" style="width:100%">
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('hon')>=0}" ng-click="sets.toggle('hon')" style="width:14.3%">Heirs of Númenor</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tsf')>=0}" ng-click="sets.toggle('tsf')" style="width:14.3%">The Steward's Fear</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tdf')>=0}" ng-click="sets.toggle('tdf')" style="width:14.3%">The Drúadan Forest</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('eaad')>=0}" ng-click="sets.toggle('eaad')" style="width:14.3%">Encounter at Amon Dîn</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('aoo')>=0}" ng-click="sets.toggle('aoo')" style="width:14.3%">Assault on Osgiliath</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tbog')>=0}" ng-click="sets.toggle('tbog')" style="width:14.3%">The Blood of Gondor</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tmv')>=0}" ng-click="sets.toggle('tmv')" style="width:14.3%">The Morgul Vale</button>
+</div>
+  <div class="btn-group" style="width:100%">
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('voi')>=0}" ng-click="sets.toggle('voi')" style="width:14.3%">The Voice of Isengard</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tdt')>=0}" ng-click="sets.toggle('tdt')" style="width:14.3%">The Dunland Trap</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('ttt')>=0}" ng-click="sets.toggle('ttt')" style="width:14.3%">The Three Trials</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tit')>=0}" ng-click="sets.toggle('tit')" style="width:14.3%">Trouble in Tharbad</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('nie')>=0}" ng-click="sets.toggle('nie')" style="width:14.3%">The Nin-in-Eilph</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('cs')>=0}" ng-click="sets.toggle('cs')" style="width:14.3%">Celebrimbor's Secret</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tac')>=0}" ng-click="sets.toggle('tac')" style="width:14.3%">The Antlered Crown</button>
+  </div>
+
+   <div class="btn-group" style="width:100%">
+     <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tlr')>=0}" ng-click="sets.toggle('tlr')" style="width:14.3%">The Lost Realm</button>
+     <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('twoe')>=0}" ng-click="sets.toggle('twoe')" style="width:14.3%">The Wastes of Eriador</button>
+     <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('efmg')>=0}" ng-click="sets.toggle('efmg')" style="width:14.3%">Escape from Mount Gram</button>
+     <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('ate')>=0}" ng-click="sets.toggle('ate')" style="width:14.3%">Across the Ettenmoors</button>
+     <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('ttor')>=0}" ng-click="sets.toggle('ttor')" style="width:14.3%">The Treachery of Rhudaur</button>
+     <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tbocd')>=0}" ng-click="sets.toggle('tbocd')" style="width:14.3%">The Battle of Carn Dûm</button>
+     <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tdr')>=0}" ng-click="sets.toggle('tdr')" style="width:14.3%">The Dread Realm</button>
+   </div>
+
+  <div class="btn-group" style="width:100%">
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tgh')>=0}" ng-click="sets.toggle('tgh')" style="width:14.3%">The Grey Havens</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('fots')>=0}" ng-click="sets.toggle('fots')" style="width:14.3%;color:white" disabled>Flight of the Stormcaller</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('ttitd')>=0}" ng-click="sets.toggle('ttitd')" style="width:14.3%;color:white" disabled>The Thing in the Depths</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('totd')>=0}" ng-click="sets.toggle('totd')" style="width:14.3%;color:white" disabled>Temple of the Deceived</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tdr2')>=0}" ng-click="sets.toggle('tdr2')" style="width:14.3%;color:white" disabled>The Drowned Ruins</button>
+</div>
+
+  <h2>Sagas:</h2>
+  <div class="btn-group" style="width:100%">
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('thohauh')>=0}" ng-click="sets.toggle('thohauh')" style="width:14.3%">Over Hill and Under Hill</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('thotd')>=0}" ng-click="sets.toggle('thotd')" style="width:14.3%">On the Doorstep</button>
+</div>
+
+  <div class="btn-group" style="width:100%">
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tbr')>=0}" ng-click="sets.toggle('tbr')" style="width:14.3%">The Black Riders</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('rd')>=0}" ng-click="sets.toggle('rd')" style="width:14.3%">The Road Darkens</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tos')>=0}" ng-click="sets.toggle('tos')" style="width:14.3%">The Treason of Saruman</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tlos')>=0}" ng-click="sets.toggle('tlos')" style="width:14.3%">The Land of Shadow</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tfotw')>=0}" ng-click="sets.toggle('tfotw')" style="width:14.3%;color:white" disabled>The Flame of the West</button>
+</div>
+
+
   <h2>Release Order:</h2>
   <div style="width:200px">
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('core')>=0}" ng-click="sets.toggle('core')">	Core	<br>	2011-04-20	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('thfg')>=0}" ng-click="sets.toggle('thfg')">	The Hunt for Gollum	<br>	2011-07-21	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('catc')>=0}" ng-click="sets.toggle('catc')">	Conflict at the Carraock	<br>	2011-08-10	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('ajtr')>=0}" ng-click="sets.toggle('ajtr')">	A Journey to Rhosgobel	<br>	2011-09-01	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	The Massing at Osgiliath	<br>	2011-09-21	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	The Massing at Osgiliath	<br>	2011-09-21	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('thoem')>=0}" ng-click="sets.toggle('thoem')">	The Hills of Emyn Muil	<br>	2011-09-30	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tdm')>=0}" ng-click="sets.toggle('tdm')">	The Dead Marshes	<br>	2011-11-02	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('rtm')>=0}" ng-click="sets.toggle('rtm')">	Return to Mirkwood	<br>	2011-11-23	</button>
@@ -108,70 +104,78 @@
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('fos')>=0}" ng-click="sets.toggle('fos')">	Foundations of Stone	<br>	2012-06-20	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('saf')>=0}" ng-click="sets.toggle('saf')">	Shadow and Flame	<br>	2012-08-08	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('thohauh')>=0}" ng-click="sets.toggle('thohauh')">	Over Hill and Under Hill	<br>	2012-08-17	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	The Battle of Lake-town	<br>	2012-10-16	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	The Battle of Lake-town	<br>	2012-10-16	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('hon')>=0}" ng-click="sets.toggle('hon')">	Heirs of Numenor	<br>	2012-11-26	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('thotd')>=0}" ng-click="sets.toggle('thotd')">	On the Doorstep	<br>	2013-02-22	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tsf')>=0}" ng-click="sets.toggle('tsf')">	The Steward's Fear	<br>	2013-05-09	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tdf')>=0}" ng-click="sets.toggle('tdf')">	The Druadan Forest	<br>	2013-05-31	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('eaad')>=0}" ng-click="sets.toggle('eaad')">	Encounter at Amon Din	<br>	2013-07-05	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM Passage Through Mirkwood	<br>	2013-08-01	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM Journey Along the Anduin	<br>	2013-08-01	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM Escape from Dol Guldur	<br>	2013-08-01	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM Passage Through Mirkwood	<br>	2013-08-01	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM Journey Along the Anduin	<br>	2013-08-01	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM Escape from Dol Guldur	<br>	2013-08-01	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('aoo')>=0}" ng-click="sets.toggle('aoo')">	Assault on Osgiliath	<br>	2013-08-09	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tbr')>=0}" ng-click="sets.toggle('tbr')">	The Black Riders	<br>	2013-09-20	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tbog')>=0}" ng-click="sets.toggle('tbog')">	The Blood of Gondor	<br>	2013-10-17	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	The Stone of Erech	<br>	2013-10-30	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	The Stone of Erech	<br>	2013-10-30	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tmv')>=0}" ng-click="sets.toggle('tmv')">	The Morgul Vale	<br>	2013-11-15	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM The Hunt for Gollum	<br>	2013-12-30	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM Conflict at the Carrock	<br>	2013-12-30	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM A Journey to Rhosgobel	<br>	2013-12-30	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM The Hunt for Gollum	<br>	2013-12-30	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM Conflict at the Carrock	<br>	2013-12-30	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM A Journey to Rhosgobel	<br>	2013-12-30	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('voi')>=0}" ng-click="sets.toggle('voi')">	The Voice of Isengard	<br>	2014-02-21	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM The Hills of Emyn Muil	<br>	2014-04-16	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM The Dead Marshes	<br>	2014-04-16	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM Return to Mirkwood	<br>	2014-04-16	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM Khazad dum	<br>	2014-06-02	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM The Hills of Emyn Muil	<br>	2014-04-16	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM The Dead Marshes	<br>	2014-04-16	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM Return to Mirkwood	<br>	2014-04-16	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM Khazad dum	<br>	2014-06-02	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tdt')>=0}" ng-click="sets.toggle('tdt')">	The Dunland Trap	<br>	2014-06-26	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM Over Hill and Under Hill	<br>	2014-07-22	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM Over Hill and Under Hill	<br>	2014-07-22	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('ttt')>=0}" ng-click="sets.toggle('ttt')">	The Three Trials	<br>	2014-07-24	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tit')>=0}" ng-click="sets.toggle('tit')">	Trouble in Tharbad	<br>	2014-08-21	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM The Redhorn Gate	<br>	2014-08-27	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM Road to Rivendell	<br>	2014-08-27	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM The Watcher in the Water	<br>	2014-08-27	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM The Long Dark	<br>	2014-09-18	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM Foundations of Stone	<br>	2014-09-18	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM Shadow and Flame	<br>	2014-09-18	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM The Redhorn Gate	<br>	2014-08-27	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM Road to Rivendell	<br>	2014-08-27	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM The Watcher in the Water	<br>	2014-08-27	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM The Long Dark	<br>	2014-09-18	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM Foundations of Stone	<br>	2014-09-18	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM Shadow and Flame	<br>	2014-09-18	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('rd')>=0}" ng-click="sets.toggle('rd')">	The Road Darkens	<br>	2014-10-03	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('nie')>=0}" ng-click="sets.toggle('nie')">	The Nin-in-Eilph	<br>	2014-10-23	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM Heirs of Numenor	<br>	2014-10-31	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	The Old Forest	<br>	2014-11-11	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM Heirs of Numenor	<br>	2014-10-31	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	The Old Forest	<br>	2014-11-11	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('cs')>=0}" ng-click="sets.toggle('cs')">	Celebrimbor's Secret	<br>	2014-11-13	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM On the Doorstep	<br>	2014-12-18	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM On the Doorstep	<br>	2014-12-18	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tac')>=0}" ng-click="sets.toggle('tac')">	The Antlered Crown	<br>	2014-12-23	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	Fog on the Barrow-downs	<br>	2015-01-15	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM The Steward's Fear	<br>	2015-02-12	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM The Druadan Forest	<br>	2015-02-12	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM Encounter at Amon Din	<br>	2015-02-12	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM Assault on Osgiliath	<br>	2015-03-19	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM The Blood of Gondor	<br>	2015-03-19	</button>
-            <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM The Morgul Vale	<br>	2015-03-19	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	Fog on the Barrow-downs	<br>	2015-01-15	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM The Steward's Fear	<br>	2015-02-12	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM The Druadan Forest	<br>	2015-02-12	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM Encounter at Amon Din	<br>	2015-02-12	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM Assault on Osgiliath	<br>	2015-03-19	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM The Blood of Gondor	<br>	2015-03-19	</button>
+            <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM The Morgul Vale	<br>	2015-03-19	</button>
 	    <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tlr')>=0}" ng-click="sets.toggle('tlr')">	The Lost Realm	<br>	2015-04-03	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM The Black Riders	<br>	2015-04-10	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM The Black Riders	<br>	2015-04-10	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tos')>=0}" ng-click="sets.toggle('tos')">	The Treason of Saruman	<br>	2015-04-23	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('twoe')>=0}" ng-click="sets.toggle('twoe')">	The Wastes of Eriador	<br>	2015-07-02	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM The Voice of Isengard	<br>	2015-07-17	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM The Voice of Isengard	<br>	2015-07-17	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('efmg')>=0}" ng-click="sets.toggle('efmg')">	Escape from Mount Gram	<br>	2015-07-30	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	The Ruins of Belegost	<br>	2015-07-30	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	The Ruins of Belegost	<br>	2015-07-30	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('ate')>=0}" ng-click="sets.toggle('ate')">	Across the Ettenmoors	<br>	2015-09-03	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('ttor')>=0}" ng-click="sets.toggle('ttor')">	The Treachery of Rhudaur	<br>	2015-09-24	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM The Dunland Trap	<br>	2015-10-29	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM The Three Trials	<br>	2015-10-29	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	NM Trouble in Tharbad	<br>	2015-10-29	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM The Dunland Trap	<br>	2015-10-29	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM The Three Trials	<br>	2015-10-29	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	NM Trouble in Tharbad	<br>	2015-10-29	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tbocd')>=0}" ng-click="sets.toggle('tbocd')">	The Battle of Carn Dûm	<br>	2015-11-06	</button>
-	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled>	Murder at the Prancing Pony	<br>	2015-11-14	</button>
+	    <button class="btn btn-primary btn-lg btn-outline packbutton" disabled style="color:white">	Murder at the Prancing Pony	<br>	2015-11-14	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tlos')>=0}" ng-click="sets.toggle('tlos')">	The Land of Shadow	<br>	2015-11-19	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tdr')>=0}" ng-click="sets.toggle('tdr')">	The Dread Realm	<br>	2015-12-17	</button>
             <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tgh')>=0}" ng-click="sets.toggle('tgh')">	The Grey Havens	<br>	2016-02-09	</button>
-            <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tfotw')>=0}" ng-click="sets.toggle('tfotw')" disabled>	The Flame of the West	<br>		</button>
+            <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tfotw')>=0}" ng-click="sets.toggle('tfotw')" disabled style="color:white">	The Flame of the West	<br>		</button>
+
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('fots')>=0}" ng-click="sets.toggle('fots')" style="color:white" disabled>Flight of the Stormcaller</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('ttitd')>=0}" ng-click="sets.toggle('ttitd')" style="color:white" disabled>The Thing in the Depths</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('totd')>=0}" ng-click="sets.toggle('totd')" style="color:white" disabled>Temple of the Deceived</button>
+        <button class="btn btn-primary btn-lg btn-outline packbutton" ng-class="{selected: sets.filtersettings.pack.indexOf('tdr2')>=0}" ng-click="sets.toggle('tdr2')" style="color:white" disabled>The Drowned Ruins</button>
+
+
+
 	  </tr>
 </div>
 

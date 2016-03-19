@@ -3,7 +3,7 @@
   <btn class="pull-right btn btn-primary btn-outline btn-rounded" ng-click="exportOctgn()">Export to OCTGN</btn>
   <btn class="pull-right btn btn-primary btn-outline btn-rounded" ng-click="exportText()">Export to Text</btn>
   <div>
-    <h2>{{viewDeckObject.deckname}} <small>by </small><small style="font-weight:bold">{{viewDeckObject.username}}</small>
+    <h2>{{viewDeckObject.deckname}} <small>by </small><small style="font-weight:bold"><a ng-href="#/deck/user:{{viewDeckObject.username}}" style="color:grey">{{viewDeckObject.username}}</a></small>
       <br>
       <div style="font-size:20px;">
 	<small>Deck ID: {{viewDeckObject.deckid}}</small>
@@ -66,7 +66,7 @@
       <h4>Notes</h4>
       <div ng-show="authData.uid==viewDeckObject.userid">
 	<textarea cols="20" rows="4" style="width:100%" ng-model="commentBoxText" maxlength="350"></textarea>
-	<button type="button" class="btn btn-primary pull-right btn-rounded" ng-click="submitComment()">Submit</button>
+	<button type="button" class="btn btn-default pull-right" ng-click="submitComment()">Submit</button>
       </div>
       <div>
  	<div ng-repeat="comment in deckCommentsArray | orderBy:'+dateUTC'">
@@ -89,7 +89,8 @@
     </div>
   </div>
   
-  <div class=jumbotron ng-show="deckLogsArray.length" style="float:left;width:32%;margin-right:1%">
+
+  <div class=jumbotron ng-show="deckLogsArray.length" style="float:left;width:32%;margin-right:2%">
     <div class=container>
 	  <div ng-repeat="log in deckLogsArray | orderBy:'-date'">
 	    <h4>{{log.quest}}</h4>
