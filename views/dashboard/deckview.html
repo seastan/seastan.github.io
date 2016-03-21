@@ -65,11 +65,16 @@
   <!-- <div class=jumbotron style="float:left;width:48%;margin-right:2%" ng-show="(authData.uid==ownerID)||(deckCommentsArray.length)"> -->
     <div class=container>
       <h4>Comments</h4>
-      <div>
+      <div ng-show="authData.uid">
       <!-- <div ng-show="authData.uid==ownerID"> -->
 	<textarea cols="20" rows="4" style="width:100%" ng-model="commentBoxText" maxlength="350"></textarea>
 	<button type="button" class="btn btn-default pull-right" ng-click="submitComment()">Submit</button>
       </div>
+      <div ng-hide="authData.uid">
+      <!-- <div ng-show="authData.uid==ownerID"> -->
+        Please <a ng-click="logIn()">log in</a> to post comments.
+      </div>
+
       <div>
  	<div ng-repeat="comment in deckCommentsArray | orderBy:'+dateUTC'">
 	  <br>

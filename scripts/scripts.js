@@ -66,6 +66,12 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
         templateUrl: "views/dashboard/help.html",
     })
 }])
+
+.factory("loginFactory",["$scope","$rootScope","$location",function($scope,$rootScope,$location) {
+    var loginFactory = {};
+    
+}])
+
 .controller("LoginCtrl", ["$scope", "$location",'$rootScope', '$firebaseAuth', '$firebaseArray',  function($scope, $location, $rootScope, $firebaseAuth, $firebaseArray) {
     // var ref = new Firebase('https://seastan-lotrdb.firebaseio.com/');
     // $rootScope.auth = $firebaseAuth(ref);
@@ -85,7 +91,13 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 		//		console.log("Authenticated successfully with payload:", authData);
 	 	$scope.message = '';
 		$scope.$apply(function() {
-		    $location.path("/deck");
+		    $rootScope.authData = authData;
+		    //		    console.log($location.redirectURL)
+		    if ($location.redirectURL) {
+			$location.path($location.redirectURL);
+			$location.redirectURL='';
+		    }
+		    else $location.path("/deck/builder");
 		});
 	    }
 	    $scope.$digest();
@@ -168,10 +180,15 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 		console.log("Login Failed!", error);
 		$scope.message = 'Login failed';
 	    } else {
-		console.log("Authenticated successfully with payload:", authData);
 	 	$scope.message = '';
 		$scope.$apply(function() {
-		    $location.path("/deck");
+		    $rootScope.authData = authData;
+		    //		    console.log($location.redirectURL)
+		    if ($location.redirectURL) {
+			$location.path($location.redirectURL);
+			$location.redirectURL='';
+		    }
+		    else $location.path("/deck/builder");
 		});
 	    }
 	    $scope.$digest();
@@ -194,10 +211,12 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	console.log("Logging out");
 	$rootScope.auth.$unauth();
 	$scope.displayName = 'Guest';
+	$location.redirectURL = "/deck/builder"
 	return $location.path("/login");
     }
     $scope.logIn = function() {
 	console.log("Logging in");
+	$location.redirectURL = $location.url();
 	return $location.path("/login");
     }
 
@@ -1677,27 +1696,21 @@ function(getData,$location,deck,cardObject,$scope,syncStatus,$rootScope,sanitize
 	$scope.syncStatus.cardObjectLoaded = true; // Triggers $watch functions
     });
 
-    setTimeout( function() {
-	// Modify this to include user in the url
-	var deckStringIndex = $location.url().indexOf('/deckstring=');
-	if (deckStringIndex>-1){
-	    var deckString = $location.url().substr(deckStringIndex+2);
-	    deck.load(deckString);
-	}
-	$scope.$apply();
-    },1000);
-
-    // Load Notifications
-    $scope.notificationsArray = []
-    $scope.notifications = $firebaseObject($rootScope.ref.child('users').child($rootScope.authData.uid).child('notifications'))
-    $scope.notifications.$loaded().then(function() {
-	var deckIDs = $scope.notifications.deckComments
-	var pageIDs = $scope.notifications.pageComments
-	angular.forEach(deckIDs, function(value, key){
-	    $scope.notificationsArray.push({"type":"deckComments","id":value})
-	})
-	angular.forEach(pageIDs, function(value, key){
-	    $scope.notificationsArray.push({"type":"pageComments","id":value})
+    // Load notifications once authenticated
+    $scope.authData = $rootScope.authData;
+    $scope.$watch('authData',function(newValue,oldValue) {
+	if(!newValue) return;
+	$scope.notificationsArray = []
+	$scope.notifications = $firebaseObject($rootScope.ref.child('users').child($rootScope.authData.uid).child('notifications'))
+	$scope.notifications.$loaded().then(function() {
+	    var deckIDs = $scope.notifications.deckComments
+	    var pageIDs = $scope.notifications.pageComments
+	    angular.forEach(deckIDs, function(value, key){
+		$scope.notificationsArray.push({"type":"deckComments","id":value})
+	    })
+	    angular.forEach(pageIDs, function(value, key){
+		$scope.notificationsArray.push({"type":"pageComments","id":value})
+	    })
 	})
     })
 
@@ -1810,6 +1823,7 @@ function(getData,$location,deck,cardObject,$scope,syncStatus,$rootScope,sanitize
     $scope.saveDeck = function() {
 	console.log("Saving deck");
         if (!$rootScope.authData) {
+	    $location.redirectURL = $location.url();
             return $location.path("/login");
         }
         if (deck.empty()) {
@@ -2009,8 +2023,10 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
     // Submit comment
     $scope.submitComment = function() {
 	//	console.log("Submitting comment.")
-	if (!$rootScope.authData)
+	if (!$rootScope.authData) {
+	    $location.redirectURL = $location.url();
             return $location.path("/login");
+	}
 	if (!$scope.commentBoxText) return alert("Please type a comment.");
 	var commentText = $rootScope.sanitizeText($scope.commentBoxText);
 	if (!$rootScope.displayName) return alert("Not properly logged in.");
@@ -2033,6 +2049,10 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
 	    $rootScope.ref.child('users').child($scope.viewDeckObject.userid).child('notifications').child('deckComments').child($scope.deckID).set($scope.deckID);
 	}
     }
+    $scope.logIn = function() {
+	$location.redirectURL = $location.url();
+	$location.path("/login");
+    }
     // Delete comment
     $scope.deleteComment = function(comment) {
 	if (confirm("Are you sure?")) {
@@ -2040,6 +2060,7 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
 	    $scope.loadDeckComments();	
 	}
     }
+    
 
 }])
 
@@ -2171,6 +2192,7 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
     $scope.submitComment = function() {
 	//	console.log("Submitting comment.")
 	if (!$rootScope.authData)
+	    $location.redirectURL = $location.url();
             return $location.path("/login");
 	if (!$scope.commentBoxText) return alert("Please type a comment.");
 	var commentText = $rootScope.sanitizeText($scope.commentBoxText);
@@ -2193,6 +2215,10 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
 	    $rootScope.ref.child('users').child($scope.deckPageObject.userid).child('notifications').child('pageComments').child($scope.pageID).set($scope.pageID);
 	}
 
+    }
+    $scope.logIn = function() {
+	$location.redirectURL = $location.url();
+	$location.path("/login");
     }
     // Delete comment
     $scope.deleteComment = function(comment) {
@@ -2806,6 +2832,7 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
     }
     $scope.deleting = false;
     if (!$rootScope.authData) {
+//	 $location.redirectURL = $location.url();
         return $location.path("/login");
     } else {
 	$scope.loadMyDecks();
