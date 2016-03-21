@@ -2191,9 +2191,10 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
     // Submit comment
     $scope.submitComment = function() {
 	//	console.log("Submitting comment.")
-	if (!$rootScope.authData)
+	if (!$rootScope.authData) {
 	    $location.redirectURL = $location.url();
             return $location.path("/login");
+	}
 	if (!$scope.commentBoxText) return alert("Please type a comment.");
 	var commentText = $rootScope.sanitizeText($scope.commentBoxText);
 	if (!$rootScope.displayName) return alert("Not properly logged in.");
