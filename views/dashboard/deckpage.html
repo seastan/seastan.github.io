@@ -97,10 +97,12 @@
   </div>
 
 
-  <div class=jumbotron style="float:left;width:48%;margin-right:2%" ng-show="(authData.uid==ownerID)||(deckCommentsArray.length)">
+  <div class=jumbotron style="float:left;width:48%;margin-right:2%">
+  <!-- <div class=jumbotron style="float:left;width:48%;margin-right:2%" ng-show="(authData.uid==ownerID)||(deckCommentsArray.length)"> -->
     <div class=container>
-      <h4>Notes</h4>
-      <div ng-show="authData.uid==ownerID">
+      <h4>Comments</h4>
+      <div>
+      <!-- <div ng-show="authData.uid==ownerID"> -->
 	<textarea cols="20" rows="4" style="width:100%" ng-model="commentBoxText" maxlength="350"></textarea>
 	<button type="button" class="btn btn-default pull-right" ng-click="submitComment()">Submit</button>
       </div>
@@ -111,7 +113,7 @@
 	  <br>
 	  <div style="font-size:12px;padding-left:10px;text-align:right">
 	    <div>
-	      <a ng-click="deleteComment(comment)" ng-show="authData.uid==ownerID">(Delete comment)</a>
+	      <a ng-click="deleteComment(comment)" ng-show="authData.uid==comment.userid">(Delete comment)</a>
 	    </div>
 	    <div>
 	      {{comment.dateUTC|date:'medium'}}

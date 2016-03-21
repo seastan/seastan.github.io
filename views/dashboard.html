@@ -13,6 +13,46 @@
 	  </h2>
 	</div>
 
+	<div style="text-align:center" ng-show="notificationsArray.length">
+	  <button ng-click="nextComment()" class="btn btn-outline btn-rounded btn-white" style="font-size:14px;"><span class="glyphicon glyphicon-comment"></span> New comments</button>
+	</div>
+
+
+
+
+
+	<ul class="nav nav-sidebar">
+	  <li ng-class="{active: $state.includes('builder')}">
+	    <a ui-sref=builder>Builder <span class=sr-only>(current)</span></a>
+	  </li>
+	  <li ng-class="{active: $state.includes('sets')}">
+	    <a ui-sref=sets>Sets <span class=sr-only>(current)</span></a>
+	  </li>
+	  <li ng-class="{active: $state.includes('mydecks')}">
+	    <a ui-sref=mydecks>My Decks <span class=sr-only>(current)</span>
+	    </a>
+	  </li>
+	  <li ng-class="{active: $state.includes('mypage')}">
+	    <a href="#/deck/user:{{displayName}}">My Page <span class=sr-only>(current)</span></a>
+	  </li>
+	  <li ng-class="{active: $state.includes('mylogs')}">
+	    <a ui-sref=mylogs>My Logs <span class=sr-only>(current)</span></a>
+	  </li>
+	  <li ng-class="{active: $state.includes('community')}">
+	    <a ui-sref=community>Community <span class=sr-only>(current)</span></a>
+	  </li>
+	  <li ng-class="{active: $state.includes('help')}">
+	    <a ui-sref=help>Help <span class=sr-only>(current)</span></a>
+	  </li>
+	</ul>
+
+
+
+
+
+
+
+
 
 
 
@@ -29,7 +69,7 @@
                   <a class="btn btn-white btn-outline btn-rounded btn-sm" href ng-click="preview.setTab('img')" ng-class="{activetab: preview.isSet('img')}">Image</a>
                   <a class="btn btn-white btn-outline btn-rounded btn-sm" href ng-click="preview.setTab('tex'); preview.image.loaded=false" ng-class="{activetab: preview.isSet('tex')}">Text</a>
 		</div>
-		<div style="border-radius:5px;border:4px solid #ffffff;background:#ffffff;height:47%">
+		<div style="border-radius:5px;border:4px solid #ffffff;background:#ffffff;height:47%;">
 		  <img ng-if="preview.image.url&&preview.isSet('img')" ng-src="{{preview.getImg()}}" class="cardpreview" alt="{{preview.alt()}}" title="{{preview.alt()}}" imageonload  />
 		  
 		  <div ng-hide="preview.image.url&&preview.isSet('img')" style="color:black;">
@@ -76,27 +116,14 @@
 
 
 
+	<div>
+	  <br><br><br><br><br><br><br><br>
+	</div>
 
-	<ul class="nav nav-sidebar">
-	  <li ng-class="{active: $state.includes('builder')}">
-	    <a ui-sref=builder>Builder <span class=sr-only>(current)</span></a>
-	  </li>
-	  <li ng-class="{active: $state.includes('sets')}">
-	    <a ui-sref=sets>Sets <span class=sr-only>(current)</span></a>
-	  </li>
-	  <li ng-class="{active: $state.includes('mydecks')}">
-	    <a ui-sref=mydecks>My Decks <span class=sr-only>(current)</span></a>
-	  </li>
-	  <li ng-class="{active: $state.includes('mylogs')}">
-	    <a ui-sref=mylogs>My Logs <span class=sr-only>(current)</span></a>
-	  </li>
-	  <li ng-class="{active: $state.includes('community')}">
-	    <a ui-sref=community>Community <span class=sr-only>(current)</span></a>
-	  </li>
-	  <li ng-class="{active: $state.includes('help')}">
-	    <a ui-sref=help>Help <span class=sr-only>(current)</span></a>
-	  </li>
-	</ul>
+
+
+
+
 	
       </div>
       <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ui-view>

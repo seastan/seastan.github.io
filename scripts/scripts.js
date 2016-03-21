@@ -82,7 +82,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 		console.log("Login Failed!", error);
 		$scope.message = 'Login failed';
 	    } else {
-		console.log("Authenticated successfully with payload:", authData);
+		//		console.log("Authenticated successfully with payload:", authData);
 	 	$scope.message = '';
 		$scope.$apply(function() {
 		    $location.path("/deck");
@@ -104,8 +104,8 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     // Sign up
     $scope.submit = function() {
 	console.log("Attempting to sign in as "+$scope.suEmail);
-	if (!$scope.suName) {
-	    $scope.message='Invalid username.'
+	if (!$scope.suName || !(/^[A-z0-9_]+$/.test($scope.suName))) {
+	    $scope.message='Invalid username. Can only contain letters, numbers, and underscores.'
 	    return;
 	}
 	if ($scope.suName.toLowerCase()=='guest') {
@@ -1665,8 +1665,8 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 // Controllers
 //
 
-.controller('init',['getData','$location','deck','cardObject','$scope','syncStatus','$rootScope','sanitizeText',
-function(getData,$location,deck,cardObject,$scope,syncStatus,$rootScope,sanitizeText){
+.controller('init',['getData','$location','deck','cardObject','$scope','syncStatus','$rootScope','sanitizeText','$firebaseObject',
+function(getData,$location,deck,cardObject,$scope,syncStatus,$rootScope,sanitizeText,$firebaseObject){
     $scope.syncStatus = syncStatus;
     $rootScope.sanitizeText = sanitizeText;
     getData.async('cards.json').then(function(data) {
@@ -1686,6 +1686,35 @@ function(getData,$location,deck,cardObject,$scope,syncStatus,$rootScope,sanitize
 	}
 	$scope.$apply();
     },1000);
+
+    // Load Notifications
+    $scope.notificationsArray = []
+    $scope.notifications = $firebaseObject($rootScope.ref.child('users').child($rootScope.authData.uid).child('notifications'))
+    $scope.notifications.$loaded().then(function() {
+	var deckIDs = $scope.notifications.deckComments
+	var pageIDs = $scope.notifications.pageComments
+	angular.forEach(deckIDs, function(value, key){
+	    $scope.notificationsArray.push({"type":"deckComments","id":value})
+	})
+	angular.forEach(pageIDs, function(value, key){
+	    $scope.notificationsArray.push({"type":"pageComments","id":value})
+	})
+    })
+
+    $scope.nextComment = function() {
+	if (!$scope.notificationsArray) return;
+	var next = $scope.notificationsArray[0]
+	if (next.type == "deckComments") {
+	    $rootScope.ref.child('users').child($rootScope.authData.uid).child('notifications').child("deckComments").child(next.id).remove();
+	    $location.path("/deck/id:"+next.id);
+	} else if (next.type == "pageComments") {
+	    $rootScope.ref.child('users').child($rootScope.authData.uid).child('notifications').child("pageComments").child(next.id).remove();
+	    $location.path("/deck/page:"+next.id);
+	}
+	$scope.notificationsArray.splice(0,1)
+
+    }
+
 }])
 
 //Logic for the card selection
@@ -1998,6 +2027,11 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
 	$rootScope.ref.child('decks').child($scope.deckID).child('comments').child(commentID).set(comment);
 	$scope.deckCommentsArray.push(comment);
 	$scope.commentBoxText = "";
+
+	// Notify owner of new comment
+	if ($scope.authData.uid != $scope.viewDeckObject.userid) {
+	    $rootScope.ref.child('users').child($scope.viewDeckObject.userid).child('notifications').child('deckComments').child($scope.deckID).set($scope.deckID);
+	}
     }
     // Delete comment
     $scope.deleteComment = function(comment) {
@@ -2153,6 +2187,12 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
 	$rootScope.ref.child('pages').child($scope.pageID).child('comments').child(commentID).set(comment);
 	$scope.deckCommentsArray.push(comment);
 	$scope.commentBoxText = "";
+
+	// Notify owner of new comment
+	if ($scope.authData.uid != $scope.deckPageObject.userid) {
+	    $rootScope.ref.child('users').child($scope.deckPageObject.userid).child('notifications').child('pageComments').child($scope.pageID).set($scope.pageID);
+	}
+
     }
     // Delete comment
     $scope.deleteComment = function(comment) {
@@ -2715,7 +2755,7 @@ function($scope,$rootScope,$firebaseObject,$firebaseArray,image,getUserIDFromUse
             }
         }
 
-        text += "\r\n[size=7]Deck built with [url=http://seastan.github.io/]Love of Tales[/url][/size]";
+        text += "\r\nDeck built with [url=http://seastan.github.io/]Love of Tales[/url]";
         return text;
     }
     this.exportText = function(deckObject) {
