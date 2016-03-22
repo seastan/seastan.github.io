@@ -1,9 +1,11 @@
 <div ng-controller="cardControl as cards">
   <div class="filterdiv" style="width:50%">
-    <input ng-model="cards.filtersettings.search.name_norm" type="text" placeholder=" Search by card name" style="width:25%;"></input>
+    <input ng-model="cards.filtersettings.search.name_norm" type="text" placeholder=" Search by card name" style="width:40%;"></input>
+    <input ng-model="cards.filtersettings.search.textc" type="text" placeholder=" Search by card text" style="width:40%"></input>
+    <button ng-click="cards.resetSearch();" class="btn btn-default btn-sm" style="font-size:12px;width:15%;margin-bottom:5px;">Reset</button>
+    <br/>
+    <categories></categories>
     <traits></traits>
-    <input ng-model="cards.filtersettings.search.textc" type="text" placeholder=" Search by card text" style="width:25%"></input>
-    <button ng-click="cards.resetSearch();" class="btn btn-default btn-md" style="font-size:12px;width:15%;">Reset</button>
     <br/>
     <div style="float:left;width:100%;">
       <!-- <div style="font-size:9px;width:100%;text-align:center;">Card Type</div><br/> -->
@@ -152,7 +154,7 @@
   </button>
   <div ng-show="(!suggested.empty()||suggested.blacklist.length)&&!suggested.hidden&&!deck.empty()"><label for="rankSuggestions">Rank by Popularity</label>
     <input type="checkbox" id="rankSuggestions" class="col-sm-2 control-label" ng-model="suggested.rankSuggestions" ng-change="suggested.getStats()"></input>
-  </div>  
+  </div>
   <table class="suggested" ng-hide="suggested.hidden || suggested.empty() || !suggested.rankSuggestions">
     <!-- <div ng-show="suggested.rankSuggestions"> -->
       <tr class="head"><td style="width:100px"></td><td>Ranked</td></tr>
