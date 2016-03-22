@@ -140,20 +140,41 @@
 
 
 </div>
-<div class="suggesteddiv" ng-controller="suggestedCtrl">
-  <button class="btn btn-default btn-sm" style="width:100%;" ng-show="(!suggested.empty()||suggested.blacklist.length)&&!suggested.hidden&&!deck.empty()" ng-click="suggested.hide()" ng-class="">
+<div class="suggesteddiv" ng-controller="suggestedCtrl" ng-hide="deck.empty()">
+  <button class="btn btn-default btn-sm" style="width:100%;" ng-hide="suggested.hidden" ng-click="suggested.hidden = 1">
     Hide Suggestions
   </button>
-  <button class="btn btn-default btn-sm" style="width:100%;" ng-show="(!suggested.empty()||suggested.blacklist.length)&&suggested.hidden&&!deck.empty()" ng-click="suggested.show()" ng-class="">
+  <button class="btn btn-default btn-sm" style="width:100%;" ng-show="suggested.hidden" ng-click="suggested.hidden = 0">
     Show Suggestions
   </button>
-  <button class="btn btn-default btn-sm" style="width:100%" ng-show="suggested.blacklist.length&&!suggested.hidden&&!deck.empty()" ng-click="suggested.clearBlacklist()" ng-class="">
+  <button class="btn btn-default btn-sm" style="width:100%" ng-show="suggested.blacklist.length&&!suggested.hidden" ng-click="suggested.clearBlacklist()" ng-class="">
     Clear Blocked Suggestions
   </button>
-  <div ng-show="(!suggested.empty()||suggested.blacklist.length)&&!suggested.hidden&&!deck.empty()"><label for="rankSuggestions">Rank by Popularity</label>
+  <div ng-hide="suggested.hidden||suggested.useSmartSuggestions"><label for="rankSuggestions">Rank by Popularity</label>
     <input type="checkbox" id="rankSuggestions" class="col-sm-2 control-label" ng-model="suggested.rankSuggestions" ng-change="suggested.getStats()"></input>
   </div>  
-  <table class="suggested" ng-hide="suggested.hidden || suggested.empty() || !suggested.rankSuggestions">
+  <div ng-hide="suggested.hidden||suggested.rankSuggestions"><label for="smartSuggestions">Use Smart Suggestions</label>
+    <input type="checkbox" id="smartSuggestions" class="col-sm-2 control-label" ng-model="suggested.useSmartSuggestions" ng-click="suggested.deckChange(deck)"></input>
+  </div>  
+  <div ng-show="!suggested.hidden && suggested.useSmartSuggestions">
+  <table class="suggested">
+      <tr class="card" ng-repeat="card in suggested.smartSuggestions" ng-mouseover="changepreview(card)">
+	<td style="font-size:0;">
+	  <div class="btn-group">
+            <button class="btn btn-default btn-xs" ng-class="" ng-click="suggested.remove(card)">X</button>
+            <button class="btn btn-default btn-xs" ng-class="{active: deck.quantity(card)==1}" ng-click="deck.change(card,1)">1</button>
+            <button class="btn btn-default btn-xs" ng-class="{active: deck.quantity(card)==2}" ng-click="deck.change(card,2)" ng-hide="card.restrict || card.type=='1hero' || (suggested.filtersettings.onecore && card.corequantity < 2 && deck.quantity(card)<2 )">2</button>
+            <button class="btn btn-default btn-xs" ng-class="{active: deck.quantity(card)==3}" ng-click="deck.change(card,3)" ng-hide="card.restrict || card.type=='1hero' || (suggested.filtersettings.onecore && card.corequantity < 3 && deck.quantity(card)<3 ) || (suggested.filtersettings.twocore && card.corequantity < 2 && deck.quantity(card) < 3)">3</button>
+	  </div>
+	</td>
+	<td class="c{{card.sphere}}">{{card.name}}</td>
+      </tr>
+    <!-- </div> -->
+  </table>
+  </div>
+
+  <div ng-hide="suggested.hidden || !suggested.rankSuggestions || suggested.useSmartSuggestions">
+  <table class="suggested">
     <!-- <div ng-show="suggested.rankSuggestions"> -->
       <tr class="head"><td style="width:100px"></td><td>Ranked</td></tr>
       <tr class="card" ng-repeat="card in suggested.databaseStats.statsCardObject | orderBy:'-deckPercentage'" ng-mouseover="changepreview(card)" ng-show="suggested.rankSuggestions && suggested.isInSuggested(card)">
@@ -169,7 +190,9 @@
       </tr>
     <!-- </div> -->
   </table>
-  <table class="suggested" ng-hide="suggested.hidden || suggested.empty() || suggested.rankSuggestions">
+  </div>
+  
+  <table class="suggested" ng-hide="suggested.hidden || suggested.rankSuggestions || suggested.useSmartSuggestions">
 
     <tr class="head" ng-show="suggested.countHeroes()"><td style="width:100px"></td><td>Heroes</td></tr>
     <tr class="card" ng-repeat="card in suggested['1hero'] | orderBy:['sphere','name_norm']" ng-mouseover="changepreview(card)">
