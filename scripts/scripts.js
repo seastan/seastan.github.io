@@ -730,7 +730,8 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     suggested.cardNetwork = cardNetwork;
     suggested.suggestV2 = function(deck) {
 	if (!suggested.useSmartSuggestions) return;
-	console.log("hi");
+	console.log(cardNetwork);
+	if (!cardNetwork) return;
 	// Set up deck parameters
 	suggested.deck = deck;
 	suggested.setTargetOptionsForDeck();
