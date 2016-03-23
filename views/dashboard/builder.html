@@ -153,7 +153,7 @@
   <div ng-hide="suggested.hidden||suggested.useSmartSuggestions"><label for="rankSuggestions">Rank by Popularity</label>
     <input type="checkbox" id="rankSuggestions" class="col-sm-2 control-label" ng-model="suggested.rankSuggestions" ng-change="suggested.getStats()"></input>
   </div>  
-  <div ng-hide="suggested.hidden||suggested.rankSuggestions"><label for="smartSuggestions">Use Smart Suggestions</label>
+  <div ng-hide="suggested.hidden||suggested.rankSuggestions||!syncStatus.cardNetworkLoaded"><label for="smartSuggestions">Use Smart Suggestions</label>
     <input type="checkbox" id="smartSuggestions" class="col-sm-2 control-label" ng-model="suggested.useSmartSuggestions" ng-click="suggested.deckChange(deck)"></input>
   </div>  
   <div ng-show="!suggested.hidden && suggested.useSmartSuggestions">

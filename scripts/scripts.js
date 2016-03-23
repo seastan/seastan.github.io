@@ -725,12 +725,12 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     // New suggested mechanism featuring stats from database
     // The Card Network is basically a N*N array, where N is the number of cards in the card pool.
     // The [i][j] entry is the probability of a deck containing card i to also contain card j.
+    // In my case I am using an object, and entries with probability <0.05 are missing. This was done to conserve space 
     suggested.smartSuggestions = [];
     suggested.useSmartSuggestions = 0;
     suggested.cardNetwork = cardNetwork;
     suggested.suggestV2 = function(deck) {
 	if (!suggested.useSmartSuggestions) return;
-	console.log(cardNetwork);
 	if (!cardNetwork) return;
 	// Set up deck parameters
 	suggested.deck = deck;
@@ -747,6 +747,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	    var newRow = row;
 	    //	    console.log(newRow);
 	    var addCard = function(cardID) {
+		if(!newRow[cardID]) newRow[cardID] = 0.01;
 		cardRow[cardID]*=newRow[cardID]; // The += operator is also worth exploring here
 	    }
 	    angular.forEach(cardRow, function(value, key){
@@ -759,6 +760,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	for (var t in types) {
 	    for (var c in deck[types[t]]) {
 		var card = deck[types[t]][c];
+		if (!cardNetwork[getCardID(card)]) continue;
 		var newRow = cardNetwork[getCardID(card)];
 		addRow(newRow);
 	    }
@@ -786,8 +788,11 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	var vetolisted=suggested.isCardInVetoList(card.name_norm,card.exp);
 	// No not suggest more heroes if there are 3 heroes in the deck
 	var threeheroes=(suggested.countDeckHeroes()>=3);
-	
-	var debug = '';
+
+	// For debug
+	//if (card.name_norm=="Gandalf" &&card.exp=="core") console.log(propersphere+' '+propertarget+' '+vetolisted+' '+threeheroes)
+
+
 	if (vetolisted) return 0;
 	if (!propersphere && card.type!='1hero') return 0; // Hero suggestions are exempt from requiring a sphere match
 	if (card.sphere=='6baggins'||card.sphere=='7fellowship') return 0; // Never suggest cards of these spheres
@@ -799,7 +804,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     // Final set of check before adding the card. Should not be bypassed.
     suggested.finalCheck = function(card) {
 	// Check if card is already in deck
-	var isInDeck = suggested.isCardInList(card,suggested[card.type]);
+	var isInDeck = suggested.isCardInList(card,suggested.deck[card.type]);
 	// Check is card is in blacklist
 	var blacklisted=suggested.isCardInList(card,suggested.blacklist);
 	// Check if there is an ally or hero with the same name already in the deck
@@ -808,7 +813,9 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	var properexp=0;
 	for(var k in filtersettings.pack)
 	    if(filtersettings.pack[k]==card.exp) properexp=1;
-
+	// For debug
+	//	if (card.name_norm=="Gandalf" &&card.exp=="core") console.log(isInDeck+' '+blacklisted+' '+sameName+' '+properexp)
+	//	if (card.name_norm=="Faramir" &&card.exp=="core") console.log(isInDeck+' '+blacklisted+' '+sameName+' '+properexp)
 	if (isInDeck) return 0;
 	if (blacklisted) return 0;
 	if (sameName) return 0;
@@ -817,9 +824,8 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	return 1;
     };
 
-
-
-    // This is the main function, it gets called whenever the cards in the deck change and updates the suggestions
+    
+    // These suggestions are produced maunally based on regular expressions
     suggested.suggestV1 = function(deck) {
 	suggested.deck=deck;
 	// Clear the suggestions
@@ -1992,8 +1998,9 @@ function(getData,$location,deck,cardObject,$scope,syncStatus,$rootScope,sanitize
 	$scope.saving=false;
     }
 }])
-.controller('suggestedCtrl',['$scope','suggested','image','deck','cardObject','databaseStats',function($scope,suggested,image,deck,cardObject,databaseStats){
+.controller('suggestedCtrl',['$scope','suggested','image','deck','cardObject','databaseStats','syncStatus',function($scope,suggested,image,deck,cardObject,databaseStats,syncStatus){
     $scope.suggested=suggested;
+    $scope.syncStatus=syncStatus;
     $scope.suggested.getStats = function() {
 	databaseStats.getStatsCardObject();
 	//	databaseStats.getCardNetwork();
@@ -3433,7 +3440,6 @@ function($rootScope,$scope,$firebaseObject,$firebaseArray,generateDeckID,getDeck
 	    return object;
 	}
 	cardNetwork.$loaded().then(function() {
-	    console.log('Loaded card network',cardNetwork);
 	    databaseStats.cardNetwork = cardNetwork;
 	    returnObject(cardNetwork);
 	});
@@ -3610,8 +3616,15 @@ function($rootScope,$scope,$firebaseObject,getDeckObjectFromDeckID,formDataDeckS
 		var cardIDi = ki;
 		angular.forEach(cardNetwork[cardIDi], function(vj, kj){
 		    var cardIDj = kj;
-		    if (cardNetwork[cardIDi][cardIDj] == 0) return;
-		    else cardNetwork[cardIDi][cardIDj] = parseFloat(cardNetwork[cardIDi][cardIDj]/cardNetwork[cardIDi]["totalDecks"]);
+		    var cutOff = 0.05;
+		    if (cardNetwork[cardIDi]["totalDecks"]==0) {
+			delete cardNetwork[cardIDi][cardIDj];
+			console.log("deleting"+cardIDi+' '+cardIDj);
+			return;
+		    }
+		    cardNetwork[cardIDi][cardIDj] = parseFloat(cardNetwork[cardIDi][cardIDj]/cardNetwork[cardIDi]["totalDecks"]);
+		    if (cardNetwork[cardIDi][cardIDj] <= cutOff)
+			delete cardNetwork[cardIDi][cardIDj];
 		})
 	    })
 	    console.log(cardNetwork)
