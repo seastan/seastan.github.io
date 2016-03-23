@@ -57,6 +57,36 @@
 	    <td class="c{{card.sphere}}">{{card.name}}</td></tr>
 	</table>
       </div>
+
+
+      <br><br>
+
+      <div ng-show="deckModsArray.length">
+	<h4>Modifications</h4>
+	<table class="table mydecktable">
+	  <thead>
+	    <tr>
+	      <th>Author</th>
+	      <th>Deck ID</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <tr ng-repeat="d in deckModsArray | orderBy:'-date'">
+	      <td>
+		{{d.username}}
+	      </td>
+	      <td>
+		<a ng-href="#/deck/id:{{d.deckid}}">{{d.deckid}}</a>
+	      </td>
+	    </tr>
+	  </tbody>
+	</table>
+      </div>
+
+
+
+
+
     </div>
   </div>
 
@@ -116,29 +146,6 @@
 
 
 
-  <div class=jumbotron ng-show="deckModsArray.length" style="float:left;width:32%;margin-right:1%">
-    <div class=container>
-      <h4>Modifications</h4>
-      <table class="table mydecktable">
-	<thead>
-	  <tr>
-	    <th>Author</th>
-	    <th>Deck ID</th>
-	  </tr>
-	</thead>
-	<tbody>
-	  <tr ng-repeat="d in deckModsArray | orderBy:'-date'">
-	    <td>
-	      {{d.username}}
-	    </td>
-	    <td>
-	      <a ng-href="#/deck/id:{{d.deckid}}">{{d.deckid}}</a>
-	    </td>
-	  </tr>
-	</tbody>
-      </table>
-    </div>
-  </div>
 
 
   

@@ -575,10 +575,35 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     };
     return getData;
 })
+.factory('getNetwork', function($http) {
+    var promise;
+    var getNetwork = {
+	async: function(file) {
+            if ( !promise ) {
+		// $http returns a promise, which has a then function, which also returns a promise
+		promise = $http.get(file).then(function (response) {
+		    // The then function here is an opportunity to modify the response
+		    //console.log(response);
+		    // The return value gets picked up by the then in the controller.
+		    return response.data;
+		});
+            }
+            // Return the promise to the controller
+            return promise;
+	}
+    };
+    return getNetwork;
+})
+
 .factory('cardObject',["getData",function(getData){
     var cardObject = [];
     return cardObject;
 }])
+.factory('cardNetwork',["getNetwork",function(getNetwork){
+    var cardNetwork = {};
+    return cardNetwork;
+}])
+
 .factory('filtersettings',["$localStorage",function ($localStorage) {
     var filtersettings={};
     filtersettings.onecore = $localStorage.onecore;
@@ -663,7 +688,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     return image;
 })
 
-.factory('suggested', ['filtersettings','cardObject',function(filtersettings,cardObject){
+.factory('suggested', ['filtersettings','cardObject','getCardID','cardNetwork','getCardFromCardID',function(filtersettings,cardObject,getCardID,cardNetwork,getCardFromCardID){
     var suggested={};
     suggested.hidden=0;
     suggested.deck={};
@@ -674,6 +699,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     suggested.deck['5quest']=[];
     suggested.filtersettings = filtersettings;
     suggested.allcards = cardObject;
+    console.log(cardObject);
     suggested['sphere']=[];
     suggested['1hero']=[];
     suggested['2ally']=[];
@@ -697,8 +723,116 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	{name_norm: "Gandalf", exp: "core"}
     ];
 
-    // This is the main function, it gets called whenever the cards in the deck change and updates the suggestions
     suggested.deckChange = function(deck) {
+	suggested.suggestV1(deck); // Based on regex and manual input
+	suggested.suggestV2(deck); // Based on card database
+    }
+
+    // New suggested mechanism featuring stats from database
+    // The Card Network is basically a N*N array, where N is the number of cards in the card pool.
+    // The [i][j] entry is the probability of a deck containing card i to also contain card j.
+    // In my case I am using an object, and entries with probability <0.05 are missing. This was done to conserve space
+    suggested.smartSuggestions = [];
+    suggested.useSmartSuggestions = 0;
+    suggested.cardNetwork = cardNetwork;
+    suggested.suggestV2 = function(deck) {
+	if (!suggested.useSmartSuggestions) return;
+	if (!cardNetwork) return;
+	// Set up deck parameters
+	suggested.deck = deck;
+	suggested.setTargetOptionsForDeck();
+        // Set the spheres that the deck has access to.
+        suggested.setSpheres();
+	// cardRow starts as a blank array of all the cards in the pool, with a default suggestion value of 1 for each card
+	var cardRow = {};
+	for (var d in cardObject) {
+	    cardRow[getCardID(cardObject[d])] = 1;
+	}
+	// A function to add a row of the Network to the cardRow
+	var addRow = function(row) {
+	    var newRow = row;
+	    //	    console.log(newRow);
+	    var addCard = function(cardID) {
+		if(!newRow[cardID]) newRow[cardID] = 0.01;
+		cardRow[cardID]*=newRow[cardID]; // The += operator is also worth exploring here
+	    }
+	    angular.forEach(cardRow, function(value, key){
+		var cardID = key;
+		addCard(cardID);
+	    })
+	}
+	// Loop over cards in deck
+	var types = ['1hero','2ally','3attachment','4event','5quest'];
+	for (var t in types) {
+	    for (var c in deck[types[t]]) {
+		var card = deck[types[t]][c];
+		if (!cardNetwork[getCardID(card)]) continue;
+		var newRow = cardNetwork[getCardID(card)];
+		addRow(newRow);
+	    }
+	}
+	// Sort the cardRow
+	var sortedRow = Object.keys(cardRow).sort(function(a,b){return cardRow[b]-cardRow[a]})
+	var orderedSuggestions = [];
+	for (var i in sortedRow)
+	    orderedSuggestions.push(getCardFromCardID(sortedRow[i]));
+	suggested.smartSuggestions = [];
+	for (var c in orderedSuggestions) {
+	    var card = orderedSuggestions[c];
+	    if (suggested.checks(card)) suggested.smartSuggestions.push(card);
+	    if (suggested.smartSuggestions.length>=25) break;
+	}
+	//console.log(suggested.smartSuggestions);
+    }
+    // Check to make sure the card makes sense to suggest
+    suggested.checks = function(card) {
+	// Check if there is a hero with access to the necessary sphere to play the card
+	var propersphere=suggested.sphereAccess(card);
+	// // Check if there is a proper target in the deck that can use the card
+	var propertarget=suggested.deckHasTargetOption(card);
+	// Cards that have been hand-picked to never be suggested
+	var vetolisted=suggested.isCardInVetoList(card.name_norm,card.exp);
+	// No not suggest more heroes if there are 3 heroes in the deck
+	var threeheroes=(suggested.countDeckHeroes()>=3);
+
+	// For debug
+	//if (card.name_norm=="Gandalf" &&card.exp=="core") console.log(propersphere+' '+propertarget+' '+vetolisted+' '+threeheroes)
+
+
+	if (vetolisted) return 0;
+	if (!propersphere && card.type!='1hero') return 0; // Hero suggestions are exempt from requiring a sphere match
+	if (card.sphere=='6baggins'||card.sphere=='7fellowship') return 0; // Never suggest cards of these spheres
+	if (!propertarget) return 0;
+	if (threeheroes && card.type=='1hero') return 0;
+	return suggested.finalCheck(card);
+    };
+
+    // Final set of check before adding the card. Should not be bypassed.
+    suggested.finalCheck = function(card) {
+	// Check if card is already in deck
+	var isInDeck = suggested.isCardInList(card,suggested.deck[card.type]);
+	// Check is card is in blacklist
+	var blacklisted=suggested.isCardInList(card,suggested.blacklist);
+	// Check if there is an ally or hero with the same name already in the deck
+	var sameName=suggested.sameName(card);
+	// Check if card is in an available pack
+	var properexp=0;
+	for(var k in filtersettings.pack)
+	    if(filtersettings.pack[k]==card.exp) properexp=1;
+	// For debug
+	//	if (card.name_norm=="Gandalf" &&card.exp=="core") console.log(isInDeck+' '+blacklisted+' '+sameName+' '+properexp)
+	//	if (card.name_norm=="Faramir" &&card.exp=="core") console.log(isInDeck+' '+blacklisted+' '+sameName+' '+properexp)
+	if (isInDeck) return 0;
+	if (blacklisted) return 0;
+	if (sameName) return 0;
+	if (!properexp) return 0;
+
+	return 1;
+    };
+
+
+    // These suggestions are produced maunally based on regular expressions
+    suggested.suggestV1 = function(deck) {
 	suggested.deck=deck;
 	// Clear the suggestions
 	suggested['1hero']=[];
@@ -748,8 +882,8 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	    if (suggested.isInDeck('Vilya','saf') && cardc.cost>=4 && cardc.type!='1hero')
 		suggested.add(cardc); // Bypass basic checks
 
-	    // Suggest spirit heroes for Caldara
-	    if (suggested.isInDeck('Caldara','tbog') && cardc.sphere=='3spirit' && cardc.type=='1hero')
+	    // Suggest spirit heroes/allies for Caldara
+	    if (suggested.isInDeck('Caldara','tbog') && cardc.sphere=='3spirit' && (cardc.type=='1hero' || cardc.type=='2ally'))
 	      	suggestions.push(cardc);
 	    // Suggest tactics heroes for Thoeden
 	    if (suggested.isInDeck('Theoden','tmv') && cardc.sphere=='2tactics' && cardc.type=='1hero')
@@ -905,7 +1039,6 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	    suggested['sphere'].push('2tactics');
 	if(suggested.isInDeck('Amarthiul','tbocd'))
 	    suggested['sphere'].push('2tactics');
-
     };
 
     // Returns true if deck has access to given sphere
@@ -1239,7 +1372,6 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     };
     // Takes in a name and expansion, and returns 1 if the card is suggested
     suggested.isInSuggested = function(card) {
-	console.log(card.name_norm);
 	var types = ['1hero','2ally','3attachment','4event','5quest'];
 	for(var t in types)
 	    for (var c in suggested[types[t]]) {
@@ -1452,12 +1584,13 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     };
     // Remove from suggested
     suggested.remove = function(card) {
-        for (var c in suggested[card.type]){
-            if (suggested[card.type][c].cycle==card.cycle && suggested[card.type][c].no==card.no){
-		suggested[card.type].splice(c, 1);
-            }
-	}
+        // for (var c in suggested[card.type]){
+        //     if (suggested[card.type][c].cycle==card.cycle && suggested[card.type][c].no==card.no){
+	// 	suggested[card.type].splice(c, 1);
+        //     }
+	// }
 	suggested.blacklist.push(card);
+	suggested.deckChange(suggested.deck);
     }
     // Clear the blacklisted cards
     suggested.clearBlacklist = function() {
@@ -1524,7 +1657,6 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     deck['4event']=[];
     deck['5quest']=[];
     deck.change = function(card,quantity){
-//	console.log(card.name+' '+quantity);
 	if (quantity>0){
 	    if (deck.quantity(card)==0) {
 		card.quantity=quantity;
@@ -1690,8 +1822,8 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 // Controllers
 //
 
-.controller('init',['getData','$location','deck','cardObject','$scope','syncStatus','$rootScope','sanitizeText','$firebaseObject',
-function(getData,$location,deck,cardObject,$scope,syncStatus,$rootScope,sanitizeText,$firebaseObject){
+.controller('init',['getData','$location','deck','cardObject','$scope','syncStatus','$rootScope','sanitizeText','$firebaseObject','cardNetwork','getNetwork',
+function(getData,$location,deck,cardObject,$scope,syncStatus,$rootScope,sanitizeText,$firebaseObject,cardNetwork,getNetwork){
     $scope.syncStatus = syncStatus;
     $rootScope.sanitizeText = sanitizeText;
     getData.async('cards.json').then(function(data) {
@@ -1700,6 +1832,17 @@ function(getData,$location,deck,cardObject,$scope,syncStatus,$rootScope,sanitize
 	    cardObject.push(data[d]);
 	}
 	$scope.syncStatus.cardObjectLoaded = true; // Triggers $watch functions
+    });
+    getNetwork.async('cardNetwork.json').then(function(data) {
+	angular.forEach(data, function(vi, ki){
+            var cardIDi = ki;
+	    cardNetwork[cardIDi] = {};
+            angular.forEach(data[cardIDi], function(vj, kj){
+		var cardIDj = kj;
+		cardNetwork[cardIDi][cardIDj] = data[cardIDi][cardIDj];
+            })
+        })
+	$scope.syncStatus.cardNetworkLoaded = true; // Triggers $watch functions
     });
 
     // Load notifications once authenticated
@@ -1862,17 +2005,20 @@ function(getData,$location,deck,cardObject,$scope,syncStatus,$rootScope,sanitize
 	$scope.saving=false;
     }
 }])
-.controller('suggestedCtrl',['$scope','suggested','image','deck','databaseStats',function($scope,suggested,image,deck,databaseStats){
+.controller('suggestedCtrl',['$scope','suggested','image','deck','cardObject','databaseStats','syncStatus',function($scope,suggested,image,deck,cardObject,databaseStats,syncStatus){
     $scope.suggested=suggested;
+    $scope.syncStatus=syncStatus;
     $scope.suggested.getStats = function() {
 	databaseStats.getStatsCardObject();
+	//	databaseStats.getCardNetwork();
 	$scope.suggested.databaseStats = databaseStats;
     }
+
 //    deck.refreshSuggested();
     $scope.changepreview = function(card){
     	image.update(card);
     }
-    // Rank cards  (Omit this for use in Rivendell Councilroom)
+
 
 }])
 
@@ -3274,8 +3420,6 @@ function($rootScope,$scope,$firebaseObject,$firebaseArray,generateDeckID,getDeck
     databaseStats.getStats = function() {
 	if (databaseStats.gotStats) return;
 	databaseStats.gotStats = true;
-	// Copy the cardObject. The new cardObject will have a additional field
-	// called 'deckPercentage' which is the percentage of decks the card is in.
 	var statsCardObject = cardObject;//JSON.parse(JSON.stringify(cardObject));
 	// Get the stats object from the database
 	var statsObject = $firebaseObject($rootScope.ref.child('stats'));
@@ -3295,11 +3439,28 @@ function($rootScope,$scope,$firebaseObject,$firebaseArray,generateDeckID,getDeck
 	    returnObject(statsCardObject);
 	});
     }
+    databaseStats.getNetwork = function() {
+	if (databaseStats.gotNetwork) return;
+	databaseStats.gotNetwork = true;
+	var cardNetwork = $firebaseObject($rootScope.ref.child('stats').child('cardNetwork'));
+	var returnObject = function(object) {
+	    return object;
+	}
+	cardNetwork.$loaded().then(function() {
+	    databaseStats.cardNetwork = cardNetwork;
+	    returnObject(cardNetwork);
+	});
+    }
+
     databaseStats.getStatsCardObject = function() {
-	console.log("Getting stats.");
 	if (databaseStats.statsCardObject) return databaseStats.statsCardObject;
 	else return databaseStats.getStats();
     }
+    databaseStats.getCardNetwork = function() {
+	if (databaseStats.cardNetwork) return databaseStats.cardNetwork;
+	else return databaseStats.getNetwork();
+    }
+
     return databaseStats;
 }])
 
@@ -3426,11 +3587,55 @@ function($rootScope,$scope,$firebaseObject,getDeckObjectFromDeckID,formDataDeckS
 	    console.log("Parsed all decks.");
 	    console.log("Saving stats.");
 	    $rootScope.ref.child('stats').child('cardPopularity').set(cardPopularity);
-	    // allStats.$loaded().then(function() {
-	    // 	allStats = statsObject;
-	    // 	console.log("Saving stats");
-	    // 	allStats.$save();
-	    // })
+
+	    // Build empty card network
+	    var cardNetwork = {};
+	    for (var c in cardObject) {
+		var cardRow = {};
+		for (var d in cardObject) {
+		    cardRow[getCardID(cardObject[d])] = 0;
+		}
+		var cardID = getCardID(cardObject[c]);
+		cardNetwork[cardID] = cardRow;
+		cardNetwork[cardID]["totalDecks"] = 0;
+	    }
+	    angular.forEach(allDecks, function(value, key){
+	    	var deckID = key;
+	    	var deckObject = value;
+	    	var deckString = deckObject.deckstring;
+	    	if (!deckObject.daughterids) { // only count decks with no newer versions
+		    var cardIDList = [];
+	    	    for (var i=0; i<=(deckString.length-4); i=i+4) {
+	    		var cardID = deckString.substr(i,3);
+	    		cardIDList.push(cardID);
+	    	    }
+	    	    for (var i in cardIDList) {
+	    		var cardIDi = cardIDList[i];
+			cardNetwork[cardIDi]["totalDecks"]++;
+			for (var j in cardIDList) {
+			    var cardIDj = cardIDList[j];
+			    cardNetwork[cardIDi][cardIDj]++;
+			}
+	    	    }
+		}
+	    })
+	    angular.forEach(cardNetwork, function(vi, ki){
+		var cardIDi = ki;
+		angular.forEach(cardNetwork[cardIDi], function(vj, kj){
+		    var cardIDj = kj;
+		    var cutOff = 0.05;
+		    if (cardNetwork[cardIDi]["totalDecks"]==0) {
+			delete cardNetwork[cardIDi][cardIDj];
+			console.log("deleting"+cardIDi+' '+cardIDj);
+			return;
+		    }
+		    cardNetwork[cardIDi][cardIDj] = parseFloat(cardNetwork[cardIDi][cardIDj]/cardNetwork[cardIDi]["totalDecks"]);
+		    if (cardNetwork[cardIDi][cardIDj] <= cutOff)
+			delete cardNetwork[cardIDi][cardIDj];
+		})
+	    })
+	    console.log(cardNetwork)
+	    $rootScope.ref.child('stats').child('cardNetwork').set(cardNetwork);
 	});
     }
     $scope.getStats = function() {
