@@ -64,7 +64,7 @@
       <h3 class="panel-title">Search Results</h3>
     </div>
     <div class="panel-body">
-      <table class="table mydecktable" style="max-width:100%;">
+      <table class="table mydecktable" style="max-width:100%;table-layout:fixed;">
 	<thead>
 	  <tr>
 	    <th>Name</th>
@@ -74,14 +74,12 @@
 	</thead>
 	<tbody>
 	  <tr ng-repeat="deck in formDataDeckSearch.searchResultsArray | orderBy:'-dateUTC'">
-	    <td style="padding-left:10px;">
+	    <td style="padding-left:0px;max-width:1%;word-wrap:break-word;">
 	      <a ng-href="#/deck/id:{{deck.deckid}}" style="font-weight:bold;">{{deck.deckname}}</a>
 	      <div style="font-size:9px;padding-left:10px;">{{deck.dateUTC|date:'medium'}}</div>
 	    </td>
 	    <td>
-	      <table>
-		<td ng-repeat="card in deck.heroes | limitTo:4" ng-mouseover="changepreview(card)" class="c{{card.sphere}}" style="padding-right:10px;">{{card.name}}</td>
-	      </table>
+		<span ng-repeat="card in deck.heroes | limitTo:4 | orderBy:'sphere'" ng-mouseover="changepreview(card)" class="c{{card.sphere}}" style="padding-right:10px;">{{card.name}}<br></span>
 	    </td>
 	    <td>
 	      <div><a ng-href="#/deck/user:{{deck.username}}" style="font-weight:bold;">{{deck.username}}</a></div>
