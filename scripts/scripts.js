@@ -69,7 +69,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 
 .factory("loginFactory",["$scope","$rootScope","$location",function($scope,$rootScope,$location) {
     var loginFactory = {};
-    
+
 }])
 
 .controller("LoginCtrl", ["$scope", "$location",'$rootScope', '$firebaseAuth', '$firebaseArray',  function($scope, $location, $rootScope, $firebaseAuth, $firebaseArray) {
@@ -220,18 +220,18 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	return $location.path("/login");
     }
 
-    
+
 }])
 
 .controller("authCtrl", ["$scope","$rootScope","$state","$location","$firebase","$firebaseArray","$firebaseObject","$firebaseAuth",function($scope,$rootScope,$state,$location,$firebase,$firebaseArray,$firebaseObject,$firebaseAuth) {
     $rootScope.displayName = 'Guest';
-    $rootScope.ref = new Firebase('https://seastan-lotrdb.firebaseio.com/');    
+    $rootScope.ref = new Firebase('https://seastan-lotrdb.firebaseio.com/');
     //$rootScope.users = $firebaseObject($rootScope.ref.child('users'));
     //$rootScope.userdecks = $firebaseObject($rootScope.ref.child('decks'));
     //$rootScope.userlogs  = $firebaseObject($rootScope.ref.child('logs'));
     $rootScope.user = {};
-    
-    $rootScope.auth = $firebaseAuth($rootScope.ref);    
+
+    $rootScope.auth = $firebaseAuth($rootScope.ref);
     $rootScope.auth.$onAuth(function(authData) {
 	$rootScope.authData = authData;
     	if (authData) {
@@ -242,12 +242,12 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 		    console.log("Could not find user!");
 		    return;
 		}
-		
+
 		$rootScope.displayName = user.username;
 		$rootScope.user = user;
 		//			$rootScope.userdecks = user.decks;
 		//			$rootScope.userlogs = user.logs;
-		
+
 	    });
 	}
     	else
@@ -263,6 +263,12 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     return {
       restrict: 'E',
       templateUrl: 'views/dashboard/traitchoice.html'
+    };
+})
+.directive('categories', function() {
+    return {
+      restrict: 'E',
+      templateUrl: 'views/dashboard/categories.html'
     };
 })
 .directive('questchoice', function() {
@@ -425,10 +431,10 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
         for (var c in cardObject) {
             if (getCardID(cardObject[c]) == cardID) {
 		var foundCard = JSON.parse(JSON.stringify(cardObject.slice(+c,+c+1)[0])); //create a copy of the card, not changing the cardObject
-//                var foundCard = cardObject.slice(+c,+c+1)[0]; 
+//                var foundCard = cardObject.slice(+c,+c+1)[0];
 		return foundCard;
             }
-            
+
         }
 	return {};
     }
@@ -451,7 +457,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	var getCardID = function(card) {
 	    return getSetID(card.exp)+('0'+card.no.toString(16)).substr(-2);
 	}
-	return getCardID; 
+	return getCardID;
 }])
 .factory('getQuantityOfCardInLocalObject',function() {
 	var quantity = function(card,localDeck) {
@@ -465,7 +471,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 })
 
 .factory('getSetID',function(){
-	var getSetID = function(set) { 
+	var getSetID = function(set) {
 	    if (set=='core') return 'A';
 	    else if (set=='thfg'||set=='catc'||set=='ajtr'||set=='thoem'||set=='tdm'||set=='rtm') return 'B';
 	    else if (set=='kd') return 'C';
@@ -479,14 +485,14 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	    else if (set=='tgh') return 'K';
 	    else if (set=='fots'||set=='ttitd'||set=='totd'||set=='tdr') return 'K';
 
-	    else if (set=='thohauh') return 'a';	    
+	    else if (set=='thohauh') return 'a';
 	    else if (set=='thotd') return 'b';
 	    else if (set=='tbr') return 'c';
-	    else if (set=='rd') return 'd';    
-	    else if (set=='tos') return 'e';    
-	    else if (set=='tlos') return 'f';    
+	    else if (set=='rd') return 'd';
+	    else if (set=='tos') return 'e';
+	    else if (set=='tlos') return 'f';
 	    else if (set=='tfotw') return 'g';
-    
+
 	    else {
 			console.log(set+' notfound.');
 			return '_';
@@ -622,8 +628,8 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	text=text.replace(rx,"CARDNAME");
 	text=text.replace(/(Orc|Noldor|Archer|Armor|Artifact|Beorning|Boon|Bree|Burglar|Condition|Craftsman|Creature|Dale|Dwarf|D\u00fanedain|Eagle|Ent|Esgaroth|Gondor|Healer|Hobbit|Isengard|Istari|Item|Minstrel|Mount|Noble|Noldor|Outlands|Pipe|Ranger|Ring-bearer(\'s)?|Rohan|Scout|Signal|Silvan|Skill|Song|Spell|Tale|Title|Trait|Trap|Warrior|Weapon|Woodman) /g,
 			  "<b><i>$1</i></b> ");
-	
-	
+
+
 	text=text.replace(/Valour Response:/g,"<b>Valour Response:</b>");
 	text=text.replace(/Response:([^<])/g,"<b>Response:</b>$1");
 	text=text.replace(/Forced:/g,"<b>Forced:</b>");
@@ -636,12 +642,12 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	text=text.replace(/Valour Action:/g,"<b>Valour Action:</b>");
 	text=text.replace(/Action:([^<])/g,"<b>Action:</b>$1");
 	text=text.replace(/([^>])Valour/g,"$1<b>Valour</b>");
-	
+
 	text=text.replace(/Attack/g,"<img src='images/strength.gif'/>");
 	text=text.replace(/Willpower/g,"<img src='images/willpower.gif'/>");
 	text=text.replace(/Defense/g,"<img src='images/defense.gif'/>");
 	text=text.replace(/Threat/g,"<img src='images/threat.png'/>");
-	
+
 	text=text.replace(/Leadership/g,"<img src='images/spheres/1leadership.png'/>");
 	text=text.replace(/Tactics/g,"<img src='images/spheres/2tactics.png'/>");
 	text=text.replace(/Spirit/g,"<img src='images/spheres/3spirit.png'/>");
@@ -649,12 +655,12 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	text=text.replace(/Neutral/g,"<img src='images/spheres/5neutral.png'/>");
 	text=text.replace(/Baggins/g,"<img src='images/spheres/6baggins.png'/>");
 	text=text.replace(/Fellowship/g,"<img src='images/spheres/7fellowship.png'/>");
-	
+
 	text=text.replace(/CARDNAME/g,cardname);
-	
+
 	return text;
     }
-    
+
     image.update = function(card){
 	if(image.url!=card.img){
             image.loaded = false;
@@ -725,7 +731,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     // New suggested mechanism featuring stats from database
     // The Card Network is basically a N*N array, where N is the number of cards in the card pool.
     // The [i][j] entry is the probability of a deck containing card i to also contain card j.
-    // In my case I am using an object, and entries with probability <0.05 are missing. This was done to conserve space 
+    // In my case I am using an object, and entries with probability <0.05 are missing. This was done to conserve space
     suggested.smartSuggestions = [];
     suggested.useSmartSuggestions = 0;
     suggested.cardNetwork = cardNetwork;
@@ -824,7 +830,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	return 1;
     };
 
-    
+
     // These suggestions are produced maunally based on regular expressions
     suggested.suggestV1 = function(deck) {
 	suggested.deck=deck;
@@ -864,7 +870,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	    if (suggested.isInDeck('Damrod','tlos') && suggested.isWordInString('Trap',cardc.traits)) {
 	      	suggestions.push(cardc);
 	    }
-	    
+
 	    // Suggest heal/hit point cards for Gloin, Treebeard, Gimil
 	    if ( (suggested.isInDeck('Gloin','core') || suggested.isInDeck('Gimli','core') || suggested.isInDeck('Treebeard','tos')) && (suggested.isWordInString('heal',cardc.text) || suggested.isWordInString('hit point',cardc.text)) )
 	      	suggestions.push(cardc);
@@ -894,13 +900,13 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	    // Suggest threat reduction for Boromir, Dunhere, or Hobbit Gandalf
 	    if ((suggested.isInDeck('Boromir','tdm') || suggested.isInDeck('Gandalf','thohauh') || suggested.isInDeck('Dunhere','core')) && (/([L|l]ower|[R|r]educe)/.test(cardc.text)) && (/[T|t]hreat/.test(cardc.text)))
 		suggestions.push(cardc);
-	    
+
 	    // Suggest location cards for Idraen
 	    if (suggested.isInDeck('Idraen','ttt') && suggested.isWordInString('explored',cardc.text))
 	      	suggestions.push(cardc);
 	    if (suggested.isInDeck('Idraen','ttt') && suggested.isWordInString('progress',cardc.text) && suggested.isWordInString('location',cardc.text))
 	      	suggestions.push(cardc);
-	    
+
 	    // Sugest discard pile cards for Arwen or Erestor
 	    if ((suggested.isInDeck('Arwen Undomiel','tdr')||suggested.isInDeck('Erestor','ttor')) && suggested.isWordInString('discard pile',cardc.text) && !suggested.isWordInString('encounter',cardc.text))
 	      	suggestions.push(cardc);
@@ -912,13 +918,13 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	    // Sugest Tactics Events for Hama
 	    if (suggested.isInDeck('Hama','tld') && (cardc.sphere=='2tactics') && (cardc.type=='4event'))
 	      	suggestions.push(cardc);
-	    
+
 	    // Suggest weapon/armour for Beregond
 	    if (suggested.isInDeck('Beregond','hon') && suggested.isWordInString('Weapon',cardc.traits))
-	      	suggestions.push(cardc);	    
+	      	suggestions.push(cardc);
 	    if (suggested.isInDeck('Beregond','hon') && suggested.isWordInString('Armor',cardc.traits))
-	      	suggestions.push(cardc);	    
-	    
+	      	suggestions.push(cardc);
+
 	    // Suggest engage cards
 	    if (suggested.isWordInDeck('engage ') && (suggested.isWordInCard('engage ',cardc) || suggested.isWordInCard('into play engaged',cardc)))
 	      	suggestions.push(cardc);
@@ -941,12 +947,12 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	    for (var t in monoTrait)
 		if (suggested.isWordInString(monoTrait[t],cardc.traits))
 		    suggestions.push(cardc);
-	    
+
 	    // Suggest secrecy
 	    if (suggested.isSecrecy() && (/[S|s]ecrecy/.test(cardc.textc)))
-		suggestions.push(cardc);	  
+		suggestions.push(cardc);
 
-	    
+
 	    // Suggest Weapons for Warriors
 	    if (suggested.isTraitInHeroTraits('Warrior') && suggested.isWordInCard('eapon',cardc) && (cardc.type=='3attachment'||cardc.type=='4event'))
 	       	suggestions.push(cardc);
@@ -968,12 +974,12 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 
 	// Loop over list of suggested cards
 	for(var c in suggestions) {
-	    
+
 	    var cardc = suggestions[c];
 	    // Only suggest cards that are not already in suggested
 	    if(suggested.isCardInList(cardc,suggested[cardc.type])) continue;
 	    suggested.check(cardc);
-	}	  
+	}
     };
 
     // Check to make sure the card makes sense to suggest
@@ -986,7 +992,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	var vetolisted=suggested.isCardInVetoList(card.name_norm,card.exp);
 	// No not suggest more heroes if there are 3 heroes in the deck
 	var threeheroes=(suggested.countDeckHeroes()>=3);
-	
+
 	var debug = '';
 	if (vetolisted) return;
 	if (!propersphere && card.type!='1hero') return; // Hero suggestions are exempt from requiring a sphere match
@@ -1012,7 +1018,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	if (!properexp) return;
 
 	suggested[card.type].push(card);
-	
+
     };
     // Define the vetolist here
     suggested.isCardInVetoList = function(name,exp) {
@@ -1048,7 +1054,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	    return 1;
 	return 0;
     };
-    
+
     // Returns 1 if the deck has an eligible target for the card
     suggested.deckHasTargetOption = function(card) {
 	var targetsincard = suggested.getTargetsInCard(card);
@@ -1059,7 +1065,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	   	return 1;
 	return 0;
     };
-    
+
     // Returns list of target options for the card. If Core Gloin was the card, the returned list would look like:
     // [{trait:'None',type:'hero'},
     //  {trait:'None',type:'character'},
@@ -1072,7 +1078,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     suggested.getTargetOptionsForCard = function(card) {
 	// Special case
 	if (card.name_norm=='Beorn' && card.exp=='thohauh') return []; // Beorn cannot be a target option for any player card
-	// 
+	//
 	var targets = [];
 	var regextrait = /([A-Z][\u00BF-\u1FFF\u2C00-\uD7FF\w]+)/g;
 	var typen = suggested.normalize(card.type);
@@ -1100,7 +1106,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     suggested.getTraitSpecificTargetOptionsForCard = function(card) {
 	return suggested.traitSpecificFilter(suggested.getTargetOptionsForCard(card));
     };
-    
+
     // Returns a list of targets that are in the card and specific to the given trait
     suggested.getTraitSpecificTargetsInCard = function(card) {
 	return suggested.traitSpecificFilter(suggested.getTargetsInCard(card));
@@ -1134,7 +1140,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	var deck = suggested.deck;
 	suggested.traitSpecificTargetsInDeck = suggested.traitSpecificFilter(suggested.targetsInDeck);
     };
-    
+
     // Sets list of targets options for the deck.
     suggested.setTargetOptionsForDeck = function() {
 	var deck = suggested.deck;
@@ -1146,7 +1152,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	    for (var c in deck[types[t]]) {
 		var newtargets = suggested.getTargetOptionsForCard(deck[types[t]][c]);
 		targets=targets.concat(newtargets);
-		
+
 	    }
 	suggested.targetOptionsForDeck = targets;
     };
@@ -1164,9 +1170,9 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	    var target = list[t];
 	    string=string+target.trait+' '+target.type+' / ';
 	}
-	return string;	      
+	return string;
     };
-    
+
     // Checks if a target is in a list of targets
     suggested.isTargetInList = function(target,list) {
 	for (var t in list)
@@ -1174,7 +1180,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 		return 1;
 	return 0;
     };
-    
+
     // Returns 1 if there is a target in listA that matches a target in listB
     suggested.matchInTargetLists = function(listA,listB) {
 	for (var t in listA)
@@ -1182,7 +1188,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 		return 1;
 	return 0;
     };
-    
+
     // Converts '2tactics' to 'Tactics', etc.
     suggested.normalize = function(word) {
 	if (word=='1leadership') return 'Leadership';
@@ -1202,7 +1208,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 
     // Returns list of targets targetted by the card text
     suggested.getTargetsInCard = function(card) {
-	var targets = []; // List of targets named by the card. 
+	var targets = []; // List of targets named by the card.
 	// A returned list for Quick Ears would look like [{trait:'Dunedain',type:'hero'},{trait:'Ranger',type:'hero'}]
 	// A returned list for Unexpected Courage would look like [{trait:'None',type:'hero'}]
 	// A returned list for Spear of the Citadel would look like [{trait:'Tactics',type:'character'}]
@@ -1241,7 +1247,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	// Match targets like 'a hero'
 	var acharacter = /(?: (?:a|an|1)) (hero|character|ally)(?! (?:you control )?with)/.exec(card.text);
 	if (acharacter) targets.push({trait:'None',type:acharacter[1]});
-	
+
 	// Match targets like 'a Ranger hero'
 	var atraithero = /(?:(?:a|an|1|Each|each) )([A-Z][\u00BF-\u1FFF\u2C00-\uD7FF\w]+) (?:or )?([A-Z][\u00BF-\u1FFF\u2C00-\uD7FF\w]+)? ?(?:hero)/.exec(card.text);
 	if (atraithero) {
@@ -1269,19 +1275,19 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	// Match cards like 'with ranged' or 'sentinel character'
 	var withranged = /(hero|character).+with (the |printed )?([R|r]anged)/.exec(card.text);
 	if (withranged) {
-	    targets.push({trait:'Ranged',type:withranged[1]});  
+	    targets.push({trait:'Ranged',type:withranged[1]});
 	}
 	var withsentinel = /(hero|character).+with (the |printed )?([S|s]entinel)/.exec(card.text);
 	if (withsentinel) {
-	    targets.push({trait:'Sentinel',type:withsentinel[1]});	      
+	    targets.push({trait:'Sentinel',type:withsentinel[1]});
 	}
 	var rangedcharacter = /[R|r]ranged character/.exec(card.text);
 	if (rangedcharacter) {
-	    targets.push({trait:'Ranged',type:'character'});    
+	    targets.push({trait:'Ranged',type:'character'});
 	}
 	var sentinelcharacter = /[S|s]entinel character/.exec(card.text);
 	if (sentinelcharacter) {
-	    targets.push({trait:'Sentinel',type:'character'});	      
+	    targets.push({trait:'Sentinel',type:'character'});
 	}
 
 	return targets;
@@ -1308,7 +1314,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	    if (deck[card.type][c].name_norm==card.name_norm){
 		return 1;
 	    }
-	}	
+	}
 	// We also do not want to suggest, for example, Galadriel ally if Galadriel Hero was added to the deck
 	for (var c in deck['1hero']){
 	    if (deck['1hero'][c].name_norm==card.name_norm){
@@ -1362,7 +1368,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	    for (var c in deck[types[t]]) {
 		if (deck[types[t]][c].name_norm==name_norm && deck[types[t]][c].exp==exp) return 1;
 	    }
-	return 0;	
+	return 0;
     };
     // Takes in a name and expansion, and returns 1 if the card is suggested
     suggested.isInSuggested = function(card) {
@@ -1377,7 +1383,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     suggested.isWordInCard = function(word,card) {
 	if (suggested.isWordInString(word,card.text)) return 1;
 	if (suggested.isWordInString(word,card.traits)) return 1;
-	return 0;	
+	return 0;
     };
     // Takes in a word and returns 1 if the word is found in the text/traits of a card in the deck
     suggested.isWordInDeck = function(word) {
@@ -1386,7 +1392,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	for(var t in types)
 	    for (var c in deck[types[t]])
 		if (suggested.isWordInCard(word,deck[types[t]][c])) return 1;
-	return 0;	
+	return 0;
     };
     // Takes in a word and returns 1 if the word is found in the text of a card in the deck
     suggested.isWordInDeckText = function(word) {
@@ -1395,7 +1401,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	for(var t in types)
 	    for (var c in deck[types[t]])
 		if (suggested.isWordInString(word,deck[types[t]][c].text)) return 1;
-	return 0;	
+	return 0;
     };
     // Takes in a trait and returns 1 if the trait is found in the text of a card in the deck
     suggested.isTraitInDeckText = function(trait) {
@@ -1403,25 +1409,25 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	var types = ['1hero','2ally','3attachment','4event','5quest'];
 	for(var t in types)
 	    for (var c in deck[types[t]]) {
-		// We do not want to include all Gondor cards just because Steward grants the 'Gondor trait' 
+		// We do not want to include all Gondor cards just because Steward grants the 'Gondor trait'
 		if (suggested.isWordInString('trait',deck[types[t]][c].text)) continue;
 		if (suggested.isWordInString(trait,deck[types[t]][c].text)) return 1;
 	    }
-	return 0;	
+	return 0;
     };
     // Takes in a trait and returns 1 if the trait is found in the traits of a hero in the deck. We also consider keywords like Ranged to be traits.
     suggested.isTraitInHeroTraits = function(trait) {
 	var deck = suggested.deck;
 	for(var h in deck['1hero'])
 	    if (suggested.isWordInString(trait,deck['1hero'][h].traits) || suggested.isWordInString(trait,deck['1hero'][h].keywords)) return 1;
-	return 0;	
+	return 0;
     };
     // Takes in a trait and returns 1 if the trait is found in the traits of an ally in the deck. We also consider keywords like Ranged to be traits.
     suggested.isTraitInAllyTraits = function(trait) {
 	var deck = suggested.deck;
 	for(var h in deck['2ally'])
 	    if (suggested.isWordInString(trait,deck['2ally'][h].traits) || suggested.isWordInString(trait,deck['2ally'][h].keywords)) return 1;
-	return 0;	
+	return 0;
     };
     // Takes in a trait and returns 1 if the trait is found in the traits of a character in the deck
     suggested.isTraitInDeckTraits = function(trait) {
@@ -1572,22 +1578,22 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     suggested.countTotal = function() {
 	return suggested.countAllies()+suggested.countAttachments()+suggested.countEvents()+suggested.countQuests();
     };
-    
+
     suggested.empty = function() {
 	return (suggested.countAllies()+suggested.countAttachments()+suggested.countEvents()+suggested.countQuests()+suggested.countHeroes())==0;
     };
     // Remove from suggested
-    suggested.remove = function(card) {	
+    suggested.remove = function(card) {
         // for (var c in suggested[card.type]){
         //     if (suggested[card.type][c].cycle==card.cycle && suggested[card.type][c].no==card.no){
 	// 	suggested[card.type].splice(c, 1);
         //     }
-	// }  
+	// }
 	suggested.blacklist.push(card);
 	suggested.deckChange(suggested.deck);
     }
     // Clear the blacklisted cards
-    suggested.clearBlacklist = function() {	
+    suggested.clearBlacklist = function() {
 	suggested.blacklist=[];
 	suggested.deckChange(suggested.deck);
     }
@@ -1597,7 +1603,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     }
     suggested.show = function() {
 	suggested.hidden = 0;
-    }    
+    }
     return suggested;
 }])
 
@@ -1697,7 +1703,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	if(mirlonde) threat-=loreheroes;
 	return threat;
     };
-    
+
     deck.countAllies = function(){
 	var allies=0;
 	for (var a in deck['2ally']) {
@@ -1733,11 +1739,11 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	}
 	return heroes;
     };
-    
+
     deck.countTotal = function() {
 	return deck.countAllies()+deck.countAttachments()+deck.countEvents()+deck.countQuests();
     };
-    
+
     deck.empty = function() {
 	return (deck.countAllies()+deck.countAttachments()+deck.countEvents()+deck.countQuests()+deck.countHeroes())==0;
     };
@@ -1775,7 +1781,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 
 	}
 	return loadDeckIntoBuilder;
-	
+
 }])
 
 // A factory to keep track of all variabled being watched.
@@ -1799,7 +1805,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	    + tagBody
 	    + ')>',
 	    'gi');
-    
+
     var sanitizeText = function(html) {
 	var oldHtml;
 	do {
@@ -1886,6 +1892,7 @@ function(getData,$location,deck,cardObject,$scope,syncStatus,$rootScope,sanitize
     this.resetSearch = function(){
 	filtersettings.search.name_norm="";
 	filtersettings.search.traits="";
+  filtersettings.search.categories="";
 	filtersettings.search.textc="";
     };
     this.toggleType = function(t,$event){
@@ -1975,7 +1982,7 @@ function(getData,$location,deck,cardObject,$scope,syncStatus,$rootScope,sanitize
         if (deck.deckname == "") return alert('Please enter a name!');
 	deck.deckname = $rootScope.sanitizeText(deck.deckname);
         if (deck.deckname == "") return alert('Please enter a name!');
-	$scope.saving=true;	
+	$scope.saving=true;
 	// Save deck to database
 	var deckString = getDeckString(deck);
         var deckid = generateDeckID();
@@ -2011,12 +2018,12 @@ function(getData,$location,deck,cardObject,$scope,syncStatus,$rootScope,sanitize
     $scope.changepreview = function(card){
     	image.update(card);
     }
-    
+
 
 }])
 
 
-  
+
 .controller('previewCtrl',['$scope','$sce','image','translate','previewService',function($scope,$sce,image,translate,previewService) {
     $scope.trust = $sce.trustAsHtml;
     this.image=image;
@@ -2054,7 +2061,7 @@ function(getData,$location,deck,cardObject,$scope,syncStatus,$rootScope,sanitize
 			scopeLogs.push(logObject);
 		}
 	    });
-	});	
+	});
     }
     return logs;
 }])
@@ -2069,7 +2076,7 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
     var url = $location.url();
     var index = url.indexOf('id:');
     if (index>-1) {
-        $scope.deckID = url.substr(index+3);	
+        $scope.deckID = url.substr(index+3);
     } else {
 	//404
     };
@@ -2087,7 +2094,7 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
 
     $scope.changepreview = function(card){
     	image.update(card);
-    }    
+    }
     $scope.loadDeck = function() {
 	return loadDeckIntoBuilder($scope.viewDeckObject);
     }
@@ -2126,13 +2133,13 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
 		    if (deckLogsArray.length == nLogIDs) {
 			$scope.deckLogsArray = deckLogsArray;
 			$scope.loadLogDecks();
-		    }		    
+		    }
 		})
 	    });
 	});
-    }		      
+    }
     $scope.loadDeckLogs();
-    // Load Mods      
+    // Load Mods
     $scope.deckModsArray = [];
     $scope.loadDeckMods = function() {
         var deckMods = [];
@@ -2203,10 +2210,10 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
     $scope.deleteComment = function(comment) {
 	if (confirm("Are you sure?")) {
 	    $rootScope.ref.child('decks').child($scope.deckID).child('comments').child(comment.commentid).remove();
-	    $scope.loadDeckComments();	
+	    $scope.loadDeckComments();
 	}
     }
-    
+
 
 }])
 
@@ -2219,7 +2226,7 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
     var url = $location.url();
     var index = url.indexOf('page:');
     if (index>-1) {
-        $scope.pageID = url.substr(index+5);	
+        $scope.pageID = url.substr(index+5);
     } else {
 	//404
     };
@@ -2258,7 +2265,7 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
 		    $scope.deckObjectsArray = deckObjectsArray;
 		    $scope.loadDeckMods();
 		    $scope.decksLoaded = true;
-		}		    
+		}
 	    })
 	})
     }
@@ -2276,18 +2283,18 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
     }
     $scope.removeDeck = function(deckObject) {
 	if (!$rootScope.authData.uid || $rootScope.authData.uid != $scope.ownerID) return;
-	$rootScope.ref.child('pages').child($scope.pageID).child('deckids').child(deckObject.deckid).remove();	
+	$rootScope.ref.child('pages').child($scope.pageID).child('deckids').child(deckObject.deckid).remove();
 	$rootScope.ref.child('decks').child(deckObject.deckid).child('pageids').child($scope.pageID).remove();
 	$scope.loadDeckPage();
     }
     $scope.updateDeck = function(oldDeckObject, newDeckObject) {
-	if (!$rootScope.authData.uid || $rootScope.authData.uid != $scope.ownerID) return;	
+	if (!$rootScope.authData.uid || $rootScope.authData.uid != $scope.ownerID) return;
 	$scope.removeDeck(oldDeckObject);
 	$scope.addDeck(newDeckObject.deckid);
     }
     $scope.changepreview = function(card){
     	image.update(card);
-    }    
+    }
     $scope.exportOctgn = function() {
 	for (var d in $scope.deckObjectsArray) {
 	    var deckObject = $scope.deckObjectsArray[d];
@@ -2308,7 +2315,7 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
 	return $location.path("/deck/mylogs");
 
     }
-    // Load Mods      
+    // Load Mods
     $scope.loadDeckMods = function() {
 	for (var d in $scope.deckObjectsArray) {
 	    $scope.deckObjectsArray[d].deckModsArray=[]; // clear
@@ -2371,7 +2378,7 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
     $scope.deleteComment = function(comment) {
 	if (confirm("Are you sure?")) {
 	    $rootScope.ref.child('pages').child($scope.pageID).child('comments').child(comment.commentid).remove();
-	    $scope.loadPageComments();	
+	    $scope.loadPageComments();
 	}
     }
 
@@ -2400,7 +2407,7 @@ function($scope,$rootScope,$firebaseObject,$firebaseArray,image,getUserIDFromUse
     var url = $location.url();
     var index = url.indexOf('user:');
     if (index>-1) {
-        $scope.username = url.substr(index+5);	
+        $scope.username = url.substr(index+5);
     } else {
 	//404
     };
@@ -2428,7 +2435,7 @@ function($scope,$rootScope,$firebaseObject,$firebaseArray,image,getUserIDFromUse
     $scope.loadUserDecks = function() {
 	$scope.userDecksArray = $firebaseArray($rootScope.ref.child('users').child($scope.ownerID).child('decks'));
         $scope.userDecksArray.$loaded().then(function() {
-            // Load heroes                                                                                                                           
+            // Load heroes
             $scope.userDecksArray.$loaded().then(function() {
                 for (var d=0; d<$scope.userDecksArray.length; d++) {
                     $scope.userDecksArray[d].heroes = getHeroesFromDeckString($scope.userDecksArray[d].deckstring);
@@ -2483,7 +2490,7 @@ function($scope,$rootScope,$firebaseObject,$firebaseArray,image,getUserIDFromUse
 	    $scope.loadUser();
 	}
     }
-    
+
     // Wait until cardObject is loaded
     $scope.syncStatus = syncStatus;
     $scope.$watch('syncStatus.cardObjectLoaded',function(newValue,oldValue) {
@@ -2509,7 +2516,7 @@ function($scope,$rootScope,$firebaseObject,$firebaseArray,image,getUserIDFromUse
 
 
 .factory('exportDeck', ['translate','getCardFromCardID',function(translate,getCardFromCardID) {
-    
+
     this.download = function(filename,text) {
         var pom = document.createElement('a');
         pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
@@ -2534,7 +2541,7 @@ function($scope,$rootScope,$firebaseObject,$firebaseArray,image,getUserIDFromUse
             "5quest": []
         };
         var warned = false;
-	
+
 	octgndeck.deckname = deckObject.deckname;
 	var deckString = deckObject.deckstring;
 	for (var i=0; i<=(deckString.length-4); i=i+4) {
@@ -2550,7 +2557,7 @@ function($scope,$rootScope,$firebaseObject,$firebaseArray,image,getUserIDFromUse
 	    card.quantity = +deckString.substr(i+3,1);
 	    octgndeck[card.type].push(card);
 	}
-	
+
 
         var text = "";
         text += '<?xml version="1.0" encoding="utf-8" standalone="yes"?>\n';
@@ -2843,7 +2850,7 @@ function($scope,$rootScope,$firebaseObject,$firebaseArray,image,getUserIDFromUse
 	    card.quantity = +deckString.substr(i+3,1);
 	    deck[card.type].push(card);
 	}
-	
+
         var text = "[size=18][url=http://seastan.github.io/#/deck/id:";
         text += deckObject.deckid;
         text += "]";
@@ -2969,7 +2976,7 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
     $scope.formDataMyDecks = formDataMyDecks;
     $scope.loadMyDecks = function() {
 	console.log("Loading decks");
-	$scope.myDecksArray = $firebaseArray($rootScope.ref.child('users').child($rootScope.authData.uid).child('decks'));    
+	$scope.myDecksArray = $firebaseArray($rootScope.ref.child('users').child($rootScope.authData.uid).child('decks'));
 	// Load heroes
 	$scope.myDecksArray.$loaded().then(function() {
 	    for (var d=0; d<$scope.myDecksArray.length; d++) {
@@ -3036,7 +3043,7 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
     }
     this.deleteDeck = function(deckObject) {
 	if (!deckObject) return alert("Please select a deck.");
-	if (confirm('Are you sure you want to delete: '+deckObject.deckname)) { 
+	if (confirm('Are you sure you want to delete: '+deckObject.deckname)) {
 	    $scope.deleting=true;
 	    var myDeck = $firebaseObject($rootScope.ref.child('decks').child(deckObject.deckid));
 	    myDeck.$loaded().then(function() {
@@ -3074,7 +3081,7 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
 	    this.selectedDeck = null;
 	}
     }
-    
+
     this.download = function(filename,text) {
         var pom = document.createElement('a');
         pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
@@ -3151,7 +3158,7 @@ function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, card
 		$scope.$apply(function() {
 		    loadDeckIntoBuilder(deckObject);
 		});
-		
+
             };
             r.readAsText(file);
         };
@@ -3189,9 +3196,9 @@ function($rootScope,$scope,$firebaseObject,$firebaseArray,generateDeckID,getDeck
 	var today = new Date();
 	var dd = today.getDate();
 	var mm = today.getMonth()+1; //January is 0!
-	var yyyy = today.getFullYear();	
-	if(dd<10) dd='0'+dd 
-	if(mm<10) mm='0'+mm 
+	var yyyy = today.getFullYear();
+	if(dd<10) dd='0'+dd
+	if(mm<10) mm='0'+mm
 	today = yyyy+'-'+mm+'-'+dd;
 	return today;
     }
@@ -3216,7 +3223,7 @@ function($rootScope,$scope,$firebaseObject,$firebaseArray,generateDeckID,getDeck
 		})
 	    });
 	});
-    }	
+    }
     // Delete log
     $scope.deleteLog = function(log) {
 	if (confirm('Are you sure?')) {
@@ -3251,8 +3258,8 @@ function($rootScope,$scope,$firebaseObject,$firebaseArray,generateDeckID,getDeck
 	if (!$scope.formDataMyLogs.score)
 	    $scope.formDataMyLogs.score = null;
 	if ($scope.formDataMyLogs.notes) $scope.formDataMyLogs.notes = $rootScope.sanitizeText($scope.formDataMyLogs.notes);
-	
-	
+
+
 	console.log("Submitting Log.");
 	var logID = generateDeckID();
 	var newLog = $firebaseObject($rootScope.ref.child('logs').child(logID));
@@ -3266,10 +3273,10 @@ function($rootScope,$scope,$firebaseObject,$firebaseArray,generateDeckID,getDeck
 	    newLog.outcome = $scope.formDataMyLogs.outcome;
 	    newLog.score = $scope.formDataMyLogs.score;
 	    newLog.deckids = [];
-	    for (var d in deckIDs) 
+	    for (var d in deckIDs)
 		if (deckIDs[d]) newLog.deckids.push(deckIDs[d]);
 	    if (!$scope.formDataMyLogs.notes)  $scope.formDataMyLogs.notes="";
-	    newLog.notes   = $scope.formDataMyLogs.notes; 
+	    newLog.notes   = $scope.formDataMyLogs.notes;
 
 	    var onComplete = function() {
 		$scope.loadMyLogs();
@@ -3279,7 +3286,7 @@ function($rootScope,$scope,$firebaseObject,$firebaseArray,generateDeckID,getDeck
 		// if ($scope.formDataMyLogs.deckid1)
 		//     $scope.loadMyLogs();
 		$rootScope.ref.child('users').child($rootScope.authData.uid).child('logids').child(logID).set(logID,onComplete);
-		for (var d in deckIDs) 
+		for (var d in deckIDs)
 		    if (deckIDs[d])
 			$rootScope.ref.child('decks').child(deckIDs[d]).child('logids').child(logID).set(logID);
 	    })
@@ -3576,7 +3583,7 @@ function($rootScope,$scope,$firebaseObject,getDeckObjectFromDeckID,formDataDeckS
 			else cardPopularity[cardID] = cardPopularity[cardID] + 1;
 		    }
 		}
-	    });	
+	    });
 	    console.log("Parsed all decks.");
 	    console.log("Saving stats.");
 	    $rootScope.ref.child('stats').child('cardPopularity').set(cardPopularity);
@@ -3636,9 +3643,8 @@ function($rootScope,$scope,$firebaseObject,getDeckObjectFromDeckID,formDataDeckS
 	$scope.gotStats = true;
     }
 
-	    
+
 }])
 
 
 ;
-

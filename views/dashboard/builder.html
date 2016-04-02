@@ -1,9 +1,11 @@
 <div ng-controller="cardControl as cards">
   <div class="filterdiv" style="width:50%">
-    <input ng-model="cards.filtersettings.search.name_norm" type="text" placeholder=" Search by card name" style="width:25%;"></input>
+    <input ng-model="cards.filtersettings.search.name_norm" type="text" placeholder=" Search by card name" style="width:40%;"></input>
+    <input ng-model="cards.filtersettings.search.textc" type="text" placeholder=" Search by card text" style="width:40%"></input>
+    <button ng-click="cards.resetSearch();" class="btn btn-default btn-sm" style="font-size:12px;width:15%;margin-bottom:5px;">Reset</button>
+    <br/>
+    <categories></categories>
     <traits></traits>
-    <input ng-model="cards.filtersettings.search.textc" type="text" placeholder=" Search by card text" style="width:25%"></input>
-    <button ng-click="cards.resetSearch();" class="btn btn-default btn-md" style="font-size:12px;width:15%;">Reset</button>
     <br/>
     <div style="float:left;width:100%;">
       <!-- <div style="font-size:9px;width:100%;text-align:center;">Card Type</div><br/> -->
@@ -155,7 +157,7 @@
   </div>  
   <div ng-hide="suggested.hidden||suggested.rankSuggestions||!syncStatus.cardNetworkLoaded"><label for="smartSuggestions">Use Smart Suggestions</label>
     <input type="checkbox" id="smartSuggestions" class="col-sm-2 control-label" ng-model="suggested.useSmartSuggestions" ng-click="suggested.deckChange(deck)"></input>
-  </div>  
+  </div>
   <div ng-show="!suggested.hidden && suggested.useSmartSuggestions">
   <table class="suggested">
       <tr class="card" ng-repeat="card in suggested.smartSuggestions" ng-mouseover="changepreview(card)">
@@ -191,7 +193,7 @@
     <!-- </div> -->
   </table>
   </div>
-  
+
   <table class="suggested" ng-hide="suggested.hidden || suggested.rankSuggestions || suggested.useSmartSuggestions">
 
     <tr class="head" ng-show="suggested.countHeroes()"><td style="width:100px"></td><td>Heroes</td></tr>
