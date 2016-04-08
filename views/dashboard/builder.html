@@ -31,26 +31,38 @@
     </div>
   </div>
   <br>
-  <div style="width:50%;top:120px;left:1%;position:absolute;">
-    <table>
-      <tr>
-	<td style="font-weight: bold;left:15%;position:absolute;"><a href ng-click="cards.orderby('name_norm')">Name</a></td>
-	<td style="font-weight: bold;left:45%;position:absolute;"><a href ng-click="cards.orderby(['sphere','name_norm'])">Sphere</a></td>
-	<td style="font-weight: bold;left:60%;position:absolute;"><a href ng-click="cards.orderby(['cost','name_norm'])">Cost</a></td>
-	<td style="font-weight: bold;left:68%;position:absolute;"><a href ng-click="cards.orderby(['type','name_norm'])">Type</a></td>
-	<td style="font-weight: bold;left:76%;position:absolute;"><a href ng-click="cards.orderby(['-willpower','name_norm'])"><img title="Willpower" src="images/willpower.gif"/></a></td>
-	<td style="font-weight: bold;left:81%;position:absolute;"><a href ng-click="cards.orderby(['-strength','name_norm'])"><img title="Attack" src="images/strength.gif"/></a></td>
-	<td style="font-weight: bold;left:87%;position:absolute;"><a href ng-click="cards.orderby(['-defense','name_norm'])"><img title="Defense" src="images/defense.gif"/></a></td>
-	<td style="font-weight: bold;left:91%;position:absolute;"><a href ng-click="cards.orderby(['-hitpoints','name_norm'])"><img title="Hit Points" src="images/hitpoints.png" style="width:20px;height:20px;"/></a></td>
-      </tr>
-    </table>
-  </div>
+  <!-- <div style="width:50%;top:130px;left:1%;position:absolute;"> -->
+  <!--   <table> -->
+  <!--     <tr> -->
+  <!-- 	<td style="font-weight: bold;left:15%;position:absolute;"><a href ng-click="cards.orderby('name_norm')">Name</a></td> -->
+  <!-- 	<td style="font-weight: bold;left:45%;position:absolute;"><a href ng-click="cards.orderby(['sphere','name_norm'])">Sphere</a></td> -->
+  <!-- 	<td style="font-weight: bold;left:60%;position:absolute;"><a href ng-click="cards.orderby(['cost','name_norm'])">Cost</a></td> -->
+  <!-- 	<td style="font-weight: bold;left:68%;position:absolute;"><a href ng-click="cards.orderby(['type','name_norm'])">Type</a></td> -->
+  <!-- 	<td style="font-weight: bold;left:76%;position:absolute;"><a href ng-click="cards.orderby(['-willpower','name_norm'])"><img title="Willpower" src="images/willpower.gif"/></a></td> -->
+  <!-- 	<td style="font-weight: bold;left:81%;position:absolute;"><a href ng-click="cards.orderby(['-strength','name_norm'])"><img title="Attack" src="images/strength.gif"/></a></td> -->
+  <!-- 	<td style="font-weight: bold;left:87%;position:absolute;"><a href ng-click="cards.orderby(['-defense','name_norm'])"><img title="Defense" src="images/defense.gif"/></a></td> -->
+  <!-- 	<td style="font-weight: bold;left:91%;position:absolute;"><a href ng-click="cards.orderby(['-hitpoints','name_norm'])"><img title="Hit Points" src="images/hitpoints.png" style="width:20px;height:20px;"/></a></td> -->
+  <!--     </tr> -->
+  <!--   </table> -->
+  <!-- </div> -->
 
   <div class="cardsdiv" style="width:50%">
     <table class="cardlist">
       <tbody>
+	<tr>
+	  <th></th>
+	  <th style="font-weight: bold;"><a href ng-click="cards.orderby('name_norm')">Name</a></th>
+	  <th style="font-weight: bold;"><a href ng-click="cards.orderby(['sphere','name_norm'])">Sphere</a></th>
+	  <th style="font-weight: bold;"><a href ng-click="cards.orderby(['cost','name_norm'])">Cost</a></th>
+	  <th style="font-weight: bold;"><a href ng-click="cards.orderby(['type','name_norm'])">Type</a></th>
+	  <th style="font-weight: bold;"><a href ng-click="cards.orderby(['-willpower','name_norm'])"><img title="Willpower" src="images/willpower.gif"/></a></th>
+	  <th style="font-weight: bold;"><a href ng-click="cards.orderby(['-strength','name_norm'])"><img title="Attack" src="images/strength.gif"/></a></th>
+	  <th style="font-weight: bold;"><a href ng-click="cards.orderby(['-defense','name_norm'])"><img title="Defense" src="images/defense.gif"/></a></th>
+	  <th style="font-weight: bold;"><a href ng-click="cards.orderby(['-hitpoints','name_norm'])"><img title="Hit Points" src="images/hitpoints.png" style="width:20px;height:20px;"/></a></th>
+	</tr>
+
 	<tr ng-repeat="card in cards.allcards | cardfilter:cards | filter:cards.filtersettings.search | orderBy:cards.order" class="cardrow" ng-mouseover="cards.changepreview(card)">
-          <td style="font-size:0;width:15%;">
+          <td style="font-size:0;">
             <img class="preload"  ng-src="{{cards.image.loaded && card.img || ''}}" /> <!-- This doesn't preload images if there's an image we want to load right now -->
 	    <div class="btn-group">
             <button class="btn btn-default btn-xs" ng-class="{active: deck.quantity(card)==0}" ng-click="deck.change(card,0)">0</button>
@@ -59,16 +71,16 @@
             <button class="btn btn-default btn-xs" ng-class="{active: deck.quantity(card)==3}" ng-click="deck.change(card,3)" ng-hide="card.type=='1hero' || card.restrict || (cards.filtersettings.onecore && card.corequantity < 3) || (deck.filtersettings.twocore && card.corequantity < 2 && deck.quantity(card) < 3)">3</button>
 	    </div>
           </td>
-          <td style=";width:28%;">
+          <td style="">
             <img class="unique" src="images/unique.png" ng-show="card.unique"/>
             {{card.name}}</td>
-          <td style=";width:10%;text-align:center"><img src="images/spheres/{{card.sphere}}.png"/></td>
-          <td style=";width:14%;text-align:center">{{card.cost}}</td>
-          <td style=";width:7%;"><img src="images/types/{{card.type}}.png"/></td>
-          <td style=";width:5%;">{{card.willpower}}</td>
-          <td style=";width:5%;">{{card.strength}}</td>
-          <td style=";width:5%;">{{card.defense}}</td>
-          <td style=";width:5%;">{{card.hitpoints}}</td>
+          <td style="text-align:center"><img src="images/spheres/{{card.sphere}}.png"/></td>
+          <td style="text-align:center">{{card.cost}}</td>
+          <td style=""><img src="images/types/{{card.type}}.png"/></td>
+          <td style="">{{card.willpower}}</td>
+          <td style="">{{card.strength}}</td>
+          <td style="">{{card.defense}}</td>
+          <td style="">{{card.hitpoints}}</td>
 	</tr>
       </tbody>
     </table>
