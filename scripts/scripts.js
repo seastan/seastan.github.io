@@ -2416,8 +2416,10 @@ function($scope,$rootScope,$stateParams,$location,$firebaseObject,getLocalObject
     return userIDFromUsername;
 }])
 
-.controller('userViewCtrl', ['$scope','$rootScope','$firebaseObject','$firebaseArray','image','getUserIDFromUsername','$location','getHeroesFromDeckString','syncStatus','generateDeckID',
-function($scope,$rootScope,$firebaseObject,$firebaseArray,image,getUserIDFromUsername,$location,getHeroesFromDeckString,syncStatus,generateDeckID) {
+.controller('userViewCtrl', ['$scope','$rootScope','$firebaseObject','$firebaseArray','image','getUserIDFromUsername','$location',// 'getHeroesFromDeckString',
+			     'syncStatus','generateDeckID',
+function($scope,$rootScope,$firebaseObject,$firebaseArray,image,getUserIDFromUsername,$location,// getHeroesFromDeckString,
+	 syncStatus,generateDeckID) {
     $scope.userLoaded = false;
     $scope.userDecksArray = [];
 
@@ -2431,10 +2433,10 @@ function($scope,$rootScope,$firebaseObject,$firebaseArray,image,getUserIDFromUse
     $scope.changepreview = function(card){
     	image.update(card);
     }
-    $scope.getHeroes = function(deckString) {
-	var heroes = getHeroesFromDeckString(deckString);
-	return heroes;
-    }
+    // $scope.getHeroes = function(deckString) {
+    // 	var heroes = getHeroesFromDeckString(deckString);
+    // 	return heroes;
+    // }
 
     $scope.loadUser = function() {
 //	var userID = getUserIDFromUsername($scope.username);
@@ -2453,11 +2455,11 @@ function($scope,$rootScope,$firebaseObject,$firebaseArray,image,getUserIDFromUse
 	$scope.userDecksArray = $firebaseArray($rootScope.ref.child('users').child($scope.ownerID).child('decks'));
         $scope.userDecksArray.$loaded().then(function() {
             // Load heroes
-            $scope.userDecksArray.$loaded().then(function() {
-                for (var d=0; d<$scope.userDecksArray.length; d++) {
-                    $scope.userDecksArray[d].heroes = getHeroesFromDeckString($scope.userDecksArray[d].deckstring);
-                }
-            })
+            // $scope.userDecksArray.$loaded().then(function() {
+            //     for (var d=0; d<$scope.userDecksArray.length; d++) {
+            //         $scope.userDecksArray[d].heroes = getHeroesFromDeckString($scope.userDecksArray[d].deckstring);
+            //     }
+            // })
             $scope.userLoaded = true;
         })
     }
@@ -2995,11 +2997,11 @@ function(deck, getDeckString, $localStorage, $scope, $rootScope, cardObject, $lo
 	console.log("Loading decks");
 	$scope.myDecksArray = $firebaseArray($rootScope.ref.child('users').child($rootScope.authData.uid).child('decks'));
 	// Load heroes
-	$scope.myDecksArray.$loaded().then(function() {
-	    for (var d=0; d<$scope.myDecksArray.length; d++) {
-		$scope.myDecksArray[d].heroes = getHeroesFromDeckString($scope.myDecksArray[d].deckstring);
-	    }
-	})
+	// $scope.myDecksArray.$loaded().then(function() {
+	//     for (var d=0; d<$scope.myDecksArray.length; d++) {
+	// 	$scope.myDecksArray[d].heroes = getHeroesFromDeckString($scope.myDecksArray[d].deckstring);
+	//     }
+	// })
     }
     $scope.deleting = false;
     if (!$rootScope.authData) {
@@ -3558,9 +3560,9 @@ function($rootScope,$scope,$firebaseObject,getDeckObjectFromDeckID,formDataDeckS
 	    // Filter decks according to search criteria
 	    filterDecks(allDecks,allLogs);
 	    // Get Heroes
-	    for (var d=0; d<$scope.formDataDeckSearch.searchResultsArray.length; d++) {
-                $scope.formDataDeckSearch.searchResultsArray[d].heroes = getHeroesFromDeckString($scope.formDataDeckSearch.searchResultsArray[d].deckstring);
-            }
+	    // for (var d=0; d<$scope.formDataDeckSearch.searchResultsArray.length; d++) {
+            //     $scope.formDataDeckSearch.searchResultsArray[d].heroes = getHeroesFromDeckString($scope.formDataDeckSearch.searchResultsArray[d].deckstring);
+            // }
 	    console.log("Decks searched.");
 	    $scope.searching = false;
 	}
