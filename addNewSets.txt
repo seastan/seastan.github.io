@@ -1,0 +1,7 @@
+cd ../Lord-of-the-Rings
+git pull
+cd ../seastan.github.io
+open makeCardsJson.py, add new line where specified, getting image url from cardgamedb
+open scripts/scripts.js and update the sets at line 475, 500, 1920 (search for "asoch")
+python makeCardsJson.py
+edit /views/dashboard/sets.html

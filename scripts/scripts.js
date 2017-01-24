@@ -429,6 +429,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     var card = function(cardID) {
 	cardID = cardID.substr(0,3); // In case quatity was also passed as the 4th character in cardID
         for (var c in cardObject) {
+//	    console.log(cardID);
             if (getCardID(cardObject[c]) == cardID) {
 		var foundCard = JSON.parse(JSON.stringify(cardObject.slice(+c,+c+1)[0])); //create a copy of the card, not changing the cardObject
 //                var foundCard = cardObject.slice(+c,+c+1)[0];
@@ -462,7 +463,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 .factory('getQuantityOfCardInLocalObject',function() {
 	var quantity = function(card,localDeck) {
 		for (var c in localDeck[card.type]){
-			if (localDeck[card.type][c].cycle==card.cycle && localDeck[card.type][c].no==card.no){
+			if (localDeck[card.type][c].octgn==card.octgn){
 				return localDeck[card.type][c].quantity;
 			}
 		}
@@ -472,6 +473,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 
 .factory('getSetID',function(){
 	var getSetID = function(set) {
+	    console.log(set);
 	    if (set=='core') return 'A';
 	    else if (set=='thfg'||set=='catc'||set=='ajtr'||set=='thoem'||set=='tdm'||set=='rtm') return 'B';
 	    else if (set=='kd') return 'C';
@@ -479,74 +481,90 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	    else if (set=='hon') return 'E';
 	    else if (set=='tsf'||set=='tdf'||set=='eaad'||set=='aoo'||set=='tbog'||set=='tmv') return 'F';
 	    else if (set=='voi') return 'G';
-	    else if (set=='tdt'||set=='ttt'||set=='tit'||set=='nie'||set=='cs'||set=='tac') return 'H';
+	    else if (set=='tdt'||set=='ttt'||set=='tit'||set=='tnie'||set=='cs'||set=='tac') return 'H';
 	    else if (set=='tlr') return 'I';
 	    else if (set=='twoe'||set=='efmg'||set=='ate'||set=='ttor'||set=='tbocd'||set=='tdr') return 'J';
 	    else if (set=='tgh') return 'K';
-	    else if (set=='fots'||set=='ttitd'||set=='totd'||set=='tdr') return 'K';
+	    else if (set=='fots'||set=='ttitd'||set=='totd'||set=='tdr2'||set=='asoch'||set=='tcoc') return 'L';
+	    else if (set=='tsoh') return 'M';
+	    else if (set=='tm'||set=='rah'||set=='bts'||set=='tbs'||set=='tdocg') return 'N';
 
 	    else if (set=='thohauh') return 'a';
 	    else if (set=='thotd') return 'b';
 	    else if (set=='tbr') return 'c';
-	    else if (set=='rd') return 'd';
-	    else if (set=='tos') return 'e';
+	    else if (set=='trd') return 'd';
+	    else if (set=='ttos') return 'e';
 	    else if (set=='tlos') return 'f';
 	    else if (set=='tfotw') return 'g';
 
 	    else {
-			console.log(set+' notfound.');
-			return '_';
-			}
+		console.log(set+' notfound.');
+		return '_';
+	    }
 	}
 	return getSetID;
 })
-.factory('translate',function(){
-    var translate={};
-    translate[""]="";
-    translate.core="Core Set";
-    translate.kd=unescape("Khazad-D%FBm");
-    translate.hon=unescape("Heirs of N%FAmenor");
-    translate.voi="The Voice of Isengard";
-    translate.tlr="The Lost Realm";
-    translate.thohauh="Over Hill and Under Hill";
-    translate.thfg="The Hunt for Gollum";
-    translate.trg="The Redhorn Gate";
-    translate.tsf="The Steward's Fear";
-    translate.tdt="The Dunland Trap";
-    translate.twoe="The Wastes of Eriador";
-    translate.thotd="On the Doorstep";
-    translate.catc="Conflict at the Carrock";
-    translate.rtr="Road to Rivendell";
-    translate.tdf=unescape("The Dr%FAadan Forest");
-    translate.ttt="The Three Trials";
-    translate.efmg="Escape from Mount Gram";
-    translate.tbr="The Black Riders";
-    translate.ajtr="A Journey to Rhosgobel";
-    translate.twitw="The Watcher in the Water";
-    translate.eaad=unescape("Encounter at Amon D%EEn");
-    translate.tit="Trouble in Tharbad";
-    translate.rd="The Road Darkens";
-    translate.thoem="The Hills of Emyn Muil";
-    translate.tld="The Long Dark";
-    translate.aoo="Assault on Osgiliath";
-    translate.nie="The Nin-in-Eilph";
-    translate.tdm="The Dead Marshes";
-    translate.fos="Foundations of Stone";
-    translate.tbog="The Blood of Gondor";
-    translate.cs="Celebrimbor's Secret";
-    translate.rtm="Return to Mirkwood";
-    translate.saf="Shadow and Flame";
-    translate.tmv="The Morgul Vale";
-    translate.tac="The Antlered Crown";
-    translate.tos="The Treason of Saruman";
-    translate.tlos="The Land of Shadow";
-    translate.ate="Across the Ettenmoors";
-    translate.ttor="The Treachery of Rhudaur";
-    translate.tbocd=unescape("The Battle of Carn D%FBm");
-    translate.tdr="The Dread Realm";
-	translate.tgh="The Grey Havens";
-    return translate;
-})
+// .factory('translate',function(){
+//     var translate={};
+//     translate[""]="";
+//     translate.core="Core Set";
+//     translate.kd=unescape("Khazad-D%FBm");
+//     translate.hon=unescape("Heirs of N%FAmenor");
+//     translate.voi="The Voice of Isengard";
+//     translate.tlr="The Lost Realm";
+//     translate.thohauh="Over Hill and Under Hill";
+//     translate.thfg="The Hunt for Gollum";
+//     translate.trg="The Redhorn Gate";
+//     translate.tsf="The Steward's Fear";
+//     translate.tdt="The Dunland Trap";
+//     translate.twoe="The Wastes of Eriador";
+//     translate.thotd="On the Doorstep";
+//     translate.catc="Conflict at the Carrock";
+//     translate.rtr="Road to Rivendell";
+//     translate.tdf=unescape("The Dr%FAadan Forest");
+//     translate.ttt="The Three Trials";
+//     translate.efmg="Escape from Mount Gram";
+//     translate.tbr="The Black Riders";
+//     translate.ajtr="A Journey to Rhosgobel";
+//     translate.twitw="The Watcher in the Water";
+//     translate.eaad=unescape("Encounter at Amon D%EEn");
+//     translate.tit="Trouble in Tharbad";
+//     translate.rd="The Road Darkens";
+//     translate.thoem="The Hills of Emyn Muil";
+//     translate.tld="The Long Dark";
+//     translate.aoo="Assault on Osgiliath";
+//     translate.tnie="The Nin-in-Eilph";
+//     translate.tdm="The Dead Marshes";
+//     translate.fos="Foundations of Stone";
+//     translate.tbog="The Blood of Gondor";
+//     translate.cs="Celebrimbor's Secret";
+//     translate.rtm="Return to Mirkwood";
+//     translate.saf="Shadow and Flame";
+//     translate.tmv="The Morgul Vale";
+//     translate.tac="The Antlered Crown";
+//     translate.ttos="The Treason of Saruman";
+//     translate.tlos="The Land of Shadow";
+//     translate.ate="Across the Ettenmoors";
+//     translate.ttor="The Treachery of Rhudaur";
+//     translate.tbocd=unescape("The Battle of Carn D%FBm");
+//     translate.tdr="The Dread Realm";
+//     translate.tgh="The Grey Havens";
+//     translate.fots="Flight of the Stormcaller";
+//     translate.ttitd="The Thing in the Depths";
+//     translate.totd="Temple of the Deceived";
+//     translate.tdr2="The Drowned Ruins";
+//     translate.asoch="A Storm at CObas Haven";
+//     translate.tcoc="TheCity of Corsairs";
+//     translate.tsoh="The Sands or Harad";
+//     translate.tm="The M%FBmakil";
+//     translate.rah="Race Across Harad";
+//     translate.bts="Beneath the Sands";
+//     translate.tbs="The Black Serpent";
+// //    translate.="";
+// //    translate.="";
+
+//     return translate;
+// })
 .factory('filtersettings',["$localStorage",function ($localStorage) {
     var filtersettings={};
     filtersettings.onecore = $localStorage.onecore;
@@ -619,6 +637,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     image.url="";
     image.name="";
     image.exp="";
+    image.setname="";
     image.text="";
     image.traits="";
     image.flavor="";
@@ -668,6 +687,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
             image.url = card.img;
             image.name = card.name;
             image.exp = card.exp;
+            image.setname = card.setname;
             image.text = card.keywords + "\n" + card.text;
             image.traits = card.traits;
             image.flavor = (card.flavor||"").replace(/\`/g,'"');
@@ -872,7 +892,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 	    }
 
 	    // Suggest heal/hit point cards for Gloin, Treebeard, Gimil
-	    if ( (suggested.isInDeck('Gloin','core') || suggested.isInDeck('Gimli','core') || suggested.isInDeck('Treebeard','tos')) && (suggested.isWordInString('heal',cardc.text) || suggested.isWordInString('hit point',cardc.text)) )
+	    if ( (suggested.isInDeck('Gloin','core') || suggested.isInDeck('Gimli','core') || suggested.isInDeck('Treebeard','ttos')) && (suggested.isWordInString('heal',cardc.text) || suggested.isWordInString('hit point',cardc.text)) )
 	      	suggestions.push(cardc);
 
 	    // Suggest healing cards for Elrond
@@ -1338,7 +1358,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     // Returns 1 if card is in list
     suggested.isCardInList = function(card,list) {
 	for (var c in list) {
-	    if(list[c].cycle==card.cycle && list[c].no==card.no) {
+	    if(list[c].octgn==card.octgn) {
 		return 1;
 	    }
 	}
@@ -1346,6 +1366,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     };
     // Returns 1 if word is in string
     suggested.isWordInString = function(word,string) {
+	if (!string) return 0;
 	//	  return (string.search(word)>=0);
 	return (string.indexOf(word)>-1);
 	// var hits = string.match(word);
@@ -1354,6 +1375,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     };
     // Returns 1 if regexp is in string
     suggested.isRegExpInString = function(regexp,string) {
+	if (!string) return 0;
 	//	  return (string.search(word)>=0);
 	return regexp.exec(string);
 	// var hits = string.match(word);
@@ -1470,14 +1492,14 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 
     suggested.change = function(card,quantity){
         for (var c in suggested[card.type]){
-            if (suggested[card.type][c].cycle==card.cycle && suggested[card.type][c].no==card.no){
+            if (suggested[card.type][c].octgn==card.octgn){
 		suggested[card.type].splice(c, 1);
             }
 	}
     };
     suggested.quantity = function(card){
 	for(var c in suggested[card.type]){
-            if(suggested[card.type][c].cycle==card.cycle && suggested[card.type][c].no==card.no){
+            if(suggested[card.type][c].octgn==card.octgn){
 		return suggested[card.type][c].quantity;
             };
 	};
@@ -1584,11 +1606,6 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     };
     // Remove from suggested
     suggested.remove = function(card) {
-        // for (var c in suggested[card.type]){
-        //     if (suggested[card.type][c].cycle==card.cycle && suggested[card.type][c].no==card.no){
-	// 	suggested[card.type].splice(c, 1);
-        //     }
-	// }
 	suggested.blacklist.push(card);
 	suggested.deckChange(suggested.deck);
     }
@@ -1663,14 +1680,14 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
 		deck[card.type].push(card);
             } else {
 		for (var c in deck[card.type]){
-		    if (deck[card.type][c].cycle==card.cycle && deck[card.type][c].no==card.no){
+		    if (deck[card.type][c].octgn==card.octgn){
 			deck[card.type][c].quantity = quantity;
 		    }
 		}
             }
 	} else {
             for (var c in deck[card.type]){
-		if (deck[card.type][c].cycle==card.cycle && deck[card.type][c].no==card.no){
+		if (deck[card.type][c].octgn==card.octgn){
 		    deck[card.type].splice(c, 1);
 		}
             }
@@ -1683,7 +1700,7 @@ angular.module("yapp", ["ui.router", "ngAnimate",'ngStorage','firebase'])
     };
     deck.quantity = function(card){
 	for (var c in deck[card.type]){
-            if (deck[card.type][c].cycle==card.cycle && deck[card.type][c].no==card.no){
+            if (deck[card.type][c].octgn==card.octgn){
 		return deck[card.type][c].quantity;
             }
 	}
@@ -1921,7 +1938,7 @@ function(getData,$location,deck,cardObject,$scope,syncStatus,$rootScope,sanitize
 
 .controller('setsCtrl',["filtersettings","$localStorage",function(filtersettings,$localStorage){
     this.filtersettings=filtersettings;
-    this.full=["core", "kd", "hon", "voi", "tlr", "thohauh", "thfg", "trg", "tsf", "tdt", "twoe", "thotd", "catc", "rtr", "tdf", "ttt", "efmg", "tbr", "ajtr", "twitw", "eaad", "tit", "rd", "thoem", "tld", "aoo", "nie", "tdm", "fos", "tbog", "cs", "rtm", "saf", "tmv", "tac", "tos", "tlos", "ate", "ttor", "tbocd", "tdr","tgh"]; //all expansions so far
+    this.full=["core", "kd", "hon", "voi", "tlr", "thohauh", "thfg", "trg", "tsf", "tdt", "twoe", "thotd", "catc", "rtr", "tdf", "ttt", "efmg", "tbr", "ajtr", "twitw", "eaad", "tit", "trd", "thoem", "tld", "aoo", "tnie", "tdm", "fos", "tbog", "cs", "rtm", "saf", "tmv", "tac", "ttos", "tlos", "ate", "ttor", "tbocd", "tdr","tgh","fots","ttitd","totd","tdr2","asoch","tcoc","tsoh"]; //all expansions so far
     this.toggle=function(exp){
 	var ind = this.filtersettings.pack.indexOf(exp);
 	if (ind<0) { //index will be -1 if not found
@@ -2024,7 +2041,7 @@ function(getData,$location,deck,cardObject,$scope,syncStatus,$rootScope,sanitize
 
 
 
-.controller('previewCtrl',['$scope','$sce','image','translate','previewService',function($scope,$sce,image,translate,previewService) {
+.controller('previewCtrl',['$scope','$sce','image','previewService',function($scope,$sce,image,previewService) {
     $scope.trust = $sce.trustAsHtml;
     this.image=image;
     this.getImg = function() {
@@ -2034,7 +2051,7 @@ function(getData,$location,deck,cardObject,$scope,syncStatus,$rootScope,sanitize
 	return image.name;
     }
     this.exp = function() {
-	return " (" + translate[image.exp] +")";
+	return " (" + image.setname +")";
     }
     this.alt = function() {
 	return image.text;
@@ -2515,7 +2532,7 @@ function($scope,$rootScope,$firebaseObject,$firebaseArray,image,getUserIDFromUse
 }])
 
 
-.factory('exportDeck', ['translate','getCardFromCardID',function(translate,getCardFromCardID) {
+.factory('exportDeck', ['getCardFromCardID',function(getCardFromCardID) {
 
     this.download = function(filename,text) {
         var pom = document.createElement('a');
@@ -2683,7 +2700,7 @@ function($scope,$rootScope,$firebaseObject,$firebaseArray,image,getUserIDFromUse
                 text += "     ";
                 text += h.name;
                 text += " (";
-                text += translate[h.exp];
+                text += h.setname;
                 text += ")\r\n";
             }
         }
@@ -2720,7 +2737,7 @@ function($scope,$rootScope,$firebaseObject,$firebaseArray,image,getUserIDFromUse
                     text += "x ";
                     text += t[i].name;
                     text += " (";
-                    text += translate[t[i].exp];
+                    text += t[i].setname;
                     text += ")\r\n";
                 }
             }
@@ -2782,7 +2799,7 @@ function($scope,$rootScope,$firebaseObject,$firebaseArray,image,getUserIDFromUse
                 text += '-';
                 text += h.exp;
                 text += ") (*";
-                text += translate[h.exp];
+                text += h.setname;
                 text += "*)  \r\n";
             }
         }
@@ -2823,7 +2840,7 @@ function($scope,$rootScope,$firebaseObject,$firebaseArray,image,getUserIDFromUse
                     text += '-';
                     text += t[i].exp;
                     text += ") (*";
-                    text += translate[t[i].exp];
+                    text += t[i].setname;
                     text += "*)  \r\n";
                 }
             }
@@ -2887,7 +2904,7 @@ function($scope,$rootScope,$firebaseObject,$firebaseArray,image,getUserIDFromUse
                 text += "]";
                 text += h.name;
                 text += "[/url] ([i]";
-                text += translate[h.exp];
+                text += h.setname;
                 text += "[/i])  \r\n";
             }
         }
@@ -2929,7 +2946,7 @@ function($scope,$rootScope,$firebaseObject,$firebaseArray,image,getUserIDFromUse
                     text += "]";
                     text += t[i].name;
                     text += "[/url] ([i]";
-                    text += translate[t[i].exp];
+                    text += t[i].setname;
                     text += "[/i])  \r\n";
                 }
             }
@@ -2970,8 +2987,8 @@ function($scope,$rootScope,$firebaseObject,$firebaseArray,image,getUserIDFromUse
     return formDataMyDecks;
 })
 
-.controller('myDecksCtrl', ['deck', 'getDeckString', '$localStorage', 'translate', '$scope', '$rootScope', 'cardObject', '$location', '$firebaseObject','$firebaseArray','getHeroesFromDeckString','loadDeckIntoBuilder','getCardFromCardID','getCardID','searchDecks','image','exportDeck','formDataMyDecks',
-function(deck, getDeckString, $localStorage, translate, $scope, $rootScope, cardObject, $location,$firebaseObject,$firebaseArray,getHeroesFromDeckString,loadDeckIntoBuilder,getCardFromCardID,getCardID,searchDecks,image,exportDeck,formDataMyDecks) {
+.controller('myDecksCtrl', ['deck', 'getDeckString', '$localStorage', '$scope', '$rootScope', 'cardObject', '$location', '$firebaseObject','$firebaseArray','getHeroesFromDeckString','loadDeckIntoBuilder','getCardFromCardID','getCardID','searchDecks','image','exportDeck','formDataMyDecks',
+function(deck, getDeckString, $localStorage, $scope, $rootScope, cardObject, $location,$firebaseObject,$firebaseArray,getHeroesFromDeckString,loadDeckIntoBuilder,getCardFromCardID,getCardID,searchDecks,image,exportDeck,formDataMyDecks) {
     $scope.myDecksArray=[];
     $scope.formDataMyDecks = formDataMyDecks;
     $scope.loadMyDecks = function() {
@@ -3472,6 +3489,7 @@ function($rootScope,$scope,$firebaseObject,getDeckObjectFromDeckID,formDataDeckS
     $scope.image = image;
     $scope.databaseStats = databaseStats;
     $scope.isWordInString = function(word,string) {
+	if (!string) return 0;
         return (string.indexOf(word)>-1);
     };
     $scope.setSelectedQuest = function() {
