@@ -1938,7 +1938,7 @@ function(getData,$location,deck,cardObject,$scope,syncStatus,$rootScope,sanitize
 
 .controller('setsCtrl',["filtersettings","$localStorage",function(filtersettings,$localStorage){
     this.filtersettings=filtersettings;
-    this.full=["core", "kd", "hon", "voi", "tlr", "thohauh", "thfg", "trg", "tsf", "tdt", "twoe", "thotd", "catc", "rtr", "tdf", "ttt", "efmg", "tbr", "ajtr", "twitw", "eaad", "tit", "trd", "thoem", "tld", "aoo", "tnie", "tdm", "fos", "tbog", "cs", "rtm", "saf", "tmv", "tac", "ttos", "tlos", "ate", "ttor", "tbocd", "tdr","tgh","fots","ttitd","totd","tdr2","asoch","tcoc","tsoh"]; //all expansions so far
+    this.full=["core", "kd", "hon", "tvoi", "tlr", "thohauh", "thfg", "trg", "tsf", "tdt", "twoe", "thotd", "catc", "rtr", "tdf", "ttt", "efmg", "tbr", "ajtr", "twitw", "eaad", "tit", "trd", "thoem", "tld", "aoo", "tnie", "tdm", "fos", "tbog", "cs", "rtm", "saf", "tmv", "tac", "ttos", "tlos", "ate", "ttor", "tbocd", "tdr","tgh","fots","ttitd","totd","tdr2","asoch","tcoc","tfotw","tsoh"]; //all expansions so far
     this.toggle=function(exp){
 	var ind = this.filtersettings.pack.indexOf(exp);
 	if (ind<0) { //index will be -1 if not found
