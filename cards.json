@@ -19,6 +19,7 @@
         "exp": "core", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801200c9001", 
+        "Categories": "Readying, ", 
         "quantity": "1"
     }, 
     {
@@ -41,6 +42,7 @@
         "exp": "core", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801200c9002", 
+        "Categories": "Resource Acceleration, ", 
         "quantity": "1"
     }, 
     {
@@ -63,6 +65,7 @@
         "exp": "core", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801200c9003", 
+        "Categories": "Resource Acceleration, ", 
         "quantity": "1"
     }, 
     {
@@ -85,6 +88,7 @@
         "exp": "core", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801200c9004", 
+        "Categories": "Attack Bonus, ", 
         "quantity": "1"
     }, 
     {
@@ -107,6 +111,7 @@
         "exp": "core", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801200c9005", 
+        "Categories": "", 
         "quantity": "1"
     }, 
     {
@@ -129,6 +134,7 @@
         "exp": "core", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801200c9006", 
+        "Categories": "Encounter Control, Direct Damage, ", 
         "quantity": "1"
     }, 
     {
@@ -151,6 +157,7 @@
         "exp": "core", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801200c9007", 
+        "Categories": "Discard from Hand, Willpower Bonus, ", 
         "quantity": "1"
     }, 
     {
@@ -173,6 +180,7 @@
         "exp": "core", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801200c9008", 
+        "Categories": "Encounter Control, ", 
         "quantity": "1"
     }, 
     {
@@ -195,6 +203,7 @@
         "exp": "core", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801200c9009", 
+        "Categories": "Staging Area Attack, Attack Bonus, ", 
         "quantity": "1"
     }, 
     {
@@ -217,6 +226,7 @@
         "exp": "core", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801200c9010", 
+        "Categories": "Encounter Control, Encounter Scrying, ", 
         "quantity": "1"
     }, 
     {
@@ -239,6 +249,7 @@
         "exp": "core", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801200c9011", 
+        "Categories": "Healing, ", 
         "quantity": "1"
     }, 
     {
@@ -261,6 +272,7 @@
         "exp": "core", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801200c9012", 
+        "Categories": "Card Draw, ", 
         "quantity": "1"
     }, 
     {
@@ -282,6 +294,7 @@
         "exp": "core", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -304,6 +317,7 @@
         "exp": "core", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801200c9014", 
+        "Categories": "Willpower Bonus, ", 
         "quantity": "2"
     }, 
     {
@@ -325,6 +339,7 @@
         "exp": "core", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Staging Area Control, ", 
         "quantity": "2"
     }, 
     {
@@ -346,6 +361,7 @@
         "exp": "core", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "Location Control, ", 
         "quantity": "3"
     }, 
     {
@@ -367,6 +383,7 @@
         "exp": "core", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "", 
         "quantity": "2"
     }, 
     {
@@ -388,6 +405,7 @@
         "exp": "core", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "Direct Damage, ", 
         "quantity": "2"
     }, 
     {
@@ -410,6 +428,7 @@
         "exp": "core", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801200c9019", 
+        "Categories": "Leaves Play, Mustering, ", 
         "quantity": "1"
     }, 
     {
@@ -427,6 +446,7 @@
         "keywords": "", 
         "exp": "core", 
         "type": "4event", 
+        "Categories": "Readying, ", 
         "quantity": "2"
     }, 
     {
@@ -444,6 +464,7 @@
         "keywords": "", 
         "exp": "core", 
         "type": "4event", 
+        "Categories": "Readying, ", 
         "quantity": "2"
     }, 
     {
@@ -461,6 +482,7 @@
         "keywords": "", 
         "exp": "core", 
         "type": "4event", 
+        "Categories": "Attack Bonus, Defense Bonus, ", 
         "quantity": "2"
     }, 
     {
@@ -478,6 +500,7 @@
         "keywords": "", 
         "exp": "core", 
         "type": "4event", 
+        "Categories": "Mustering, Recursion, ", 
         "quantity": "2"
     }, 
     {
@@ -495,6 +518,7 @@
         "keywords": "", 
         "exp": "core", 
         "type": "4event", 
+        "Categories": "Card Draw, Leaves Play, ", 
         "quantity": "2"
     }, 
     {
@@ -512,6 +536,7 @@
         "keywords": "", 
         "exp": "core", 
         "type": "4event", 
+        "Categories": "Readying, ", 
         "quantity": "1"
     }, 
     {
@@ -530,6 +555,7 @@
         "exp": "core", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801200c9026", 
+        "Categories": "Resource Acceleration, ", 
         "quantity": "2"
     }, 
     {
@@ -548,6 +574,7 @@
         "exp": "core", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801200c9027", 
+        "Categories": "Resource Smoothing, Willpower Bonus, ", 
         "quantity": "1"
     }, 
     {
@@ -569,6 +596,7 @@
         "exp": "core", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -590,6 +618,7 @@
         "exp": "core", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "Direct Damage, ", 
         "quantity": "3"
     }, 
     {
@@ -611,6 +640,7 @@
         "exp": "core", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "", 
         "quantity": "2"
     }, 
     {
@@ -633,6 +663,7 @@
         "exp": "core", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801200c9031", 
+        "Categories": "Attack Bonus, ", 
         "quantity": "1"
     }, 
     {
@@ -650,6 +681,7 @@
         "keywords": "", 
         "exp": "core", 
         "type": "4event", 
+        "Categories": "Attack Bonus, Defense Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -667,6 +699,7 @@
         "keywords": "", 
         "exp": "core", 
         "type": "4event", 
+        "Categories": "Direct Damage, ", 
         "quantity": "2"
     }, 
     {
@@ -684,6 +717,7 @@
         "keywords": "", 
         "exp": "core", 
         "type": "4event", 
+        "Categories": "Combat Control, ", 
         "quantity": "2"
     }, 
     {
@@ -701,6 +735,7 @@
         "keywords": "", 
         "exp": "core", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "2"
     }, 
     {
@@ -718,6 +753,7 @@
         "keywords": "", 
         "exp": "core", 
         "type": "4event", 
+        "Categories": "Combat Control, ", 
         "quantity": "2"
     }, 
     {
@@ -735,6 +771,7 @@
         "keywords": "", 
         "exp": "core", 
         "type": "4event", 
+        "Categories": "Direct Damage, ", 
         "quantity": "1"
     }, 
     {
@@ -752,6 +789,7 @@
         "keywords": "", 
         "exp": "core", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "1"
     }, 
     {
@@ -769,6 +807,7 @@
         "traits": "Item. Weapon.", 
         "exp": "core", 
         "type": "3attachment", 
+        "Categories": "Attack Bonus, ", 
         "quantity": "2"
     }, 
     {
@@ -786,6 +825,7 @@
         "traits": "Item. Armor.", 
         "exp": "core", 
         "type": "3attachment", 
+        "Categories": "Hit Point Bonus, ", 
         "quantity": "2"
     }, 
     {
@@ -803,6 +843,7 @@
         "traits": "Item. Weapon.", 
         "exp": "core", 
         "type": "3attachment", 
+        "Categories": "Attack Bonus, ", 
         "quantity": "2"
     }, 
     {
@@ -821,6 +862,7 @@
         "exp": "core", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801200c9042", 
+        "Categories": "Leaves Play, Resource Acceleration, ", 
         "quantity": "1"
     }, 
     {
@@ -842,6 +884,7 @@
         "exp": "core", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Threat Control, ", 
         "quantity": "2"
     }, 
     {
@@ -863,6 +906,7 @@
         "exp": "core", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Location Control, ", 
         "quantity": "3"
     }, 
     {
@@ -884,6 +928,7 @@
         "exp": "core", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "Location Control, Staging Area Control, ", 
         "quantity": "2"
     }, 
     {
@@ -901,6 +946,7 @@
         "keywords": "", 
         "exp": "core", 
         "type": "4event", 
+        "Categories": "Threat Control, ", 
         "quantity": "2"
     }, 
     {
@@ -918,6 +964,7 @@
         "keywords": "", 
         "exp": "core", 
         "type": "4event", 
+        "Categories": "Location Control, ", 
         "quantity": "2"
     }, 
     {
@@ -935,6 +982,7 @@
         "keywords": "", 
         "exp": "core", 
         "type": "4event", 
+        "Categories": "Shadow Control, ", 
         "quantity": "2"
     }, 
     {
@@ -952,6 +1000,7 @@
         "keywords": "", 
         "exp": "core", 
         "type": "4event", 
+        "Categories": "Discard Pile, ", 
         "quantity": "2"
     }, 
     {
@@ -969,6 +1018,7 @@
         "keywords": "", 
         "exp": "core", 
         "type": "4event", 
+        "Categories": "Encounter Control, ", 
         "quantity": "2"
     }, 
     {
@@ -986,6 +1036,7 @@
         "keywords": "", 
         "exp": "core", 
         "type": "4event", 
+        "Categories": "Discard Pile, Mustering, ", 
         "quantity": "3"
     }, 
     {
@@ -1003,6 +1054,7 @@
         "keywords": "", 
         "exp": "core", 
         "type": "4event", 
+        "Categories": "Recursion, Staging Area Control, ", 
         "quantity": "2"
     }, 
     {
@@ -1020,6 +1072,7 @@
         "keywords": "", 
         "exp": "core", 
         "type": "4event", 
+        "Categories": "Discard from Hand, Discard Pile, Recursion, ", 
         "quantity": "1"
     }, 
     {
@@ -1037,6 +1090,7 @@
         "keywords": "", 
         "exp": "core", 
         "type": "4event", 
+        "Categories": "Discard Pile, Mustering, ", 
         "quantity": "1"
     }, 
     {
@@ -1054,6 +1108,7 @@
         "traits": "Condition.", 
         "exp": "core", 
         "type": "3attachment", 
+        "Categories": "Willpower Bonus, ", 
         "quantity": "2"
     }, 
     {
@@ -1071,6 +1126,7 @@
         "traits": "Condition.", 
         "exp": "core", 
         "type": "3attachment", 
+        "Categories": "Location Control, ", 
         "quantity": "2"
     }, 
     {
@@ -1088,6 +1144,7 @@
         "traits": "Condition.", 
         "exp": "core", 
         "type": "3attachment", 
+        "Categories": "Readying, ", 
         "quantity": "1"
     }, 
     {
@@ -1109,6 +1166,7 @@
         "exp": "core", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "Healing, ", 
         "quantity": "3"
     }, 
     {
@@ -1130,6 +1188,7 @@
         "exp": "core", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "Discard from Hand, Discard Pile, Recursion, ", 
         "quantity": "2"
     }, 
     {
@@ -1152,6 +1211,7 @@
         "exp": "core", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801200c9060", 
+        "Categories": "Encounter Control, Encounter Scrying, ", 
         "quantity": "1"
     }, 
     {
@@ -1173,6 +1233,7 @@
         "exp": "core", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Condition Control, ", 
         "quantity": "2"
     }, 
     {
@@ -1195,6 +1256,7 @@
         "exp": "core", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801200c9062", 
+        "Categories": "Card Draw, ", 
         "quantity": "2"
     }, 
     {
@@ -1212,6 +1274,7 @@
         "keywords": "", 
         "exp": "core", 
         "type": "4event", 
+        "Categories": "Healing, ", 
         "quantity": "3"
     }, 
     {
@@ -1229,6 +1292,7 @@
         "keywords": "", 
         "exp": "core", 
         "type": "4event", 
+        "Categories": "Card Draw, ", 
         "quantity": "2"
     }, 
     {
@@ -1246,6 +1310,7 @@
         "keywords": "", 
         "exp": "core", 
         "type": "4event", 
+        "Categories": "Quest Action, Staging Area Control, ", 
         "quantity": "2"
     }, 
     {
@@ -1263,6 +1328,7 @@
         "keywords": "", 
         "exp": "core", 
         "type": "4event", 
+        "Categories": "Location Control, Quest Action, Staging Area Control, ", 
         "quantity": "2"
     }, 
     {
@@ -1280,6 +1346,7 @@
         "keywords": "", 
         "exp": "core", 
         "type": "4event", 
+        "Categories": "Player Deck Scrying, Recursion, ", 
         "quantity": "2"
     }, 
     {
@@ -1297,6 +1364,7 @@
         "keywords": "", 
         "exp": "core", 
         "type": "4event", 
+        "Categories": "Healing, ", 
         "quantity": "1"
     }, 
     {
@@ -1314,6 +1382,7 @@
         "traits": "Item. Trap.", 
         "exp": "core", 
         "type": "3attachment", 
+        "Categories": "Combat Control, ", 
         "quantity": "2"
     }, 
     {
@@ -1331,6 +1400,7 @@
         "traits": "Title.", 
         "exp": "core", 
         "type": "3attachment", 
+        "Categories": "Discard from Hand, Defense Bonus, Willpower Bonus, ", 
         "quantity": "2"
     }, 
     {
@@ -1348,6 +1418,7 @@
         "traits": "Condition.", 
         "exp": "core", 
         "type": "3attachment", 
+        "Categories": "Shadow Control, ", 
         "quantity": "1"
     }, 
     {
@@ -1365,6 +1436,7 @@
         "traits": "Skill.", 
         "exp": "core", 
         "type": "3attachment", 
+        "Categories": "Healing, ", 
         "quantity": "2"
     }, 
     {
@@ -1387,6 +1459,7 @@
         "exp": "core", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801200c9073", 
+        "Categories": "Card Draw, Threat Control, Direct Damage, ", 
         "quantity": "4"
     }, 
     {
@@ -1409,6 +1482,7 @@
         "exp": "tit", 
         "unique": true, 
         "octgn": "9d548a43-0ef8-45e6-ab95-7356d218d203", 
+        "Categories": "", 
         "quantity": "1"
     }, 
     {
@@ -1430,6 +1504,7 @@
         "exp": "tit", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "Mustering, ", 
         "quantity": "3"
     }, 
     {
@@ -1447,6 +1522,7 @@
         "traits": "Song.", 
         "exp": "tit", 
         "type": "3attachment", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -1469,6 +1545,7 @@
         "exp": "tit", 
         "unique": true, 
         "octgn": "2e7f22cc-218e-4dad-b4e4-00b2208713d9", 
+        "Categories": "Card Seach, Discard from Hand, Discard Pile, Mustering, Recursion, ", 
         "quantity": "3"
     }, 
     {
@@ -1486,6 +1563,7 @@
         "keywords": "", 
         "exp": "tit", 
         "type": "4event", 
+        "Categories": "Recursion, Direct Damage, ", 
         "quantity": "3"
     }, 
     {
@@ -1503,6 +1581,7 @@
         "keywords": "", 
         "exp": "tit", 
         "type": "4event", 
+        "Categories": "Discard from Hand, Recursion, Secrecy, Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -1520,6 +1599,7 @@
         "keywords": "", 
         "exp": "tit", 
         "type": "4event", 
+        "Categories": "Encounter Control, Threat Control, ", 
         "quantity": "3"
     }, 
     {
@@ -1541,6 +1621,7 @@
         "exp": "tit", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "Card Seach, ", 
         "quantity": "3"
     }, 
     {
@@ -1558,6 +1639,7 @@
         "traits": "Item.", 
         "exp": "tit", 
         "type": "3attachment", 
+        "Categories": "Readying, Healing, ", 
         "quantity": "3"
     }, 
     {
@@ -1579,6 +1661,7 @@
         "exp": "tit", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Readying, Leaves Play, ", 
         "quantity": "3"
     }, 
     {
@@ -1601,6 +1684,7 @@
         "exp": "tdf", 
         "unique": true, 
         "octgn": "536c80ba-ad8b-447e-b378-1684508eb0f9", 
+        "Categories": "", 
         "quantity": "1"
     }, 
     {
@@ -1623,6 +1707,7 @@
         "exp": "tdf", 
         "unique": true, 
         "octgn": "c6ae1840-dd7d-46ea-baf8-6d30614506de", 
+        "Categories": "Readying, ", 
         "quantity": "3"
     }, 
     {
@@ -1640,6 +1725,7 @@
         "keywords": "", 
         "exp": "tdf", 
         "type": "4event", 
+        "Categories": "Readying, ", 
         "quantity": "3"
     }, 
     {
@@ -1657,6 +1743,7 @@
         "traits": "Skill.", 
         "exp": "tdf", 
         "type": "3attachment", 
+        "Categories": "Direct Damage, ", 
         "quantity": "3"
     }, 
     {
@@ -1674,6 +1761,7 @@
         "keywords": "", 
         "exp": "tdf", 
         "type": "4event", 
+        "Categories": "Resource Smoothing, ", 
         "quantity": "3"
     }, 
     {
@@ -1695,6 +1783,7 @@
         "exp": "tdf", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "Leaves Play, ", 
         "quantity": "3"
     }, 
     {
@@ -1712,6 +1801,7 @@
         "keywords": "", 
         "exp": "tdf", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -1733,6 +1823,7 @@
         "exp": "tdf", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Resource Acceleration, Defense Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -1750,6 +1841,7 @@
         "keywords": "", 
         "exp": "tdf", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -1771,6 +1863,7 @@
         "exp": "tdf", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -1793,6 +1886,7 @@
         "exp": "aoo", 
         "unique": true, 
         "octgn": "323ebfa3-57e5-4394-9f55-284b2f7ee0be", 
+        "Categories": "Staging Area Attack, Attack Bonus, ", 
         "quantity": "1"
     }, 
     {
@@ -1811,6 +1905,7 @@
         "exp": "aoo", 
         "unique": true, 
         "octgn": "98ba9e54-d6c3-41ff-b886-81a29e29eb64", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -1828,6 +1923,7 @@
         "traits": "Outlands.", 
         "exp": "aoo", 
         "type": "4event", 
+        "Categories": "Discard from Hand, Discard Pile, Recursion, ", 
         "quantity": "3"
     }, 
     {
@@ -1849,6 +1945,7 @@
         "exp": "aoo", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "Resource Smoothing, Staging Area Attack, ", 
         "quantity": "3"
     }, 
     {
@@ -1866,6 +1963,7 @@
         "traits": "Gondor.", 
         "exp": "aoo", 
         "type": "3attachment", 
+        "Categories": "Attack Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -1887,6 +1985,7 @@
         "exp": "aoo", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -1905,6 +2004,7 @@
         "exp": "aoo", 
         "unique": true, 
         "octgn": "72cb5c31-c62f-4870-a5f4-099cdec1d4a7", 
+        "Categories": "Discard from Hand, Discard Pile, Recursion, ", 
         "quantity": "3"
     }, 
     {
@@ -1922,6 +2022,7 @@
         "traits": "Weapon.", 
         "exp": "aoo", 
         "type": "3attachment", 
+        "Categories": "Staging Area Control, Direct Damage, ", 
         "quantity": "3"
     }, 
     {
@@ -1939,6 +2040,7 @@
         "traits": "Trap.", 
         "exp": "aoo", 
         "type": "4event", 
+        "Categories": "Direct Damage, ", 
         "quantity": "3"
     }, 
     {
@@ -1957,6 +2059,7 @@
         "exp": "aoo", 
         "unique": true, 
         "octgn": "1e9a6c59-8dc7-4dc4-a5a4-f5f4f9ccdc55", 
+        "Categories": "Card Draw, Encounter Control, Encounter Scrying, Player Deck Scrying, ", 
         "quantity": "3"
     }, 
     {
@@ -1979,6 +2082,7 @@
         "exp": "thohauh", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-1801204c9017", 
+        "Categories": "Leaves Play, ", 
         "quantity": "1"
     }, 
     {
@@ -2001,6 +2105,7 @@
         "exp": "thohauh", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-1801204c9083", 
+        "Categories": "Resource Acceleration, ", 
         "quantity": "1"
     }, 
     {
@@ -2023,6 +2128,7 @@
         "exp": "thohauh", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-1801204c9062", 
+        "Categories": "Threat Control, ", 
         "quantity": "1"
     }, 
     {
@@ -2045,6 +2151,7 @@
         "exp": "thohauh", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-1801204c9065", 
+        "Categories": "Card Draw, Resource Acceleration, ", 
         "quantity": "1"
     }, 
     {
@@ -2067,6 +2174,7 @@
         "exp": "thohauh", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-1801204c9015", 
+        "Categories": "", 
         "quantity": "1"
     }, 
     {
@@ -2089,6 +2197,7 @@
         "exp": "thohauh", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-1801204c9032", 
+        "Categories": "Card Seach, Mustering, ", 
         "quantity": "3"
     }, 
     {
@@ -2111,6 +2220,7 @@
         "exp": "thohauh", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-1801204c9055", 
+        "Categories": "Card Seach, Mustering, ", 
         "quantity": "3"
     }, 
     {
@@ -2133,6 +2243,7 @@
         "exp": "thohauh", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-1801204c9019", 
+        "Categories": "Card Seach, ", 
         "quantity": "3"
     }, 
     {
@@ -2155,6 +2266,7 @@
         "exp": "thohauh", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-1801204c9027", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -2177,6 +2289,7 @@
         "exp": "thohauh", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-1801204c9036", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -2194,6 +2307,7 @@
         "traits": "Item.", 
         "exp": "thohauh", 
         "type": "3attachment", 
+        "Categories": "Readying, ", 
         "quantity": "3"
     }, 
     {
@@ -2211,6 +2325,7 @@
         "traits": "Item.", 
         "exp": "thohauh", 
         "type": "3attachment", 
+        "Categories": "Readying, ", 
         "quantity": "3"
     }, 
     {
@@ -2229,6 +2344,7 @@
         "exp": "thohauh", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-1801204c9084", 
+        "Categories": "Location Control, Recursion, Staging Area Control, ", 
         "quantity": "3"
     }, 
     {
@@ -2246,6 +2362,7 @@
         "keywords": "", 
         "exp": "thohauh", 
         "type": "4event", 
+        "Categories": "Mustering, ", 
         "quantity": "3"
     }, 
     {
@@ -2263,6 +2380,7 @@
         "keywords": "", 
         "exp": "thohauh", 
         "type": "4event", 
+        "Categories": "Card Draw, ", 
         "quantity": "3"
     }, 
     {
@@ -2280,6 +2398,7 @@
         "keywords": "", 
         "exp": "thohauh", 
         "type": "4event", 
+        "Categories": "Direct Damage, ", 
         "quantity": "3"
     }, 
     {
@@ -2297,6 +2416,7 @@
         "keywords": "", 
         "exp": "thohauh", 
         "type": "4event", 
+        "Categories": "Quest Action, ", 
         "quantity": "3"
     }, 
     {
@@ -2314,6 +2434,7 @@
         "keywords": "", 
         "exp": "thohauh", 
         "type": "4event", 
+        "Categories": "Encounter Control, Direct Damage, ", 
         "quantity": "3"
     }, 
     {
@@ -2331,6 +2452,7 @@
         "keywords": "", 
         "exp": "thohauh", 
         "type": "4event", 
+        "Categories": "Attack Bonus, Defense Bonus, Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -2353,6 +2475,7 @@
         "exp": "tnie", 
         "unique": true, 
         "octgn": "9e3a4b3b-7bb7-4403-984c-411af5ec8467", 
+        "Categories": "Resource Acceleration, ", 
         "quantity": "1"
     }, 
     {
@@ -2370,6 +2493,7 @@
         "keywords": "", 
         "exp": "tnie", 
         "type": "4event", 
+        "Categories": "Card Draw, ", 
         "quantity": "3"
     }, 
     {
@@ -2387,6 +2511,7 @@
         "keywords": "", 
         "exp": "tnie", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -2408,6 +2533,7 @@
         "exp": "tnie", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "Direct Damage, ", 
         "quantity": "3"
     }, 
     {
@@ -2425,6 +2551,7 @@
         "traits": "Item. Weapon.", 
         "exp": "tnie", 
         "type": "3attachment", 
+        "Categories": "Attack Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -2446,6 +2573,7 @@
         "exp": "tnie", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Encounter Control, Encounter Scrying, Location Control, Secrecy, ", 
         "quantity": "3"
     }, 
     {
@@ -2463,6 +2591,7 @@
         "keywords": "", 
         "exp": "tnie", 
         "type": "4event", 
+        "Categories": "Recursion, Threat Control, ", 
         "quantity": "3"
     }, 
     {
@@ -2484,6 +2613,7 @@
         "exp": "tnie", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Staging Area Control, ", 
         "quantity": "3"
     }, 
     {
@@ -2502,6 +2632,7 @@
         "exp": "tnie", 
         "unique": true, 
         "octgn": "17cb8a9a-6369-4ea9-a614-02908bd7b77f", 
+        "Categories": "Readying, Location Control, ", 
         "quantity": "3"
     }, 
     {
@@ -2520,6 +2651,7 @@
         "exp": "tnie", 
         "unique": true, 
         "octgn": "a1f5a577-30bf-44ed-b60b-e733b5f26d55", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -2542,6 +2674,7 @@
         "exp": "rtm", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801206c9005", 
+        "Categories": "Readying, Attack Bonus, Willpower Bonus, ", 
         "quantity": "1"
     }, 
     {
@@ -2559,6 +2692,7 @@
         "traits": "Signal.", 
         "exp": "rtm", 
         "type": "3attachment", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -2576,6 +2710,7 @@
         "keywords": "", 
         "exp": "rtm", 
         "type": "4event", 
+        "Categories": "Shadow Control, ", 
         "quantity": "3"
     }, 
     {
@@ -2597,6 +2732,7 @@
         "exp": "rtm", 
         "hitpoints": 4, 
         "type": "2ally", 
+        "Categories": "Leaves Play, Attack Bonus, Defense Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -2614,6 +2750,7 @@
         "traits": "Boon.", 
         "exp": "rtm", 
         "type": "3attachment", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -2635,6 +2772,7 @@
         "exp": "rtm", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "Location Control, Staging Area Control, ", 
         "quantity": "3"
     }, 
     {
@@ -2652,6 +2790,7 @@
         "keywords": "", 
         "exp": "rtm", 
         "type": "4event", 
+        "Categories": "Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -2673,6 +2812,7 @@
         "exp": "rtm", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -2690,6 +2830,7 @@
         "keywords": "", 
         "exp": "rtm", 
         "type": "4event", 
+        "Categories": "Encounter Control, Encounter Scrying, Player Deck Scrying, Recursion, ", 
         "quantity": "3"
     }, 
     {
@@ -2707,6 +2848,7 @@
         "keywords": "", 
         "exp": "rtm", 
         "type": "4event", 
+        "Categories": "Discard Pile, Encounter Control, ", 
         "quantity": "3"
     }, 
     {
@@ -2729,6 +2871,7 @@
         "exp": "trd", 
         "unique": true, 
         "octgn": "f9196cda-8f50-4cc5-9aad-1c56cb677bca", 
+        "Categories": "", 
         "quantity": "1"
     }, 
     {
@@ -2751,6 +2894,7 @@
         "exp": "trd", 
         "unique": true, 
         "octgn": "3e055edf-4540-4cf1-94ce-afbf5fc28f82", 
+        "Categories": "", 
         "quantity": "1"
     }, 
     {
@@ -2773,6 +2917,7 @@
         "exp": "trd", 
         "unique": true, 
         "octgn": "3d09a998-9ad0-4b98-9c42-50c4226cc73b", 
+        "Categories": "Card Seach, Discard from Hand, Mustering, ", 
         "quantity": "3"
     }, 
     {
@@ -2795,6 +2940,7 @@
         "exp": "trd", 
         "unique": true, 
         "octgn": "36b26228-1c01-4064-a109-d110e00d8e4b", 
+        "Categories": "Readying, Defense Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -2817,6 +2963,7 @@
         "exp": "trd", 
         "unique": true, 
         "octgn": "638638f0-8177-410a-bce8-9e2bbf5ad81f", 
+        "Categories": "Card Draw, Condition Control, Healing, ", 
         "quantity": "3"
     }, 
     {
@@ -2839,6 +2986,7 @@
         "exp": "trd", 
         "unique": true, 
         "octgn": "e02cc17b-80e4-4a8f-ba55-1df74aac816d", 
+        "Categories": "Card Seach, ", 
         "quantity": "3"
     }, 
     {
@@ -2857,6 +3005,7 @@
         "traits": "Spell.", 
         "victory points": "1", 
         "type": "4event", 
+        "Categories": "Readying, Victory Display, ", 
         "quantity": "3"
     }, 
     {
@@ -2875,6 +3024,7 @@
         "exp": "trd", 
         "unique": true, 
         "octgn": "02e56cef-e78d-4dbd-bd4d-6ec43e4b1d2b", 
+        "Categories": "Shadow Control, Card Draw, Resource Acceleration, ", 
         "quantity": "3"
     }, 
     {
@@ -2892,6 +3042,7 @@
         "traits": "Item. Pipe.", 
         "exp": "trd", 
         "type": "3attachment", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -2910,6 +3061,7 @@
         "exp": "trd", 
         "unique": true, 
         "octgn": "d5f09d24-be50-4958-b0d0-41b1ad09b7af", 
+        "Categories": "Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -2932,6 +3084,7 @@
         "exp": "catc", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801202c9001", 
+        "Categories": "", 
         "quantity": "1"
     }, 
     {
@@ -2949,6 +3102,7 @@
         "traits": "Signal.", 
         "exp": "catc", 
         "type": "3attachment", 
+        "Categories": "Defense Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -2966,6 +3120,7 @@
         "keywords": "", 
         "exp": "catc", 
         "type": "4event", 
+        "Categories": "Discard from Hand, Discard Pile, Recursion, ", 
         "quantity": "3"
     }, 
     {
@@ -2987,6 +3142,7 @@
         "exp": "catc", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "Staging Area Control, Direct Damage, ", 
         "quantity": "3"
     }, 
     {
@@ -3004,6 +3160,7 @@
         "traits": "Condition.", 
         "exp": "catc", 
         "type": "3attachment", 
+        "Categories": "Discard from Hand, Recursion, ", 
         "quantity": "3"
     }, 
     {
@@ -3026,6 +3183,7 @@
         "exp": "catc", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801202c9009", 
+        "Categories": "Readying, Leaves Play, ", 
         "quantity": "3"
     }, 
     {
@@ -3043,6 +3201,7 @@
         "traits": "Title.", 
         "exp": "catc", 
         "type": "3attachment", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -3064,6 +3223,7 @@
         "exp": "catc", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -3081,6 +3241,7 @@
         "traits": "Item.", 
         "exp": "catc", 
         "type": "3attachment", 
+        "Categories": "Shadow Control, ", 
         "quantity": "3"
     }, 
     {
@@ -3098,6 +3259,7 @@
         "traits": "Song.", 
         "exp": "catc", 
         "type": "3attachment", 
+        "Categories": "Resource Smoothing, ", 
         "quantity": "3"
     }, 
     {
@@ -3120,6 +3282,7 @@
         "exp": "tmv", 
         "unique": true, 
         "octgn": "29d5feef-6165-4077-bb80-692526a8a924", 
+        "Categories": "Willpower Bonus, ", 
         "quantity": "1"
     }, 
     {
@@ -3141,6 +3304,7 @@
         "exp": "tmv", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Resource Smoothing, ", 
         "quantity": "3"
     }, 
     {
@@ -3159,6 +3323,7 @@
         "exp": "tmv", 
         "unique": true, 
         "octgn": "2f0a3f18-c84f-4458-b6f7-2e6be9acee6b", 
+        "Categories": "Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -3176,6 +3341,7 @@
         "traits": "Item. Weapon.", 
         "exp": "tmv", 
         "type": "3attachment", 
+        "Categories": "Staging Area Attack, Attack Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -3193,6 +3359,7 @@
         "keywords": "", 
         "exp": "tmv", 
         "type": "4event", 
+        "Categories": "Staging Area Attack, ", 
         "quantity": "3"
     }, 
     {
@@ -3210,6 +3377,7 @@
         "traits": "Mount.", 
         "exp": "tmv", 
         "type": "3attachment", 
+        "Categories": "Readying, ", 
         "quantity": "3"
     }, 
     {
@@ -3227,6 +3395,7 @@
         "traits": "Song.", 
         "exp": "tmv", 
         "type": "4event", 
+        "Categories": "Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -3248,6 +3417,7 @@
         "exp": "tmv", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Discard Pile, ", 
         "quantity": "3"
     }, 
     {
@@ -3266,6 +3436,7 @@
         "exp": "tmv", 
         "unique": true, 
         "octgn": "63c6bd3a-5566-412d-9199-3929d2fc3cf2", 
+        "Categories": "Discard from Hand, Discard Pile, Recursion, ", 
         "quantity": "3"
     }, 
     {
@@ -3283,6 +3454,7 @@
         "keywords": "", 
         "exp": "tmv", 
         "type": "4event", 
+        "Categories": "Card Draw, Resource Acceleration, ", 
         "quantity": "3"
     }, 
     {
@@ -3305,6 +3477,7 @@
         "exp": "tsf", 
         "unique": true, 
         "octgn": "85699571-9cc3-4ccc-98b0-0e1664893ef5", 
+        "Categories": "", 
         "quantity": "1"
     }, 
     {
@@ -3326,6 +3499,7 @@
         "exp": "tsf", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "Defense Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -3343,6 +3517,7 @@
         "keywords": "", 
         "exp": "tsf", 
         "type": "4event", 
+        "Categories": "Resource Acceleration, ", 
         "quantity": "3"
     }, 
     {
@@ -3364,6 +3539,7 @@
         "exp": "tsf", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "Attack Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -3381,6 +3557,7 @@
         "traits": "Armor. Item.", 
         "exp": "tsf", 
         "type": "3attachment", 
+        "Categories": "Defense Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -3402,6 +3579,7 @@
         "exp": "tsf", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -3420,6 +3598,7 @@
         "exp": "tsf", 
         "unique": true, 
         "octgn": "0ef9e385-b7e5-4676-a690-2dd8031aa8c8", 
+        "Categories": "Resource Smoothing, Hit Point Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -3441,6 +3620,7 @@
         "exp": "tsf", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "Hit Point Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -3458,6 +3638,7 @@
         "keywords": "", 
         "exp": "tsf", 
         "type": "4event", 
+        "Categories": "Card Draw, ", 
         "quantity": "3"
     }, 
     {
@@ -3475,6 +3656,7 @@
         "keywords": "", 
         "exp": "tsf", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -3497,6 +3679,7 @@
         "exp": "ttitd", 
         "unique": true, 
         "octgn": "47750277-6869-470c-9376-7eb7f0a706f5", 
+        "Categories": "Readying, Encounter Control, Willpower Bonus, ", 
         "quantity": "1"
     }, 
     {
@@ -3519,6 +3702,7 @@
         "exp": "ttitd", 
         "unique": true, 
         "octgn": "66a0dc1a-4913-425d-9d94-15b3e505bb40", 
+        "Categories": "Shadow Control, Defense Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -3536,6 +3720,7 @@
         "keywords": "", 
         "exp": "ttitd", 
         "type": "4event", 
+        "Categories": "Resource Acceleration, ", 
         "quantity": "3"
     }, 
     {
@@ -3557,6 +3742,7 @@
         "exp": "ttitd", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Discard from Hand, Discard Pile, Recursion, ", 
         "quantity": "3"
     }, 
     {
@@ -3578,6 +3764,7 @@
         "exp": "ttitd", 
         "hitpoints": 0, 
         "type": "3attachment", 
+        "Categories": "Attack Bonus, Defense Bonus, Hit Point Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -3600,6 +3787,7 @@
         "exp": "ttitd", 
         "unique": true, 
         "octgn": "785367f7-6475-4935-979f-abec23c596f2", 
+        "Categories": "Readying, Threat Control, Attack Bonus, Defense Bonus, Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -3617,6 +3805,7 @@
         "keywords": "Play only after the staging step.", 
         "exp": "ttitd", 
         "type": "4event", 
+        "Categories": "Readying, Quest Action, Threat Control, ", 
         "quantity": "3"
     }, 
     {
@@ -3638,6 +3827,7 @@
         "exp": "ttitd", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Location Control, ", 
         "quantity": "3"
     }, 
     {
@@ -3655,6 +3845,7 @@
         "traits": "Condition.", 
         "exp": "ttitd", 
         "type": "3attachment", 
+        "Categories": "Location Control, ", 
         "quantity": "3"
     }, 
     {
@@ -3677,6 +3868,7 @@
         "exp": "voi", 
         "unique": true, 
         "octgn": "21cfb9e9-6777-4bc6-ace6-08fe68e949a4", 
+        "Categories": "Leaves Play, Attack Bonus, ", 
         "quantity": "1"
     }, 
     {
@@ -3699,6 +3891,7 @@
         "exp": "voi", 
         "unique": true, 
         "octgn": "b49c3563-b3cd-4f33-b706-c2a721028891", 
+        "Categories": "", 
         "quantity": "1"
     }, 
     {
@@ -3721,6 +3914,7 @@
         "exp": "voi", 
         "unique": true, 
         "octgn": "20250f12-5bfc-4ffc-8e7e-4e3d71276509", 
+        "Categories": "Location Control, Staging Area Control, ", 
         "quantity": "3"
     }, 
     {
@@ -3742,6 +3936,7 @@
         "exp": "voi", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Readying, ", 
         "quantity": "3"
     }, 
     {
@@ -3763,6 +3958,7 @@
         "exp": "voi", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -3784,6 +3980,7 @@
         "exp": "voi", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -3805,6 +4002,7 @@
         "exp": "voi", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "Card Seach, ", 
         "quantity": "3"
     }, 
     {
@@ -3822,6 +4020,7 @@
         "traits": "Mount.", 
         "exp": "voi", 
         "type": "3attachment", 
+        "Categories": "Readying, ", 
         "quantity": "3"
     }, 
     {
@@ -3839,6 +4038,7 @@
         "traits": "Item.", 
         "exp": "voi", 
         "type": "3attachment", 
+        "Categories": "Readying, Shadow Control, ", 
         "quantity": "3"
     }, 
     {
@@ -3857,6 +4057,7 @@
         "exp": "voi", 
         "unique": true, 
         "octgn": "e6ee53f4-36e4-4671-9d76-8974134d052e", 
+        "Categories": "Resource Acceleration, ", 
         "quantity": "3"
     }, 
     {
@@ -3874,6 +4075,7 @@
         "keywords": "Doomed 4.", 
         "exp": "voi", 
         "type": "4event", 
+        "Categories": "Resource Acceleration, ", 
         "quantity": "3"
     }, 
     {
@@ -3891,6 +4093,7 @@
         "keywords": "Doomed 2.", 
         "exp": "voi", 
         "type": "4event", 
+        "Categories": "Card Draw, ", 
         "quantity": "3"
     }, 
     {
@@ -3908,6 +4111,7 @@
         "traits": "Spell.", 
         "exp": "voi", 
         "type": "4event", 
+        "Categories": "Combat Control, ", 
         "quantity": "3"
     }, 
     {
@@ -3925,6 +4129,7 @@
         "traits": "Spell.", 
         "exp": "voi", 
         "type": "4event", 
+        "Categories": "Condition Control, ", 
         "quantity": "3"
     }, 
     {
@@ -3942,6 +4147,7 @@
         "keywords": "Doomed 1.", 
         "exp": "voi", 
         "type": "4event", 
+        "Categories": "Card Seach, ", 
         "quantity": "3"
     }, 
     {
@@ -3964,6 +4170,7 @@
         "exp": "tdr2", 
         "unique": true, 
         "octgn": "8aea2aaf-8320-4694-bc64-fc264b409bab", 
+        "Categories": "Staging Area Attack, Threat Control, Direct Damage, ", 
         "quantity": "1"
     }, 
     {
@@ -3985,6 +4192,7 @@
         "exp": "tdr2", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -4002,6 +4210,7 @@
         "traits": "Signal.", 
         "exp": "tdr2", 
         "type": "3attachment", 
+        "Categories": "Healing, ", 
         "quantity": "3"
     }, 
     {
@@ -4023,6 +4232,7 @@
         "exp": "tdr2", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -4040,6 +4250,7 @@
         "keywords": "Play only before the staging step.", 
         "exp": "tdr2", 
         "type": "4event", 
+        "Categories": "Quest Action, ", 
         "quantity": "3"
     }, 
     {
@@ -4061,6 +4272,7 @@
         "exp": "tdr2", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "Location Control, ", 
         "quantity": "3"
     }, 
     {
@@ -4078,6 +4290,7 @@
         "traits": "Item.", 
         "exp": "tdr2", 
         "type": "3attachment", 
+        "Categories": "Location Control, ", 
         "quantity": "3"
     }, 
     {
@@ -4100,6 +4313,7 @@
         "exp": "tdr2", 
         "unique": true, 
         "octgn": "697e1c80-a218-4dc7-b0c3-06921e879b81", 
+        "Categories": "Location Control, ", 
         "quantity": "3"
     }, 
     {
@@ -4117,6 +4331,7 @@
         "keywords": "", 
         "exp": "tdr2", 
         "type": "4event", 
+        "Categories": "Encounter Control, Encounter Scrying, Recursion, ", 
         "quantity": "3"
     }, 
     {
@@ -4135,6 +4350,7 @@
         "exp": "tdr2", 
         "unique": true, 
         "octgn": "789fbae0-a33e-4ea0-a34f-adfe3b62dba7", 
+        "Categories": "Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -4157,6 +4373,7 @@
         "exp": "fots", 
         "unique": true, 
         "octgn": "4a76ad60-35d1-4657-ab4a-2f7f15cc7ab7", 
+        "Categories": "Resource Acceleration, Resource Smoothing, ", 
         "quantity": "1"
     }, 
     {
@@ -4175,6 +4392,7 @@
         "exp": "fots", 
         "unique": true, 
         "octgn": "3d3ced53-71af-46de-b7e7-1892a9c49747", 
+        "Categories": "Card Draw, ", 
         "quantity": "3"
     }, 
     {
@@ -4192,6 +4410,7 @@
         "traits": "Title.", 
         "exp": "fots", 
         "type": "3attachment", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -4214,6 +4433,7 @@
         "exp": "fots", 
         "unique": true, 
         "octgn": "27843323-c7d0-4f9e-a67e-4494f8926203", 
+        "Categories": "Direct Damage, ", 
         "quantity": "3"
     }, 
     {
@@ -4231,6 +4451,7 @@
         "keywords": "", 
         "exp": "fots", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -4253,6 +4474,7 @@
         "exp": "fots", 
         "unique": true, 
         "octgn": "7309efbd-ea6a-45d5-bfec-2a4e0fc8d3b7", 
+        "Categories": "Readying, Discard from Hand, Discard Pile, Recursion, ", 
         "quantity": "3"
     }, 
     {
@@ -4270,6 +4492,7 @@
         "keywords": "", 
         "exp": "fots", 
         "type": "4event", 
+        "Categories": "Readying, Shadow Control, Attack Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -4291,6 +4514,7 @@
         "exp": "fots", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Discard from Hand, Healing, ", 
         "quantity": "3"
     }, 
     {
@@ -4308,6 +4532,7 @@
         "keywords": "", 
         "exp": "fots", 
         "type": "4event", 
+        "Categories": "Card Seach, Resource Acceleration, ", 
         "quantity": "3"
     }, 
     {
@@ -4329,6 +4554,7 @@
         "exp": "fots", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "Discard from Hand, ", 
         "quantity": "3"
     }, 
     {
@@ -4346,6 +4572,7 @@
         "keywords": "Play only if you control 2 or fewer heroes.", 
         "exp": "fots", 
         "type": "4event", 
+        "Categories": "Secrecy, ", 
         "quantity": "3"
     }, 
     {
@@ -4368,6 +4595,7 @@
         "exp": "twitw", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801210c9001", 
+        "Categories": "Threat Control, ", 
         "quantity": "1"
     }, 
     {
@@ -4385,6 +4613,7 @@
         "keywords": "", 
         "exp": "twitw", 
         "type": "4event", 
+        "Categories": "Leaves Play, ", 
         "quantity": "3"
     }, 
     {
@@ -4403,6 +4632,7 @@
         "exp": "twitw", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801210c9018", 
+        "Categories": "Resource Smoothing, Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -4424,6 +4654,7 @@
         "exp": "twitw", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Discard from Hand, ", 
         "quantity": "3"
     }, 
     {
@@ -4441,6 +4672,7 @@
         "traits": "Item. Weapon.", 
         "exp": "twitw", 
         "type": "3attachment", 
+        "Categories": "Attack Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -4463,6 +4695,7 @@
         "exp": "twitw", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801210c9002", 
+        "Categories": "Defense Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -4480,6 +4713,7 @@
         "keywords": "", 
         "exp": "twitw", 
         "type": "4event", 
+        "Categories": "Threat Control, Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -4497,6 +4731,7 @@
         "keywords": "", 
         "exp": "twitw", 
         "type": "4event", 
+        "Categories": "Encounter Control, Location Control, Staging Area Control, ", 
         "quantity": "3"
     }, 
     {
@@ -4515,6 +4750,7 @@
         "exp": "twitw", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801210c9009", 
+        "Categories": "Card Draw, ", 
         "quantity": "3"
     }, 
     {
@@ -4532,6 +4768,7 @@
         "keywords": "Secrecy 3.", 
         "exp": "twitw", 
         "type": "3attachment", 
+        "Categories": "Resource Acceleration, Secrecy, ", 
         "quantity": "3"
     }, 
     {
@@ -4554,6 +4791,7 @@
         "exp": "asoch", 
         "unique": true, 
         "octgn": "5205f00e-c538-4b5e-976c-5db99d33bc4e", 
+        "Categories": "", 
         "quantity": "1"
     }, 
     {
@@ -4572,6 +4810,7 @@
         "exp": "asoch", 
         "unique": true, 
         "octgn": "5c6b9d23-79fe-482c-8122-66b185cd476e", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -4589,6 +4828,7 @@
         "keywords": "", 
         "exp": "asoch", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -4610,6 +4850,7 @@
         "exp": "asoch", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -4627,6 +4868,7 @@
         "traits": "Skill. ", 
         "exp": "asoch", 
         "type": "3attachment", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -4644,6 +4886,7 @@
         "keywords": "", 
         "exp": "asoch", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -4665,6 +4908,7 @@
         "exp": "asoch", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -4683,6 +4927,7 @@
         "exp": "asoch", 
         "unique": true, 
         "octgn": "778cf45f-cc72-424d-a7b3-09373328dd1b", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -4705,6 +4950,7 @@
         "exp": "asoch", 
         "unique": true, 
         "octgn": "fc6e412d-eeca-432e-bd91-378c1ae72c9f", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -4722,6 +4968,7 @@
         "keywords": "", 
         "exp": "asoch", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -4740,6 +4987,7 @@
         "keywords": "", 
         "victory points": "1", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -4762,6 +5010,7 @@
         "exp": "rtr", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801209c9010", 
+        "Categories": "Readying, Attack Bonus, ", 
         "quantity": "1"
     }, 
     {
@@ -4783,6 +5032,7 @@
         "exp": "rtr", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Secrecy, ", 
         "quantity": "3"
     }, 
     {
@@ -4800,6 +5050,7 @@
         "keywords": "", 
         "exp": "rtr", 
         "type": "4event", 
+        "Categories": "Readying, ", 
         "quantity": "3"
     }, 
     {
@@ -4817,6 +5068,7 @@
         "traits": "Item. Weapon.", 
         "exp": "rtr", 
         "type": "3attachment", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -4834,6 +5086,7 @@
         "keywords": "", 
         "exp": "rtr", 
         "type": "4event", 
+        "Categories": "Staging Area Control, ", 
         "quantity": "3"
     }, 
     {
@@ -4855,6 +5108,7 @@
         "exp": "rtr", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Shadow Control, ", 
         "quantity": "3"
     }, 
     {
@@ -4872,6 +5126,7 @@
         "traits": "Song.", 
         "exp": "rtr", 
         "type": "3attachment", 
+        "Categories": "Card Draw, Threat Control, ", 
         "quantity": "3"
     }, 
     {
@@ -4894,6 +5149,7 @@
         "exp": "rtr", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801209c9007", 
+        "Categories": "Location Control, ", 
         "quantity": "3"
     }, 
     {
@@ -4911,6 +5167,7 @@
         "keywords": "Secrecy 2.", 
         "exp": "rtr", 
         "type": "4event", 
+        "Categories": "Card Seach, Encounter Control, Secrecy, Victory Display, ", 
         "quantity": "3"
     }, 
     {
@@ -4928,6 +5185,7 @@
         "keywords": "", 
         "exp": "rtr", 
         "type": "4event", 
+        "Categories": "Discard Pile, Encounter Control, Leaves Play, ", 
         "quantity": "3"
     }, 
     {
@@ -4950,6 +5208,7 @@
         "exp": "efmg", 
         "unique": true, 
         "octgn": "18fea279-cd38-4a5e-b271-b94d4f64eda1", 
+        "Categories": "Location Control, Victory Display, Defense Bonus, Willpower Bonus, ", 
         "quantity": "1"
     }, 
     {
@@ -4971,6 +5230,7 @@
         "exp": "efmg", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Attack Bonus, Defense Bonus, Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -4988,6 +5248,7 @@
         "keywords": "", 
         "exp": "efmg", 
         "type": "4event", 
+        "Categories": "Readying, ", 
         "quantity": "3"
     }, 
     {
@@ -5009,6 +5270,7 @@
         "exp": "efmg", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "Defense Bonus, Direct Damage, ", 
         "quantity": "3"
     }, 
     {
@@ -5026,6 +5288,7 @@
         "traits": "Ent.", 
         "exp": "efmg", 
         "type": "4event", 
+        "Categories": "Readying, Attack Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -5047,6 +5310,7 @@
         "exp": "efmg", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Discard from Hand, Mustering, ", 
         "quantity": "3"
     }, 
     {
@@ -5066,6 +5330,7 @@
         "keywords": "Limit 1 per deck.", 
         "victory points": "1", 
         "type": "5quest", 
+        "Categories": "Threat Control, ", 
         "quantity": "3"
     }, 
     {
@@ -5083,6 +5348,7 @@
         "keywords": "Limit 3 copies of Leave No Trace in the victory display.", 
         "exp": "efmg", 
         "type": "4event", 
+        "Categories": "Location Control, Victory Display, ", 
         "quantity": "3"
     }, 
     {
@@ -5100,6 +5366,7 @@
         "keywords": "", 
         "exp": "efmg", 
         "type": "4event", 
+        "Categories": "Card Seach, Discard Pile, Encounter Control, Location Control, ", 
         "quantity": "3"
     }, 
     {
@@ -5117,25 +5384,8 @@
         "keywords": "Reduce the cost to play Keen as Lanches by 1 for each card worth no victory points in the victory display.", 
         "exp": "efmg", 
         "type": "4event", 
+        "Categories": "Card Draw, Resource Acceleration, Threat Control, Victory Display, ", 
         "quantity": "3"
-    }, 
-    {
-        "textc": "Capture 5.\nTime 4. Forced: When the last time counter is removed from this quest, discard its captured cards and remove this quest from the game. Then, raise each player\u2019s threat by 3 for each of his characters that was discarded by this effect.", 
-        "name": "Stop the Executioners!", 
-        "setname": "Escape from Mount Gram", 
-        "no": 53, 
-        "type": "5quest", 
-        "encounter set": "Escape from Mount Gram", 
-        "quest points": "6", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC40_53.jpg", 
-        "traits": "", 
-        "text": "Time 4. Forced: When the last time counter is removed from this quest, discard its captured cards and remove this quest from the game. Then, raise each player\u2019s threat by 3 for each of his characters that was discarded by this effect.", 
-        "exp": "efmg", 
-        "name_norm": "Stop the Executioners!", 
-        "keywords": "Capture 5.", 
-        "victory points": "10", 
-        "octgn": "414353af-e004-4e7c-b288-e168e2acfee7", 
-        "quantity": "1"
     }, 
     {
         "textc": "\nWhile you are engaged with at least 1 enemy, Amarthi\u00fal gains the Tactics resource icon.\n\nWhile you are engaged with at least 2 enemies, add 1 additional resource to Amarthi\u00fal's resource pool when you collect resources during the resource phase.", 
@@ -5157,6 +5407,7 @@
         "exp": "tbocd", 
         "unique": true, 
         "octgn": "94726dff-4b95-4c7c-9542-320b45652d7a", 
+        "Categories": "Resource Acceleration, Resource Smoothing, ", 
         "quantity": "1"
     }, 
     {
@@ -5178,6 +5429,7 @@
         "exp": "tbocd", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "Defense Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -5195,6 +5447,7 @@
         "keywords": "", 
         "exp": "tbocd", 
         "type": "4event", 
+        "Categories": "Valour, ", 
         "quantity": "3"
     }, 
     {
@@ -5217,6 +5470,7 @@
         "exp": "tbocd", 
         "unique": true, 
         "octgn": "b1584166-c8b3-4984-bfdc-06c33f31e153", 
+        "Categories": "Direct Damage, ", 
         "quantity": "3"
     }, 
     {
@@ -5234,6 +5488,7 @@
         "keywords": "", 
         "exp": "tbocd", 
         "type": "4event", 
+        "Categories": "Readying, Valour, ", 
         "quantity": "3"
     }, 
     {
@@ -5256,6 +5511,7 @@
         "exp": "tbocd", 
         "unique": true, 
         "octgn": "4bff71e7-f66c-4a2d-ba7d-633a6c77f765", 
+        "Categories": "Card Draw, ", 
         "quantity": "3"
     }, 
     {
@@ -5273,6 +5529,7 @@
         "keywords": "Lords of the Eldar can only be played from your discard pile.", 
         "exp": "tbocd", 
         "type": "4event", 
+        "Categories": "Discard Pile, Attack Bonus, Defense Bonus, Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -5290,6 +5547,7 @@
         "traits": "Condition.", 
         "exp": "tbocd", 
         "type": "3attachment", 
+        "Categories": "Card Draw, Healing, ", 
         "quantity": "3"
     }, 
     {
@@ -5307,6 +5565,7 @@
         "keywords": "", 
         "exp": "tbocd", 
         "type": "4event", 
+        "Categories": "Encounter Control, ", 
         "quantity": "3"
     }, 
     {
@@ -5324,6 +5583,7 @@
         "traits": "Condition.", 
         "exp": "tbocd", 
         "type": "3attachment", 
+        "Categories": "Threat Control, ", 
         "quantity": "3"
     }, 
     {
@@ -5346,6 +5606,7 @@
         "exp": "thfg", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801201c9001", 
+        "Categories": "Card Draw, Resource Acceleration, ", 
         "quantity": "1"
     }, 
     {
@@ -5363,6 +5624,7 @@
         "traits": "Signal.", 
         "exp": "thfg", 
         "type": "3attachment", 
+        "Categories": "Attack Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -5380,6 +5642,7 @@
         "keywords": "", 
         "exp": "thfg", 
         "type": "4event", 
+        "Categories": "Card Draw, ", 
         "quantity": "3"
     }, 
     {
@@ -5401,6 +5664,7 @@
         "exp": "thfg", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -5418,6 +5682,7 @@
         "traits": "Eagle.", 
         "exp": "thfg", 
         "type": "4event", 
+        "Categories": "Card Seach, ", 
         "quantity": "3"
     }, 
     {
@@ -5439,6 +5704,7 @@
         "exp": "thfg", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "Readying, ", 
         "quantity": "3"
     }, 
     {
@@ -5456,6 +5722,7 @@
         "keywords": "", 
         "exp": "thfg", 
         "type": "4event", 
+        "Categories": "Card Seach, ", 
         "quantity": "3"
     }, 
     {
@@ -5477,6 +5744,7 @@
         "exp": "thfg", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "Card Seach, ", 
         "quantity": "3"
     }, 
     {
@@ -5494,6 +5762,7 @@
         "keywords": "", 
         "exp": "thfg", 
         "type": "4event", 
+        "Categories": "Encounter Control, Location Control, Recursion, Staging Area Control, ", 
         "quantity": "3"
     }, 
     {
@@ -5511,6 +5780,7 @@
         "traits": "Song.", 
         "exp": "thfg", 
         "type": "3attachment", 
+        "Categories": "Resource Smoothing, ", 
         "quantity": "3"
     }, 
     {
@@ -5533,6 +5803,7 @@
         "exp": "tbog", 
         "unique": true, 
         "octgn": "60725069-031c-4251-9b2c-3f368545e9ac", 
+        "Categories": "Discard Pile, Mustering, ", 
         "quantity": "1"
     }, 
     {
@@ -5554,6 +5825,7 @@
         "exp": "tbog", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "Leaves Play, Resource Acceleration, ", 
         "quantity": "3"
     }, 
     {
@@ -5572,6 +5844,7 @@
         "exp": "tbog", 
         "unique": true, 
         "octgn": "e88d7165-821c-4b04-9869-80ee1f33905c", 
+        "Categories": "Discard from Hand, Discard Pile, Recursion, ", 
         "quantity": "3"
     }, 
     {
@@ -5594,6 +5867,7 @@
         "exp": "tbog", 
         "unique": true, 
         "octgn": "06baca74-330a-4038-9387-32ce8657dd8f", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -5611,6 +5885,7 @@
         "keywords": "", 
         "exp": "tbog", 
         "type": "4event", 
+        "Categories": "Encounter Control, ", 
         "quantity": "3"
     }, 
     {
@@ -5633,6 +5908,7 @@
         "exp": "tbog", 
         "unique": true, 
         "octgn": "314eaf40-1554-4c1a-b643-1f4353e25633", 
+        "Categories": "Discard from Hand, Mustering, ", 
         "quantity": "3"
     }, 
     {
@@ -5650,6 +5926,7 @@
         "keywords": "", 
         "exp": "tbog", 
         "type": "4event", 
+        "Categories": "Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -5672,6 +5949,7 @@
         "exp": "tbog", 
         "unique": true, 
         "octgn": "ef8aec20-e0c9-4d02-9dea-20b6e7c2278b", 
+        "Categories": "Discard from Hand, Discard Pile, Recursion, ", 
         "quantity": "3"
     }, 
     {
@@ -5689,6 +5967,7 @@
         "traits": "Trap.", 
         "exp": "tbog", 
         "type": "3attachment", 
+        "Categories": "Staging Area Control, Direct Damage, ", 
         "quantity": "3"
     }, 
     {
@@ -5706,6 +5985,7 @@
         "keywords": "", 
         "exp": "tbog", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -5728,6 +6008,7 @@
         "exp": "eaad", 
         "unique": true, 
         "octgn": "fd89bdbf-7475-4f3e-96fc-8f5315a90021", 
+        "Categories": "Recursion, Staging Area Control, ", 
         "quantity": "1"
     }, 
     {
@@ -5750,6 +6031,7 @@
         "exp": "eaad", 
         "unique": true, 
         "octgn": "fd89bdbf-7475-4f3e-96fc-8f5315a90022", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -5768,6 +6050,7 @@
         "exp": "eaad", 
         "unique": true, 
         "octgn": "fd89bdbf-7475-4f3e-96fc-8f5315a90023", 
+        "Categories": "Card Draw, Resource Smoothing, ", 
         "quantity": "3"
     }, 
     {
@@ -5786,6 +6069,7 @@
         "exp": "eaad", 
         "unique": true, 
         "octgn": "fd89bdbf-7475-4f3e-96fc-8f5315a90024", 
+        "Categories": "Discard from Hand, Discard Pile, Recursion, ", 
         "quantity": "3"
     }, 
     {
@@ -5803,6 +6087,7 @@
         "traits": "Gondor.", 
         "exp": "eaad", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -5824,6 +6109,7 @@
         "exp": "eaad", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "Encounter Control, Location Control, ", 
         "quantity": "3"
     }, 
     {
@@ -5841,6 +6127,7 @@
         "keywords": "", 
         "exp": "eaad", 
         "type": "4event", 
+        "Categories": "Shadow Control, ", 
         "quantity": "3"
     }, 
     {
@@ -5862,6 +6149,7 @@
         "exp": "eaad", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Recursion, Staging Area Attack, ", 
         "quantity": "3"
     }, 
     {
@@ -5879,6 +6167,7 @@
         "traits": "Trap.", 
         "exp": "eaad", 
         "type": "3attachment", 
+        "Categories": "Staging Area Attack, ", 
         "quantity": "3"
     }, 
     {
@@ -5896,6 +6185,7 @@
         "keywords": "Play only if each of your heroes is a Hobbit.", 
         "exp": "eaad", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -5918,6 +6208,7 @@
         "exp": "tfotw", 
         "unique": true, 
         "octgn": "2e778689-9e3f-4da8-a473-781c777f6473", 
+        "Categories": "", 
         "quantity": "1"
     }, 
     {
@@ -5940,6 +6231,7 @@
         "exp": "tfotw", 
         "unique": true, 
         "octgn": "6dc19efc-af54-4eff-b9ee-ee45e9fd4072", 
+        "Categories": "", 
         "quantity": "1"
     }, 
     {
@@ -5962,6 +6254,7 @@
         "exp": "tfotw", 
         "unique": true, 
         "octgn": "da4c926c-7917-4b6d-a1be-cc90fbdce597", 
+        "Categories": "", 
         "quantity": "1"
     }, 
     {
@@ -5984,6 +6277,7 @@
         "exp": "tfotw", 
         "unique": true, 
         "octgn": "825dfbbb-6ba7-44ad-8327-d06ff46830eb", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -6006,6 +6300,7 @@
         "exp": "tfotw", 
         "unique": true, 
         "octgn": "6238c12d-b4c0-478f-bd7e-b59ef9b4e86f", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -6028,6 +6323,7 @@
         "exp": "tfotw", 
         "unique": true, 
         "octgn": "66bcd2b8-fcc7-402b-94b2-a45a6c469981", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -6050,6 +6346,7 @@
         "exp": "tfotw", 
         "unique": true, 
         "octgn": "76951dec-233c-41aa-83d2-36497e89e7be", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -6067,6 +6364,7 @@
         "keywords": "", 
         "exp": "tfotw", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -6084,6 +6382,7 @@
         "keywords": "", 
         "exp": "tfotw", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -6102,6 +6401,7 @@
         "exp": "tfotw", 
         "unique": true, 
         "octgn": "a87da7c6-14fe-4213-b66f-43836531e213", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -6119,6 +6419,7 @@
         "traits": "Item. Armor. ", 
         "exp": "tfotw", 
         "type": "3attachment", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -6137,6 +6438,7 @@
         "exp": "tfotw", 
         "unique": true, 
         "octgn": "83febe3a-95e8-4c38-8de7-4c1b1d43c917", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -6155,6 +6457,7 @@
         "exp": "tfotw", 
         "unique": true, 
         "octgn": "fcf56ddf-cbff-4441-95f4-951cc5ae82c2", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -6177,6 +6480,7 @@
         "exp": "fos", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801212c9016", 
+        "Categories": "", 
         "quantity": "1"
     }, 
     {
@@ -6198,6 +6502,7 @@
         "exp": "fos", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Encounter Control, Encounter Scrying, Location Control, ", 
         "quantity": "3"
     }, 
     {
@@ -6215,6 +6520,7 @@
         "traits": "Condition.", 
         "exp": "fos", 
         "type": "3attachment", 
+        "Categories": "Location Control, ", 
         "quantity": "3"
     }, 
     {
@@ -6236,6 +6542,7 @@
         "exp": "fos", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Discard from Hand, ", 
         "quantity": "3"
     }, 
     {
@@ -6253,6 +6560,7 @@
         "keywords": "", 
         "exp": "fos", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -6274,6 +6582,7 @@
         "exp": "fos", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "Player Deck Scrying, Recursion, ", 
         "quantity": "3"
     }, 
     {
@@ -6292,6 +6601,7 @@
         "exp": "fos", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801212c9020", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -6309,6 +6619,7 @@
         "keywords": "", 
         "exp": "fos", 
         "type": "4event", 
+        "Categories": "Card Draw, Discard from Hand, ", 
         "quantity": "3"
     }, 
     {
@@ -6326,6 +6637,7 @@
         "keywords": "Attach to a \u00ce hero.", 
         "exp": "fos", 
         "type": "3attachment", 
+        "Categories": "Healing, ", 
         "quantity": "3"
     }, 
     {
@@ -6344,6 +6656,7 @@
         "exp": "fos", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801212c9001", 
+        "Categories": "Location Control, ", 
         "quantity": "3"
     }, 
     {
@@ -6366,6 +6679,7 @@
         "exp": "kd", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801207c9025", 
+        "Categories": "Threat Control, ", 
         "quantity": "1"
     }, 
     {
@@ -6388,6 +6702,7 @@
         "exp": "kd", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801207c9008", 
+        "Categories": "Resource Acceleration, ", 
         "quantity": "1"
     }, 
     {
@@ -6406,6 +6721,7 @@
         "exp": "kd", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801207c9050", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -6423,6 +6739,7 @@
         "traits": "Song.", 
         "exp": "kd", 
         "type": "4event", 
+        "Categories": "Attack Bonus, Defense Bonus, Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -6440,6 +6757,7 @@
         "keywords": "", 
         "exp": "kd", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -6461,6 +6779,7 @@
         "exp": "kd", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -6478,6 +6797,7 @@
         "traits": "Item. Weapon.", 
         "exp": "kd", 
         "type": "3attachment", 
+        "Categories": "Attack Bonus, Direct Damage, ", 
         "quantity": "3"
     }, 
     {
@@ -6495,6 +6815,7 @@
         "keywords": "", 
         "exp": "kd", 
         "type": "4event", 
+        "Categories": "Attack Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -6516,6 +6837,7 @@
         "exp": "kd", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "Resource Acceleration, ", 
         "quantity": "3"
     }, 
     {
@@ -6533,6 +6855,7 @@
         "keywords": "", 
         "exp": "kd", 
         "type": "4event", 
+        "Categories": "Location Control, Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -6554,6 +6877,7 @@
         "exp": "kd", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "Readying, Combat Control, ", 
         "quantity": "3"
     }, 
     {
@@ -6571,6 +6895,7 @@
         "keywords": "", 
         "exp": "kd", 
         "type": "4event", 
+        "Categories": "Location Control, ", 
         "quantity": "3"
     }, 
     {
@@ -6588,6 +6913,7 @@
         "traits": "Item.", 
         "exp": "kd", 
         "type": "3attachment", 
+        "Categories": "Hit Point Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -6610,6 +6936,7 @@
         "exp": "tld", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801211c9016", 
+        "Categories": "Discard from Hand, Discard Pile, Recursion, ", 
         "quantity": "1"
     }, 
     {
@@ -6632,6 +6959,7 @@
         "exp": "tld", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801211c9008", 
+        "Categories": "Card Draw, Discard from Hand, ", 
         "quantity": "3"
     }, 
     {
@@ -6649,6 +6977,7 @@
         "keywords": "", 
         "exp": "tld", 
         "type": "4event", 
+        "Categories": "Staging Area Control, Direct Damage, ", 
         "quantity": "3"
     }, 
     {
@@ -6670,6 +6999,7 @@
         "exp": "tld", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Attack Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -6687,6 +7017,7 @@
         "traits": "Item. Armor.", 
         "exp": "tld", 
         "type": "3attachment", 
+        "Categories": "Defense Bonus, Hit Point Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -6704,6 +7035,7 @@
         "keywords": "Secrecy 3.", 
         "exp": "tld", 
         "type": "4event", 
+        "Categories": "Combat Control, Secrecy, ", 
         "quantity": "3"
     }, 
     {
@@ -6721,6 +7053,7 @@
         "traits": "Condition.", 
         "exp": "tld", 
         "type": "3attachment", 
+        "Categories": "Readying, Location Control, Threat Control, ", 
         "quantity": "3"
     }, 
     {
@@ -6742,6 +7075,7 @@
         "exp": "tld", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "Readying, Healing, ", 
         "quantity": "3"
     }, 
     {
@@ -6759,6 +7093,7 @@
         "keywords": "", 
         "exp": "tld", 
         "type": "4event", 
+        "Categories": "Card Seach, ", 
         "quantity": "3"
     }, 
     {
@@ -6776,6 +7111,7 @@
         "traits": "Condition.", 
         "exp": "tld", 
         "type": "3attachment", 
+        "Categories": "Resource Acceleration, ", 
         "quantity": "3"
     }, 
     {
@@ -6798,6 +7134,7 @@
         "exp": "tdr", 
         "unique": true, 
         "octgn": "21f0ac18-21ea-44b7-b67b-4d1c5baaae0f", 
+        "Categories": "Discard from Hand, Resource Acceleration, ", 
         "quantity": "1"
     }, 
     {
@@ -6820,6 +7157,7 @@
         "exp": "tdr", 
         "unique": true, 
         "octgn": "fdabde61-0341-4dae-9a9b-de9f0b955078", 
+        "Categories": "Readying, ", 
         "quantity": "3"
     }, 
     {
@@ -6837,6 +7175,7 @@
         "traits": "Item. Weapon.", 
         "exp": "tdr", 
         "type": "3attachment", 
+        "Categories": "Resource Acceleration, Attack Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -6858,6 +7197,7 @@
         "exp": "tdr", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "Attack Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -6875,6 +7215,7 @@
         "keywords": "", 
         "exp": "tdr", 
         "type": "4event", 
+        "Categories": "Valour, ", 
         "quantity": "3"
     }, 
     {
@@ -6892,6 +7233,7 @@
         "keywords": "Elven-light can only be played from your discard pile.", 
         "exp": "tdr", 
         "type": "4event", 
+        "Categories": "Card Draw, Discard from Hand, Discard Pile, Recursion, ", 
         "quantity": "3"
     }, 
     {
@@ -6909,6 +7251,7 @@
         "traits": "Song.", 
         "exp": "tdr", 
         "type": "4event", 
+        "Categories": "Readying, ", 
         "quantity": "3"
     }, 
     {
@@ -6930,6 +7273,7 @@
         "exp": "tdr", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "Healing, ", 
         "quantity": "3"
     }, 
     {
@@ -6947,6 +7291,7 @@
         "traits": "Item.", 
         "exp": "tdr", 
         "type": "3attachment", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -6965,6 +7310,7 @@
         "exp": "tdr", 
         "unique": true, 
         "octgn": "59cd2c5f-1986-4065-ad2c-8423d6b200e2", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -6987,6 +7333,7 @@
         "exp": "tlr", 
         "unique": true, 
         "octgn": "09ebd71c-8286-4838-b661-36a8633c9f0c", 
+        "Categories": "", 
         "quantity": "1"
     }, 
     {
@@ -7009,6 +7356,7 @@
         "exp": "tlr", 
         "unique": true, 
         "octgn": "52b151e9-f13b-4f85-961c-62838d25b97a", 
+        "Categories": "Encounter Control, ", 
         "quantity": "1"
     }, 
     {
@@ -7030,6 +7378,7 @@
         "exp": "tlr", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Card Seach, ", 
         "quantity": "3"
     }, 
     {
@@ -7051,6 +7400,7 @@
         "exp": "tlr", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "Card Seach, Encounter Control, Mustering, ", 
         "quantity": "3"
     }, 
     {
@@ -7072,6 +7422,7 @@
         "exp": "tlr", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Card Draw, ", 
         "quantity": "3"
     }, 
     {
@@ -7093,6 +7444,7 @@
         "exp": "tlr", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -7110,6 +7462,7 @@
         "traits": "Signal.", 
         "exp": "tlr", 
         "type": "4event", 
+        "Categories": "Encounter Control, ", 
         "quantity": "3"
     }, 
     {
@@ -7127,6 +7480,7 @@
         "keywords": "Play only before the resolving enemy attacks step.", 
         "exp": "tlr", 
         "type": "4event", 
+        "Categories": "Shadow Control, ", 
         "quantity": "3"
     }, 
     {
@@ -7144,6 +7498,7 @@
         "keywords": "", 
         "exp": "tlr", 
         "type": "4event", 
+        "Categories": "Location Control, ", 
         "quantity": "3"
     }, 
     {
@@ -7162,6 +7517,7 @@
         "exp": "tlr", 
         "unique": true, 
         "octgn": "8b9da56f-6713-457f-8f73-6fdc8168348f", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -7179,6 +7535,7 @@
         "traits": "Item.", 
         "exp": "tlr", 
         "type": "3attachment", 
+        "Categories": "Condition Control, Healing, ", 
         "quantity": "3"
     }, 
     {
@@ -7196,6 +7553,7 @@
         "traits": "Condition.", 
         "exp": "tlr", 
         "type": "3attachment", 
+        "Categories": "Threat Control, ", 
         "quantity": "3"
     }, 
     {
@@ -7213,6 +7571,7 @@
         "traits": "Item.", 
         "exp": "tlr", 
         "type": "3attachment", 
+        "Categories": "Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -7232,6 +7591,7 @@
         "keywords": "Limit 1 per deck.", 
         "victory points": "1", 
         "type": "5quest", 
+        "Categories": "Card Seach, ", 
         "quantity": "3"
     }, 
     {
@@ -7254,168 +7614,8 @@
         "exp": "tlr", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "Encounter Control, Location Control, Direct Damage, ", 
         "quantity": "3"
-    }, 
-    {
-        "textc": "\nNo more than 3 progress tokens can be placed on the current quest each round.\n\nWhile Orc Rearguard is the current quest it gains: \u201cForced: At the end of the staging step, reveal 1 card from the encounter deck.\u201d", 
-        "name": "Orc Rearguard", 
-        "setname": "The Lost Realm", 
-        "no": 23, 
-        "type": "5quest", 
-        "encounter set": "Intruders in Chetwood", 
-        "quest points": "3", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC38_23.jpg", 
-        "traits": "", 
-        "text": "No more than 3 progress tokens can be placed on the current quest each round.\n\nWhile Orc Rearguard is the current quest it gains: \u201cForced: At the end of the staging step, reveal 1 card from the encounter deck.\u201d", 
-        "exp": "tlr", 
-        "name_norm": "Orc Rearguard", 
-        "keywords": "", 
-        "victory points": "10", 
-        "octgn": "85eb724c-a258-4d94-83ba-5e9f21d82491", 
-        "quantity": "1"
-    }, 
-    {
-        "textc": "\nTime 4. When Revealed: The first player loses control of I\u00e2rion and places him facedown underneath this stage. When this stage is defeated, the first player takes control of I\u00e2rion and exhausts him. \n\nForced: After the last time counter is removed from this stage, discard I\u00e2rion.", 
-        "name": "Rescue I\u00e2rion", 
-        "setname": "The Lost Realm", 
-        "no": 24, 
-        "type": "5quest", 
-        "encounter set": "Intruders in Chetwood", 
-        "quest points": "6", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC38_24.jpg", 
-        "traits": "", 
-        "text": "Time 4. When Revealed: The first player loses control of I\u00e2rion and places him facedown underneath this stage. When this stage is defeated, the first player takes control of I\u00e2rion and exhausts him. \n\nForced: After the last time counter is removed from this stage, discard I\u00e2rion.", 
-        "exp": "tlr", 
-        "name_norm": "Rescue I\u00e2rion", 
-        "keywords": "", 
-        "victory points": "10", 
-        "octgn": "9497ef98-8f38-4647-bf77-28d8007a911a", 
-        "quantity": "1"
-    }, 
-    {
-        "textc": "Surge. Time 4.\nForced: After the last time counter is removed from this quest card, each player deals 4 damage to a hero he controls. Then, place 4 time counters on this quest card.", 
-        "name": "Find Shelter", 
-        "setname": "The Lost Realm", 
-        "no": 32, 
-        "type": "5quest", 
-        "encounter set": "The Weather Hills", 
-        "quest points": "6", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC38_32.jpg", 
-        "traits": "", 
-        "text": "Forced: After the last time counter is removed from this quest card, each player deals 4 damage to a hero he controls. Then, place 4 time counters on this quest card.", 
-        "exp": "tlr", 
-        "name_norm": "Find Shelter", 
-        "keywords": "Surge. Time 4.", 
-        "victory points": "10", 
-        "octgn": "0e192334-fa2b-4c1a-bfab-0aa44bf88db4", 
-        "quantity": "1"
-    }, 
-    {
-        "textc": "Surge.\nForced: At the end of the refresh phase, each player discards the top X cards of his deck, where X is the number of Undead enemies engaged with him.", 
-        "name": "The Shadow World", 
-        "setname": "The Lost Realm", 
-        "no": 42, 
-        "type": "5quest", 
-        "encounter set": "Deadmen's Dike", 
-        "quest points": "5", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC38_42.jpg", 
-        "traits": "", 
-        "text": "Forced: At the end of the refresh phase, each player discards the top X cards of his deck, where X is the number of Undead enemies engaged with him.", 
-        "exp": "tlr", 
-        "name_norm": "The Shadow World", 
-        "keywords": "Surge.", 
-        "octgn": "e3d50fbb-2b94-481a-a1e5-7925ca8384ff", 
-        "quantity": "1"
-    }, 
-    {
-        "textc": "Each Orc enemy gets +1 $, +1 \u00db, and +1 \u00da.\nWhen Revealed: Each player must search the encounter deck and discard pile for an Orc enemy and put it into play engaged with him. Shuffle the encounter deck.", 
-        "name": "Orc Ambush", 
-        "setname": "The Lost Realm", 
-        "no": 46, 
-        "type": "5quest", 
-        "encounter set": "Angmar Orcs", 
-        "quest points": "4", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC38_46.jpg", 
-        "traits": "", 
-        "text": "When Revealed: Each player must search the encounter deck and discard pile for an Orc enemy and put it into play engaged with him. Shuffle the encounter deck.", 
-        "exp": "tlr", 
-        "name_norm": "Orc Ambush", 
-        "keywords": "Each Orc enemy gets +1 $, +1 \u00db, and +1 \u00da.", 
-        "victory points": "10", 
-        "octgn": "e347f103-7444-4681-ae57-49c7b84dd3c0", 
-        "quantity": "1"
-    }, 
-    {
-        "textc": "\nWhen Revealed: Each player places all cards in his hand facedown underneath Lost in the Wilderness.\n\nForced: When Lost in the Wilderness is defeated, return each card underneath to its owner\u2019s hand.", 
-        "name": "Lost in the Wilderness", 
-        "setname": "The Lost Realm", 
-        "no": 51, 
-        "type": "5quest", 
-        "encounter set": "Eriador Wilds", 
-        "quest points": "4", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC38_51.jpg", 
-        "traits": "", 
-        "text": "When Revealed: Each player places all cards in his hand facedown underneath Lost in the Wilderness.\n\nForced: When Lost in the Wilderness is defeated, return each card underneath to its owner\u2019s hand.", 
-        "exp": "tlr", 
-        "name_norm": "Lost in the Wilderness", 
-        "keywords": "", 
-        "victory points": "10", 
-        "octgn": "efcd8672-26f1-4c32-b6ef-5a06f80e406a", 
-        "quantity": "1"
-    }, 
-    {
-        "textc": "Surge.\nCharacters cannot be healed.\n\nResponse: After Make Camp is defeated, each player heals up to 3 damage from a hero he controls.", 
-        "name": "Make Camp", 
-        "setname": "The Lost Realm", 
-        "no": 55, 
-        "type": "5quest", 
-        "encounter set": "Foul Weather", 
-        "quest points": "6", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC38_55.jpg", 
-        "traits": "", 
-        "text": "Characters cannot be healed.\n\nResponse: After Make Camp is defeated, each player heals up to 3 damage from a hero he controls.", 
-        "exp": "tlr", 
-        "name_norm": "Make Camp", 
-        "keywords": "Surge.", 
-        "victory points": "10", 
-        "octgn": "5388683d-3240-433a-9602-a7367e428406", 
-        "quantity": "1"
-    }, 
-    {
-        "textc": "Surge.\nForced: At the end of the refresh phase, raise each player\u2019s threat by 2.\n\nResponse: After Search the Ruins is defeated, reduce each player\u2019s threat by 3.", 
-        "name": "Search the Ruins", 
-        "setname": "The Lost Realm", 
-        "no": 59, 
-        "type": "5quest", 
-        "encounter set": "Ruins of Arnor", 
-        "quest points": "8", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC38_59.jpg", 
-        "traits": "", 
-        "text": "Forced: At the end of the refresh phase, raise each player\u2019s threat by 2.\n\nResponse: After Search the Ruins is defeated, reduce each player\u2019s threat by 3.", 
-        "exp": "tlr", 
-        "name_norm": "Search the Ruins", 
-        "keywords": "Surge.", 
-        "victory points": "10", 
-        "octgn": "047ca6cd-733d-46aa-b2db-48a9c63bfc24", 
-        "quantity": "1"
-    }, 
-    {
-        "textc": "Surge.\nCards in each player\u2019s discard pile cannot leave that player\u2019s discard pile by player card effect.\n\nForced: After this stage is defeated, each player shuffl es the top 5 cards of his discard pile back into his deck.", 
-        "name": "The Power of Angmar", 
-        "setname": "The Lost Realm", 
-        "no": 67, 
-        "type": "5quest", 
-        "encounter set": "Dark Sorcery", 
-        "quest points": "8", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC38_67.jpg", 
-        "traits": "", 
-        "text": "Cards in each player\u2019s discard pile cannot leave that player\u2019s discard pile by player card effect.\n\nForced: After this stage is defeated, each player shuffl es the top 5 cards of his discard pile back into his deck.", 
-        "exp": "tlr", 
-        "name_norm": "The Power of Angmar", 
-        "keywords": "Surge.", 
-        "victory points": "10", 
-        "octgn": "c3e07d8f-3af3-4f21-8951-d3300ca376fa", 
-        "quantity": "1"
     }, 
     {
         "textc": "\nResponse: After an enemy is revealed from the top of the encounter deck, exhaust Merry to lower your threat by that enemy\u2019s Threat.", 
@@ -7437,6 +7637,7 @@
         "exp": "twoe", 
         "unique": true, 
         "octgn": "03a7152b-e6af-4aaf-a064-7e814fc181d5", 
+        "Categories": "Encounter Control, Threat Control, ", 
         "quantity": "1"
     }, 
     {
@@ -7459,6 +7660,7 @@
         "exp": "twoe", 
         "unique": true, 
         "octgn": "1e28318c-e82a-4d50-b6db-d08e6e9a6b53", 
+        "Categories": "Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -7476,6 +7678,7 @@
         "keywords": "", 
         "exp": "twoe", 
         "type": "4event", 
+        "Categories": "Discard from Hand, Discard Pile, Leaves Play, Recursion, Valour, ", 
         "quantity": "3"
     }, 
     {
@@ -7497,6 +7700,7 @@
         "exp": "twoe", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "Valour, ", 
         "quantity": "3"
     }, 
     {
@@ -7514,6 +7718,7 @@
         "traits": "Item. Armor.", 
         "exp": "twoe", 
         "type": "3attachment", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -7535,6 +7740,7 @@
         "exp": "twoe", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Location Control, Mustering, ", 
         "quantity": "3"
     }, 
     {
@@ -7552,6 +7758,7 @@
         "traits": "Mount.", 
         "exp": "twoe", 
         "type": "3attachment", 
+        "Categories": "Quest Action, ", 
         "quantity": "3"
     }, 
     {
@@ -7573,6 +7780,7 @@
         "exp": "twoe", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -7592,6 +7800,7 @@
         "keywords": "Limit 1 per deck.", 
         "victory points": "1", 
         "type": "5quest", 
+        "Categories": "Card Seach, Encounter Control, Mustering, Victory Display, ", 
         "quantity": "3"
     }, 
     {
@@ -7613,6 +7822,7 @@
         "exp": "twoe", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "Mustering, ", 
         "quantity": "3"
     }, 
     {
@@ -7635,6 +7845,7 @@
         "exp": "hon", 
         "unique": true, 
         "octgn": "4823aae3-46ef-4a75-89f9-cbd3aa1b9005", 
+        "Categories": "", 
         "quantity": "1"
     }, 
     {
@@ -7657,6 +7868,7 @@
         "exp": "hon", 
         "unique": true, 
         "octgn": "4823aae3-46ef-4a75-89f9-cbd3aa1b9008", 
+        "Categories": "Attack Bonus, ", 
         "quantity": "1"
     }, 
     {
@@ -7678,6 +7890,7 @@
         "exp": "hon", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Resource Smoothing, ", 
         "quantity": "3"
     }, 
     {
@@ -7699,6 +7912,7 @@
         "exp": "hon", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -7716,6 +7930,7 @@
         "keywords": "", 
         "exp": "hon", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -7733,6 +7948,7 @@
         "keywords": "", 
         "exp": "hon", 
         "type": "4event", 
+        "Categories": "Resource Acceleration, ", 
         "quantity": "3"
     }, 
     {
@@ -7754,6 +7970,7 @@
         "exp": "hon", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -7771,6 +7988,7 @@
         "keywords": "", 
         "exp": "hon", 
         "type": "4event", 
+        "Categories": "Readying, Defense Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -7788,6 +8006,7 @@
         "traits": "Item. Weapon.", 
         "exp": "hon", 
         "type": "3attachment", 
+        "Categories": "Direct Damage, ", 
         "quantity": "3"
     }, 
     {
@@ -7810,6 +8029,7 @@
         "exp": "hon", 
         "unique": true, 
         "octgn": "4823aae3-46ef-4a75-89f9-cbd3aa1b9013", 
+        "Categories": "Staging Area Control, Threat Control, ", 
         "quantity": "3"
     }, 
     {
@@ -7827,6 +8047,7 @@
         "keywords": "", 
         "exp": "hon", 
         "type": "4event", 
+        "Categories": "Defense Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -7844,6 +8065,7 @@
         "keywords": "", 
         "exp": "hon", 
         "type": "4event", 
+        "Categories": "Encounter Control, Leaves Play, Location Control, Recursion, ", 
         "quantity": "3"
     }, 
     {
@@ -7861,6 +8083,7 @@
         "traits": "Condition.", 
         "exp": "hon", 
         "type": "3attachment", 
+        "Categories": "Defense Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -7882,6 +8105,7 @@
         "exp": "hon", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "Discard from Hand, ", 
         "quantity": "3"
     }, 
     {
@@ -7903,6 +8127,7 @@
         "exp": "hon", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "Staging Area Control, Threat Control, ", 
         "quantity": "3"
     }, 
     {
@@ -7924,6 +8149,7 @@
         "exp": "hon", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -7941,6 +8167,7 @@
         "traits": "Trap.", 
         "exp": "hon", 
         "type": "3attachment", 
+        "Categories": "Staging Area Control, ", 
         "quantity": "3"
     }, 
     {
@@ -7962,6 +8189,7 @@
         "exp": "hon", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "Resource Acceleration, ", 
         "quantity": "3"
     }, 
     {
@@ -7984,6 +8212,7 @@
         "exp": "tac", 
         "unique": true, 
         "octgn": "f2a282eb-eab1-472d-b7fb-71429a1a4855", 
+        "Categories": "Shadow Control, Direct Damage, ", 
         "quantity": "1"
     }, 
     {
@@ -8005,6 +8234,7 @@
         "exp": "tac", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -8023,6 +8253,7 @@
         "exp": "tac", 
         "unique": true, 
         "octgn": "5d1c8757-7409-41da-9e12-454af06e8946", 
+        "Categories": "Resource Acceleration, ", 
         "quantity": "3"
     }, 
     {
@@ -8041,6 +8272,7 @@
         "exp": "tac", 
         "unique": true, 
         "octgn": "29b76593-0ef3-410b-aa85-1c282d4b1582", 
+        "Categories": "Attack Bonus, Defense Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -8062,6 +8294,7 @@
         "exp": "tac", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "Attack Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -8079,6 +8312,7 @@
         "keywords": "", 
         "exp": "tac", 
         "type": "4event", 
+        "Categories": "Location Control, Quest Action, Staging Area Control, ", 
         "quantity": "3"
     }, 
     {
@@ -8096,6 +8330,7 @@
         "keywords": "You must use resources from 3 different heroes' pools to pay for this card.", 
         "exp": "tac", 
         "type": "4event", 
+        "Categories": "Shadow Control, ", 
         "quantity": "3"
     }, 
     {
@@ -8113,6 +8348,7 @@
         "keywords": "", 
         "exp": "tac", 
         "type": "4event", 
+        "Categories": "Readying, Encounter Control, ", 
         "quantity": "3"
     }, 
     {
@@ -8130,6 +8366,7 @@
         "keywords": "Doomed 3.", 
         "exp": "tac", 
         "type": "4event", 
+        "Categories": "Healing, ", 
         "quantity": "3"
     }, 
     {
@@ -8152,6 +8389,7 @@
         "exp": "tac", 
         "unique": true, 
         "octgn": "c266126d-cf2d-4a61-aac7-28bac2d1ea0d", 
+        "Categories": "Readying, ", 
         "quantity": "3"
     }, 
     {
@@ -8174,6 +8412,7 @@
         "exp": "ate", 
         "unique": true, 
         "octgn": "a25c47a4-3a9c-4883-a7a7-c40df596650c", 
+        "Categories": "", 
         "quantity": "1"
     }, 
     {
@@ -8191,6 +8430,7 @@
         "traits": "Item.", 
         "exp": "ate", 
         "type": "3attachment", 
+        "Categories": "Location Control, Resource Acceleration, ", 
         "quantity": "3"
     }, 
     {
@@ -8208,6 +8448,7 @@
         "traits": "Signal.", 
         "exp": "ate", 
         "type": "4event", 
+        "Categories": "Card Seach, ", 
         "quantity": "3"
     }, 
     {
@@ -8229,6 +8470,7 @@
         "exp": "ate", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "Defense Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -8248,6 +8490,7 @@
         "keywords": "Limit 1 per deck.\nBattle.", 
         "victory points": "1", 
         "type": "5quest", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -8265,6 +8508,7 @@
         "traits": "Mount.", 
         "exp": "ate", 
         "type": "3attachment", 
+        "Categories": "Discard from Hand, Location Control, ", 
         "quantity": "3"
     }, 
     {
@@ -8282,6 +8526,7 @@
         "keywords": "", 
         "exp": "ate", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -8303,6 +8548,7 @@
         "exp": "ate", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "Healing, ", 
         "quantity": "3"
     }, 
     {
@@ -8320,6 +8566,7 @@
         "keywords": "Limit 3 copies of None Return in the victory display.", 
         "exp": "ate", 
         "type": "4event", 
+        "Categories": "Recursion, Victory Display, ", 
         "quantity": "3"
     }, 
     {
@@ -8337,61 +8584,8 @@
         "traits": "Song.", 
         "exp": "ate", 
         "type": "4event", 
+        "Categories": "Card Seach, Valour, ", 
         "quantity": "3"
-    }, 
-    {
-        "textc": "\nForced: At the end of the quest phase, if no progress was placed on Lie Low this round, each enemy gets \u201320 engagement cost until the end of the round.\n\nResponse: After this stage is defeated, choose an enemy in the staging area and shuffle it into the encounter deck.", 
-        "name": "Lie Low", 
-        "setname": "Across the Ettenmoors", 
-        "no": 81, 
-        "type": "5quest", 
-        "encounter set": "Across the Ettenmoors", 
-        "quest points": "8", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC41_81.jpg", 
-        "traits": "", 
-        "text": "Forced: At the end of the quest phase, if no progress was placed on Lie Low this round, each enemy gets \u201320 engagement cost until the end of the round.\n\nResponse: After this stage is defeated, choose an enemy in the staging area and shuffle it into the encounter deck.", 
-        "exp": "ate", 
-        "name_norm": "Lie Low", 
-        "keywords": "", 
-        "victory points": "10", 
-        "octgn": "397ef92c-981b-4495-a2a0-681ea886d30c", 
-        "quantity": "1"
-    }, 
-    {
-        "textc": "\nForced: After 1 or more resources are spent from a hero\u2019s resource pool, deal 1 damage to that hero.\n\nResponse: After this stage is defeated, heal 1 damage from each hero.", 
-        "name": "Forage for Food", 
-        "setname": "Across the Ettenmoors", 
-        "no": 82, 
-        "type": "5quest", 
-        "encounter set": "Across the Ettenmoors", 
-        "quest points": "6", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC41_82.jpg", 
-        "traits": "", 
-        "text": "Forced: After 1 or more resources are spent from a hero\u2019s resource pool, deal 1 damage to that hero.\n\nResponse: After this stage is defeated, heal 1 damage from each hero.", 
-        "exp": "ate", 
-        "name_norm": "Forage for Food", 
-        "keywords": "", 
-        "victory points": "10", 
-        "octgn": "b793d1f1-012e-4e13-aad0-d91833f6f8c6", 
-        "quantity": "1"
-    }, 
-    {
-        "textc": "\nThe cost to play each player card is increased by 1.\n\nForced: When this stage is defeated, search the encounter deck and discard pile for a Troll enemy and put it into play engaged with the player with the highest threat. Each player may play a card from his hand, at no cost.", 
-        "name": "Scavenge for Supplies", 
-        "setname": "Across the Ettenmoors", 
-        "no": 83, 
-        "type": "5quest", 
-        "encounter set": "Across the Ettenmoors", 
-        "quest points": "7", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC41_83.jpg", 
-        "traits": "", 
-        "text": "The cost to play each player card is increased by 1.\n\nForced: When this stage is defeated, search the encounter deck and discard pile for a Troll enemy and put it into play engaged with the player with the highest threat. Each player may play a card from his hand, at no cost.", 
-        "exp": "ate", 
-        "name_norm": "Scavenge for Supplies", 
-        "keywords": "", 
-        "victory points": "10", 
-        "octgn": "c898c9f0-d4a7-4821-b075-1e412cde86a7", 
-        "quantity": "1"
     }, 
     {
         "textc": "\nAction:Spend 1 Fellowship resource and exhaust The One Ring to give Frodo Baggins +2 Willpower and +2 Attack until the end of the round.", 
@@ -8413,6 +8607,7 @@
         "exp": "tlos", 
         "unique": true, 
         "octgn": "fe58a6d3-7028-41c1-ab00-5e33e7d77b5f", 
+        "Categories": "Attack Bonus, Willpower Bonus, ", 
         "quantity": "1"
     }, 
     {
@@ -8435,6 +8630,7 @@
         "exp": "tlos", 
         "unique": true, 
         "octgn": "8f937f89-b248-4261-9b00-4e3cd9763299", 
+        "Categories": "Readying, ", 
         "quantity": "1"
     }, 
     {
@@ -8457,6 +8653,7 @@
         "exp": "tlos", 
         "unique": true, 
         "octgn": "3f482b9c-aa18-415e-ab9b-58f9c3b328a1", 
+        "Categories": "Card Draw, ", 
         "quantity": "1"
     }, 
     {
@@ -8479,6 +8676,7 @@
         "exp": "tlos", 
         "unique": true, 
         "octgn": "c8b5dd1c-82bc-4733-be1a-484a6e87c3c0", 
+        "Categories": "Staging Area Control, Direct Damage, ", 
         "quantity": "3"
     }, 
     {
@@ -8501,6 +8699,7 @@
         "exp": "tlos", 
         "unique": true, 
         "octgn": "a870e2b3-4b9d-46ea-bc37-425fd682f114", 
+        "Categories": "Recursion, Staging Area Control, ", 
         "quantity": "3"
     }, 
     {
@@ -8523,6 +8722,7 @@
         "exp": "tlos", 
         "unique": true, 
         "octgn": "df2b2070-240c-4b38-b4c8-29a0d2c789cf", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -8545,6 +8745,7 @@
         "exp": "tlos", 
         "unique": true, 
         "octgn": "9e944f47-14b0-4890-98d2-584e0abe0eda", 
+        "Categories": "Discard from Hand, Recursion, ", 
         "quantity": "3"
     }, 
     {
@@ -8562,6 +8763,7 @@
         "traits": "Item.", 
         "exp": "tlos", 
         "type": "3attachment", 
+        "Categories": "Shadow Control, ", 
         "quantity": "3"
     }, 
     {
@@ -8579,6 +8781,7 @@
         "traits": "Condition. Trap.", 
         "exp": "tlos", 
         "type": "3attachment", 
+        "Categories": "Staging Area Attack, ", 
         "quantity": "3"
     }, 
     {
@@ -8597,6 +8800,7 @@
         "exp": "tlos", 
         "unique": true, 
         "octgn": "b89d39c4-1017-4707-95c3-d60f352d4e95", 
+        "Categories": "Readying, ", 
         "quantity": "3"
     }, 
     {
@@ -8614,6 +8818,7 @@
         "keywords": "", 
         "exp": "tlos", 
         "type": "4event", 
+        "Categories": "Readying, Attack Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -8631,6 +8836,7 @@
         "keywords": "Lower the cost to play In the Shadows by 1 for each Hobbit or Ranger hero you control.", 
         "exp": "tlos", 
         "type": "4event", 
+        "Categories": "Shadow Control, Threat Control, ", 
         "quantity": "3"
     }, 
     {
@@ -8648,6 +8854,7 @@
         "keywords": "", 
         "exp": "tlos", 
         "type": "4event", 
+        "Categories": "Readying, Threat Control, ", 
         "quantity": "3"
     }, 
     {
@@ -8670,6 +8877,7 @@
         "exp": "thoem", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801204c9003", 
+        "Categories": "Readying, ", 
         "quantity": "1"
     }, 
     {
@@ -8691,6 +8899,7 @@
         "exp": "thoem", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Discard from Hand, Recursion, ", 
         "quantity": "3"
     }, 
     {
@@ -8708,6 +8917,7 @@
         "keywords": "", 
         "exp": "thoem", 
         "type": "4event", 
+        "Categories": "Quest Action, Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -8729,6 +8939,7 @@
         "exp": "thoem", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Leaves Play, Staging Area Control, Direct Damage, ", 
         "quantity": "3"
     }, 
     {
@@ -8746,6 +8957,7 @@
         "keywords": "", 
         "exp": "thoem", 
         "type": "4event", 
+        "Categories": "Recursion, ", 
         "quantity": "3"
     }, 
     {
@@ -8767,6 +8979,7 @@
         "exp": "thoem", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Location Control, ", 
         "quantity": "3"
     }, 
     {
@@ -8784,6 +8997,7 @@
         "keywords": "", 
         "exp": "thoem", 
         "type": "4event", 
+        "Categories": "Location Control, ", 
         "quantity": "3"
     }, 
     {
@@ -8806,6 +9020,7 @@
         "exp": "thoem", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801204c9005", 
+        "Categories": "Player Deck Scrying, Recursion, ", 
         "quantity": "3"
     }, 
     {
@@ -8823,6 +9038,7 @@
         "keywords": "", 
         "exp": "thoem", 
         "type": "4event", 
+        "Categories": "Encounter Control, ", 
         "quantity": "3"
     }, 
     {
@@ -8840,6 +9056,7 @@
         "traits": "Song.", 
         "exp": "thoem", 
         "type": "3attachment", 
+        "Categories": "Resource Smoothing, ", 
         "quantity": "3"
     }, 
     {
@@ -8862,6 +9079,7 @@
         "exp": "ttt", 
         "unique": true, 
         "octgn": "df9683da-d86f-46c9-9ef5-66001753dad5", 
+        "Categories": "Readying, Location Control, ", 
         "quantity": "1"
     }, 
     {
@@ -8883,6 +9101,7 @@
         "exp": "ttt", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Secrecy, ", 
         "quantity": "3"
     }, 
     {
@@ -8900,6 +9119,7 @@
         "keywords": "", 
         "exp": "ttt", 
         "type": "4event", 
+        "Categories": "Combat Control, Recursion, ", 
         "quantity": "3"
     }, 
     {
@@ -8922,6 +9142,7 @@
         "exp": "ttt", 
         "unique": true, 
         "octgn": "4b794779-c6b6-4ee0-b13f-196b721e28a7", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -8939,6 +9160,7 @@
         "traits": "Item. Armor.", 
         "exp": "ttt", 
         "type": "3attachment", 
+        "Categories": "Hit Point Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -8960,6 +9182,7 @@
         "exp": "ttt", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Location Control, ", 
         "quantity": "3"
     }, 
     {
@@ -8978,6 +9201,7 @@
         "exp": "ttt", 
         "unique": true, 
         "octgn": "f9b39223-3b12-4682-8db5-9ef4116b4919", 
+        "Categories": "Encounter Control, Location Control, ", 
         "quantity": "3"
     }, 
     {
@@ -8995,6 +9219,7 @@
         "keywords": "", 
         "exp": "ttt", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -9012,6 +9237,7 @@
         "keywords": "", 
         "exp": "ttt", 
         "type": "4event", 
+        "Categories": "Discard from Hand, Recursion, Secrecy, Staging Area Control, ", 
         "quantity": "3"
     }, 
     {
@@ -9028,6 +9254,7 @@
         "traits": "Item.", 
         "exp": "ttt", 
         "type": "3attachment", 
+        "Categories": "Secrecy, ", 
         "quantity": "3"
     }, 
     {
@@ -9050,6 +9277,7 @@
         "exp": "ajtr", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801203c9001", 
+        "Categories": "Readying, Leaves Play, ", 
         "quantity": "1"
     }, 
     {
@@ -9067,6 +9295,7 @@
         "traits": "Signal.", 
         "exp": "ajtr", 
         "type": "3attachment", 
+        "Categories": "Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -9084,6 +9313,7 @@
         "keywords": "", 
         "exp": "ajtr", 
         "type": "4event", 
+        "Categories": "Resource Smoothing, ", 
         "quantity": "3"
     }, 
     {
@@ -9106,6 +9336,7 @@
         "exp": "ajtr", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801203c9004", 
+        "Categories": "Mustering, Recursion, ", 
         "quantity": "3"
     }, 
     {
@@ -9123,6 +9354,7 @@
         "keywords": "", 
         "exp": "ajtr", 
         "type": "4event", 
+        "Categories": "Discard from Hand, Discard Pile, Recursion, ", 
         "quantity": "3"
     }, 
     {
@@ -9144,6 +9376,7 @@
         "exp": "ajtr", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -9161,6 +9394,7 @@
         "traits": "Mathom.", 
         "exp": "ajtr", 
         "type": "3attachment", 
+        "Categories": "Card Draw, Location Control, ", 
         "quantity": "3"
     }, 
     {
@@ -9183,6 +9417,7 @@
         "exp": "ajtr", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801203c9002", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -9200,6 +9435,7 @@
         "keywords": "", 
         "exp": "ajtr", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -9222,6 +9458,7 @@
         "exp": "ajtr", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801203c9003", 
+        "Categories": "Healing, ", 
         "quantity": "3"
     }, 
     {
@@ -9232,7 +9469,7 @@
         "setname": "The Treason of Saruman", 
         "no": 1, 
         "type": "1hero", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/aragorn-ttos.jpg", 
+        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC45_1.jpg", 
         "willpower": 2, 
         "hitpoints": 5, 
         "sphere": "7fellowship", 
@@ -9244,6 +9481,7 @@
         "exp": "ttos", 
         "unique": true, 
         "octgn": "f5178135-1485-43c5-9660-99232a4cdca8", 
+        "Categories": "Readying, Leaves Play, ", 
         "quantity": "1"
     }, 
     {
@@ -9254,7 +9492,7 @@
         "setname": "The Treason of Saruman", 
         "no": 2, 
         "type": "1hero", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/theoden-ttos.jpg", 
+        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC45_2.jpg", 
         "willpower": 2, 
         "hitpoints": 4, 
         "sphere": "3spirit", 
@@ -9266,6 +9504,7 @@
         "exp": "ttos", 
         "unique": true, 
         "octgn": "f3d88160-30f2-4b8b-9e83-c42e62851bbc", 
+        "Categories": "", 
         "quantity": "1"
     }, 
     {
@@ -9276,7 +9515,7 @@
         "setname": "The Treason of Saruman", 
         "no": 3, 
         "type": "1hero", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/treebeard-ttos.jpg", 
+        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC45_3.jpg", 
         "willpower": 2, 
         "hitpoints": 5, 
         "sphere": "4lore", 
@@ -9288,6 +9527,7 @@
         "exp": "ttos", 
         "unique": true, 
         "octgn": "94f6738a-c946-4415-9b38-0ce3a443fa33", 
+        "Categories": "Attack Bonus, Willpower Bonus, Direct Damage, ", 
         "quantity": "1"
     }, 
     {
@@ -9298,7 +9538,7 @@
         "setname": "The Treason of Saruman", 
         "no": 4, 
         "type": "2ally", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/gimli-ttos.jpg", 
+        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC45_4.jpg", 
         "willpower": 2, 
         "hitpoints": 3, 
         "sphere": "1leadership", 
@@ -9310,6 +9550,7 @@
         "exp": "ttos", 
         "unique": true, 
         "octgn": "6a9ff9c1-64d2-4ed5-a793-9e93e8d605b7", 
+        "Categories": "Readying, Encounter Control, ", 
         "quantity": "3"
     }, 
     {
@@ -9320,7 +9561,7 @@
         "setname": "The Treason of Saruman", 
         "no": 5, 
         "type": "2ally", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/legolas-ttos.jpg", 
+        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC45_5.jpg", 
         "willpower": 1, 
         "hitpoints": 3, 
         "sphere": "2tactics", 
@@ -9332,6 +9573,7 @@
         "exp": "ttos", 
         "unique": true, 
         "octgn": "9825aa22-f197-4320-972d-e2487197d989", 
+        "Categories": "Card Draw, ", 
         "quantity": "3"
     }, 
     {
@@ -9342,7 +9584,7 @@
         "setname": "The Treason of Saruman", 
         "no": 6, 
         "type": "2ally", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/quickbeam-ttos.jpg", 
+        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC45_6.jpg", 
         "willpower": 2, 
         "hitpoints": 3, 
         "sphere": "4lore", 
@@ -9354,6 +9596,7 @@
         "exp": "ttos", 
         "unique": true, 
         "octgn": "f37fc371-5a6e-4a24-85a1-2afef11c6841", 
+        "Categories": "Readying, Direct Damage, ", 
         "quantity": "3"
     }, 
     {
@@ -9364,7 +9607,7 @@
         "setname": "The Treason of Saruman", 
         "no": 7, 
         "type": "2ally", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/hama-ttos.jpg", 
+        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC45_7.jpg", 
         "willpower": 1, 
         "hitpoints": 2, 
         "sphere": "3spirit", 
@@ -9376,6 +9619,7 @@
         "exp": "ttos", 
         "unique": true, 
         "octgn": "adc3e6f6-da67-4cc1-9767-8e87dfc91b99", 
+        "Categories": "Readying, Defense Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -9384,7 +9628,7 @@
         "setname": "The Treason of Saruman", 
         "no": 8, 
         "type": "3attachment", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/arod-ttos.jpg", 
+        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC45_8.jpg", 
         "sphere": "2tactics", 
         "cost": 1, 
         "text": "Response: After attached character participates in an attack that destroys an enemy, exhaust Arod to place 1 progress token on any location.", 
@@ -9394,6 +9638,7 @@
         "exp": "ttos", 
         "unique": true, 
         "octgn": "6646bb07-0b44-4051-94a7-39c600b38481", 
+        "Categories": "Location Control, ", 
         "quantity": "3"
     }, 
     {
@@ -9402,7 +9647,7 @@
         "setname": "The Treason of Saruman", 
         "no": 9, 
         "octgn": "b86ba0f8-11f9-4694-b421-17b683bd4325", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/ent-draught-ttos.jpg", 
+        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC45_9.jpg", 
         "sphere": "4lore", 
         "cost": 1, 
         "text": "Attach to a character. Limit 1 per character. Attached character gets +2 hit points.", 
@@ -9411,6 +9656,7 @@
         "traits": "Item. Ent.", 
         "exp": "ttos", 
         "type": "3attachment", 
+        "Categories": "Hit Point Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -9419,7 +9665,7 @@
         "setname": "The Treason of Saruman", 
         "no": 10, 
         "type": "3attachment", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/herugrim-ttos.jpg", 
+        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC45_10.jpg", 
         "sphere": "3spirit", 
         "cost": 3, 
         "text": "Reduce the cost to play Herugrim on Th\u00e9oden by 1. Response: After attached hero is declared as an attacker, exhaust Herugrim to add attached hero's Willpower to its Attack for this attack.", 
@@ -9429,6 +9675,7 @@
         "exp": "ttos", 
         "unique": true, 
         "octgn": "9fce5e18-37dc-45c2-8398-df8b5018cb54", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -9437,7 +9684,7 @@
         "setname": "The Treason of Saruman", 
         "no": 11, 
         "octgn": "a17465f5-e6f5-4699-b0d7-79355286a065", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/entmoot-ttos.jpg", 
+        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC45_11.jpg", 
         "sphere": "4lore", 
         "cost": 0, 
         "text": "Action: Search the top 5 cards of your deck for any number of Ent cards and add them to your hand. Shuffle the other cards back into your deck.", 
@@ -9446,6 +9693,7 @@
         "traits": "Ent.", 
         "exp": "ttos", 
         "type": "4event", 
+        "Categories": "Card Seach, ", 
         "quantity": "3"
     }, 
     {
@@ -9454,7 +9702,7 @@
         "setname": "The Treason of Saruman", 
         "no": 12, 
         "octgn": "f63da56c-6598-4e01-b245-a9fe49f2251a", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/helm!-helm!-ttos.jpg", 
+        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC45_12.jpg", 
         "sphere": "3spirit", 
         "cost": 2, 
         "text": "Combat Action: Exhaust and discard a Rohan ally you control to choose and discard a non-unique enemy engaged with you.", 
@@ -9463,6 +9711,7 @@
         "keywords": "Play only after the resolving enemy attacks step is complete.", 
         "exp": "ttos", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -9471,7 +9720,7 @@
         "setname": "The Treason of Saruman", 
         "no": 13, 
         "octgn": "4101f975-3317-43f8-ba60-19785e01959c", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/the-three-hunters-ttos.jpg", 
+        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC45_13.jpg", 
         "sphere": "7fellowship", 
         "cost": 3, 
         "text": "Quest Action: Choose 3 heroes committed to the quest. Ready those heroes. Until the end of the round, each of the chosen heroes gets +1 Willpower, +1 Attack, and +1 Defense.", 
@@ -9480,6 +9729,7 @@
         "keywords": "Play only if you control \u263a Aragorn.", 
         "exp": "ttos", 
         "type": "4event", 
+        "Categories": "Readying, Quest Action, Attack Bonus, Defense Bonus, Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -9488,7 +9738,7 @@
         "setname": "The Treason of Saruman", 
         "no": 14, 
         "type": "3attachment", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/shadowfax-ttos.jpg", 
+        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC45_14.jpg", 
         "sphere": "5neutral", 
         "cost": 3, 
         "text": "Gandalf gains ranged and sentinel. \n\nAction: Exhaust Shadowfax to ready Gandalf.", 
@@ -9498,6 +9748,7 @@
         "exp": "ttos", 
         "unique": true, 
         "octgn": "9f61eee8-cff2-43ad-8f82-7c4efb5ed9b8", 
+        "Categories": "Readying, Shadow Control, ", 
         "quantity": "3"
     }, 
     {
@@ -9520,6 +9771,7 @@
         "exp": "tdm", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801205c9002", 
+        "Categories": "Readying, Direct Damage, ", 
         "quantity": "1"
     }, 
     {
@@ -9541,6 +9793,7 @@
         "exp": "tdm", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Shadow Control, ", 
         "quantity": "3"
     }, 
     {
@@ -9558,6 +9811,7 @@
         "traits": "Item.", 
         "exp": "tdm", 
         "type": "3attachment", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -9579,6 +9833,7 @@
         "exp": "tdm", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -9596,6 +9851,7 @@
         "traits": "Song.", 
         "exp": "tdm", 
         "type": "3attachment", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -9618,6 +9874,7 @@
         "exp": "tdm", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801205c9005", 
+        "Categories": "Readying, Encounter Control, Threat Control, ", 
         "quantity": "3"
     }, 
     {
@@ -9635,6 +9892,7 @@
         "keywords": "", 
         "exp": "tdm", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -9656,6 +9914,7 @@
         "exp": "tdm", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "Healing, ", 
         "quantity": "3"
     }, 
     {
@@ -9673,6 +9932,7 @@
         "traits": "Skill.", 
         "exp": "tdm", 
         "type": "3attachment", 
+        "Categories": "Readying, ", 
         "quantity": "3"
     }, 
     {
@@ -9690,6 +9950,7 @@
         "traits": "Song.", 
         "exp": "tdm", 
         "type": "3attachment", 
+        "Categories": "Resource Smoothing, ", 
         "quantity": "3"
     }, 
     {
@@ -9712,6 +9973,7 @@
         "exp": "ttor", 
         "unique": true, 
         "octgn": "b188f729-0314-4664-95a0-7f93f4d44133", 
+        "Categories": "Card Draw, Discard from Hand, Resource Acceleration, ", 
         "quantity": "1"
     }, 
     {
@@ -9729,6 +9991,7 @@
         "keywords": "You must use resources from 3 different heroes' pools to pay for this card.", 
         "exp": "ttor", 
         "type": "4event", 
+        "Categories": "Mustering, Recursion, ", 
         "quantity": "3"
     }, 
     {
@@ -9748,6 +10011,7 @@
         "keywords": "Limit 1 per deck.", 
         "victory points": "1", 
         "type": "5quest", 
+        "Categories": "Card Seach, Mustering, ", 
         "quantity": "3"
     }, 
     {
@@ -9765,6 +10029,7 @@
         "traits": "Item. Weapon.", 
         "exp": "ttor", 
         "type": "3attachment", 
+        "Categories": "Discard from Hand, Attack Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -9782,6 +10047,7 @@
         "keywords": "", 
         "exp": "ttor", 
         "type": "4event", 
+        "Categories": "Valour, ", 
         "quantity": "3"
     }, 
     {
@@ -9803,6 +10069,7 @@
         "exp": "ttor", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "Combat Control, Discard Pile, ", 
         "quantity": "3"
     }, 
     {
@@ -9820,6 +10087,7 @@
         "traits": "Item. Instrument.", 
         "exp": "ttor", 
         "type": "3attachment", 
+        "Categories": "Discard from Hand, Recursion, ", 
         "quantity": "3"
     }, 
     {
@@ -9842,6 +10110,7 @@
         "exp": "ttor", 
         "unique": true, 
         "octgn": "608ac037-89dd-4aac-8b6d-057bd0fa7507", 
+        "Categories": "Card Draw, Discard from Hand, ", 
         "quantity": "3"
     }, 
     {
@@ -9859,6 +10128,7 @@
         "keywords": "", 
         "exp": "ttor", 
         "type": "4event", 
+        "Categories": "Encounter Control, Victory Display, ", 
         "quantity": "3"
     }, 
     {
@@ -9876,6 +10146,7 @@
         "traits": "Title.", 
         "exp": "ttor", 
         "type": "3attachment", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -9898,6 +10169,7 @@
         "exp": "tcoc", 
         "unique": true, 
         "octgn": "66cf39b5-015f-4bae-b304-4a61b5d1bedf", 
+        "Categories": "", 
         "quantity": "1"
     }, 
     {
@@ -9919,6 +10191,7 @@
         "exp": "tcoc", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -9936,6 +10209,7 @@
         "keywords": "", 
         "exp": "tcoc", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -9957,6 +10231,7 @@
         "exp": "tcoc", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -9979,6 +10254,7 @@
         "exp": "tcoc", 
         "unique": true, 
         "octgn": "daf23298-67fa-41c5-aff6-a3b7fef2014e", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -9996,6 +10272,7 @@
         "keywords": "", 
         "exp": "tcoc", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -10017,6 +10294,7 @@
         "exp": "tcoc", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -10034,6 +10312,7 @@
         "traits": "Item. Weapon.", 
         "exp": "tcoc", 
         "type": "3attachment", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -10052,6 +10331,7 @@
         "exp": "tcoc", 
         "unique": true, 
         "octgn": "3903cf5b-0ca8-4cd9-8943-490a7af601e5", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -10074,6 +10354,7 @@
         "exp": "tgh", 
         "unique": true, 
         "octgn": "76ee3df4-3ebe-4d2d-9d7f-a0bbe759358a", 
+        "Categories": "Card Draw, Resource Acceleration, ", 
         "quantity": "1"
     }, 
     {
@@ -10096,6 +10377,7 @@
         "exp": "tgh", 
         "unique": true, 
         "octgn": "52e217a6-ddc0-4082-9ec2-09d92e8c25c7", 
+        "Categories": "Card Draw, Discard from Hand, ", 
         "quantity": "1"
     }, 
     {
@@ -10117,6 +10399,7 @@
         "exp": "tgh", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Discard Pile, Attack Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -10134,6 +10417,7 @@
         "keywords": "", 
         "exp": "tgh", 
         "type": "4event", 
+        "Categories": "Discard Pile, Direct Damage, ", 
         "quantity": "3"
     }, 
     {
@@ -10151,6 +10435,7 @@
         "traits": "Item.", 
         "exp": "tgh", 
         "type": "3attachment", 
+        "Categories": "Quest Action, ", 
         "quantity": "3"
     }, 
     {
@@ -10172,6 +10457,7 @@
         "exp": "tgh", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "Discard Pile, Defense Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -10189,6 +10475,7 @@
         "keywords": "", 
         "exp": "tgh", 
         "type": "4event", 
+        "Categories": "Discard Pile, ", 
         "quantity": "3"
     }, 
     {
@@ -10206,6 +10493,7 @@
         "traits": "Item.", 
         "exp": "tgh", 
         "type": "3attachment", 
+        "Categories": "Card Seach, Encounter Control, Location Control, Staging Area Control, ", 
         "quantity": "3"
     }, 
     {
@@ -10227,6 +10515,7 @@
         "exp": "tgh", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Discard from Hand, ", 
         "quantity": "3"
     }, 
     {
@@ -10244,6 +10533,7 @@
         "keywords": "", 
         "exp": "tgh", 
         "type": "4event", 
+        "Categories": "Discard Pile, Location Control, ", 
         "quantity": "3"
     }, 
     {
@@ -10261,6 +10551,7 @@
         "traits": "Item.", 
         "exp": "tgh", 
         "type": "3attachment", 
+        "Categories": "Location Control, Staging Area Control, ", 
         "quantity": "3"
     }, 
     {
@@ -10282,6 +10573,7 @@
         "exp": "tgh", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Discard Pile, Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -10299,6 +10591,7 @@
         "keywords": "", 
         "exp": "tgh", 
         "type": "4event", 
+        "Categories": "Readying, Discard Pile, Quest Action, Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -10317,6 +10610,7 @@
         "exp": "tgh", 
         "unique": true, 
         "octgn": "d0180ea8-15e3-4a9a-80c6-dfd6549753c9", 
+        "Categories": "Discard from Hand, ", 
         "quantity": "3"
     }, 
     {
@@ -10335,6 +10629,7 @@
         "exp": "tgh", 
         "unique": true, 
         "octgn": "8ae15724-e823-4f55-a9e8-c75b3e795e9a", 
+        "Categories": "Readying, Resource Smoothing, Attack Bonus, Defense Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -10357,6 +10652,7 @@
         "exp": "thotd", 
         "unique": true, 
         "octgn": "4e61b160-2104-497f-9977-4b353e54fbb7", 
+        "Categories": "Card Seach, Leaves Play, Resource Acceleration, ", 
         "quantity": "1"
     }, 
     {
@@ -10379,6 +10675,7 @@
         "exp": "thotd", 
         "unique": true, 
         "octgn": "bf2cb5a8-2ec6-4366-89f6-7e3010686a85", 
+        "Categories": "Shadow Control, ", 
         "quantity": "1"
     }, 
     {
@@ -10401,6 +10698,7 @@
         "exp": "thotd", 
         "unique": true, 
         "octgn": "e2cf87be-ccdc-48e9-8127-57bee67d4a0c", 
+        "Categories": "", 
         "quantity": "1"
     }, 
     {
@@ -10423,6 +10721,7 @@
         "exp": "thotd", 
         "unique": true, 
         "octgn": "b21a2af5-7443-4630-9503-1b334ae51c6e", 
+        "Categories": "Resource Smoothing, Attack Bonus, ", 
         "quantity": "1"
     }, 
     {
@@ -10445,6 +10744,7 @@
         "exp": "thotd", 
         "unique": true, 
         "octgn": "66f66c2e-36e7-4d97-aebb-1ca413f9edeb", 
+        "Categories": "", 
         "quantity": "1"
     }, 
     {
@@ -10467,6 +10767,7 @@
         "exp": "thotd", 
         "unique": true, 
         "octgn": "6778eb01-6b07-4dbe-87f1-e854ab548813", 
+        "Categories": "Resource Acceleration, ", 
         "quantity": "3"
     }, 
     {
@@ -10489,6 +10790,7 @@
         "exp": "thotd", 
         "unique": true, 
         "octgn": "c4b959f5-92a9-4f46-8656-f9da08a5cb86", 
+        "Categories": "Card Draw, ", 
         "quantity": "3"
     }, 
     {
@@ -10511,6 +10813,7 @@
         "exp": "thotd", 
         "unique": true, 
         "octgn": "c66638a7-95ae-4913-bf11-2e8dcf8d6104", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -10528,6 +10831,7 @@
         "keywords": "", 
         "exp": "thotd", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -10545,6 +10849,7 @@
         "keywords": "", 
         "exp": "thotd", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -10562,6 +10867,7 @@
         "keywords": "", 
         "exp": "thotd", 
         "type": "4event", 
+        "Categories": "Encounter Control, Encounter Scrying, Mustering, ", 
         "quantity": "3"
     }, 
     {
@@ -10579,6 +10885,7 @@
         "keywords": "", 
         "exp": "thotd", 
         "type": "4event", 
+        "Categories": "Discard Pile, Mustering, ", 
         "quantity": "3"
     }, 
     {
@@ -10596,6 +10903,7 @@
         "keywords": "", 
         "exp": "thotd", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -10613,6 +10921,7 @@
         "traits": "Item. Weapon.", 
         "exp": "thotd", 
         "type": "3attachment", 
+        "Categories": "Staging Area Attack, ", 
         "quantity": "3"
     }, 
     {
@@ -10632,6 +10941,7 @@
         "victory points": "1", 
         "unique": true, 
         "octgn": "ae16236d-886e-4f65-9129-5ead1d373bfe", 
+        "Categories": "Victory Display, Attack Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -10650,6 +10960,7 @@
         "exp": "thotd", 
         "unique": true, 
         "octgn": "f4490261-317e-4e9e-9440-a5c58dcddcbf", 
+        "Categories": "Location Control, Staging Area Control, ", 
         "quantity": "3"
     }, 
     {
@@ -10667,6 +10978,7 @@
         "traits": "Skill.", 
         "exp": "thotd", 
         "type": "3attachment", 
+        "Categories": "Discard from Hand, ", 
         "quantity": "3"
     }, 
     {
@@ -10685,6 +10997,7 @@
         "exp": "thotd", 
         "unique": true, 
         "octgn": "9152834a-5355-42ba-9592-1a3c1940d1a8", 
+        "Categories": "Discard from Hand, Player Deck Scrying, ", 
         "quantity": "3"
     }, 
     {
@@ -10707,6 +11020,7 @@
         "exp": "totd", 
         "unique": true, 
         "octgn": "14820d35-cb36-499b-80ec-da6442548f7b", 
+        "Categories": "Attack Bonus, Defense Bonus, Willpower Bonus, ", 
         "quantity": "1"
     }, 
     {
@@ -10729,6 +11043,7 @@
         "exp": "totd", 
         "unique": true, 
         "octgn": "7e1db97c-f6dc-43e1-a6f3-7ab600845e93", 
+        "Categories": "Readying, ", 
         "quantity": "3"
     }, 
     {
@@ -10746,6 +11061,7 @@
         "traits": "Mount.", 
         "exp": "totd", 
         "type": "3attachment", 
+        "Categories": "Readying, Shadow Control, ", 
         "quantity": "3"
     }, 
     {
@@ -10768,6 +11084,7 @@
         "exp": "totd", 
         "unique": true, 
         "octgn": "1987caf1-aedd-4fe0-bbe9-41539c2a7910", 
+        "Categories": "Shadow Control, ", 
         "quantity": "3"
     }, 
     {
@@ -10785,6 +11102,7 @@
         "keywords": "Play only if you control a Noldor hero.", 
         "exp": "totd", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -10806,6 +11124,7 @@
         "exp": "totd", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Location Control, Staging Area Control, Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -10823,6 +11142,7 @@
         "keywords": "Play only after the staging step.", 
         "exp": "totd", 
         "type": "4event", 
+        "Categories": "Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -10840,6 +11160,7 @@
         "traits": "Trap.", 
         "exp": "totd", 
         "type": "3attachment", 
+        "Categories": "Staging Area Attack, ", 
         "quantity": "3"
     }, 
     {
@@ -10857,6 +11178,7 @@
         "keywords": "Play only after making engagement checks.", 
         "exp": "totd", 
         "type": "4event", 
+        "Categories": "Encounter Control, Resource Acceleration, Staging Area Control, Direct Damage, ", 
         "quantity": "3"
     }, 
     {
@@ -10878,6 +11200,7 @@
         "exp": "totd", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Mustering, ", 
         "quantity": "3"
     }, 
     {
@@ -10900,6 +11223,7 @@
         "exp": "tsoh", 
         "unique": true, 
         "octgn": "053357f5-4192-4a35-bf2c-7f48d584f292", 
+        "Categories": "", 
         "quantity": "1"
     }, 
     {
@@ -10922,6 +11246,7 @@
         "exp": "tsoh", 
         "unique": true, 
         "octgn": "8124f5ac-6f03-4629-96f5-b8775ec8a7c4", 
+        "Categories": "", 
         "quantity": "1"
     }, 
     {
@@ -10943,6 +11268,7 @@
         "exp": "tsoh", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -10964,6 +11290,7 @@
         "exp": "tsoh", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -10985,6 +11312,7 @@
         "exp": "tsoh", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -11006,6 +11334,7 @@
         "exp": "tsoh", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -11023,6 +11352,7 @@
         "keywords": "", 
         "exp": "tsoh", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -11040,6 +11370,7 @@
         "keywords": "", 
         "exp": "tsoh", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -11057,6 +11388,7 @@
         "keywords": "", 
         "exp": "tsoh", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -11074,6 +11406,7 @@
         "traits": "Item. Armor.", 
         "exp": "tsoh", 
         "type": "3attachment", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -11091,6 +11424,7 @@
         "traits": "Item. Weapon.", 
         "exp": "tsoh", 
         "type": "3attachment", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -11108,6 +11442,7 @@
         "traits": "Song.", 
         "exp": "tsoh", 
         "type": "3attachment", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -11127,97 +11462,8 @@
         "keywords": "", 
         "victory points": "1", 
         "type": "5quest", 
+        "Categories": "", 
         "quantity": "3"
-    }, 
-    {
-        "textc": "\n", 
-        "name": "Southron Champion", 
-        "setname": "The Sands of Harad", 
-        "no": 40, 
-        "type": "5quest", 
-        "encounter set": "Harad Soldiers", 
-        "quest points": "4", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC55_40.jpg", 
-        "traits": "", 
-        "text": "", 
-        "exp": "tsoh", 
-        "name_norm": "Southron Champion", 
-        "keywords": "", 
-        "victory points": "10", 
-        "octgn": "47b1cd0f-5d56-483c-956c-7851eb4b0a9a", 
-        "quantity": "1"
-    }, 
-    {
-        "textc": "Surge.\n", 
-        "name": "In Hostile Territory", 
-        "setname": "The Sands of Harad", 
-        "no": 45, 
-        "type": "5quest", 
-        "encounter set": "Harad Territory", 
-        "quest points": "8", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC55_45.jpg", 
-        "traits": "", 
-        "text": "", 
-        "exp": "tsoh", 
-        "name_norm": "In Hostile Territory", 
-        "keywords": "Surge.", 
-        "victory points": "10", 
-        "octgn": "24772594-75f3-4789-aeec-41526d845e11", 
-        "quantity": "1"
-    }, 
-    {
-        "textc": "\n", 
-        "name": "Find Water", 
-        "setname": "The Sands of Harad", 
-        "no": 48, 
-        "type": "5quest", 
-        "encounter set": "Desert Sands", 
-        "quest points": "6", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC55_48.jpg", 
-        "traits": "", 
-        "text": "", 
-        "exp": "tsoh", 
-        "name_norm": "Find Water", 
-        "keywords": "", 
-        "victory points": "10", 
-        "octgn": "84877af6-0720-4ef8-802b-69b792c32e15", 
-        "quantity": "1"
-    }, 
-    {
-        "textc": "\n", 
-        "name": "Craft Remedy", 
-        "setname": "The Sands of Harad", 
-        "no": 53, 
-        "type": "5quest", 
-        "encounter set": "Desert Creatures", 
-        "quest points": "6", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC55_53.jpg", 
-        "traits": "", 
-        "text": "", 
-        "exp": "tsoh", 
-        "name_norm": "Craft Remedy", 
-        "keywords": "", 
-        "victory points": "10", 
-        "octgn": "55d8f78d-2dd7-4b44-80db-fb539ff05f00", 
-        "quantity": "1"
-    }, 
-    {
-        "textc": "Surge.\n", 
-        "name": "Uruks of the Eye", 
-        "setname": "The Sands of Harad", 
-        "no": 60, 
-        "type": "5quest", 
-        "encounter set": "Mordor Orcs", 
-        "quest points": "5", 
-        "img": "http://www.cardgamedb.com/forums/uploads/lotr/MEC55_60.jpg", 
-        "traits": "", 
-        "text": "", 
-        "exp": "tsoh", 
-        "name_norm": "Uruks of the Eye", 
-        "keywords": "Surge.", 
-        "victory points": "10", 
-        "octgn": "8a0a834b-d10c-43b1-a43c-75b459c18374", 
-        "quantity": "1"
     }, 
     {
         "textc": "\nWhile Elladan is in play, Elrohir gets +2 Defense.\n\nResponse: After Elrohir is declared as a defender, pay 1 resource from his resource pool to ready him.", 
@@ -11239,6 +11485,7 @@
         "exp": "trg", 
         "unique": true, 
         "octgn": "cc7beee8-1f42-4926-8c45-8a50f3a87c57", 
+        "Categories": "Readying, Defense Bonus, ", 
         "quantity": "1"
     }, 
     {
@@ -11256,6 +11503,7 @@
         "keywords": "", 
         "exp": "trg", 
         "type": "4event", 
+        "Categories": "Card Draw, Direct Damage, ", 
         "quantity": "3"
     }, 
     {
@@ -11273,6 +11521,7 @@
         "keywords": "Secrecy 3.", 
         "exp": "trg", 
         "type": "4event", 
+        "Categories": "Mustering, Secrecy, ", 
         "quantity": "3"
     }, 
     {
@@ -11290,6 +11539,7 @@
         "keywords": "", 
         "exp": "trg", 
         "type": "4event", 
+        "Categories": "Attack Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -11307,6 +11557,7 @@
         "keywords": "Attach to a hero. Limit 1 per hero.", 
         "exp": "trg", 
         "type": "3attachment", 
+        "Categories": "Attack Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -11329,6 +11580,7 @@
         "exp": "trg", 
         "unique": true, 
         "octgn": "c00bdeff-c186-4d83-bf24-2142fdd39b19", 
+        "Categories": "Mustering, Quest Action, Recursion, ", 
         "quantity": "3"
     }, 
     {
@@ -11346,6 +11598,7 @@
         "keywords": "", 
         "exp": "trg", 
         "type": "4event", 
+        "Categories": "Readying, Card Draw, Threat Control, ", 
         "quantity": "3"
     }, 
     {
@@ -11367,6 +11620,7 @@
         "exp": "trg", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "Location Control, ", 
         "quantity": "3"
     }, 
     {
@@ -11384,6 +11638,7 @@
         "keywords": "Secrecy 2.", 
         "exp": "trg", 
         "type": "4event", 
+        "Categories": "Player Deck Scrying, Secrecy, Threat Control, ", 
         "quantity": "3"
     }, 
     {
@@ -11401,6 +11656,7 @@
         "keywords": "Attach to a Hobbit hero.", 
         "exp": "trg", 
         "type": "3attachment", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -11423,6 +11679,7 @@
         "exp": "cs", 
         "unique": true, 
         "octgn": "8d6a15a8-e363-46bb-8e49-0af45a1ea0d1", 
+        "Categories": "Card Draw, Threat Control, ", 
         "quantity": "1"
     }, 
     {
@@ -11441,6 +11698,7 @@
         "exp": "cs", 
         "unique": true, 
         "octgn": "83842580-bfe9-4d56-addf-e1d290eb7bcf", 
+        "Categories": "Readying, ", 
         "quantity": "3"
     }, 
     {
@@ -11463,6 +11721,7 @@
         "exp": "cs", 
         "unique": true, 
         "octgn": "9220dbae-e7fc-43fc-b772-043af7d4bda1", 
+        "Categories": "Discard from Hand, Discard Pile, Recursion, ", 
         "quantity": "3"
     }, 
     {
@@ -11484,6 +11743,7 @@
         "exp": "cs", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Defense Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -11501,6 +11761,7 @@
         "keywords": "", 
         "exp": "cs", 
         "type": "4event", 
+        "Categories": "Attack Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -11522,6 +11783,7 @@
         "exp": "cs", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "Threat Control, ", 
         "quantity": "3"
     }, 
     {
@@ -11540,6 +11802,7 @@
         "exp": "cs", 
         "unique": true, 
         "octgn": "6e97a705-2458-4aa1-ad90-f3cd8200ca5a", 
+        "Categories": "Card Seach, Discard from Hand, ", 
         "quantity": "3"
     }, 
     {
@@ -11561,6 +11824,7 @@
         "exp": "cs", 
         "hitpoints": 3, 
         "type": "2ally", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -11578,6 +11842,7 @@
         "traits": "Item.", 
         "exp": "cs", 
         "type": "3attachment", 
+        "Categories": "Location Control, Defense Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -11596,6 +11861,7 @@
         "exp": "cs", 
         "unique": true, 
         "octgn": "17ed9b53-19f5-4ad1-ab91-14c2859e5a60", 
+        "Categories": "Quest Action, Resource Acceleration, Resource Smoothing, ", 
         "quantity": "3"
     }, 
     {
@@ -11618,6 +11884,7 @@
         "exp": "tdt", 
         "unique": true, 
         "octgn": "4c4cccd3-576a-41f1-8b6c-ba11b4cc3d4b", 
+        "Categories": "Attack Bonus, Defense Bonus, Willpower Bonus, ", 
         "quantity": "1"
     }, 
     {
@@ -11639,6 +11906,7 @@
         "exp": "tdt", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -11656,6 +11924,7 @@
         "keywords": "", 
         "exp": "tdt", 
         "type": "4event", 
+        "Categories": "Readying, Discard from Hand, Recursion, Secrecy, ", 
         "quantity": "3"
     }, 
     {
@@ -11674,6 +11943,7 @@
         "exp": "tdt", 
         "unique": true, 
         "octgn": "0ee1f1e6-1952-4bad-8ecd-631e80f4ccc0", 
+        "Categories": "Attack Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -11691,6 +11961,7 @@
         "keywords": "Doomed X.", 
         "exp": "tdt", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -11712,6 +11983,7 @@
         "exp": "tdt", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Resource Smoothing, ", 
         "quantity": "3"
     }, 
     {
@@ -11729,6 +12001,7 @@
         "keywords": "", 
         "exp": "tdt", 
         "type": "3attachment", 
+        "Categories": "Threat Control, Victory Display, ", 
         "quantity": "3"
     }, 
     {
@@ -11750,6 +12023,7 @@
         "exp": "tdt", 
         "hitpoints": 2, 
         "type": "2ally", 
+        "Categories": "Encounter Control, Encounter Scrying, Secrecy, ", 
         "quantity": "3"
     }, 
     {
@@ -11767,6 +12041,7 @@
         "keywords": "", 
         "exp": "tdt", 
         "type": "4event", 
+        "Categories": "Card Seach, Mustering, Recursion, ", 
         "quantity": "3"
     }, 
     {
@@ -11784,6 +12059,7 @@
         "keywords": "", 
         "exp": "tdt", 
         "type": "4event", 
+        "Categories": "Readying, Card Draw, Discard Pile, Resource Acceleration, ", 
         "quantity": "3"
     }, 
     {
@@ -11806,6 +12082,7 @@
         "exp": "tbr", 
         "unique": true, 
         "octgn": "3217a119-6b86-47dd-b451-c5e45be3f874", 
+        "Categories": "Encounter Control, ", 
         "quantity": "1"
     }, 
     {
@@ -11828,6 +12105,7 @@
         "exp": "tbr", 
         "unique": true, 
         "octgn": "4124136c-8c86-4f86-830c-94c8c76df161", 
+        "Categories": "Readying, Attack Bonus, Defense Bonus, Willpower Bonus, ", 
         "quantity": "1"
     }, 
     {
@@ -11850,6 +12128,7 @@
         "exp": "tbr", 
         "unique": true, 
         "octgn": "052b1f85-8b9c-4bb0-a735-bdbd5ac1b2c4", 
+        "Categories": "Readying, Attack Bonus, ", 
         "quantity": "1"
     }, 
     {
@@ -11872,6 +12151,7 @@
         "exp": "tbr", 
         "unique": true, 
         "octgn": "ce96b767-c569-48b8-a998-d8009b0143c7", 
+        "Categories": "Card Draw, ", 
         "quantity": "1"
     }, 
     {
@@ -11894,6 +12174,7 @@
         "exp": "tbr", 
         "unique": true, 
         "octgn": "5d75d4dd-7300-43d7-87f2-963271c9c904", 
+        "Categories": "Staging Area Control, ", 
         "quantity": "1"
     }, 
     {
@@ -11916,6 +12197,7 @@
         "exp": "tbr", 
         "unique": true, 
         "octgn": "1f7fc118-94a7-48a0-bd0c-9c15a36ddc23", 
+        "Categories": "Hit Point Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -11938,6 +12220,7 @@
         "exp": "tbr", 
         "unique": true, 
         "octgn": "77f58774-86e7-4449-b31e-3833700b3e60", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -11960,6 +12243,7 @@
         "exp": "tbr", 
         "unique": true, 
         "octgn": "9d8ccd1a-48d3-4123-bcca-3c0ab88347ec", 
+        "Categories": "Direct Damage, ", 
         "quantity": "3"
     }, 
     {
@@ -11977,6 +12261,7 @@
         "keywords": "", 
         "exp": "tbr", 
         "type": "4event", 
+        "Categories": "Attack Bonus, Defense Bonus, Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -11994,6 +12279,7 @@
         "keywords": "", 
         "exp": "tbr", 
         "type": "4event", 
+        "Categories": "Threat Control, Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -12011,6 +12297,7 @@
         "keywords": "", 
         "exp": "tbr", 
         "type": "4event", 
+        "Categories": "", 
         "quantity": "3"
     }, 
     {
@@ -12028,6 +12315,7 @@
         "keywords": "", 
         "exp": "tbr", 
         "type": "4event", 
+        "Categories": "Card Draw, Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -12045,6 +12333,7 @@
         "traits": "Item.", 
         "exp": "tbr", 
         "type": "3attachment", 
+        "Categories": "Defense Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -12062,6 +12351,7 @@
         "traits": "Artifact. Item. Weapon.", 
         "exp": "tbr", 
         "type": "3attachment", 
+        "Categories": "Attack Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -12079,6 +12369,7 @@
         "traits": "Item. Pipe.", 
         "exp": "tbr", 
         "type": "3attachment", 
+        "Categories": "Card Draw, Threat Control, ", 
         "quantity": "3"
     }, 
     {
@@ -12097,6 +12388,7 @@
         "exp": "tbr", 
         "unique": true, 
         "octgn": "9bb32f2c-29fb-43ba-b7ba-2227b28f7b58", 
+        "Categories": "Leaves Play, Location Control, Mustering, ", 
         "quantity": "3"
     }, 
     {
@@ -12119,6 +12411,7 @@
         "exp": "saf", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801213c9004", 
+        "Categories": "Healing, ", 
         "quantity": "1"
     }, 
     {
@@ -12136,6 +12429,7 @@
         "keywords": "", 
         "exp": "saf", 
         "type": "4event", 
+        "Categories": "Card Draw, Resource Acceleration, ", 
         "quantity": "3"
     }, 
     {
@@ -12154,6 +12448,7 @@
         "exp": "saf", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801213c9008", 
+        "Categories": "Hit Point Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -12171,6 +12466,7 @@
         "keywords": "", 
         "exp": "saf", 
         "type": "4event", 
+        "Categories": "Staging Area Attack, Attack Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -12188,6 +12484,7 @@
         "keywords": "Secrecy 4.", 
         "exp": "saf", 
         "type": "4event", 
+        "Categories": "Encounter Control, Mustering, Secrecy, Threat Control, ", 
         "quantity": "3"
     }, 
     {
@@ -12205,6 +12502,7 @@
         "traits": "Item.", 
         "exp": "saf", 
         "type": "3attachment", 
+        "Categories": "Readying, Mustering, Resource Acceleration, Willpower Bonus, ", 
         "quantity": "3"
     }, 
     {
@@ -12226,6 +12524,7 @@
         "exp": "saf", 
         "hitpoints": 1, 
         "type": "2ally", 
+        "Categories": "Card Seach, ", 
         "quantity": "3"
     }, 
     {
@@ -12243,6 +12542,7 @@
         "keywords": "", 
         "exp": "saf", 
         "type": "4event", 
+        "Categories": "Card Draw, ", 
         "quantity": "3"
     }, 
     {
@@ -12260,6 +12560,7 @@
         "keywords": "Secrecy 3.", 
         "exp": "saf", 
         "type": "4event", 
+        "Categories": "Encounter Control, Encounter Scrying, Recursion, Secrecy, ", 
         "quantity": "3"
     }, 
     {
@@ -12278,6 +12579,7 @@
         "exp": "saf", 
         "unique": true, 
         "octgn": "51223bd0-ffd1-11df-a976-0801213c9027", 
+        "Categories": "Mustering, Resource Smoothing, Resource Smoothing, ", 
         "quantity": "3"
     }
 ]

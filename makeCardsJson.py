@@ -111,7 +111,7 @@ for folder in next(os.walk('../Lord-of-the-Rings/o8g/Sets'))[1]:
         elif exp=='tdr': suffix='MEC44_'+str(num)+".jpg"
         elif exp=='tgh': suffix='MEC47_'+str(num)+".jpg"
         elif exp=='trd': suffix='MEC34_'+str(num).zfill(3)+".jpg"
-        elif exp=='tos': suffix='MEC45_'+str(num)+".jpg"
+        elif exp=='ttos': suffix='MEC45_'+str(num)+".jpg"
         elif exp=='tlos': suffix='MEC46_'+str(num)+".jpg"
         elif exp=='fots': suffix='MEC48_'+str(num)+".jpg"
         elif exp=='ttitd': suffix='MEC49_'+str(num)+".jpg"
@@ -131,10 +131,48 @@ for folder in next(os.walk('../Lord-of-the-Rings/o8g/Sets'))[1]:
         newcard["img"] = base+suffix
         
 
+        # Categories
+        cat = ""
+        tl = newcard.get("textc","").lower()
+        if ('ready' in tl): cat=cat+"Readying, " 
+        if ('shadow' in tl): cat=cat+"Shadow Control, " 
+        if ('draw' in tl): cat=cat+"Card Draw, " 
+        if ('search' in tl): cat=cat+"Card Seach, "
+        if ('cannot attack' in tl): cat=cat+"Combat Control, "
+        if ('condition' in tl): cat=cat+"Condition Control, "
+        if ('discard' in tl and 'hand' in tl): cat=cat+"Discard from Hand, "
+        if ('discard pile' in tl): cat=cat+"Discard Pile, "
+        if ('encounter' in tl): cat=cat+"Encounter Control, "
+        if ('look at' in tl and 'encounter' in tl): cat=cat+"Encounter Scrying, "
+        if ('heal' in tl): cat=cat+"Healing, "
+        if ('leaves play' in tl): cat=cat+"Leaves Play, "
+        if ('location' in tl): cat=cat+"Location Control, "
+        if ('put' in tl and 'into play'): cat=cat+"Mustering, "
+        if ('look' in tl and 'deck' in tl and ('your' in tl or 'his' in tl or "player's" in tl)): cat=cat+"Player Deck Scrying, "
+        if ('quest action' in tl): cat=cat+"Quest Action, "
+        if ('return' in tl or ('discard pile' in tl and 'hand' in tl)): cat=cat+"Recursion, "
+        if ('resource' in tl and ('add' in tl or 'additional' in tl)): cat=cat+"Resource Acceleration, "
+        if ('resource' in tl and 'move' in tl): cat=cat+"Resource Smoothing, "
+        if ('resource' in tl and 'icon' in tl and 'gains' in tl): cat=cat+"Resource Smoothing, "
+        if ('secrecy' in tl or '20' in tl): cat=cat+"Secrecy, "
+        if ('staging area' in tl and 'attack' in tl): cat=cat+"Staging Area Attack, "
+        elif ('staging area' in tl): cat=cat+"Staging Area Control, "
+        if ('less than' in tl and 'engagement cost' in tl): cat=cat+"Surprise, "
+        if ('threat' in tl and ('reduce' in tl or 'lower' in tl)): cat=cat+"Threat Control, "
+        if ('valour' in tl): cat=cat+"Valour, "
+        if ('victory display' in tl): cat=cat+"Victory Display, "
+ 
+        if (re.search("\+[0-9]+ attack",tl)): cat=cat+"Attack Bonus, "
+        if (re.search("\+[0-9]+ defense",tl)): cat=cat+"Defense Bonus, "
+        if (re.search("\+[0-9]+ willpower",tl)): cat=cat+"Willpower Bonus, "
+        if (re.search("\+[0-9]+ hit point",tl)): cat=cat+"Hit Point Bonus, "
+        if (re.search("deal [0-9]+ damage",tl)): cat=cat+"Direct Damage, "
+        newcard["Categories"]=cat
+
         # Only allow player card types, including side quests, but not side quests that belong to an encounter set. 
         cardtype = newcard.get("type","")
         if (cardtype!='1hero' and cardtype!='2ally' and cardtype!='3attachment' and cardtype!='4event' and cardtype!='5quest'): continue
-        if (newcard.get("Encounter Set","")): continue
+        if (newcard.get("encounter set","")): continue
 #        if (newcard.get("name","") != "Bard the Bowman"): continue
         allcards.append(newcard)				
 
